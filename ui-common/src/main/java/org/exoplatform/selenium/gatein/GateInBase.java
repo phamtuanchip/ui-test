@@ -276,7 +276,7 @@ public class GateInBase extends TestBase {
 	public static final By ELEMENT_ABORT_BUTTON = By.linkText("//a[text()='Abort']");
 
 	/*Portlet in general*/
-	public static final By ELEMENT_EDIT_PORTLET_ICON = By.xpath("//a[@title='Edit Portlet']");
+	public static final By ELEMENT_EDIT_PORTLET_ICON = By.xpath("//a[contains(@title,'Edit Portlet')]");
 	public static final By ELEMENT_DELETE_PORTLET_ICON = By.xpath("//a[@title='Delete Portlet']");
 	public static final By ELEMENT_PORTLET_CONTAINER = By.className("PortletLayoutDecorator");
 	public static final By ELEMENT_ABORTEDIT_BUTTON = By.xpath("//a[@title='Abort']");

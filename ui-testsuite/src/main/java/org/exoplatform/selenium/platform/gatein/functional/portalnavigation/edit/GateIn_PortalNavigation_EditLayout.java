@@ -22,7 +22,7 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 	//Application Tab in Edit Layout
 	public static final By ELEMENT_TAB_APPLICATIONS = By.xpath("//div[contains(text(),'Applications') and @class='MiddleTab']");
 	public static final By ELEMENT_APPLICATION_CONTENT_LIST = By.id("Content/ContentListViewerPortlet");
-	public static final By ELEMENT_APPLICATION_COLLABORATION_CALENDAR = By.id("Collaboration/Calendar");
+	public static final By ELEMENT_APPLICATION_NEW_ACCOUNT = By.xpath("//div[@title='New Account']");
 	
 	public static final By ELEMENT_PORTAL_PAGE_COMPONENT = By.id("UIPageBody");
 	
@@ -35,6 +35,7 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 	public static final By ELEMENT_CONFIRMATION_YES_OPTION = By.xpath("//div[@id='UIConfirmation']//div[contains(@class, 'UIAction')]//a[contains(text(), 'Yes')]");
 			
 	public static final By ELEMENT_PAGE_BODY = By.xpath(".//*[@id='UIPageBody']/div/div[1]/div");
+	public static final By ELEMENT_BLANK_CONTAINER = By.xpath("//div[@class='UIRowContainer EmptyContainer']");
 	public static final By ELEMENT_EMPTY_CONTAINER = By.cssSelector("div.UIRowContainer.EmptyContainer");
 	public static final String ELEMENT_EDIT_LAYOUT = "//div[@class='Label' and text()='${navigation}']/../../td[3]//a[@class='EditLayoutIcon']";
 	public static final String ELEMENT_EDIT_PAGE_COMPONENT_DRAG_ICON = "//div[@class='UIRowContainer']/div[${number}]//div[@class='DragControlArea']";
@@ -45,8 +46,9 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 	public static final String APPLICATION_DRAG_ICON = ELEMENT_EDIT_PAGE_COMPONENT_DRAG_ICON.replace("${number}", "1");
 	public static final String ELEMENT_EDIT_CONTAINER = ELEMENT_EDIT_PAGE_COMPONENT.replace("${portletNumber}", "1");
 	public static final By ELEMENT_CONTAINER_TITLE = By.xpath("//input[@id='title']");
-
-	public static final String ELEMENT_COLLABORATION_CATEGORY = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", "Collaboration");
+	public static final By ELEMENT_APPLICATION_ACCOUNT = By.xpath("//div[contains(text(),'Account Portlet')]");
+	public static final By ELEMENT_APPLICATION_ACCOUNT_DRAG = By.xpath("//div[contains(text(),'Account Portlet')]/../div[@class='DragControlArea']");
+	
 	public static final String ELEMENT_CONTENT_CATEGORY = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", "Content");
 	public static final String ELEMENT_ADMIN_CATEGORY = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", "Administration");
 
@@ -180,11 +182,11 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 
 		info("--Edit container layout of current portal--");
 		click(ELEMENT_TAB_CONTAINERS);
-		mouseOver(ELEMENT_EDIT_CONTAINER, true);
+		mouseOver(ELEMENT_BLANK_CONTAINER, true);
 		mouseOver(ELEMENT_EDIT_CONTAINER_ICON, true);
 		click(ELEMENT_EDIT_CONTAINER_ICON);
 
-		waitForTextPresent("Container Settings");	
+		waitForTextPresent("Container Setting");	
 		type(ELEMENT_INPUT_WIDTH, "900px", true);
 		type(ELEMENT_INPUT_HEIGHT, "600px", true);
 		save();
@@ -203,7 +205,7 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 		goToPortalSites();
 		click(editLayout);
 		click(ELEMENT_TAB_CONTAINERS) ;
-		mouseOver(ELEMENT_EDIT_CONTAINER, true);
+		mouseOver(ELEMENT_BLANK_CONTAINER, true);
 		mouseOver(ELEMENT_DELETE_CONTAINER_ICON, true);
 		click(ELEMENT_DELETE_CONTAINER_ICON);
 		waitForConfirmation(MESSAGE_DELETE_CONTAINER);
@@ -237,15 +239,15 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 
 		info("--Edit container layout of current portal--");
 		click(ELEMENT_TAB_CONTAINERS);
-		mouseOver(ELEMENT_EDIT_CONTAINER, true);
+		mouseOver(ELEMENT_BLANK_CONTAINER, true);
 		mouseOver(ELEMENT_EDIT_CONTAINER_ICON, true);
 		click(ELEMENT_EDIT_CONTAINER_ICON);
 
 		info("--Edit current title with valid value--");
-		waitForTextPresent("Container Settings");
+		waitForTextPresent("Container Setting");
 		type(ELEMENT_CONTAINER_TITLE, "test21_CheckEditingContainer", true); //ELEMENT_INPUT_TITLE
 		save();
-		mouseOver(ELEMENT_EDIT_CONTAINER, true);
+		mouseOver(ELEMENT_BLANK_CONTAINER, true);
 		waitForTextPresent("test21_CheckEditingContainer");
 
 		info("--SignOut--");
@@ -282,17 +284,17 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 		waitForAndGetElement(ELEMENT_ROWS_LAYOUT);
 		click(ELEMENT_ROWS_LAYOUT);	
 		dragAndDropToObject(ELEMENT_ONE_ROW_LAYOUT, ELEMENT_PORTAL_PAGE_COMPONENT);
-		click(ELEMENT_TAB_APPLICATIONS); 
+		/*click(ELEMENT_TAB_APPLICATIONS); 
 		waitForTextPresent("Administration");
 		click(ELEMENT_CONTENT_CATEGORY);
-		dragAndDropToObject(ELEMENT_APPLICATION_CONTENT_LIST, ELEMENT_EMPTY_CONTAINER);
+		dragAndDropToObject(ELEMENT_APPLICATION_CONTENT_LIST, ELEMENT_EMPTY_CONTAINER);*/
 
 		info("--Edit container layout of current portal--");
 		click(ELEMENT_TAB_CONTAINERS);
-		mouseOver(ELEMENT_EDIT_CONTAINER, true);
+		mouseOver(ELEMENT_BLANK_CONTAINER, true);
 		mouseOver(ELEMENT_EDIT_CONTAINER_ICON, true);
 		click(ELEMENT_EDIT_CONTAINER_ICON);
-		waitForTextPresent("Container Settings");	
+		waitForTextPresent("Container Setting");	
 		type(ELEMENT_INPUT_WIDTH, "900px", true);
 		save();
 		click(ELEMENT_EDIT_LAYOUT_FINISH_BUTTON);
@@ -309,7 +311,7 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 		goToPortalSites();
 		click(editLayout);
 		click(ELEMENT_TAB_CONTAINERS) ;
-		mouseOver(ELEMENT_EDIT_CONTAINER, true);
+		mouseOver(ELEMENT_BLANK_CONTAINER, true);
 		mouseOver(ELEMENT_DELETE_CONTAINER_ICON, true);
 		click(ELEMENT_DELETE_CONTAINER_ICON);
 		waitForConfirmation(MESSAGE_DELETE_CONTAINER);
@@ -339,8 +341,8 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 
 		info("--Select application tab on edit inline composer --");
 		waitForTextPresent("Administration") ;
-		click(ELEMENT_COLLABORATION_CATEGORY);
-		dragAndDropToObject(ELEMENT_APPLICATION_COLLABORATION_CALENDAR, ELEMENT_PORTAL_PAGE_COMPONENT);
+		click(ELEMENT_ADMIN_CATEGORY);
+		dragAndDropToObject(ELEMENT_APPLICATION_NEW_ACCOUNT, ELEMENT_PORTAL_PAGE_COMPONENT);
 
 		click(ELEMENT_TAB_CONTAINERS);
 		waitForAndGetElement(ELEMENT_ROWS_LAYOUT);
@@ -348,8 +350,8 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 		dragAndDropToObject(ELEMENT_ONE_ROW_LAYOUT, ELEMENT_PORTAL_PAGE_COMPONENT);
 
 		click(ELEMENT_TAB_APPLICATIONS); 	
-		mouseOver(ELEMENT_EDIT_PAGE_COMPONENT_FIRST, true);
-		dragAndDropToObject(APPLICATION_DRAG_ICON, ELEMENT_EMPTY_CONTAINER_2);
+		mouseOver(ELEMENT_APPLICATION_ACCOUNT, true);
+		dragAndDropToObject(ELEMENT_APPLICATION_ACCOUNT_DRAG, ELEMENT_BLANK_CONTAINER);
 
 		click(ELEMENT_EDIT_LAYOUT_FINISH_BUTTON);
 		waitForTextPresent(username);
@@ -365,7 +367,7 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 		goToPortalSites();
 		click(editLayout);
 		click(ELEMENT_TAB_CONTAINERS) ;
-		mouseOver(ELEMENT_EDIT_CONTAINER, true);
+		mouseOver(ELEMENT_APPLICATION_ACCOUNT, true);
 		click(ELEMENT_DELETE_CONTAINER_ICON);
 		waitForConfirmation(MESSAGE_DELETE_CONTAINER);
 
@@ -393,18 +395,18 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 		click(editLayout);
 
 		waitForTextPresent("Administration") ;
-		click(ELEMENT_COLLABORATION_CATEGORY);
-		dragAndDropToObject(ELEMENT_APPLICATION_COLLABORATION_CALENDAR, ELEMENT_PORTAL_PAGE_COMPONENT);
-		mouseOver(ELEMENT_EDIT_PAGE_COMPONENT_FIRST, true);
+		click(ELEMENT_ADMIN_CATEGORY);
+		dragAndDropToObject(ELEMENT_APPLICATION_NEW_ACCOUNT, ELEMENT_PORTAL_PAGE_COMPONENT);
+		mouseOver(ELEMENT_APPLICATION_ACCOUNT, true);
 		mouseOver(ELEMENT_EDIT_PORTLET_ICON, true);
 		click(ELEMENT_EDIT_PORTLET_ICON);
 
 		info("--Edit width/height--");
-		waitForTextPresent("Window Settings");
+		waitForTextPresent("Portlet Setting");
 		type(ELEMENT_INPUT_WIDTH, "300px", true) ;
 		type(ELEMENT_INPUT_HEIGHT, "300px", true);
 		saveAndClose();
-		waitForTextNotPresent("Window Settings");
+		waitForTextNotPresent("Portlet Setting");
 
 		info("--Switch view mode portal--");
 		click(ELEMENT_SWITCH_VIEW_MODE_PORTAL);
@@ -416,7 +418,7 @@ public class GateIn_PortalNavigation_EditLayout extends GateInBase{
 		mouseOver(ELEMENT_EDIT_PAGE_COMPONENT_FIRST, true);
 		mouseOver(ELEMENT_EDIT_PORTLET_ICON, true);
 		click(ELEMENT_EDIT_PORTLET_ICON);
-		waitForTextPresent("Window Settings");
+		waitForTextPresent("Window Setting");
 		type(ELEMENT_INPUT_WIDTH, "", true);
 		type(ELEMENT_INPUT_HEIGHT,"", true);
 		saveAndClose();
