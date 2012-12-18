@@ -2,10 +2,16 @@ package org.exoplatform.selenium.platform;
 
 import static org.exoplatform.selenium.TestLogger.info;
 import java.util.Map;
+
+import org.openqa.selenium.By;
+
 import static org.exoplatform.selenium.platform.NavigationToolbar.*;
 
 public class PortalManagement extends PlatformBase {
-
+	//edit layout of portal > Site's config > Permission setting
+	public static final String MESSAGE_EDIT_EMPTY_PERMISSION_SETTING = "The \"Edit Permission Setting\" list can not be empty.";
+	public static final By ELEMENT_SITE_CONFIG_LINK = By.className("PageProfileIcon") ;
+	public static final By ELELENT_LINK_DELETE_PERMISSION = By.xpath("//a[text() = 'Delete Permission']");
 	//Add new portal
 	public static void addNewPortal(String portalName, String portalLocale, String portalSkin, String portalSession, 
 			boolean publicMode, Map<String, String> permissions, String editGroupId, String editMembership){

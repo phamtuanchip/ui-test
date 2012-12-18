@@ -32,7 +32,7 @@ public class PlatformBase extends TestBase {
 	/*
 	 * Intranet
 	 * */
-	public static final String ELEMENT_SIGN_IN_LINK = "//b[contains(text(),'Sign in')]";
+	public static final String ELEMENT_SIGN_IN_LINK = "//a[@class='Login']";
 
 	/*
 	 * Log in Form - Sign-out 
@@ -55,12 +55,12 @@ public class PlatformBase extends TestBase {
 	// Dashboard
 
 	/* Edit */
-	public static final By ELEMENT_MENU_EDIT_LINK = By.linkText("Edit");
+	public static final By ELEMENT_MENU_EDIT_LINK = By.linkText("Site Editor");
 	//Content
 	public static final By ELEMENT_MENU_EDIT_CONTENT = By.xpath("//a[@class='ItemIcon QuickEditUnchecked']");
 	//Page
 	public static final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
-	public static final By ELEMENT_MENU_EDIT_LAYOUT = By.linkText("Layout");
+	public static final By ELEMENT_MENU_EDIT_LAYOUT = By.linkText("Edit Page");
 	public static final By ELEMENT_MENU_SEO_LINK = By.xpath("//a[@title='SEO Management']");
 	public static final By ELEMENT_MENU_ADD_PAGE_LINK = By.linkText("Add Page");
 	//site
@@ -69,6 +69,13 @@ public class PlatformBase extends TestBase {
 
 	/* Setting Icon */
 	public static final String ELEMENT_LINK_SETUP ="//img[@alt='Setup']";
+	//Group menu
+	public static final String ELEMENT_MENU_GROUP = "//a[text()='Group']";
+	public static final String ELEMENT_MENU_ORGANIZATION = "//a[text()='Organization']";
+	public static final String ELEMENT_MENU_STAFF = "//a[text()='New Staff']";
+	public static final String ELEMENT_MENU_USER_GROUPS = "//a[text()='Users and groups management']";
+	//Group > organization > users and groups management
+	public static final String ELEMENT_ICON_USER_SEARCH = "//a[@title='Quick Search']";
 	//Users
 	public static final String ELEMENT_LINK_USERS ="//a[text()='Users']";
 	public static final String ELEMENT_LINK_ADD_USERS="//a[text()='Add Users']";
@@ -81,7 +88,7 @@ public class PlatformBase extends TestBase {
 	//Portal
 	public static final String ELEMENT_LINK_PORTAL = "//a[text()='Portal']";
 	public static final String ELEMENT_LINK_PAGES   = "//a[text()='Pages']";
-	public static final String ELEMENT_LINK_SITES   = "//a[text()='Sites']";
+	public static final String ELEMENT_LINK_SITES   = "//a[contains(text(),'Site')]";
 	public static final String ELEMENT_LINK_GROUP = "//a[text()='Group Sites']";
 	//Administration
 	//IDE
@@ -101,7 +108,7 @@ public class PlatformBase extends TestBase {
 
 	//Add user Form - (Setting -> User -> add User)
 	//Account setting
-	public static final String ELEMENT_ACCOUNT_SETTING_TAB = "//div[text()='Account Settings' and @class='MiddleTab']";
+	public static final String ELEMENT_ACCOUNT_SETTING_TAB = "//div[text()='Account Setting' and @class='MiddleTab']";
 	public static final String ELEMENT_INPUT_CONFIRM_PASSWORD = "//input[@id='Confirmpassword']";
 	public static final String ELEMENT_INPUT_NEW_PASSWORD = "//input[@id='newPassword']";
 	public static final String ELEMENT_INPUT_NEW_CONFIRM_PASSWORD = "//input[@id='confirmPassword']";
@@ -119,7 +126,8 @@ public class PlatformBase extends TestBase {
 
 	//Sign-out
 	public static final String ELEMENT_ACCOUNT_NAME_LINK = "//a[@class='TBIcon']";
-	public static final String ELEMENT_SIGN_OUT_LINK = "//a[@class='LogoutIcon']";
+	public static final By ELEMENT_SIGN_OUT_LINK = By.linkText("Sign out");
+	public static final String ELEMENT_SIGN_OUT_ICON = "//ul[@id='UIStarToolbarPortlet']/li";
 	/* Username link - END*/
 
 	/*
@@ -188,9 +196,9 @@ public class PlatformBase extends TestBase {
 	public static final String ELEMENT_PROPERTIES_TAB = "//div[text()='Properties' and @class='MiddleTab']";
 
 	//Permission Setting TAB
-	public static final String ELEMENT_PERMISSION_SETTING_TAB= "//div[text()='Permission Settings' and @class='MiddleTab']";
+	public static final String ELEMENT_PERMISSION_SETTING_TAB= "//div[text()='Permission Setting' and @class='MiddleTab']";
 	public static final String ELEMENT_CHECKBOX_PUBLIC_MODE = "//input[@name='publicMode']";
-	public static final String ELEMENT_EDIT_PERMISSION_SETTING = "//a[text()='Edit Permission Settings']";
+	public static final String ELEMENT_EDIT_PERMISSION_SETTING = "//a[text()='Edit Permission Setting']";
 	public static final String ELEMENT_SELECT_ACCESS_MEMBERSHIP_ITEM = "//a[text()='${membership}']";
 	public static final String ELEMENT_SELECTED_ACCESS_PERMISSION_GROUP = "//div[@id='PermissionGrid']/table/tbody//div[text()='/${groupId}']";
 	public static final String ELEMENT_SELECTED_ACCESS_PERMISSION_MEMBERSHIP = "//div[@id='PermissionGrid']/table/tbody//div[text()='${membership}']";
@@ -282,7 +290,7 @@ public class PlatformBase extends TestBase {
 
 	//Account Portlet
 	public static final By ELEMENT_REGISTER_ACCOUNT_PORTLET = By.className("PortletLayoutDecorator");
-	public static final By ELEMENT_CHECK_BOX_USE_CAPTCHA = By.id("useCaptcha");
+	public static final By ELEMENT_CHECK_BOX_USE_CAPTCHA = By.name("useCaptcha");
 	public static final By ELEMENT_EDIT_LAYOUT_FINISH_BUTTON = By.xpath("//div[@id='UIPortalComposer']//a[@class='EdittedSaveButton']");
 	public static final By ELEMENT_PAGE_FINISH_BUTTON_INFRENCH = By.xpath("//div[@id='UIPageEditor']//a[@title='Terminer']");
 	public static final By ELEMENT_EDIT_ACCOUNT_PORTLET_ICON_INFRENCH = By.xpath("//a[@title='Editer la Portlet']");

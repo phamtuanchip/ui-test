@@ -27,31 +27,14 @@
 	</dependencies>
 
 	<profiles>
+		
 		<profile>
-			<id>ecms</id>
+			<id>gatein</id>
 			<properties>
-				<testSuite>ecms.xml</testSuite>
+				<testSuite>gatein.xml</testSuite>
 			</properties>
 		</profile>
-		<profile>
-			<id>exogtn</id>
-			<properties>
-				<testSuite>exogtn.xml</testSuite>
-			</properties>
-		</profile>
-		<profile>
-			<id>social</id>
-			<properties>
-				<testSuite>social.xml</testSuite>
-			</properties>
-		</profile>
-		<profile>
-			<id>ks</id>
-			<properties>
-				<testSuite>ks.xml</testSuite>
-			</properties>
-		</profile>
-
+		
 		<profile>
 			<id>regression</id>
 			<properties>
@@ -168,6 +151,7 @@
 
 				<!-- common configuration shared by all executions -->
 				<configuration>
+					<skip>${cargo.skip}</skip>
 					<driver>com.mysql.jdbc.Driver</driver>
 					<url>jdbc:mysql://localhost:3306/plf_data</url>
 					<username>root</username>
@@ -187,6 +171,7 @@
 							<goal>execute</goal>
 						</goals>
 						<configuration>
+							<skip>${cargo.skip}</skip>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:mysql://localhost:3306/</url>
 							<autocommit>true</autocommit>
@@ -201,6 +186,7 @@
 							<goal>execute</goal>
 						</goals>
 						<configuration>
+							<skip>${cargo.skip}</skip>
 							<url>jdbc:mysql://localhost:3306/</url>
 							<autocommit>true</autocommit>
 							<sqlCommand>create database if not exists plf_data</sqlCommand>

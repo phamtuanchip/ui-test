@@ -37,7 +37,7 @@ public class UserGroupManagement extends PlatformBase {
 		waitForTextPresent("Add/Edit Membership");
 	}
 
-	/*
+	/*updated by thuntn
 	 * User Management
 	 * */
 
@@ -50,7 +50,7 @@ public class UserGroupManagement extends PlatformBase {
 		}
 		pause(500);
 		click(userDeleteIcon);
-		waitForConfirmation("Are you sure to delete user " + username + "?");
+		waitForConfirmation("Are you sure you want to delete " + username + " user?");
 		pause(1000);
 		type(ELEMENT_INPUT_SEARCH_USER_NAME, username, true);
 		select(ELEMENT_SELECT_SEARCH_OPTION, "User Name");
@@ -188,7 +188,7 @@ public class UserGroupManagement extends PlatformBase {
 		int waitTime= wait.length > 0 ? wait[0]: DEFAULT_TIMEOUT;
 		click(ELEMENT_GROUP_REMOVE_ICON);
 
-		waitForConfirmation("Are you sure to delete this group?");
+		waitForConfirmation("Are you sure you want to delete this group?");
 		if (verify) {
 			waitForElementNotPresent("//a[@title='"+ groupName +"']",waitTime);
 		}
