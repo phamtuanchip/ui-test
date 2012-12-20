@@ -48,7 +48,7 @@ public class GateIn_ManagePages_Create extends GateInBase
 		initSeleniumTest();
 		driver.get(baseUrl);
 		actions = new Actions(driver);
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 	
 	/*--------------- Manage Page - Create #1 ---------------*/
@@ -76,18 +76,13 @@ public class GateIn_ManagePages_Create extends GateInBase
 		//Check Showing on Group's page
 		
 		//Goto Settings > Administration > Management
-		mouseOver(ELEMENT_LINK_SETUP, true);
-		pause(500);
-		mouseOver(ADMINISTRATION_LINK, true);
-		pause(500);
-		mouseOverAndClick(MANAGEMENT_LINK);
-		pause(500);
+		goToApplicationRegistry();
 		
 		//Goto Edit >  Page > Add Page of Group
-		goToAddPageEditor();
+		goToAddPageGroupEditor();
 		
 		//Verify Left panel 
-		waitForElementPresent(PORTAL_MANAGEMENT_LINK);
+		waitForElementPresent(ELEMENT_APPLICATION_REGISTRY_CREATE);
 		
 		//Verify Right panel
 		waitForElementPresent(NODE_NAME_INPUT);
@@ -107,41 +102,36 @@ public class GateIn_ManagePages_Create extends GateInBase
 		//Check Showing on Group's page
 		
 		//Goto Settings > Administration > Management
-		mouseOver(ELEMENT_LINK_SETUP, true);
-		pause(500);
-		mouseOver(ADMINISTRATION_LINK, true);
-		pause(500);
-		mouseOverAndClick(MANAGEMENT_LINK);
-		pause(500);
+		goToApplicationRegistry();
 		
-		//Goto Edit >  Page > Add Page of Portal
-		goToAddPageEditor();
+		goToAddPageGroupEditor();
 		
-		//Click on Portal Management
-		waitForElementPresent(PORTAL_MANAGEMENT_LINK);
-		click(PORTAL_MANAGEMENT_LINK);
+		//verify list of pages in the left
+		waitForElementPresent(ELEMENT_APPLICATION_REGISTRY_CREATE);
 		
-		//Verify sub-pages of Portal Management
-		waitForElementPresent(APPLICATION_MANAGER_LINK);
+		
+		waitForElementPresent(SERVICE_MANAGEMENT_LINK);
 		waitForElementPresent(PAGE_MANAGER_LINK);
-		waitForElementPresent(ADD_USERS_LINK);
-		waitForElementPresent(USERS_GROUP_MANAGER_LINK);
-		
+		waitForElementPresent(SITE_EXPORT_IMPORT_LINK);
+		click(ELEMENT_APPLICATION_REGISTRY_CREATE);
 		//Click on Up Level icon
 		click(UP_LEVEL_ICON);
 		
-		//Verify Selected Page Node is /default
-		waitForElementPresent(DEFAULT_NODE);
+		//Verify Selected Page Node is Administration
+		waitForElementPresent(ADMIN_LINK);
+		click(UP_LEVEL_ICON);
 		
+		//Verify Selected Page Node is /default
+				waitForElementPresent(DEFAULT_NODE);
 		//Click Abort button
 		click(ELEMENT_ABORT_BUTTON);
 		
 		//Check Showing on Portal's page
 		
 		//Goto My Sites > intranet > Home
-		mouseOver(ELEMENT_MYSITE, true);
+		mouseOver(ELEMENT_SITE_MENU, true);
 		pause(500);
-		mouseOverAndClick(ELEMENT_INTRANET_SITE_LINK);
+		mouseOverAndClick(ELEMENT_CLASSIC_MENU);
 		pause(500);
 		
 		//Goto Edit >  Page > Add Page of Portal

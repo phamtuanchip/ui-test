@@ -8,15 +8,19 @@ import org.openqa.selenium.By;
 import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
 
 public class PortalManagement extends GateInBase {
+	//Portal navigation
+	public static final String ELEMENT_CLASSIC_NAVIGATION = "classic";
+	
 	//Edit layout of portal > Site's config > Permission setting
 	public static final String MESSAGE_EDIT_EMPTY_PERMISSION_SETTING = "The \"Edit Permission Setting\" list can not be empty.";
 	public static final By ELEMENT_SITE_CONFIG_LINK = By.className("PageProfileIcon") ;
 	public static final By ELELENT_LINK_DELETE_PERMISSION = By.xpath("//a[text() = 'Delete Permission']");
 	//Edit layout
-	public static final String MESSAGE_DELETE_PORTLET = "Are you sure to delete this portlet?"  ;
+	public static final String MESSAGE_DELETE_PORTLET = "Are you sure you want to delete this portlet?"  ;
 	public static final String MESSAGE_DELETE_CONTAINER = "Are you sure you want to delete this Container?";
 	public static final String MESSAGE_WARNING_CONTAINER = "This component contains PageBody. Can not delete !";
 	public static final String MESSAGE_QUIT_EDIT_LAYOUT = "Modifications have been made. Are you sure you want to close without saving ?";
+	
 	//Add new portal
 	public static void addNewPortal(String portalName, String portalLocale, String portalSkin, String portalSession, 
 			boolean publicMode, Map<String, String> permissions, String editGroupId, String editMembership){
@@ -82,7 +86,7 @@ public class PortalManagement extends GateInBase {
 		String portalDeleteIcon = ELEMENT_PORTAL_DELETE_ICON.replace("${portalName}", portalName);
 		info("--Delete portal (" + portalName + ")--");		
 		click(portalDeleteIcon);
-		waitForConfirmation("Are you sure to delete this portal?");
+		waitForConfirmation("Are you sure you want to delete this portal?");
 		//info("--Verify portal is deleted--");
 		//		pause(30000);
 		waitForTextNotPresent(portalName, 180000);

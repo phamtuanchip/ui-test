@@ -15,13 +15,12 @@ import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
 public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateInBase 
 {
 	//Define Data
-	public String EDIT_ACME_NAVIGATION = "//div[text()='acme']/following::a[text()='Edit Navigation']";
-	public String EDIT_INT_NAVIGATION = "//div[text()='intranet']/following::a[text()='Edit Navigation']";
+	
 	public String UP_LEVEL = "//a[contains(@title,'Up Level')]";
 	public String ADD_NODE_BUTTON = "//a[contains(text(),'Add Node')]";
 	public String NODE_NAME_TEXTBOX = "name";
 	public String CLOSE_NAVIGATION = "//a[contains(@title,'Close Window')]";
-	public String CHILD_NODE = "(//a[contains(text(),'Node1')])[2]";
+	public String CHILD_NODE = "(//a[contains(@title,'Node1')])[2]";
 
 	//Global variables
 	public String FIRST_NODE = "";
@@ -29,7 +28,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 //	public WebElement ELEMENT = null;
 
 	//Messages
-	public String SAME_SOURCE_MESSAGE = "The source and the destination must be different.";
+	
 	public String SAME_PLACE_MESSAGE = "This node name already exists.";
 
 	@BeforeMethod()
@@ -39,7 +38,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get(baseUrl);
 		actions = new Actions(driver);
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 
 	//Define using methods
@@ -51,8 +50,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		
 		//Click button Save on Add Node screen
 		save();
-		pause(1000);
-		
+		waitForTextNotPresent("Page Node Setting");
 		//Click button Save on Navigation Management screen
 		save();
 		pause(1000);
@@ -68,9 +66,9 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		info("---Goto Edit Navigation");
 		goToPortalSites();
 
-		//Click on Edit Navigation of acme
-		info("---Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("---Click on Edit Navigation of Classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		info("---Add Test Data");
 
@@ -82,9 +80,9 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		addNode(ADD_NODE_BUTTON, NODE_NAME_TEXTBOX, FIRST_NODE);
 		pause(1000);
 
-		//Click on Edit Navigation of acme
-		info("---Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("---Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Add Node2
 		info("-----Add Node2");
@@ -94,34 +92,34 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		addNode(ADD_NODE_BUTTON, NODE_NAME_TEXTBOX, SECOND_NODE);
 		pause(1000);
 
-		//Click on Edit Navigation of acme
-		info("-----Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("-----Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Verify Node2 presents
 		info("-----Verify Node2 has been added");
 		waitForTextPresent(SECOND_NODE);
 
-		//Click on Edit Navigation of acme
-		info("---Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("---Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 		pause(500);
 
 		info("---Copy Node1 Paste to Node2");
 		waitForTextPresent(FIRST_NODE);
-		copyNode(By.xpath("//a[text()='" + FIRST_NODE + "']"));
-		pasteNode(By.xpath("//a[text()='"+ SECOND_NODE +"']"));
+		copyNode(By.xpath("//a[@title='" + FIRST_NODE + "']"));
+		pasteNode(By.xpath("//a[@title='"+ SECOND_NODE +"']"));
 		pause(1000);
 
 		save();
 		pause(1000);
 
-		//Click on Edit Navigation of acme
-		info("---Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("---Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Verify Node2 has a child node named Node1
-		click("//a[text()='" + SECOND_NODE + "']");
+		click("//a[@title='" + SECOND_NODE + "']");
 		info("---Verify Node2 has a child node named Node1");
 		waitForElementPresent(CHILD_NODE);
 		assert isElementPresent(CHILD_NODE):"Can not found Node1";
@@ -130,11 +128,11 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 
 		//Delete Node1
 		info("-----Delete Node1");
-		deleteNode("acme", FIRST_NODE, FIRST_NODE, true);
+		deleteNode("classic", FIRST_NODE, FIRST_NODE, true);
 
 		//Delete Node2
 		info("-----Delete Node2");
-		deleteNode("acme", SECOND_NODE, SECOND_NODE, true);
+		deleteNode("classic", SECOND_NODE, SECOND_NODE, true);
 
 		info("-END test01_CopyPasteNodeInSameNavigation");
 	}
@@ -149,9 +147,9 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		info("---Goto Edit Navigation");
 		goToPortalSites();
 
-		//Click on Edit Navigation of acme
-		info("---Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("---Click on Edit Navigation of ");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		info("---Add Test Data");
 
@@ -163,9 +161,9 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		addNode(ADD_NODE_BUTTON, NODE_NAME_TEXTBOX, FIRST_NODE);
 		pause(1000);
 
-		//Click on Edit Navigation of ACME
-		info("-----Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("-----Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Verify Node3 presents
 		waitForTextPresent(FIRST_NODE);
@@ -175,7 +173,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 
 		//Click on Edit Navigation of Intranet
 		info("----- Click on Edit Navigation of INTRANET");
-		click(EDIT_INT_NAVIGATION);
+		click(EDIT_MOBILE_NAVIGATION);
 
 		//Add Node4
 		info("-----Add Node4");
@@ -187,7 +185,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 
 		//Click on Edit Navigation of Intranet
 		info("-----Click on Edit Navigation of INTRANET");
-		click(EDIT_INT_NAVIGATION);
+		click(EDIT_MOBILE_NAVIGATION);
 		pause(1000);
 
 		//Verify Node4 presents
@@ -196,18 +194,18 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		//Close Navigation Management screen
 		click(CLOSE_NAVIGATION);
 
-		//Click on Edit Navigation of ACME
-		info("-----Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("-----Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		info("---Can't Copy Node3 to Node4");
 
-		copyNode(By.xpath("//a[text()='" + FIRST_NODE +"']"));
+		copyNode(By.xpath("//a[@title='" + FIRST_NODE +"']"));
 		click(CLOSE_NAVIGATION);
 
 		//Click on Edit Navigation of Intranet
 		info("-----Click on Edit Navigation of INTRANET");
-		click(EDIT_INT_NAVIGATION);
+		click(EDIT_MOBILE_NAVIGATION);
 		pause(1000);
 
 		//Right click on Node4
@@ -222,15 +220,15 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 
 		//Delete Node4
 		info("-----Delete Node4");
-		deleteNode("intranet", SECOND_NODE, SECOND_NODE, true);
+		deleteNode("mobile", SECOND_NODE, SECOND_NODE, true);
 
-		//Click on Edit Navigation of ACME
-		info("-----Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("-----Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Delete Node3
 		info("---Delete Node3");
-		deleteNode("acme", FIRST_NODE, FIRST_NODE, true);
+		deleteNode("classic", FIRST_NODE, FIRST_NODE, true);
 		info("-END test02_CopyPasteNodeInDiffirentNavigation");
 	}
 
@@ -244,9 +242,9 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		info("---Goto Edit Navigation");
 		goToPortalSites();
 
-		//Click on Edit Navigation of acme
-		info("-----Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("-----Click on Edit Navigation of classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		info("---Add Test Data");
 
@@ -258,8 +256,8 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		addNode(ADD_NODE_BUTTON, NODE_NAME_TEXTBOX, FIRST_NODE);
 		pause(1000);
 
-		//Click on Edit Navigation of acme
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Verify Node5 presents
 		info("-----Verify Node5 present");
@@ -271,26 +269,26 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		SECOND_NODE = "Node6";
 		addNode(ADD_NODE_BUTTON, NODE_NAME_TEXTBOX, SECOND_NODE);
 
-		//Click on Edit Navigation of acme
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Verify Node6 presents
 		waitForTextPresent(SECOND_NODE);
 
 		info("---Copy Node5 to Node6");
 
-		copyNode(By.xpath("//a[text()='" + FIRST_NODE + "']"));
-		pasteNode(By.xpath("//a[text()='"+ SECOND_NODE +"']"));
+		copyNode(By.xpath("//a[@title='" + FIRST_NODE + "']"));
+		pasteNode(By.xpath("//a[@title='"+ SECOND_NODE +"']"));
 
 		//Save
 		save();
 		pause(500);
 
-		//Click on Edit Navigation of acme
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		click(EDIT_CLASSIC_NAVIGATION);
 
-		copyNode(By.xpath("//a[text()='" + FIRST_NODE + "']"));
-		pasteNode(By.xpath("//a[text()='"+ SECOND_NODE +"']"));
+		copyNode(By.xpath("//a[@title='" + FIRST_NODE + "']"));
+		pasteNode(By.xpath("//a[@title='"+ SECOND_NODE +"']"));
 
 		//Verify display message to notice that Node5 already existed
 		waitForTextPresent(SAME_PLACE_MESSAGE);
@@ -299,14 +297,14 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		info("---Delete Test Data");
 
 		//Delete Node5
-		deleteNode("acme", FIRST_NODE, FIRST_NODE, true);
+		deleteNode("classic", FIRST_NODE, FIRST_NODE, true);
 		pause(1000);
 
-		//Click on Edit Navigation of acme
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Delete Node6
-		deleteNode("acme", SECOND_NODE, SECOND_NODE, true);
+		deleteNode("classic", SECOND_NODE, SECOND_NODE, true);
 		pause(1000);
 
 		info("-END test03_CopyPasteNodesInSamePlace");
@@ -322,8 +320,8 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		info("---Goto Edit Navigation");
 		goToPortalSites();
 
-		//Click on Edit Navigation of acme
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Add Node7
 		waitForElementPresent(By.xpath(UP_LEVEL));
@@ -331,22 +329,22 @@ public class GateIn_PortalNavigation_EditNavigation_Node_CopyPaste extends GateI
 		FIRST_NODE = "Node7";
 		addNode(ADD_NODE_BUTTON, NODE_NAME_TEXTBOX, FIRST_NODE);
 
-		//Click on Edit Navigation of acme
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		click(EDIT_CLASSIC_NAVIGATION);
 
 		//Verify Node7 presents
 		waitForTextPresent(FIRST_NODE);
 
-		copyNode(By.xpath("//a[text()='" + FIRST_NODE + "']"));
-		pasteNode(By.xpath("//a[text()='"+ SECOND_NODE +"']"));
+		copyNode(By.xpath("//a[@title='" + FIRST_NODE + "']"));
+		pasteNode(By.xpath("//a[@title='"+ FIRST_NODE +"']"));
 		pause(1000);
 
 		//Verify display message to notice that The source and the destination must be different
-		waitForTextPresent(SAME_SOURCE_MESSAGE);
+		waitForTextPresent(MSG_SAME_SOURCE);
 		click(ELEMENT_OK_BUTTON);
 
 		//Delete Node7
-		deleteNode("acme", FIRST_NODE, FIRST_NODE, true);
+		deleteNode("classic", FIRST_NODE, FIRST_NODE, true);
 		pause(1000);
 
 		info("-END test04_CopyPasteNodeInSameSource");

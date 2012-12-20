@@ -27,14 +27,14 @@ public class PageManagement extends GateInBase {
 	public static By ELEMENT_OWNER_ID_INTRANET = By.xpath("//input[@id='ownerId' and @value='intranet']");
 		
 	//Message
-	public static String MESSAGE_DELETE_PAGE = "Are you sure to delete this page?";
+	public static String MESSAGE_DELETE_PAGE = "Do you want to delete this page?";
 	
 	//Add a new page in PageManagement
 	public static void addNewPageAtManagePages(PageType type, String pageName, String pageTitle, boolean publicMode, 
 			Map<String, String> permissions, String groupId, String membership ){
 
-		click(ELEMENT_ADD_PAGE_BUTTON);
-		waitForTextPresent("Page Settings");	
+		click(By.linkText("Add New Page"));
+		waitForTextPresent("Page Setting");	
 		switch (type){
 		case PORTAL:
 			select(ELEMENT_SELECT_OWNER_TYPE, "portal");

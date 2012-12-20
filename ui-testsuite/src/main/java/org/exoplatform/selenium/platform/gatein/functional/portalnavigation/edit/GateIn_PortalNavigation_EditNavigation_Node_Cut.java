@@ -25,27 +25,21 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 	/**
 	 * @param args
 	 */
-	String CURRENT_NAV = "intranet";
-	String CURRTENT_NODE = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Home");
+	String CURRENT_NAV = "classic";
+	String CURRENT_NODE = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Home");
 	String PAGE_NAME  = null; 
 	String PAGE_TITLE = null; 
 	By UP_LEVEL = By.xpath("//a[@title='Up Level']");
 
 	public WebElement element = null;
-	public String THE_SOURCE_DESTINATION_DIFFERENT ="The source and the destination must be different.";
-	public String NODE_NAME_EXISTS ="This node name already exists.";
 	
 	public void cutNode(String nodename) {
-		WebElement cutNode = waitForAndGetElement(By.linkText(nodename));
-		Actions action = new Actions(driver);
-		action.contextClick(cutNode).perform();
+		rightClickOnElement(ELEMENT_NODE_LINK.replace("${nodeLabel}",nodename));
 		waitForAndGetElement(By.partialLinkText("Cut Node")).click();
 	}
 
 	public void pasteNode(String nodename) {
-		WebElement pasteNode = waitForAndGetElement(By.linkText(nodename));
-		Actions action = new Actions(driver);
-		action.contextClick(pasteNode).perform();
+		rightClickOnElement(ELEMENT_NODE_LINK.replace("${nodeLabel}",nodename));
 		waitForAndGetElement(By.partialLinkText("Paste Node")).click();
 	}
 
@@ -60,19 +54,18 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 	// Cut Paste Node To Same Place
 	@Test
 	public void test05_CutPasteNodeToSamePlace () {
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		//Go to Portal navigation
 		info("Go to Poral naviagtion");
 		goToPortalSites();
 		
-		//Click Edit Navigation of intranet's portal
-		info("Go to Edit navigation of intranet");
+		//Click Edit Navigation of classic's portal
+		info("Go to Edit navigation of classic");
 		editNavigation(CURRENT_NAV);
 		
 		// Cut a node
 		info("Right click on a node");
-		rightClickOnElement(CURRTENT_NODE);
 		info("Cut a node");
 		cutNode("Home");
 		
@@ -80,7 +73,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 		info("Paste to same place");
 		pasteNode("Home");
 		//Show message
-		waitForTextPresent(THE_SOURCE_DESTINATION_DIFFERENT);
+		waitForMessage(MSG_SAME_SOURCE);
 		closeMessageDialog();
 		info("Close navigation form");
 		save();
@@ -93,46 +86,47 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 
 		Map<String, String> languages = new HashMap<String, String>();
 		languages.put("English", "");
-
+		PAGE_NAME = "CutPaste02";
+		PAGE_TITLE = "CutPaste02";
 		info("main program");	  
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		//Go to Portal navigation
 		info("Go to Poral naviagtion");
 		goToPortalSites();
 		
-		//Click Edit Navigation of intranet's portal
-		info("Go to Edit navigation of intranet");
+		//Click Edit Navigation of classic's portal
+		info("Go to Edit navigation of classic");
 		editNavigation(CURRENT_NAV);
 		
 		//Add new node
 		info("add new node");
-		addNodeForPortal("intranet", "Home", false, "PORNAV_14_04_002", true, languages, "PORNAV_14_04_002", PAGE_NAME, PAGE_TITLE, true, true);
-		editNavigation("intranet");
+		addNodeForPortal("classic", "Home", false, "PORNAV_14_04_002", true, languages, "PORNAV_14_04_002", PAGE_NAME, PAGE_TITLE, true, true);
+		editNavigation("classic");
 		
 		//Cut new node
-		info("Right click on new node");
-		rightClickOnElement(By.linkText("PORNAV_14_04_002"));
 		info("Cut node");
 		cutNode("PORNAV_14_04_002");
 		click(UP_LEVEL);   
 		
 		//Paste new node to new place
 		info("Paste to new place");
-		rightClickOnElement(By.linkText("Welcome"));
-		pasteNode("Welcome");
+		pasteNode("SiteMap");
 		save();
 		
 		//Delete new node
 		info("Delete node");
-		editNavigation("intranet");
-		deleteNode("intranet","Welcome","PORNAV_14_04_002",false);
+		editNavigation("classic");
+		deleteNode("classic","SiteMap","PORNAV_14_04_002",false);
 		
 		info("Verify node is deleted");
-		editNavigation("intranet");
+		editNavigation("classic");
 		waitForTextNotPresent("PORNAV_14_04_002");
 		save();
 		waitForTextPresent(CURRENT_NAV);
+		
+		goToManagePages();
+		deletePage(PageType.PORTAL, PAGE_TITLE);
 	}
 	
 	//Cut Paste Node To Same Place
@@ -141,46 +135,48 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 
 		Map<String, String> languages = new HashMap<String, String>();
 		languages.put("English", "");
+		PAGE_NAME="CutPaste01";
+		PAGE_TITLE="CutPaste01";
 		info("main program");	  
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		//Go to Portal navigation
 		info("Go to Poral naviagtion");
 		goToPortalSites();
 		
-		//Click Edit Navigation of intranet's portal
-		info("Go to Edit navigation of intranet");
+		//Click Edit Navigation of classic's portal
+		info("Go to Edit navigation of classic");
 		editNavigation(CURRENT_NAV);
 		
 		//Add new node
 		info("add new node");
-		addNodeForPortal("intranet", "Home", false, "PORNAV_14_04_001", true, languages, "PORNAV_14_04_001", PAGE_NAME, PAGE_TITLE, true, true);
-		editNavigation("intranet");
+		addNodeForPortal("classic", "Home", false, "PORNAV_14_04_001", true, languages, "PORNAV_14_04_001", PAGE_NAME, PAGE_TITLE, true, true);
+		editNavigation("classic");
 		
-		info("Right click on new node");
 		// Cut new node
-		rightClickOnElement(By.linkText("PORNAV_14_04_001"));
 		
 		info("Cut node");
 		cutNode("PORNAV_14_04_001");
 		
 		// Paste node to same place
 		info("Paste node");
-		rightClickOnElement(By.linkText("Home"));
 		
 		info("Paste to same place");
 		pasteNode("Home");
-		waitForTextPresent(NODE_NAME_EXISTS);
+		waitForMessage(MSG_ADD_SAME_NODE);
 		closeMessageDialog();
 		
 		info("Close navigation form");
 		info("Delete node");
 		//Delete node
-		deleteNode("intranet", "Home", "PORNAV_14_04_001", true);
-		editNavigation("intranet");
+		deleteNode("classic", "Home", "PORNAV_14_04_001", true);
+		editNavigation("classic");
 		waitForTextNotPresent("PORNAV_14_04_001");
 		save();
 		waitForTextPresent(CURRENT_NAV);
+		
+		goToManagePages();
+		deletePage(PageType.PORTAL, PAGE_TITLE);
 	}
 	
 	//Cut Paste Node Created Automatically By Add Page
@@ -190,11 +186,11 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 		String DISPLAY_NAME = "PORNAV_14_04_004";		
 		String LANGUAGE = "English";	
 		Map<String, String> PORTLET_IDS = new HashMap<String, String>();
-		PORTLET_IDS.put("Content/ContentListViewerPortlet","");
-		String CATEGORY_TITLE = "Content";
+		PORTLET_IDS.put("Administration/AccountPortlet","");
+		String CATEGORY_TITLE = "Administration";
 
 		info("main program");	  
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		//Add new page by wizard
 		goToAddPageEditor();
@@ -204,30 +200,30 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 		goToPortalSites();
 		info("Go to Edit navigation");
 		
-		// Click Edit navigation of intranet's portal
-		editNavigation("intranet");
+		// Click Edit navigation of classic's portal
+		editNavigation("classic");
 		
 		//Cut new node
-		info("Right click on new node");
-		rightClickOnElement(By.linkText("PORNAV_14_04_004"));
 		
 		info("Cut node");
 		cutNode("PORNAV_14_04_004");
 		
 		// Paste new node
 		info("Paste node");
-		rightClickOnElement(By.linkText("Welcome"));
 		
 		info("Paste new node ");
-		pasteNode("Welcome");
+		pasteNode("SiteMap");
 		
 		// Delete new node
 		info("Delete node");
-		deleteNode("intranet", "Home", "PORNAV_14_04_004", true);
-		editNavigation("intranet");
+		deleteNode("classic", "SiteMap", "PORNAV_14_04_004", true);
+		editNavigation("classic");
 		waitForTextNotPresent("PORNAV_14_04_004");
 		save();
 		waitForTextPresent(CURRENT_NAV);
+		
+		goToManagePages();
+		deletePage(PageType.PORTAL, NODE_NAME);
 	}
 	
 	@AfterMethod()

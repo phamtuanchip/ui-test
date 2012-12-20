@@ -16,6 +16,8 @@ import static org.exoplatform.selenium.gatein.ManageAccount.*;
 import static org.exoplatform.selenium.gatein.NavigationManagement.*;
 import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
 import static org.exoplatform.selenium.gatein.PageManagement.*;
+import static org.exoplatform.selenium.gatein.PageEditor.*;
+import static org.exoplatform.selenium.gatein.PortalManagement.*;
 
 /**
  *@author VuNA2
@@ -29,16 +31,14 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 	String ELEMENT_LANGUAGE = "English";
 	boolean EXTENDED_LABEL_MODE = true;
 	PageType ELEMENT_PAGE_TYPE = PageType.PORTAL;
-	String ELEMENT_CATEGORY_TITLE = "Content";
-	String ELEMENT_CURRENT_NAVIGATION = "intranet";
+	String ELEMENT_CATEGORY_TITLE = "Administration";
 	
-	By ELEMENT_NODE_PASTE_TO_NEW_PLACE = By.xpath(ELEMENT_NODE_LINK.replace("${nodeLabel}", "Forums"));
+	By ELEMENT_NODE_PASTE_TO_NEW_PLACE = By.xpath(ELEMENT_NODE_LINK.replace("${nodeLabel}", "SiteMap"));
 	String ELEMENT_COLLABORATION_CATEGORY = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", "Collaboration");
 	String ELEMENT_DELETE_PAGE = ELEMENT_PAGE_DELETE_ICON.replace("${page}", ELEMENT_NODE_NAME);
 	
 	By ELEMENT_APPLICATION_CALENDAR = By.id("Collaboration/Calendar");
 	By ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT = By.id("UIPage");
-	By ELEMENT_PORTAL_TOP_CONTAINER = By.id("PortalNavigationTopContainer");
 	By ELEMENT_INPUT_SEARCH_NAME = By.id("siteName");
 	
 	@BeforeMethod
@@ -62,7 +62,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 	public void test01_CheckCloneNodeDoesNotContainSubNode(){
 		By ELEMENT_CURRENT_NODE = By.xpath(ELEMENT_NODE_LINK.replace("${nodeLabel}", ELEMENT_NODE_NAME));
 		Map<String, String> ELEMENT_PORTLET_ID = new HashMap<String, String>();
-		ELEMENT_PORTLET_ID.put("Content/ContentListViewerPortlet","");
+		ELEMENT_PORTLET_ID.put("Administration/AccountPortlet","");
 		 
 		info("-- Start Case 01: Check Clone node does not contain sub node --");
 		signIn("root", "gtn");
@@ -73,7 +73,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 				         ELEMENT_CATEGORY_TITLE, ELEMENT_PORTLET_ID, EXTENDED_LABEL_MODE);
 		
 		goToPortalSites();
-		editNavigation(ELEMENT_CURRENT_NAVIGATION);
+		editNavigation(ELEMENT_CLASSIC_NAVIGATION);
 		
 		info("-- Clone Node --");
 		cloneNode(ELEMENT_CURRENT_NODE);
@@ -86,15 +86,15 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 		waitForTextPresent("Applications");
 		
 		//Change a page's content
-		click(ELEMENT_COLLABORATION_CATEGORY);
-		dragAndDropToObject(ELEMENT_APPLICATION_CALENDAR, ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT);
+		click(ELEMENT_ADMIN_CATEGORY);
+		dragAndDropToObject(ELEMENT_APPLICATION_REGISTRY, ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT);
 		click(ELEMENT_PAGE_FINISH_BUTTON);
 		save();
-		waitForTextPresent(ELEMENT_CURRENT_NAVIGATION);
+		waitForTextPresent(ELEMENT_CLASSIC_NAVIGATION);
 		
 		info("-- Check content of clone node's page --");
-		goToNodesPage("Forums", ELEMENT_NODE_NAME);
-		waitForTextPresent("Gadget Portlet");
+		goToNodesPage("SiteMap", ELEMENT_NODE_NAME);
+		waitForTextPresent("Add Category");
 		captureScreen("Case_01_Content_Clone_Node_Page");
 		
 		//Check content of original node's page
@@ -118,8 +118,8 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 		
 		info("-- Delete a node at Navigation Management --");
 		goToPortalSites();
-		deleteNode(ELEMENT_CURRENT_NAVIGATION, "Home", ELEMENT_NODE_NAME, true);
-		deleteNode(ELEMENT_CURRENT_NAVIGATION, "Forums", ELEMENT_NODE_NAME, false);
+		deleteNode(ELEMENT_CLASSIC_NAVIGATION, "Home", ELEMENT_NODE_NAME, true);
+		deleteNode(ELEMENT_CLASSIC_NAVIGATION, "SiteMap", ELEMENT_NODE_NAME, false);
 		
 		info("-- Finish Case 01: Sign Out --");
 		signOut();	
@@ -139,20 +139,20 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 		
 		goToPortalSites();
 		
-		addNodeForPortal(ELEMENT_CURRENT_NAVIGATION, "Home", false, "nodeNameTest196", true, 
+		addNodeForPortal(ELEMENT_CLASSIC_NAVIGATION, "Home", false, "nodeNameTest196", true, 
 			             languages, "", "pageNameTest1", "pageTitle1", true, true);
 			
-		addNodeForPortal(ELEMENT_CURRENT_NAVIGATION, "nodeNameTest196", false, "nodeNameTest2", true, 
+		addNodeForPortal(ELEMENT_CLASSIC_NAVIGATION, "nodeNameTest196", false, "nodeNameTest2", true, 
 	                     languages, "", "pageNameTest2", "pageTitle2", true, true);
         
-		editNavigation(ELEMENT_CURRENT_NAVIGATION);
+		editNavigation(ELEMENT_CLASSIC_NAVIGATION);
 		
 		info("-- Clone Node --");
 		By ELEMENT_CURRENT_NODE_CASE196 = By.xpath(ELEMENT_NODE_LINK.replace("${nodeLabel}", "nodeNameTest196"));
 		cloneNode(ELEMENT_CURRENT_NODE_CASE196);
 		pasteNode(ELEMENT_NODE_PASTE_TO_NEW_PLACE);
 		save();
-		waitForTextPresent(ELEMENT_CURRENT_NAVIGATION);
+		waitForTextPresent(ELEMENT_CLASSIC_NAVIGATION);
 		
 		info("-- Go to Page Management, check existing of pages has link to cloned nodes --");
 		goToManagePages();
@@ -175,8 +175,8 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 		
 		info("-- Delete a node at Navigation Management --");
 		goToPortalSites();
-		deleteNode(ELEMENT_CURRENT_NAVIGATION, "Home", "nodeNameTest196", true);
-		deleteNode(ELEMENT_CURRENT_NAVIGATION, "Forums", "nodeNameTest196", false);
+		deleteNode(ELEMENT_CLASSIC_NAVIGATION, "Home", "nodeNameTest196", true);
+		deleteNode(ELEMENT_CLASSIC_NAVIGATION, "SiteMap", "nodeNameTest196", false);
 		
 		info("-- Finish Case 02: Sign Out --");
 		signOut();			
@@ -194,24 +194,24 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 		goToPortalSites();
 		
 		info("-- Create new node does not link to any page --");
-		editNavigation(ELEMENT_CURRENT_NAVIGATION);
+		editNavigation(ELEMENT_CLASSIC_NAVIGATION);
 		click(ELEMENT_ADD_NODE_LINK);
 		
-		waitForTextPresent("Page Node Settings");
+		waitForTextPresent("Page Node Setting");
 		type(ELEMENT_INPUT_NAME, "nodeNameTest197", true);
 		save();
 		
 		waitForTextPresent("nodeNameTest197");
 		save();
-		waitForTextPresent(ELEMENT_CURRENT_NAVIGATION);
+		waitForTextPresent(ELEMENT_CLASSIC_NAVIGATION);
 		
-		editNavigation(ELEMENT_CURRENT_NAVIGATION);
+		editNavigation(ELEMENT_CLASSIC_NAVIGATION);
 		info("-- Right click on this node and select Clone Node --");
 		By ELEMENT_CURRENT_NODE_CASE197 = By.xpath(ELEMENT_NODE_LINK.replace("${nodeLabel}", "nodeNameTest197"));
 		cloneNode(ELEMENT_CURRENT_NODE_CASE197);
 		pasteNode(ELEMENT_NODE_PASTE_TO_NEW_PLACE);
 		save();
-		waitForTextPresent(ELEMENT_CURRENT_NAVIGATION);
+		waitForTextPresent(ELEMENT_CLASSIC_NAVIGATION);
 		
 		info("-- Go to Page Management: No new page is created --");
 		goToManagePages();
@@ -222,8 +222,8 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 		
 		info("-- Delete data after testing --");
 		goToPortalSites();
-		deleteNode(ELEMENT_CURRENT_NAVIGATION, "Home", "nodeNameTest197", true);
-		deleteNode(ELEMENT_CURRENT_NAVIGATION, "Forums", "nodeNameTest197", false);
+		deleteNode(ELEMENT_CLASSIC_NAVIGATION, "Home", "nodeNameTest197", true);
+		deleteNode(ELEMENT_CLASSIC_NAVIGATION, "SiteMap", "nodeNameTest197", false);
 		
 		info("-- Finish Case 03: Sign Out --");
 		signOut();		
@@ -239,9 +239,8 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Clone extends GateInBas
 	
 
 	public void goToNodesPage(String parentNode, String nodePageName){
-		mouseOver(ELEMENT_PORTAL_TOP_CONTAINER, true);
-	    mouseOver(ELEMENT_MYSITE, true);
-	    mouseOver(By.xpath("//a[text()='" + ELEMENT_CURRENT_NAVIGATION + "']"),true);
+	    mouseOver(ELEMENT_LINK_SITES, true);
+	    mouseOver(By.xpath("//a[text()='Classic']"),true);
 	    mouseOver(By.xpath("//a[text()= '" + parentNode + "']"),true);
 	    mouseOver(By.xpath("//a[text()= '" + nodePageName + "']"), true);
 		click(By.linkText(nodePageName));

@@ -27,8 +27,6 @@ public class GateInBase extends TestBase {
 	/*
 	 * Default Page - http://localhost:8080/portal/default/
 	 * */
-	public static final String ELEMENT_GO_TO_PORTAL = "//a[text()='Login to the ACME social intranet']";
-	public static final By ELEMENT_GO_TO_ACME = By.linkText("Login to the ACME website");
 	/*
 	 * Intranet
 	 * */
@@ -45,17 +43,18 @@ public class GateInBase extends TestBase {
 	 */
 
 	//My site
-	public static final By ELEMENT_MYSITE = By.linkText("My Sites");
-	public static final By ELEMENT_MYSITE_ACME = By.linkText("acme");
-	public static final By ELEMENT_OVERVIEW = By.linkText("Overview");
-	public static final By ELEMENT_NEWS = By.linkText("News");
-	public static final By ELEMENT_INTRANET_SITE_LINK = By.linkText("intranet");
+	public final static By ELEMENT_SITE_MENU = By.linkText("Site");
+	public final static By ELEMENT_CLASSIC_MENU = By.linkText("Classic");
+	public final static By ELEMENT_HOME_MENU = By.linkText("Home");
+	public final static By ELEMENT_LAYOUT_MENU = By.linkText("Edit Layout");
+	public final static By ELEMENT_ADD_PAGE_MENU = By.linkText("Add New Page");
+	public final static By ELEMENT_EDIT_PAGE_MENU = By.linkText("Edit Page");
 
 	// My spaces
 	// Dashboard
 
 	/* Edit */
-	public static final By ELEMENT_MENU_EDIT_LINK = By.linkText("Site Editor");
+	public static final By ELEMENT_MENU_EDIT = By.linkText("Site Editor");
 	//Content
 	public static final By ELEMENT_MENU_EDIT_CONTENT = By.xpath("//a[@class='ItemIcon QuickEditUnchecked']");
 	//Page
@@ -74,13 +73,15 @@ public class GateInBase extends TestBase {
 	public static final String ELEMENT_MENU_ORGANIZATION = "//a[text()='Organization']";
 	public static final String ELEMENT_MENU_STAFF = "//a[text()='New Staff']";
 	public static final String ELEMENT_MENU_USER_GROUPS = "//a[text()='Users and groups management']";
+	public static final By ELEMENT_MENU_ADMIN = By.linkText("Administration");
+	public static final By ELEMENT_MENU_MANAGE_PAGE = By.linkText("Page Management");
 	//Group > organization > users and groups management
 	public static final String ELEMENT_ICON_USER_SEARCH = "//a[@title='Quick Search']";
 	//Users
 	public static final String ELEMENT_LINK_USERS ="//a[text()='Users']";
 	public static final String ELEMENT_LINK_ADD_USERS="//a[text()='Add Users']";
 	//Application
-	public static By ELEMENT_APPLICATIONS_LINK = By.linkText("Applications");
+	public static By ELEMENT_APPLICATIONS_LINK = By.linkText("Application Registry");
 	//Content
 	public static final By ELEMENT_MENU_CONTENT_LINK = By.linkText("Content");
 	public static final By ELEMENT_MENU_SITE_EXPLORER = By.linkText("Sites Explorer");
@@ -89,7 +90,6 @@ public class GateInBase extends TestBase {
 	public static final String ELEMENT_LINK_PORTAL = "//a[text()='Portal']";
 	public static final String ELEMENT_LINK_PAGES   = "//a[text()='Pages']";
 	public static final String ELEMENT_LINK_SITES   = "//a[contains(text(),'Site')]";
-	public static final String ELEMENT_LINK_GROUP = "//a[text()='Group Sites']";
 	//Administration
 	//IDE
 	/* End Setting Icon*/
@@ -181,7 +181,7 @@ public class GateInBase extends TestBase {
 	public static final String ELEMENT_ADD_NEW_PORTAL_LINK = "//a[text()='Add New Portal']";	
 	public static final String ELEMENT_CHECKBOX_SHOW_INFO_BAR_BY_DEFAULT = "//input[@name='showInfobar']";
 	public static final String ELEMENT_PORTAL_IN_LIST = "//td[@class='Content']/div[@class='Label' and text()='${portalName}']";
-	public static final String ELEMENT_PORTAL_DELETE_ICON = "//div[@id='UISiteManagement']//table//tr/td/div[text()='${portalName}']/../../td[2]//a[@class='DeleteIcon']";
+	public static final String ELEMENT_PORTAL_DELETE_ICON = "//div[@id='UISiteManagement']//table//tr/td/div[text()='${portalName}']/../../td[3]//a[@class='DeleteIcon']";
 	public static final String ELEMENT_PORTAL_EDIT_ICON = "//td[@class='Content']/div[@class='Label' and text()='${portalName}']/../../td[3]/a[@class='EditNavIcon'][2]";
 	public static final String ELEMENT_EDIT_FIRST_PORTAL_CONFIG = "//div[@id='UISiteManagement']//a[@class='EditNavIcon'][2]";
 	public static final String ELEMENT_SWITCH_VIEW_MODE_PORTAL = "//a[text()='Switch View Mode']";
@@ -221,10 +221,11 @@ public class GateInBase extends TestBase {
 	public static final String ELEMENT_MESSAGE_DIALOG_CLOSE_ICON = "//div[contains(@class, 'UIPopupWindow') and contains(@style, 'visibility: visible')]//span[text()='Messages']/..//a[@class='CloseButton']";
 
 	/* Add New Page Form */
-	public static final String ELEMENT_CHECKBOX_MAX_WINDOWS = "//input[@id='showMaxWindow']";
-	public static final String ELEMENT_LINK_EDITOR = "//a[@class='EditorIcon TBIcon' and text() = 'Edit']";
+	public static final String ELEMENT_CHECKBOX_MAX_WINDOWS = "//input[@name='showMaxWindow']";
+	public static final String ELEMENT_LINK_EDITOR = "//a[@class='EditorIcon TBIcon' and text() = 'Site Editor']";
+	public static final String ELEMENT_LINK_GROUP_EDITOR= "//a[text()='Group Editor']";
 	public static final String ELEMENT_LINK_EDITOR_PAGE = "//a[text()='Page']";
-	public static final String ELEMENT_LINK_EDITOR_ADD_PAGE = "//a[text()='Add Page']";	
+	public static final String ELEMENT_LINK_EDITOR_ADD_PAGE = "//a[text()='Add New Page']";	
 	public static final String ELEMENT_INPUT_NODE_NAME = "//input[@id='pageName']";
 	public static final String ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE = "//input[@name='switchmode']";
 	public static final String ELEMENT_LINK_EDITOR_PAGE_LAYOUT="//a[@class='ItemIcon EditPageIcon' and text()='Layout']";
@@ -241,7 +242,7 @@ public class GateInBase extends TestBase {
 
 	//PortalNavigation - http://localhost:8080/portal/g/:platform:administrators/portalnavigation
 	public static final String ELEMENT_NODE_LINK = "//div[@id='UINavigationNodeSelector']//a[@title='${nodeLabel}']";
-	public static final String ELEMENT_EDIT_NAVIGATION = "//div[@class='Label' and text()='${navigation}']/../../td[2]//a[@class='EditNavIcon']";
+	public static final String ELEMENT_EDIT_NAVIGATION = "//div[@class='Label' and text()='${navigation}']/../../td[3]//a[text()='Edit Navigation']";
 	public static final String ELEMENT_ADD_NODE_LINK = "//a[text()='Add Node']";
 	public static final String ELEMENT_PAGE_SELECTOR_TAB = "//div[text()='Page Selector' and @class='MiddleTab']";
 	public static final String ELEMENT_INPUT_PAGE_NAME = "//input[@id='pageName']";
@@ -273,11 +274,13 @@ public class GateInBase extends TestBase {
 	public static final By ELEMENT_CLOSE_WINDOW = By.xpath("//a[@title='Close Window']");
 	public static final By ELEMENT_FINISH_ICON = By.xpath("//a[@title='Finish']"); //Finish editing portlet icon
 	public static final By ELEMENT_NEXT_BUTTON = By.linkText("Next");	
-	public static final By ELEMENT_ABORT_BUTTON = By.linkText("//a[text()='Abort']");
+	public static final By ELEMENT_ABORT_BUTTON = By.xpath("//div[@class='ActionBar']/div[@class='UIAction']/a[text()='Abort']");
 
 	/*Portlet in general*/
+
+	public static final By ELEMENT_EDIT_PORTLET_ACCOUNT = By.xpath("//div[contains(text(),'Account Portlet')]/../../../../..//a[contains(@title,'Edit Portlet')]");
+	public static final By ELEMENT_DELETE_PORTLET_ACCOUNT = By.xpath("//div[contains(text(),'Account Portlet')]/../../../../..//a[@title='Delete Portlet']");
 	public static final By ELEMENT_EDIT_PORTLET_ICON = By.xpath("//a[contains(@title,'Edit Portlet')]");
-	public static final By ELEMENT_DELETE_PORTLET_ICON = By.xpath("//a[@title='Delete Portlet']");
 	public static final By ELEMENT_PORTLET_CONTAINER = By.className("PortletLayoutDecorator");
 	public static final By ELEMENT_ABORTEDIT_BUTTON = By.xpath("//a[@title='Abort']");
 	//Edit portlet Form

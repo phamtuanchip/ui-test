@@ -2,7 +2,6 @@ package org.exoplatform.selenium.gatein;
 
 import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.gatein.ManageAccount.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,12 +22,12 @@ public class NavigationToolbar extends GateInBase {
 		info("--Go to Portal Site Management--");
 		//		waitForAndGetElement(By.xpath(ELEMENT_LINK_SETUP));
 		for(;;){
-			mouseOver(ELEMENT_LINK_SETUP, false);
+			mouseOver(ELEMENT_MENU_GROUP, false);
 			pause(500);
-			if (waitForAndGetElement(ELEMENT_LINK_PORTAL,15000,0)!=null) {	
-				mouseOver(ELEMENT_LINK_PORTAL, false);
-				if (waitForAndGetElement(ELEMENT_LINK_PAGES,15000,0)!=null){
-					click(ELEMENT_LINK_PAGES);
+			if (waitForAndGetElement(ELEMENT_MENU_ADMIN,15000,0)!=null) {	
+				mouseOver(ELEMENT_MENU_ADMIN, false);
+				if (waitForAndGetElement(ELEMENT_MENU_MANAGE_PAGE,15000,0)!=null){
+					click(ELEMENT_MENU_MANAGE_PAGE);
 					break;
 				}
 			}
@@ -61,15 +60,8 @@ public class NavigationToolbar extends GateInBase {
 
 	//Go to Portal/Group Sites
 	public static void goToGroupSites(){
-		info("--Go to Portal Site Management--");
-		waitForAndGetElement(By.xpath(ELEMENT_LINK_SETUP));
-		mouseOver(ELEMENT_LINK_SETUP, false);
-		pause(500);
-		mouseOver(ELEMENT_LINK_PORTAL, false);
-		pause(500);
-		WebElement element;
-		element = waitForAndGetElement(ELEMENT_LINK_GROUP);
-		actions.moveToElement(element).click(element).build().perform();
+		info("--Go to Group Site Management--");
+		click(ELEMENT_MENU_GROUP);
 		pause(500);
 	}
 
@@ -78,12 +70,22 @@ public class NavigationToolbar extends GateInBase {
 		waitForAndGetElement(By.xpath(ELEMENT_LINK_EDITOR));
 		mouseOver(ELEMENT_LINK_EDITOR, true);
 		pause(500);
-		mouseOver(ELEMENT_LINK_EDITOR_PAGE, true);
-		pause(500);
-		WebElement element = waitForAndGetElement(ELEMENT_LINK_EDITOR_ADD_PAGE);
-		actions.moveToElement(element).click(element).build().perform();
+		
+		click(ELEMENT_ADD_PAGE_MENU);
 		pause(500);
 	}
+	/**
+	 * @author thuntn
+	 */
+	//Go to add page locator with Editor
+		public static void goToAddPageGroupEditor(){
+			waitForAndGetElement(By.xpath(ELEMENT_LINK_GROUP_EDITOR));
+			mouseOver(ELEMENT_LINK_GROUP_EDITOR, true);
+			pause(500);
+			
+			click(ELEMENT_ADD_PAGE_MENU);
+			pause(500);
+		}
 /**
  * @update by thuntn for gatein
  */
@@ -91,23 +93,25 @@ public class NavigationToolbar extends GateInBase {
 		info("--Go to Users and groups management--");
 		goToPage(ELEMENT_ICON_USER_SEARCH,ELEMENT_MENU_GROUP,ELEMENT_MENU_ORGANIZATION,ELEMENT_MENU_USER_GROUPS);
 	}
-
+	/**
+	 * @update: thuntn
+	 */
 	//Go to Portal Application Registry
 	public static void goToApplicationRegistry() {
 		info("--Go to Portal Application Registry--");
-		mouseOver(ELEMENT_LINK_SETUP, false);
+		mouseOver(ELEMENT_MENU_GROUP, false);
 		pause(500);
-		waitForElementPresent(ELEMENT_APPLICATIONS_LINK);
+		mouseOver(ELEMENT_MENU_ADMIN,true);
 		click(ELEMENT_APPLICATIONS_LINK);
 		pause(500);
 	}
 
 	public static void goToEditPageEditor () {
 		info("----Go to Edit page editor----");
-		mouseOver(ELEMENT_MENU_EDIT_LINK,false);
+		mouseOver(ELEMENT_MENU_EDIT,false);
 		pause(500);
 		
-		click(ELEMENT_MENU_EDIT_LAYOUT);
+		click(ELEMENT_EDIT_PAGE_MENU);
 		pause(500);
 	}
 	/**

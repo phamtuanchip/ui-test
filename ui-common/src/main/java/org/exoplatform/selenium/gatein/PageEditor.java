@@ -7,15 +7,19 @@ public class PageEditor extends GateInBase {
 	/** 
 		Page Creation Wizard: Select a Navigation Node and create the Page 
 	**/
-	public static String PORTAL_MANAGEMENT_LINK = "//a[@title='Portal Administration']";
-	public static String APPLICATION_MANAGER_LINK = "//a[@title='Application Manager']";
-	public static String PAGE_MANAGER_LINK = "//a[@title='Page Manager']";
-	public static String ADD_USERS_LINK = "//a[@title='Add Users']";
+	public static String SITE_EXPORT_IMPORT_LINK = "//div[@class='NullItemIcon']/a[@title='Site Export/Import']";
+	public static String SERVICE_MANAGEMENT_LINK = "//div[@class='NullItemIcon']/a[@title='Services Management']";
+	public static String PAGE_MANAGER_LINK = "//div[@class='NullItemIcon']/a[@title='Page Management']";
+	public static String ADMIN_LINK = "//a[@title='Administration']";
 	public static String USERS_GROUP_MANAGER_LINK = "//a[@title='User and Group Manager']";
 	public static String UP_LEVEL_ICON = "//a[@title='Up Level']";
 	public static String DEFAULT_NODE = "//div[contains(text(),'/default')]";
 	public static String NODE_NAME_INPUT = "//input[@id='pageName']";
-	
+	public static By ELEMENT_APPLICATION_REGISTRY_CREATE=By.xpath("//div[@class='NullItemIcon']/a[@title='Application Registry']");
+	//Page editor - Edit inline composer
+	public static final String ELEMENT_ADMIN_CATEGORY = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", "Administration");
+	public static final By ELEMENT_APPLICATION_NEW_ACCOUNT = By.xpath("//div[@title='New Account']");
+	public static final By ELEMENT_APPLICATION_REGISTRY = By.id("Administration/ApplicationRegistryPortlet");
 	/* Page Editor - View Page Properties*/
 	//View Page Properties form -> PlatformBase/Permission setting tab
 	public static By ELEMENT_VIEW_PAGE_PROPERTIES = By.xpath("//a[text()='View Page properties']");

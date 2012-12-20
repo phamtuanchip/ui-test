@@ -1,5 +1,8 @@
 package org.exoplatform.selenium.platform.gatein.functional.portalnavigation.edit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.exoplatform.selenium.gatein.GateInBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -10,22 +13,19 @@ import org.testng.annotations.Test;
 import static org.exoplatform.selenium.TestLogger.*;
 import static org.exoplatform.selenium.gatein.ManageAccount.*;
 import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
+import static org.exoplatform.selenium.gatein.NavigationManagement.*;
 
 public class GateIn_PortalNavigation_EditNavigation_Node_Move extends GateInBase
 {
-	public String EDIT_ACME_NAVIGATION = "//div[text()='acme']/following::a[text()='Edit Navigation']";
+	public String EDIT_classic_NAVIGATION = "//div[text()='classic']/following::a[text()='Edit Navigation']";
 	public String MOVE_UP_LINK = "Move Up";
 	public String MOVE_DOWN_LINK = "Move Down";
-	public String OVERVIEW = "//a[contains(text(),'Overview')]";
-	public String ACCOUNT = "//a[contains(text(),'New Account')]";
-	public String PRODUCTS = "//a[contains(text(),'Products')]";
-	public String QUESTIONS = "//a[contains(text(),'Questions?')]";
-	public String OVERVIEW_POSITION = "//div[2]/div/a";
-	public String ACCOUNT_POSITION = "//div[7]/div/a";
-	public String PRODUCTS_OLD_POSITION = "//div[4]/div/a";
-	public String PRODUCTS_NEW_POSITION = "//div[2]/div/div/div[3]/div/a";
-	public String QUESTIONS_OLD_POSITION = "//div[5]/div/a";
-	public String QUESTIONS_NEW_POSITION = "//div[6]/div/a";
+	public String HOME_POSITION = "//div[2]/div/a";
+	public String NOT_FOUND_POSITION = "//div[7]/div/a";
+	public String SITEMAP_OLD_POSITION = "//div[3]/div/a[contains(text(),'SiteMap')]";
+	public String SITEMAP_NEW_POSITION = "//div[2]/div/a";
+	public String REGISTER_OLD_POSITION = "//div[6]/div/a";
+	public String REGISTER_NEW_POSITION = "//div[7]/div/a";
 	
 	@BeforeMethod()
 	public void beforeTest()
@@ -33,98 +33,97 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Move extends GateInBase
 		initSeleniumTest();
 		driver.get(baseUrl);
 		actions = new Actions(driver);
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 	
 	//Change order of node in case Move Up or Move Down
 	@Test()
 	public void test01_ChangeNodeOrder()
-	{
+	{	
+		String nodeHome = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Home");
+		String nodeSite = ELEMENT_NODE_LINK.replace("${nodeLabel}", "SiteMap");
+		String nodeNotFound = ELEMENT_NODE_LINK.replace("${nodeLabel}", "NotFound");
+		String nodeRegister = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Register");
+		
+		Map<String, String> languages = new HashMap<String, String>();
+		languages.put("English", "");
 		info("-START test01_ChangeNodeOrder");
 		
 		//Goto Edit Navigation
 		info("---Goto Edit Navigation");
 		goToPortalSites();
 		
-		//Click on Edit Navigation of acme
-		info("---Click on Edit Navigation of ACME");
-		click(EDIT_ACME_NAVIGATION);
+		//Click on Edit Navigation of classic
+		info("---Click on Edit Navigation of Classic");
+		click(EDIT_CLASSIC_NAVIGATION);
 		
 		info("---Verify can't Move Up order of first node");
 		
-		//Verify position of node OVERVIEW 
-		info("-----Verify position of node OVERVIEW before Move Up");
-		waitForElementPresent(OVERVIEW_POSITION);
-		assert isElementPresent(OVERVIEW_POSITION):"Get position of Overview failed";
+		//Verify position of node Home 
+		info("-----Verify position of node Home before Move Up");
+		waitForElementPresent(HOME_POSITION);
 		
-		info("-----Click on Move Up item of node OVERVIEW");
-		//Right click on node OVERVIEW
-		rightClickOnElement(OVERVIEW);
+		info("-----Click on Move Up item of node Home");
+		//Right click on node Home
+		rightClickOnElement(nodeHome);
 		
 		//Click on Move Up item
 		click(By.linkText(MOVE_UP_LINK));
 		
-		//Verify nothing happens ~ position of node OVERVIEW is not changed
-		info("-----Verify position of node OVERVIEW is not changed after Move Up");
-		waitForElementPresent(OVERVIEW_POSITION);
-		assert isElementPresent(OVERVIEW_POSITION):"Get position of Overview failed";
-		
+		//Verify nothing happens ~ position of node Home is not changed
+		info("-----Verify position of node Home is not changed after Move Up");
+		waitForElementPresent(HOME_POSITION);
+				
 		info("---Verify can't Move Down order of last node");
 		
 		//Verify position of node ACCOUNT 
 		info("-----Verify position of node NEW ACCOUNT before Move Down");
-		waitForElementPresent(ACCOUNT_POSITION);
-		assert isElementPresent(ACCOUNT_POSITION):"Get position of New Account failed";
+		waitForElementPresent(NOT_FOUND_POSITION);
 		
 		info("-----Click on Move Down of node NEW ACCOUNT");
 		//Right click on node
-		rightClickOnElement(ACCOUNT);
+		rightClickOnElement(nodeNotFound);
 		
 		//Click on Move Down item
 		click(By.linkText(MOVE_DOWN_LINK));
 		
 		//Verify nothing happens ~ position of node New ACCOUNT is not changed
-		info("-----Verify position of node NEW ACCOUNT is not changed after Moving Down");
-		waitForElementPresent(ACCOUNT_POSITION);
-		assert isElementPresent(ACCOUNT_POSITION):"Get position of New Account failed";
+		info("-----Verify position of node site map is not changed after Moving Down");
+		waitForElementPresent(NOT_FOUND_POSITION);
 		
 		info("---Verify can Move Up node is not first node");
 		
-		//Verify position of node PRODUCTS
-		info("-----Verify position of node PRODUCTS before Moving Up");
-		waitForElementPresent(PRODUCTS_OLD_POSITION);
-		assert isElementPresent(PRODUCTS_OLD_POSITION):"Get position of Products before Moving Up failed";
+		//Verify position of node SiteMap
+		info("-----Verify position of node SiteMap before Moving Up");
+		waitForElementPresent(SITEMAP_OLD_POSITION);
 		
-		info("-----Click on Move Up item of node PRODUCTS");
-		//Right click on node PRODUCTS
-		rightClickOnElement(PRODUCTS);
+		info("-----Click on Move Up item of node SiteMap");
+		//Right click on node SiteMap
+		rightClickOnElement(nodeSite);
 		
-		//Click on Move Up item of node PRODUCTS
+		//Click on Move Up item of node SiteMap
 		click(By.linkText(MOVE_UP_LINK));
 		
-		//Verify position of PRODUCTS is changed
-		info("-----Verify position of node PRODUCTS is changed after Moving Up");
-		waitForElementPresent(PRODUCTS_NEW_POSITION);
-		assert isElementPresent(PRODUCTS_NEW_POSITION):"Get position of Products after Move Up failed";
+		//Verify position of SiteMap is changed
+		info("-----Verify position of node SiteMap is changed after Moving Up");
+		waitForElementPresent(SITEMAP_NEW_POSITION);
 		
 		info("---Verify can Move Down node which is not last node");
 		
-		//Verify position of node QUESTIONS?
-		info("-----Verify position of node QUESTIONS? before Moving Down");
-		waitForElementPresent(QUESTIONS_OLD_POSITION);
-		assert isElementPresent(QUESTIONS_OLD_POSITION):"Get position of Questions before Moving Down failed";
+		//Verify position of node Register
+		info("-----Verify position of node Register before Moving Down");
+		waitForElementPresent(REGISTER_OLD_POSITION);
 		
-		info("-----Click on Move Down item of node QUESTIONS?");
-		//Right click on node QUESTIONS?
-		rightClickOnElement(QUESTIONS);
+		info("-----Click on Move Down item of node Register");
+		//Right click on node Register
+		rightClickOnElement(nodeRegister);
 		
-		//Click on Move Down item of node QUESTIONS?
+		//Click on Move Down item of node Register
 		click(By.linkText(MOVE_DOWN_LINK));
 		
-		//Verify position of QUESTIONS? is changed
-		info("-----Verify position of node QUESTIONS? is changed after Moving Down");
-		waitForElementPresent(QUESTIONS_NEW_POSITION);
-		assert isElementPresent(QUESTIONS_NEW_POSITION):"Get position of Questions after Moving Down failed";
+		//Verify position of Register is changed
+		info("-----Verify position of node Register is changed after Moving Down");
+		waitForElementPresent(REGISTER_NEW_POSITION);
 		
 		info("-END test01_ChangeNodeOrder");
 	}

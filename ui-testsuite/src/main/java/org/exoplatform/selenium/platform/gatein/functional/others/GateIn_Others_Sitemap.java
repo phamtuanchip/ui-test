@@ -51,30 +51,26 @@ public class GateIn_Others_Sitemap extends ManageAccount {
 		Map<String, String> portletIds = new HashMap<String, String>();
 		portletIds.put("Navigation/local._web.SiteMapPortlet", "");
 		By SITEMAP_PORTLET = By.className("UIRowContainer");
-		By ELEMNT_FORUMS_LINK = By.linkText("Forums");
-		By ELEMENT_FORUM_ACTION_BAR = By.id("UIForumActionBar");
-		
-		signIn("john", "gtn");
-		showImportApplication(true);
-			
+		signIn("root", "gtn");
+		goToApplicationRegistry();
 		info("Import all apps");
 		click(ELEMENT_IMPORT_APPLICATION);
-		waitForConfirmation("This will automatically import all gadgets and portlets into new categories.");
+		waitForConfirmation("This action will automatically create categories and import all the gadgets and portlets on it.");
 		pause(2000);
 		
 		info("Add page");
-		goToAddPageEditor();
+		goToAddPageGroupEditor();
 		
 		info("Add new page");
 		addNewPageEditor(DATA_NODE_NAME, DATA_NODE_NAME, DATA_LANGUAGE, DATA_CATEGORY_TITLE, portletIds, true);
 		waitForElementPresent(SITEMAP_PORTLET);
 		
 		info("Click on a page");
-		click(ELEMNT_FORUMS_LINK);
+		click(By.xpath("//div[@class='ClearFix']/a[text()='Home']"));
 		pause(1000);
 		
 		info("Verify home page is displayed");
-		waitForElementPresent(ELEMENT_FORUM_ACTION_BAR);
+		waitForElementPresent("//div[@class='HomeIcon FL BCHome16x16Icon']");
 		
 		/*----Reset data-------*/
 		
@@ -82,8 +78,7 @@ public class GateIn_Others_Sitemap extends ManageAccount {
 		goToManagePages();
 		deletePage(PageType.GROUP,DATA_NODE_NAME);
 		goToGroupSites();
-		deleteNode("Administration", "Application Manager", DATA_NODE_NAME, false);
-		showImportApplication(false);
+		deleteNode("Administrators", "Application Registry", DATA_NODE_NAME, false);
 		
 	}
 }

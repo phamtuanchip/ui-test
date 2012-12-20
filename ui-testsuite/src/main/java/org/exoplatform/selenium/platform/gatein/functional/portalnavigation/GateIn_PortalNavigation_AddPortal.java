@@ -14,8 +14,8 @@ import static org.exoplatform.selenium.gatein.PortalManagement.*;
 
 public class GateIn_PortalNavigation_AddPortal extends GateInBase{
 	
-	String MESSAGE_PORTAL_NAME_REQUIRED = "The field \"Portal Name:\" is required." ;
-	String MESSAGE_PORTAL_NAME_SPECIAL_CHARACTERS = "The field \"Portal Name:\" must start with a character and must not contain special characters.";
+	String MESSAGE_PORTAL_NAME_REQUIRED = "The field \"Portal Name\" is required." ;
+	String MESSAGE_PORTAL_NAME_SPECIAL_CHARACTERS = "The \"Portal Name\" field must start with a letter and must not contain special characters.";
 	String MESSAGE_PORTAL_NAME_EXISTS = "This portal name already exists.";
 	
 	@BeforeMethod
@@ -44,7 +44,7 @@ public class GateIn_PortalNavigation_AddPortal extends GateInBase{
 		String portalSession = "On Demand";
 	    boolean publicMode = true;
 	    Map<String, String> permissions = null;   
-	    String groupId    = "Platform/Administration"; 
+	    String groupId    = "Platform/Administrators"; 
 	    String membership = "manager" ;
 		
 		signIn("root", "gtn");
@@ -72,7 +72,7 @@ public class GateIn_PortalNavigation_AddPortal extends GateInBase{
 		String portalSession = "On Demand";
 	    boolean publicMode = true;
 	    Map<String, String> permissions = null;   
-	    String groupId    = "Platform/Administration"; 
+	    String groupId    = "Platform/Administrators"; 
 	    String membership = "manager" ;
 		
 		signIn("root", "gtn");
@@ -99,7 +99,7 @@ public class GateIn_PortalNavigation_AddPortal extends GateInBase{
 		String portalSession = "On Demand";
 	    boolean publicMode = true;
 	    Map<String, String> permissions = null;   
-	    String groupId    = "Platform/Administration"; 
+	    String groupId    = "Platform/Administrators"; 
 	    String membership = "manager" ;
 		
 		signIn("root", "gtn");
@@ -125,7 +125,7 @@ public class GateIn_PortalNavigation_AddPortal extends GateInBase{
 		String portalSession = "On Demand";
 	    boolean publicMode = true;
 	    Map<String, String> permissions = null;   
-	    String groupId    = "Platform/Administration"; 
+	    String groupId    = "Platform/Administrators"; 
 	    String membership = "manager" ;
 		
 		signIn("root", "gtn");
@@ -159,7 +159,7 @@ public class GateIn_PortalNavigation_AddPortal extends GateInBase{
 		String portalSession = "On Demand";
 	    boolean publicMode = true;
 	    Map<String, String> permissions = null;   
-	    String groupId    = "Platform/Administration"; 
+	    String groupId    = "Platform/Administrators"; 
 	    String membership = "manager" ;
 		
 		signIn("root", "gtn");

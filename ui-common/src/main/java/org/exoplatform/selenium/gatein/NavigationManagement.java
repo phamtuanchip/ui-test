@@ -9,7 +9,15 @@ import org.openqa.selenium.By;
 public class NavigationManagement extends GateInBase {
 	public static final By ELEMENT_INPUT_POPUP_SEARCH_TITLE = By.xpath("//div[@class='QuickSet']/input[@id='pageTitle']"); 
 	public static final By ELEMENT_SELECT_PAGE = By.xpath("//div[@id='UIRepeater']//table//tbody/tr/td[5]/div[@class='ActionContainer']/img");
-
+	public static final String MSG_DELETE_NODE = "Are you sure you want to delete this node?";
+	public static final String MSG_ADD_SAME_NODE = "This node name already exists."; 
+	public static final String MSG_ADD_SAME_PAGE = "This page name already exists.";
+	public static final String MSG_SAME_SOURCE = "The source and the destination must be different.";
+	public static final By ELEMENT_NAVIGATION_CLASSIC_HOME = By.xpath("//a[@class='NodeIcon DefaultPageIcon NodeSelected' and @title='Home']");
+	public static final By ELEMENT_NAVIGATION_CLASSIC_SITEMAP = By.xpath("//a[contains(@class,'NodeIcon DefaultPageIcon') and @title='SiteMap']");
+	public static final String EDIT_CLASSIC_NAVIGATION = "//div[text()='classic']/../..//a[text()='Edit Navigation']";
+	public static final String EDIT_MOBILE_NAVIGATION = "//div[text()='mobile']/../..//a[text()='Edit Navigation']";
+	
 	// Add a node for portal at portal navigation
 	public static void addNodeForPortal(String currentNavigation, String currentNodeLabel, boolean useAddNodeLink, String nodeName, boolean extendedLabelMode,
 			Map<String, String> languages, String nodeLabel, String pageName, String pageTitle, boolean verifyPage, boolean verifyNode){
@@ -33,7 +41,7 @@ public class NavigationManagement extends GateInBase {
 				click(ELEMENT_NODE_ADD_NEW);
 			}	
 		}
-		waitForTextPresent("Page Node Settings");
+		waitForTextPresent("Page Node Setting");
 		type(ELEMENT_INPUT_NAME, nodeName, true);
 
 		if (extendedLabelMode) {
@@ -131,16 +139,16 @@ public class NavigationManagement extends GateInBase {
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_NODE_DELETE);
-			waitForConfirmation("Are you sure to delete this node?");
-			waitForTextNotPresent(nodeName);
+			waitForConfirmation(MSG_DELETE_NODE);
+			waitForElementNotPresent(currentNodeName);
 			save();		
 		}else {
 			click(currentNodeHome);
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
 			click(ELEMENT_NODE_DELETE);
-			waitForConfirmation("Are you sure to delete this node?");
-			waitForTextNotPresent(nodeName);
+			waitForConfirmation(MSG_DELETE_NODE);
+			waitForTextNotPresent(currentNodeName);
 			save();		
 		}
 		waitForTextNotPresent("Navigation Management");

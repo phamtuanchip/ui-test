@@ -48,8 +48,8 @@ public class GateIn_PortalNavigation_DeletePortal extends GateInBase{
 		String portalSession = "On Demand";
 		//boolean publicMode = true;
 		Map<String, String> permission = new HashMap<String, String>();
-	    permission.put("Platform/Administration", "member");  
-	    String editGroupId = "Platform/Administration"; 
+	    permission.put("Platform/Administrators", "member");  
+	    String editGroupId = "Platform/Administrators"; 
 	    String editMembership = "manager" ;
 		
 	    info("-- Case 02: Delete portal by legal user --");
@@ -61,16 +61,16 @@ public class GateIn_PortalNavigation_DeletePortal extends GateInBase{
 		info("-- Step 1: create a new portal --");
 		addNewPortal(portalName, portalLocale, portalSkin,portalSession, 
 						false, permission, editGroupId, editMembership);
-		
-		info("-- Step 2: Check existing portals use list");
-		waitForTextPresent(portalName);
-		hoverMySites();
 		signOut();
 		
 		info("-- Step 3: Delete portal --");
-		driver.get(baseUrl);
 		signIn("root", "gtn");
 		goToPortalSites();
+		info("-- Step 2: Check existing portals use list");
+		waitForTextPresent(portalName);
+		hoverMySites();
+		
+		
 		deletePortal(portalName);
 //		waitForTextNotPresent(portalName);
 		
@@ -80,11 +80,7 @@ public class GateIn_PortalNavigation_DeletePortal extends GateInBase{
 	
 	/*-- Auxiliary functions --*/
 	public void hoverMySites(){
-		mouseOver(ELEMENT_PORTAL_TOP_CONTAINER, true);
-		mouseOver(ELEMENT_HOME_LINK, true);
-		click(ELEMENT_HOME_LINK);
-		waitForTextPresent("John Smith");
-		mouseOver(ELEMENT_MYSITE, true);
-	    waitForTextPresent(portalName);
+		mouseOver(ELEMENT_SITE_MENU, true);
+	    waitForElementPresent(By.linkText(portalName));
 	}
 }
