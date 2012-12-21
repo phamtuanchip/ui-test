@@ -42,14 +42,13 @@ public class GateIn_LogInOut extends GateInBase{
 		
 		//Sign in as Jack Miller
 		signIn("demo", "gtn");
-		waitForTextPresent("Jack Miller");
+		waitForTextPresent("Demo gtn");
 		waitForTextNotPresent("Edit");
 		signOut();
 		
 		//Sign in as Mary
-		driver.get(baseUrl);
 		signIn("mary", "gtn");
-		waitForTextPresent("Mary Williams");
+		waitForTextPresent("Mary Kelly");
 		waitForTextNotPresent("Edit");
 		signOut();	
 	}
@@ -61,7 +60,6 @@ public class GateIn_LogInOut extends GateInBase{
 		signIn("root","");
 		waitForTextPresent(MESSAGE_FAILED);
 		driver.get(baseUrl);
-		
 		info("--Sign in with blank username");
 		signIn("","gtn");
 		waitForTextPresent(MESSAGE_FAILED);	

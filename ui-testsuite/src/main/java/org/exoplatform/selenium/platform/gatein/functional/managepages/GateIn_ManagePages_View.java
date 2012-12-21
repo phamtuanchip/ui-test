@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.exoplatform.selenium.gatein.GateInBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -21,7 +20,7 @@ import static org.exoplatform.selenium.gatein.PageManagement.*;
 public class GateIn_ManagePages_View extends GateInBase{
 	/*-- Data for test case --*/
     By ELEMENT_PORTAL_TOP_CONTAINER = By.id("PortalNavigationTopContainer");
-	String ELEMENT_CURRENT_NAVIGATION = "intranet";
+	String ELEMENT_CURRENT_NAVIGATION = "classic";
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
@@ -46,12 +45,12 @@ public class GateIn_ManagePages_View extends GateInBase{
 		String pageTitle = "demoPage";
 	   	 boolean publicMode = true;
 	    	Map<String, String> permissions = null;   
-	    	String groupId = "Platform/Administration"; 
+	    	String groupId = "Platform/Administrators"; 
 	    	String membership = "manager";
 	    
 		info("-- Starting Case 09: Check displaying page created in pages management --");
 		
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		info("-- Step 1: Show pages list --");
 		goToManagePages();
@@ -62,7 +61,6 @@ public class GateIn_ManagePages_View extends GateInBase{
 		
 		info("-- Step 3: View created page from navigation --");
 		signOut();
-		driver.get(baseUrl);
 		signIn("root", "gtn");
 		goToMySitesAndVerifyPage(pageName);
 		
@@ -84,20 +82,12 @@ public class GateIn_ManagePages_View extends GateInBase{
 	
 	/*-- Auxiliary functions --*/
 	public boolean goToMySitesAndVerifyPage(String pageName){
-		WebElement element = driver.findElement(ELEMENT_PORTAL_TOP_CONTAINER);
-		actions.moveToElement(element).build().perform();
-		mouseOver(ELEMENT_MYSITE, true);
-	    	waitForTextPresent(ELEMENT_CURRENT_NAVIGATION);
-	    	mouseOver(By.linkText(ELEMENT_CURRENT_NAVIGATION), true);
+		mouseOver(ELEMENT_SITE_MENU, true);
+	    	waitForTextPresent("Classic");
+	    	mouseOver(By.linkText("Classic"), true);
 	    	mouseOver(By.linkText("Home"), true);
 	    	waitForTextNotPresent(pageName);
-	    	mouseOver(By.linkText("Forums"), true);
-	    	waitForTextNotPresent(pageName);
-	    	mouseOver(By.linkText("Calendar"), true);
-	    	waitForTextNotPresent(pageName);
-	    	mouseOver(By.linkText("Documents"), true);
-	    	waitForTextNotPresent(pageName);
-	    	mouseOver(By.linkText("Wiki"), true);
+	    	mouseOver(By.linkText("SiteMap"),true);
 	    	waitForTextNotPresent(pageName);
 	    	return false; 
 	}

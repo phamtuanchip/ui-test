@@ -2,6 +2,7 @@ package org.exoplatform.selenium.platform.gatein.functional.groupnavigation;
 
 import static org.exoplatform.selenium.gatein.ManageAccount.*;
 import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
+import static org.exoplatform.selenium.gatein.NavigationManagement.*;
 
 import org.exoplatform.selenium.gatein.GateInBase;
 import org.openqa.selenium.By;
@@ -17,16 +18,15 @@ import org.testng.annotations.Test;
 public class GateIn_GroupNavigation_Node_CopyPaste extends GateInBase
 {
 	//Define data
-	public By CONTENT_EDIT_NAVI_LINK = By.xpath("//td/div[text()='Content Management']/ancestor::tr/td/a[text()='Edit Navigation']");
-	public By ADMIN_EDIT_PROPERTIES_LINK = By.xpath("//td/div[text()='Administration']/ancestor::tr/td/a[text()='Edit Navigation']");
+	public By ADMIN_EDIT_NAVI_LINK = By.xpath("//td/div[text()='Administrators']/ancestor::tr/td/a[text()='Edit Navigation']");
+	public By EXECUTIVE_EDIT_NAVI_LINK = By.xpath("//td/div[text()='Executive Board']/ancestor::tr/td/a[text()='Edit Navigation']");
 	public By UP_LEVEL = By.xpath("//a[contains(@title,'Up Level')]");
-	public By CONTENT_EXPLORER = By.xpath("//a[@title='Content Explorer']");
-	public By CONTENT_ADMINISTRATION = By.xpath("//a[@title='Content Administration']");
+	public By ELEMENT_PAGE_MANAGEMENT = By.xpath("//a[@title='Page Management']");
+	public By ELEMENT_APPLICATION_REGIS = By.xpath("//a[@title='Application Registry']");
 	public By PORTAL_ADMINISTRATION = By.xpath("//a[@title='Portal Administration']");
-	public String CHILD_NODE = "//div[@class='ChildrenContainer']//a[@class = 'NodeIcon DefaultPageIcon' and @title='Content Explorer']";
+	public String CHILD_NODE = "//div[@class='ChildrenContainer']//a[@class = 'NodeIcon DefaultPageIcon' and @title='Page Management']";
 	public By CLOSE_NAVIGATION = By.xpath("//a[contains(@title,'Close Window')]");
-	public String SAME_PLACE_MESSAGE = "This node name already exists.";
-	public String DELETE_CONFIRMATION_MESSAGE = "Are you sure to delete this node?";
+	public By ELEMENT_NEW_STAFF = By.linkText("New Staff");
 	
 	@BeforeMethod()
 	public void beforeTest()
@@ -35,7 +35,7 @@ public class GateIn_GroupNavigation_Node_CopyPaste extends GateInBase
 		driver.get(baseUrl);
 		actions = new Actions(driver);
 		driver.manage().window().maximize();
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 	
 	//Copy/Paste a node into another node in the same navigation
@@ -46,34 +46,28 @@ public class GateIn_GroupNavigation_Node_CopyPaste extends GateInBase
 		goToGroupSites();
 		
 		//Select Edit Navigation of Content Management
-		waitForElementPresent(CONTENT_EDIT_NAVI_LINK);
-		click(CONTENT_EDIT_NAVI_LINK);
+		click(ADMIN_EDIT_NAVI_LINK);
 		
 		//Copy Node on Content Explorer
-		waitForElementPresent(CONTENT_EXPLORER);
-		copyNode(CONTENT_EXPLORER);
+		copyNode(ELEMENT_PAGE_MANAGEMENT);
 		
 		//Paste Node on Content Administration
-		waitForElementPresent(CONTENT_ADMINISTRATION);
-		pasteNode(CONTENT_ADMINISTRATION);
+		pasteNode(ELEMENT_APPLICATION_REGIS);
 		
 		//Save
 		save();
-		waitForElementNotPresent(CONTENT_EXPLORER);
 		
 		//Select Edit Navigation of Content Management
-		waitForElementPresent(CONTENT_EDIT_NAVI_LINK);
-		click(CONTENT_EDIT_NAVI_LINK);
-		click(CONTENT_ADMINISTRATION);
+		click(ADMIN_EDIT_NAVI_LINK);
+		click(ELEMENT_APPLICATION_REGIS);
 		
 		//Verify Copy/Paste result and Reset data
 		waitForElementPresent(CHILD_NODE);
 		rightClickOnElement(CHILD_NODE);
 		click(ELEMENT_NODE_DELETE);
-		waitForConfirmation(DELETE_CONFIRMATION_MESSAGE);
+		waitForConfirmation(MSG_DELETE_NODE);
 		waitForElementNotPresent(CHILD_NODE);
 		save();
-		waitForElementNotPresent(CONTENT_EXPLORER);
 	}
 	
 	//Copy/Paste a node into another node in different navigation
@@ -83,25 +77,22 @@ public class GateIn_GroupNavigation_Node_CopyPaste extends GateInBase
 		//Goto Group Sites
 		goToGroupSites();
 		
-		//Select Edit Navigation of Content Management
-		waitForElementPresent(CONTENT_EDIT_NAVI_LINK);
-		click(CONTENT_EDIT_NAVI_LINK);
+		//Select Edit Navigation of Administration
+		waitForElementPresent(ADMIN_EDIT_NAVI_LINK);
+		click(ADMIN_EDIT_NAVI_LINK);
 		
-		//Right click and select Copy Node on Content Explorer
-		waitForElementPresent(CONTENT_EXPLORER);
-		copyNode(CONTENT_EXPLORER);
+		//Right click and select Copy Node on Administration
+		copyNode(ELEMENT_PAGE_MANAGEMENT);
 		
 		//Close Content Management Navigation
 		waitForElementPresent(CLOSE_NAVIGATION);
 		click(CLOSE_NAVIGATION);
 		
 		//Select Edit Navigation of Administration
-		waitForElementPresent(ADMIN_EDIT_PROPERTIES_LINK);
-		click(ADMIN_EDIT_PROPERTIES_LINK);
+		click(EXECUTIVE_EDIT_NAVI_LINK);
 		
 		//Right click and confirm Paste Node not exist on Node Portal Administration
-		waitForElementPresent(PORTAL_ADMINISTRATION);
-		rightClickOnElement(PORTAL_ADMINISTRATION);
+		rightClickOnElement(ELEMENT_NEW_STAFF);
 		waitForElementNotPresent(ELEMENT_PASTE_NODE);
 		
 		//Close Content Management Navigation
@@ -116,40 +107,38 @@ public class GateIn_GroupNavigation_Node_CopyPaste extends GateInBase
 		//Goto Group Sites
 		goToGroupSites();
 		
-		//Select Edit Navigation of Content Management
-		waitForElementPresent(CONTENT_EDIT_NAVI_LINK);
-		click(CONTENT_EDIT_NAVI_LINK);
+		//Select Edit Navigation of Administrators
+		waitForElementPresent(ADMIN_EDIT_NAVI_LINK);
+		click(ADMIN_EDIT_NAVI_LINK);
 		
-		//Copy Node on Content Explorer
-		waitForElementPresent(CONTENT_EXPLORER);
-		copyNode(CONTENT_EXPLORER);
+		//Copy Node on Page management
+		copyNode(ELEMENT_PAGE_MANAGEMENT);
 		
-		//Paste Node on Content Administration
-		waitForElementPresent(CONTENT_ADMINISTRATION);
-		pasteNode(CONTENT_ADMINISTRATION);
+		//Paste Node on Application registry
+		pasteNode(ELEMENT_APPLICATION_REGIS);
 		
 		//Save
 		save();
-		waitForElementNotPresent(CONTENT_EXPLORER);
+		waitForElementNotPresent(ELEMENT_PAGE_MANAGEMENT);
 		
-		//Select Edit Navigation of Content Management
-		waitForElementPresent(CONTENT_EDIT_NAVI_LINK);
-		click(CONTENT_EDIT_NAVI_LINK);
+		//Select Edit Navigation of Administrators
+		waitForElementPresent(ADMIN_EDIT_NAVI_LINK);
+		click(ADMIN_EDIT_NAVI_LINK);
 		
-		click(CONTENT_ADMINISTRATION);
+		click(ELEMENT_APPLICATION_REGIS);
 		copyNode(By.xpath(CHILD_NODE));
-		pasteNode(CONTENT_ADMINISTRATION);
+		pasteNode(ELEMENT_APPLICATION_REGIS);
 		
 		//Verify display message to notice that Node already existed
-		waitForTextPresent(SAME_PLACE_MESSAGE);
+		waitForTextPresent(MSG_ADD_SAME_NODE);
 		click(ELEMENT_OK_BUTTON);
 		
 		rightClickOnElement(CHILD_NODE);
 		click(ELEMENT_NODE_DELETE);
-		waitForConfirmation(DELETE_CONFIRMATION_MESSAGE);
+		waitForConfirmation(MSG_DELETE_NODE);
 		waitForElementNotPresent(CHILD_NODE);
 		save();
-		waitForElementNotPresent(CONTENT_EXPLORER);
+		waitForElementNotPresent(ELEMENT_APPLICATION_REGIS);
 	}
 	
 	@AfterMethod

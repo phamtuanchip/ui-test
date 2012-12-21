@@ -24,8 +24,8 @@ import static org.exoplatform.selenium.gatein.PageManagement.*;
 public class GateIn_GroupNavigation_Node_Delete extends GateInBase
 {
 	//Define data
-	public By ADMIN_EDIT_NAVIGATION_LINK = By.xpath("//td/div[text()='Administration']/ancestor::tr/td/a[text()='Edit Navigation']");
-	public By SITES_MANAGEMENT_LINK = By.xpath("//a[@title='Sites Management']");
+	public By ADMIN_EDIT_NAVIGATION_LINK = By.xpath("//td/div[text()='Administrators']/ancestor::tr/td/a[text()='Edit Navigation']");
+	public By ELEMENT_APPLICATION_REGIS = By.xpath("//a[@title='Application Registry']");
 	public By NODE_ADDED = By.xpath("//a[text()='POR_GRNAVIGATION_25_06']");
 	public String NODE_NAME = "POR_GRNAVIGATION_25_06";
 	public String PAGE_SELECTOR_NAME = "POR_GRNAVIGATION_25_06_PAGE";
@@ -37,7 +37,7 @@ public class GateIn_GroupNavigation_Node_Delete extends GateInBase
 		driver.get(baseUrl);
 		actions = new Actions(driver);
 		driver.manage().window().maximize();
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 	
 	//Delete node with deleting confirmation
@@ -51,21 +51,19 @@ public class GateIn_GroupNavigation_Node_Delete extends GateInBase
 		goToGroupSites();
 		
 		//Click Edit Navigation of Employees
-		waitForElementPresent(ADMIN_EDIT_NAVIGATION_LINK);
 		click(ADMIN_EDIT_NAVIGATION_LINK);
 		
 		//Add Node for test
-		addNodeForGroup("Administration", "Sites Management", false, NODE_NAME, true, languages, NODE_NAME, PAGE_SELECTOR_NAME, PAGE_SELECTOR_NAME, true, true);
+		addNodeForGroup("Administrators", "Application Registry", false, NODE_NAME, true, languages, NODE_NAME, PAGE_SELECTOR_NAME, PAGE_SELECTOR_NAME, true, true);
 		
 		//Verify added data
 		waitForElementPresent(ADMIN_EDIT_NAVIGATION_LINK);
 		click(ADMIN_EDIT_NAVIGATION_LINK);
-		waitForElementPresent(SITES_MANAGEMENT_LINK);
-		click(SITES_MANAGEMENT_LINK);
+		click(ELEMENT_APPLICATION_REGIS);
 		waitForElementPresent(NODE_ADDED);
 		
 		//Delete data
-		deleteNode("Administration", "Sites Management", NODE_NAME, false);
+		deleteNode("Administrators", "Application Registry", NODE_NAME, false);
 		
 		//Verify page selector still exists
 		goToManagePages();

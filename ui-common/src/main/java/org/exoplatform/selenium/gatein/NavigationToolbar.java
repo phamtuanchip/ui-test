@@ -114,6 +114,14 @@ public class NavigationToolbar extends GateInBase {
 		click(ELEMENT_EDIT_PAGE_MENU);
 		pause(500);
 	}
+	public static void goToEditPageGroupEditor () {
+		info("----Go to Edit page editor----");
+		mouseOver(ELEMENT_LINK_GROUP_EDITOR,false);
+		pause(500);
+		
+		click(ELEMENT_EDIT_PAGE_MENU);
+		pause(500);
+	}
 	/**
 	 * @update: thuntn
 	 */

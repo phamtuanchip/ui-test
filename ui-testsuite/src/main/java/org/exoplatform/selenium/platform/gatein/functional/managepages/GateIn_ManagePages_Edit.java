@@ -48,11 +48,10 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 	public void test19_ChangeEditRightOnPortalPage ()
 	{
 		String USER_NAME= "mimi";
-		String INTRANET_LINK = baseUrl+"/portal/intranet/";
 		String PAGE_NAME = "FNC_GTN_POR_MNP_22_019";
 		String PAGE_TITLE = "FNC_GTN_POR_MNP_22_019";
 
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		goToNewStaff();
 		addNewUserAccount(USER_NAME, "123456", "123456", USER_NAME, "test", "mimi@exoplatform.com", USER_NAME, "English", true);
@@ -67,14 +66,11 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 		//Select group
 		debug("Select group");
 		selectGroup("Platform");
-		selectGroup("Administration");
+		selectGroup("Administrators");
 
 		//Add user to group
 		debug("Add user to group");
 		addUsersToGroup(USER_NAME, "member", false, true);
-
-		debug("Go to intranet");
-		driver.get(INTRANET_LINK);
 
 		debug("Go to manage page");
 		goToManagePages();
@@ -90,7 +86,7 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 		click(ELEMENT_PERMISSION_SETTING_TAB);
 
 		debug("Set view permission for page management");
-		setViewPermissions("Platform/Administration", "*");
+		setViewPermissions("Platform/Administrators", "*");
 
 
 		//Change edit permission of page
@@ -99,7 +95,7 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 
 		debug("Set edit permission for page management");
-		setEditPermissions("Platform/Administration", "member");
+		setEditPermissions("Platform/Administrators", "member");
 
 		debug("Save edit page form");
 		save();
@@ -110,7 +106,7 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 
 		//Add new page for portal
 		debug("Add new page for portal");
-		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administration", "manager");
+		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administrators", "manager");
 		waitForTextPresent(PAGE_NAME);
 
 		debug("Edit new page");
@@ -127,7 +123,7 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 
 		debug("Set edit permission for new page");
-		setEditPermissions("Platform/Administration", "member");
+		setEditPermissions("Platform/Administrators", "member");
 
 		save();
 		waitForElementPresent(ELEMENT_FINISH_ICON);
@@ -136,7 +132,6 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 	
 
 		signOut();
-		driver.get(baseUrl);
 
 		//Login new user and view edit page form
 		signIn(USER_NAME, "123456");
@@ -144,16 +139,15 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 //		mouseOver(ELEMENT_EDIT_PAGE_LINK, true);
 //		mouseOver(ELEMEMT_PAGE_MENU, true);
 //		mouseOverAndClick(ELEMENT_PAGE_LAYOUT);
-		goToEditPageEditor();
+		goToEditPageGroupEditor();
 		waitForTextPresent("View Page properties");
 
 		//Abort edit page form
 		click(ELEMENT_ABORTEDIT_BUTTON);
 		waitForElementNotPresent(ELEMENT_ABORTEDIT_BUTTON);
 		signOut();
-		driver.get(baseUrl);
 
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		//Delete data
 		goToUsersAndGroupsManagement();
@@ -177,13 +171,13 @@ public class GateIn_ManagePages_Edit extends GateInBase {
 		String PAGE_NAME = "FNC_GTN_POR_MNP_22_021";
 		String PAGE_TITLE = "FNC_GTN_POR_MNP_22_021";
 
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		debug("Go to manage pages");
 		goToManagePages();
 
 		debug("Add new page");
-		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administration", "*");
+		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administrators", "*");
 		waitForTextPresent(PAGE_TITLE);
 
 		debug("Edit page");

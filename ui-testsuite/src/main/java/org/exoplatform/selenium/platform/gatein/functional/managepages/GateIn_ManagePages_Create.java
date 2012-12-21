@@ -38,7 +38,7 @@ public class GateIn_ManagePages_Create extends GateInBase
 	
 	//Messages
 	public String BLANK_NODE_NAME_MESSAGE = "The field \"Node Name\" is required.";
-	public String NODE_NAME_START_NUMBER_MESSAGE = "The field \"Node Name\" must start with a character and must not contain special characters.";
+	public String NODE_NAME_START_NUMBER_MESSAGE = "The \"Node Name\" field must start with a letter and must not contain special characters.\"";
 	public String NODE_NAME_START_SPECIAL_MESSAGE = "Only alpha, digit, dash and underscore characters allowed for the field \"Node Name\".";
 	public String PAGE_NAME_EXIST_MESSAGE = "This page name already exists.";
 	
@@ -176,7 +176,7 @@ public class GateIn_ManagePages_Create extends GateInBase
 		next();
 		
 		//Verify Step 2
-		waitForTextPresent("Select a Page Layout Template.");
+		waitForTextPresent("Select a Page Layout Template");
 		waitForElementPresent(EMPTY_LAYOUT);
 		
 		//Click Abort button
@@ -307,13 +307,13 @@ public class GateIn_ManagePages_Create extends GateInBase
 		PAGE_TITLE = "FNC_GTN_POR_MNP_20_022";
 
 		debug("Add new page for current portal");
-		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administration", "manager");
+		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administrators", "manager");
 		debug("Verify new page is create successfully");
 		waitForTextPresent(PAGE_NAME);
 
 		debug("Add new page with same name for group");
 		waitForElementPresent(ELEMENT_ADD_PAGE_BUTTON);
-		addNewPageAtManagePages(PageType.GROUP, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administration", "manager");
+		addNewPageAtManagePages(PageType.GROUP, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administrators", "manager");
 		waitForTextPresent(PAGE_NAME);
 
 		//Delete data
@@ -338,14 +338,14 @@ public class GateIn_ManagePages_Create extends GateInBase
 		PAGE_TITLE = "FNC_GTN_POR_MNP_20_023";
 		
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Content Management", "manager");
+		permissions.put("Platform/Users", "manager");
 
 		debug("Go to manage page");
 		goToManagePages();
 
 		debug("add new page");
 		waitForElementPresent(ELEMENT_ADD_PAGE_BUTTON);
-		addNewPageAtManagePages(PageType.GROUP, PAGE_NAME, PAGE_TITLE, false, permissions,"Platform/Administration", "manager");
+		addNewPageAtManagePages(PageType.GROUP, PAGE_NAME, PAGE_TITLE, false, permissions,"Platform/Administrators", "manager");
 		waitForTextPresent(PAGE_NAME);
 
 		//Delete data
@@ -371,7 +371,7 @@ public class GateIn_ManagePages_Create extends GateInBase
 
 		debug("add new page");
 		waitForElementPresent(ELEMENT_ADD_PAGE_BUTTON);
-		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null,"Platform/Administration", "manager");
+		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null,"Platform/Administrators", "manager");
 		waitForTextPresent(PAGE_NAME);
 
 		//Deleta data
@@ -395,8 +395,6 @@ public class GateIn_ManagePages_Create extends GateInBase
 		PAGE_NAME = "FNC_GTN_POR_MNP_20_025";
 		PAGE_TITLE = "FNC_GTN_POR_MNP_20_025";
 
-		debug("Go to intranet");
-		driver.get(INTRANET_LINK);
 
 		debug("Go to manage page");
 		goToManagePages();
@@ -404,17 +402,17 @@ public class GateIn_ManagePages_Create extends GateInBase
 
 		debug("Add new page");
 		waitForElementPresent(ELEMENT_ADD_PAGE_BUTTON);
-		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Content Management", "*");
+		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Users", "*");
 		waitForTextPresent(PAGE_NAME);
 
 		goToManagePages();
 
 		click(ELEMENT_ADD_PAGE_BUTTON);
 
-		waitForTextPresent("Page Settings");
+		waitForTextPresent("Page Setting");
 
 		select(ELEMENT_SELECT_OWNER_TYPE, "portal");
-		waitForElementPresent(ELEMENT_OWNER_ID_INTRANET);
+		waitForElementPresent(ELEMENT_OWNER_ID_CLASSIC);
 
 		type(ELEMENT_PAGE_NAME_INPUT, PAGE_NAME, true);
 		type(ELEMENT_PAGE_TITLE_INPUT, PAGE_TITLE, true);
@@ -444,20 +442,17 @@ public class GateIn_ManagePages_Create extends GateInBase
 		PAGE_NAME = "FNC_GTN_POR_MNP_20_028";
 		PAGE_TITLE = "FNC_GTN_POR_MNP_20_028";
 		
-		debug("Go to intranet");
-		driver.get(INTRANET_LINK);
-
 		debug("Go to manage page");
 		goToManagePages();
 		waitForElementPresent(ELEMENT_ADD_PAGE_BUTTON);
 
 		debug("Add new page for group");
-		addNewPageAtManagePages(PageType.GROUP, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Visitors", "*");
+		addNewPageAtManagePages(PageType.GROUP, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Users", "*");
 		waitForTextPresent(PAGE_NAME);
 		
 		debug("Add new page for portal");
 		waitForElementPresent(ELEMENT_ADD_PAGE_BUTTON);
-		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administration", "manager");
+		addNewPageAtManagePages(PageType.PORTAL, PAGE_NAME, PAGE_TITLE, true, null, "Platform/Administrators", "manager");
 		waitForTextPresent(PAGE_NAME);
 		
 		//Delete data

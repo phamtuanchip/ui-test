@@ -22,13 +22,14 @@ import org.testng.annotations.Test;
  */
 public class GateIn_GroupNavigation_Node_Create extends GateInBase{
 
-	By ELEMENT_EDIT_NAV_GROUP = By.xpath("//td/div[text()='Administration']/ancestor::tr/td/a[text()='Edit Navigation']");
+	By ELEMENT_EDIT_NAV_GROUP = By.xpath("//td/div[text()='Administrators']/ancestor::tr/td/a[text()='Edit Navigation']");
 	By UP_LEVEL = By.xpath("//a[@title='Up Level']");
 	By ADD_NODE_BUTTON = By.xpath("//a[text()='Add Node']");
 	By NODE_NAME = By.xpath("//input[@id='name']");
 	By NODE_LABEL = By.xpath("//input[@id='i18nizedLabel']");
 	By PAGE_SELECTOR = By.xpath("//div[text()='Page Selector']");
 	By PAGE_NAME = By.id("pageName");
+	By PAGE_TITLE = By.id("pageTitle");
 	By CREATE_PAGE_BUTTON = By.linkText("Create Page");
 	
 	// define add new node
@@ -50,6 +51,7 @@ public class GateIn_GroupNavigation_Node_Create extends GateInBase{
 		//Input page name
 		waitForElementPresent(PAGE_NAME);
 		type(PAGE_NAME,pageNameInput,true);
+		type(PAGE_TITLE,pageNameInput,true);
 		//Click create page
 		waitForElementPresent(CREATE_PAGE_BUTTON);
 		click(CREATE_PAGE_BUTTON);
@@ -67,7 +69,7 @@ public class GateIn_GroupNavigation_Node_Create extends GateInBase{
 	//Create node in the first level
 	@Test
 	public void test01_CreateNodeInTheFirstLevel() {	
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToGroupSites();
 		click(ELEMENT_EDIT_NAV_GROUP);
 		click(UP_LEVEL);
@@ -84,8 +86,7 @@ public class GateIn_GroupNavigation_Node_Create extends GateInBase{
 		
 		// Delete new node
 		info("Delete node");
-		deleteNode("Administration", "GROUPNAV_25_02_0001", "GROUPNAV_25_02_0001", true);
-		waitForTextPresent("Administration");
+		deleteNode("Administrators", "GROUPNAV_25_02_0001", "GROUPNAV_25_02_0001", true);
 		info("Delete page");
 		goToManagePages();
 		info("Delete page");
@@ -104,15 +105,14 @@ public class GateIn_GroupNavigation_Node_Create extends GateInBase{
 		Map<String, String> languages = new HashMap<String, String>();
 		languages.put("English", "");
 
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToGroupSites();
 		click(ELEMENT_EDIT_NAV_GROUP);
 		// add node is child of existing node
-		addNodeForGroup("Administration", "Portal Administration", false, "GROUPNAV_25_02_002", true, languages, "GROUPNAV_25_02_002", PAGE_NAME, PAGE_TITLE, true, true);
+		addNodeForGroup("Administrators", "Administration", false, "GROUPNAV_25_02_002", true, languages, "GROUPNAV_25_02_002", PAGE_NAME, PAGE_TITLE, true, true);
 		// delete node
 		info("Delete node");
-		deleteNode("Administration", "GROUPNAV_25_02_002", "GROUPNAV_25_02_002", true);
-		waitForTextPresent("Administration");
+		deleteNode("Administrators", "GROUPNAV_25_02_002", "GROUPNAV_25_02_002", true);
 	}
 
 	@AfterMethod()

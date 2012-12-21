@@ -18,7 +18,7 @@ import static org.exoplatform.selenium.gatein.ManageAccount.signOut;
 import static org.exoplatform.selenium.gatein.NavigationManagement.*;
 import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
 import static org.exoplatform.selenium.gatein.PageManagement.*;
-
+import static org.exoplatform.selenium.gatein.GroupNavigation.*;
 
 /**
  *@author HangNTT
@@ -49,19 +49,19 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 		String DISPLAY_NAME = "GROUPNAV_26_02_018";		
 		String LANGUAGE = "English";	
 		Map<String, String> PORTLET_IDS = new HashMap<String, String>();
-		PORTLET_IDS.put("Content/ContentListViewerPortlet","");
-		String CATEGORY_TITLE = "Content";
+		PORTLET_IDS.put("Administration/ApplicationRegistryPortlet","");
+		String CATEGORY_TITLE = "Administration";
 
 		info("Main program");	  
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		//Add new page by wizard
-		goToGroupSites();
-		goToAddPageEditor();
+		goToManagePages();
+		goToAddPageGroupEditor();
 		click(UP_LEVEL);   
 		addNewPageEditor(NODE_NAME, DISPLAY_NAME, LANGUAGE, CATEGORY_TITLE, PORTLET_IDS, true);
 		// Show form to edit portlet when edit node's page
 		goToGroupSites();
-		click(ELEMENT_EDIT_NAV_GROUP);
+		click(ADMIN_EDIT_NAVIGATION_LINK);
 		info("Right click on new node");
 		rightClickOnElement(By.linkText("GROUPNAV_26_02_018"));
 		info("edit node's page");
@@ -83,7 +83,10 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 		//Go to Group Navigation
 		click(ELEMENT_EDIT_NAV_GROUP);
 		// Delete node
-		deleteNode("Administration","GROUPNAV_26_02_018","GROUPNAV_26_02_018",true);
+		deleteNode("Administrators","Administration","GROUPNAV_26_02_018",true);
+		
+		goToManagePages();
+		deletePage(PageType.GROUP, NODE_NAME);
 	}
 	
 	//Add New Page By Wizard
@@ -131,6 +134,9 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 		goToGroupSites();
 		click(ELEMENT_EDIT_NAV_GROUP);
 		deleteNode("Administration","GROUPNAV_26_02_023","GROUPNAV_26_02_023",true);
+		
+		goToManagePages();
+		deletePage(PageType.GROUP, NODE_NAME);
 	}
 
 	@AfterMethod()

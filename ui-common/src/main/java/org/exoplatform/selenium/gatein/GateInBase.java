@@ -284,7 +284,7 @@ public class GateInBase extends TestBase {
 	public static final By ELEMENT_PORTLET_CONTAINER = By.className("PortletLayoutDecorator");
 	public static final By ELEMENT_ABORTEDIT_BUTTON = By.xpath("//a[@title='Abort']");
 	//Edit portlet Form
-	public static final By ELEMENT_WINDOW_SETTINGS_TAB = By.xpath("//div[@id='UIMaskWorkspace']//div[text()='Window Settings']");
+	public static final By ELEMENT_WINDOW_SETTINGS_TAB = By.xpath("//div[@id='UIMaskWorkspace']//div[text()='Portlet Setting']");
 	public static final By ELEMENT_WINDOWS_TITLE = By.xpath("//*[@id='title']");
 	/*Portlet in general*/
 

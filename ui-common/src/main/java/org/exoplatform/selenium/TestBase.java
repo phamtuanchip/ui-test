@@ -338,6 +338,10 @@ public class TestBase {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
 			pause(WAIT_INTERVAL);
 			check(locator);
+		}catch (ElementNotVisibleException e) {
+			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
+			pause(WAIT_INTERVAL);
+			check(locator);
 		} finally {
 			loopCount = 0;
 		}

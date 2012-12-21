@@ -23,18 +23,16 @@ import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
 public class GateIn_GroupNavigation_Node_CutPaste extends GateInBase
 {
 	//Define data
-	public By ADMIN_EDIT_NAVIGATION_LINK = By.xpath("//td/div[text()='Administration']/ancestor::tr/td/a[text()='Edit Navigation']");
-	public By DEVELOP_EDIT_NAVIGATION_LINK = By.xpath("//td/div[text()='Development']/ancestor::tr/td/a[text()='Edit Navigation']");
-	public By PORTAL_ADMINISTRATION_LINK = By.xpath("//a[@title='Portal Administration']");
-	public By GROUP_NAVIGATION_LINK = By.xpath("//a[@title='Group Navigation']");
-	public By MANAGEMENT_LINK = By.xpath("//a[@title='Management']");
+	public By ADMINISTRATION_LINK = By.xpath("//a[@title='Administration']");
+	public By ELEMENT_APPLICATION_REGIS = By.xpath("//a[@title='Application Registry']");
 	public By IDE_LINK = By.xpath("//a[@title='IDE']");
-	public By CHILD_NODE = By.xpath("(//a[contains(text(),'POR_GRNAVIGATION_25_05_002')])[2]");
+	public By CHILD_NODE = By.xpath("(//a[contains(text(),'POR_GRNAVIGATION_25_05_002')])");
 	public By CLOSE_NAVIGATION_ICON = By.xpath("//a[contains(@title,'Close Window')]");
 	public String NODE_NAME = "POR_GRNAVIGATION_25_05_002";
+	public By EXECUTIVE_EDIT_NAVI_LINK = By.xpath("//td/div[text()='Executive Board']/ancestor::tr/td/a[text()='Edit Navigation']");
+	public By ELEMENT_NEW_STAFF = By.linkText("New Staff");
 
 	//Product Messages
-	public String SAME_PLACE_MESSAGE = "The source and the destination must be different.";
 
 	@BeforeMethod()
 	public void beforeTest()
@@ -44,7 +42,7 @@ public class GateIn_GroupNavigation_Node_CutPaste extends GateInBase
 		driver.get(baseUrl);
 		actions = new Actions(driver);
 		driver.manage().window().maximize();
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 	
 	//Cut/Paste node to same place
@@ -55,17 +53,16 @@ public class GateIn_GroupNavigation_Node_CutPaste extends GateInBase
 		goToGroupSites();
 		
 		//Click Edit navigation of Administration 
-		waitForElementPresent(ADMIN_EDIT_NAVIGATION_LINK);
 		click(ADMIN_EDIT_NAVIGATION_LINK);
 		
 		//Copy Node Portal Administration 
-		cutNode(PORTAL_ADMINISTRATION_LINK);
+		cutNode(ADMINISTRATION_LINK);
 		
 		//Paste to Portal Administration
-		pasteNode(PORTAL_ADMINISTRATION_LINK);
+		pasteNode(ADMINISTRATION_LINK);
 		
 		//Verify message confirmation
-		waitForMessage(SAME_PLACE_MESSAGE);
+		waitForMessage(MSG_SAME_SOURCE);
 		click(ELEMENT_OK_BUTTON);
 	}
 	
@@ -80,38 +77,36 @@ public class GateIn_GroupNavigation_Node_CutPaste extends GateInBase
 		goToGroupSites();
 		
 		//Click Edit navigation of Administration 
-		waitForElementPresent(ADMIN_EDIT_NAVIGATION_LINK);
 		click(ADMIN_EDIT_NAVIGATION_LINK);
 		
 		//Add child node for Group Navigation
-		addNodeForGroup("Administration", "Group Navigation", false, NODE_NAME, true, languages, NODE_NAME, null, null, true, true);
+		addNodeForGroup("Administrators", "Administration", false, NODE_NAME, true, languages, NODE_NAME, null, null, true, true);
 		
 		//Click Edit navigation of Administration
-		waitForElementPresent(ADMIN_EDIT_NAVIGATION_LINK);
 		click(ADMIN_EDIT_NAVIGATION_LINK);
 		
 		//Copy added child node
-		click(GROUP_NAVIGATION_LINK);
-		waitForElementPresent(By.xpath("//a[@title='"+NODE_NAME+"']"));
+		if (waitForElementPresent(By.xpath("//a[@title='"+NODE_NAME+"']"),5000,0) == null )
+		click(ADMINISTRATION_LINK);
+		
 		cutNode(By.xpath("//a[@title='"+NODE_NAME+"']"));
 		
 		//Paste to Node Sites Management 
-		click(MANAGEMENT_LINK);
-		pasteNode(MANAGEMENT_LINK);
+		click(ELEMENT_APPLICATION_REGIS);
+		pasteNode(ELEMENT_APPLICATION_REGIS);
 		
 		//Save
 		save();
 		pause(1000);
 		
 		//Click Edit navigation of Administration
-		waitForElementPresent(ADMIN_EDIT_NAVIGATION_LINK);
 		click(ADMIN_EDIT_NAVIGATION_LINK);
-		waitForElementPresent(MANAGEMENT_LINK);
-		click(MANAGEMENT_LINK);
+		waitForElementPresent(ELEMENT_APPLICATION_REGIS);
+		click(ELEMENT_APPLICATION_REGIS);
 		waitForElementPresent(CHILD_NODE);
 		
 		//Delete test data
-		deleteNode("Administration", "Management", NODE_NAME, false);
+		deleteNode("Administrators", "Application Registry", NODE_NAME, false);
 	}
 	
 	//Cut/Paste a node to new place in different navigation
@@ -126,15 +121,14 @@ public class GateIn_GroupNavigation_Node_CutPaste extends GateInBase
 		click(ADMIN_EDIT_NAVIGATION_LINK);
 		
 		//Copy Node Portal Administration 
-		cutNode(PORTAL_ADMINISTRATION_LINK);
+		cutNode(ADMINISTRATION_LINK);
 		waitForElementPresent(CLOSE_NAVIGATION_ICON);
 		click(CLOSE_NAVIGATION_ICON);
 		
 		//Click Edit navigation of Development
-		waitForElementPresent(DEVELOP_EDIT_NAVIGATION_LINK);
-		click(DEVELOP_EDIT_NAVIGATION_LINK);
-		waitForElementPresent(IDE_LINK);
-		pasteNode(IDE_LINK);
+		click(EXECUTIVE_EDIT_NAVI_LINK);
+		rightClickOnElement(ELEMENT_NEW_STAFF);
+		waitForElementNotPresent(ELEMENT_PASTE_NODE);
 		click(CLOSE_NAVIGATION_ICON);
 	}
 	

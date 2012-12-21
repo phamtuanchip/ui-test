@@ -14,7 +14,7 @@ public class PageManagement extends GateInBase {
 	/*
 	 * Page Management
 	 * */
-	public static String ELEMENT_ADD_PAGE_BUTTON = "//a[text()='Add New Page']";
+	public static By ELEMENT_ADD_PAGE_BUTTON = By.linkText("Add New Page");
 	public static String ELEMENT_INPUT_SEARCH_TITLE = "//input[@id='pageTitle']";
 	public static String ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON = "//form[@id='UIPageSearchForm']/div[2]/a[@class='SearchIcon']";
 	public static String ELEMENT_PAGE_EDIT_ICON = "//div[@id='UIVirtualList']//table//tr/td/div[contains(@title, '${page}')]/../../td[5]//img[@class='EditInfoIcon']";
@@ -24,7 +24,8 @@ public class PageManagement extends GateInBase {
 	public static By ELEMENT_PAGE_NAME_INPUT = By.xpath("//input[@id='name']");
 	public static By ELEMENT_PAGE_TITLE_INPUT = By.xpath("//input[@id='title']");
 	public static String ELEMENT_SELECT_OWNER_TYPE = "//select[@name='ownerType']";
-	public static By ELEMENT_OWNER_ID_INTRANET = By.xpath("//input[@id='ownerId' and @value='intranet']");
+	public static By ELEMENT_OWNER_ID_CLASSIC = By.xpath("//input[@id='ownerId' and @value='classic']");
+	public static By ELEMENT_OWNER_ID_GROUP = By.xpath("//select[@name='ownerId']");
 		
 	//Message
 	public static String MESSAGE_DELETE_PAGE = "Do you want to delete this page?";
@@ -41,6 +42,7 @@ public class PageManagement extends GateInBase {
 			break;
 		case GROUP:	
 			select(ELEMENT_SELECT_OWNER_TYPE, "group");
+			waitForElementPresent(ELEMENT_OWNER_ID_GROUP);
 			break;
 		default:
 			break;
@@ -50,6 +52,7 @@ public class PageManagement extends GateInBase {
 
 		//showMaxWindow
 		check(ELEMENT_CHECKBOX_MAX_WINDOWS);
+		if (waitForAndGetElement(ELEMENT_CHECKBOX_MAX_WINDOWS).isSelected())
 		click(ELEMENT_PERMISSION_SETTING_TAB);	
 		WebElement element = waitForAndGetElement(ELEMENT_CHECKBOX_PUBLIC_MODE);		
 		if (publicMode & !element.isSelected()) {

@@ -4,7 +4,11 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import java.util.Map;
 
+import org.openqa.selenium.By;
+
 public class GroupNavigation extends GateInBase {
+	
+	public static final By ADMIN_EDIT_NAVIGATION_LINK = By.xpath("//td/div[text()='Administrators']/ancestor::tr/td/a[text()='Edit Navigation']");
 	//Add a node for group at group navigation
 	public static void addNodeForGroup(String currentNavigation, String currentNodeLabel, boolean useAddNodeLink, String nodeName, boolean extendedLabelMode, 
 			Map<String, String> languages, String nodeLabel, String pageName, String pageTitle, boolean verifyPage, boolean verifyNode){
@@ -28,7 +32,7 @@ public class GroupNavigation extends GateInBase {
 				click(ELEMENT_NODE_ADD_NEW);
 			}		
 		}
-		waitForTextPresent("Page Node Settings");
+		waitForTextPresent("Page Node Setting");
 		type(ELEMENT_INPUT_NAME, nodeName, true);
 
 		if (extendedLabelMode) {

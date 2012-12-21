@@ -19,6 +19,7 @@ import static org.exoplatform.selenium.gatein.ManageAccount.signOut;
 import static org.exoplatform.selenium.gatein.NavigationManagement.*;
 import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
 import static org.exoplatform.selenium.gatein.PageManagement.*;
+import static org.exoplatform.selenium.gatein.GroupNavigation.*;
 
 /**
  *@author HangNTT
@@ -28,7 +29,7 @@ public class GateIn_GroupNavigation_Node_EditPage_Container extends GateInBase {
 	/**
 	 * @param args
 	 */
-	By ELEMENT_EDIT_NAV_GROUP = By.xpath("//td/div[text()='Administration']/ancestor::tr/td/a[text()='Edit Navigation']");
+	By ELEMENT_EDIT_NAV_GROUP = By.xpath("//td/div[text()='Administrators']/ancestor::tr/td/a[text()='Edit Navigation']");
 	By UP_LEVEL = By.xpath("//a[@title='Up Level']");
 	By ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT = By.id("UIPage");
 	By ELEMENT_ROW_PAGE_CONFIGS = By.xpath("//a[contains(text(),'Row Page Configs')]");
@@ -83,18 +84,18 @@ public class GateIn_GroupNavigation_Node_EditPage_Container extends GateInBase {
 		String LANGUAGE = "English";	
 		Map<String, String> PORTLET_IDS = new HashMap<String, String>();
 
-		PORTLET_IDS.put("Collaboration/Calendar","");
-		String CATEGORY_TITLE = "Collaboration";
+		PORTLET_IDS.put("Administration/ApplicationRegistryPortlet","");
+		String CATEGORY_TITLE = "Administration";
 
 		info("main program");	  
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		//Add new page by wizard
-		goToGroupSites();
-		goToAddPageEditor();
+		goToManagePages();
+		goToAddPageGroupEditor();
 		click(UP_LEVEL);   
 		addNewPageEditor(NODE_NAME, DISPLAY_NAME, LANGUAGE, CATEGORY_TITLE, PORTLET_IDS, true);	
 		goToGroupSites();
-		click(ELEMENT_EDIT_NAV_GROUP);
+		click(ADMIN_EDIT_NAVIGATION_LINK);
 		info("Right click on new node");
 		rightClickOnElement(By.linkText("GROUPNAV_26_03_004"));
 		info("Edit node's page");
@@ -113,11 +114,11 @@ public class GateIn_GroupNavigation_Node_EditPage_Container extends GateInBase {
 		mouseOver(ELEMENT_EDIT_CONTAINER, true);
 		mouseOver(ELEMENT_EDIT_CONTAINER_ICON, true);
 		click(ELEMENT_EDIT_CONTAINER_ICON);
-		waitForTextPresent("Container Settings");	
+		waitForTextPresent("Container Setting");	
 		type(ELEMENT_INPUT_WIDTH, "900px", true);
 		type(ELEMENT_INPUT_HEIGHT, "600px", true);
 		save();
-		waitForTextNotPresent("Container Settings");
+		waitForTextNotPresent("Container Setting");
 		info("--Verify that the changes on container is saved--");
 		captureScreen("container");
 		click(ELEMENT_FINISH_ICON);
@@ -125,7 +126,10 @@ public class GateIn_GroupNavigation_Node_EditPage_Container extends GateInBase {
 		save();
 		//Delete node
 		click(ELEMENT_EDIT_NAV_GROUP);
-		deleteNode("Administration","GROUPNAV_26_03_004","GROUPNAV_26_03_004",true);
+		deleteNode("Administrators","Administration","GROUPNAV_26_03_004",true);
+		
+		goToManagePages();
+		deletePage(PageType.GROUP, NODE_NAME);
 	}
 	
 	//Add New Page By Wizard
@@ -138,15 +142,15 @@ public class GateIn_GroupNavigation_Node_EditPage_Container extends GateInBase {
 		By ELEMENT_INPUT_TITLE = By.id("title");
 
 		info("main program");	  
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		//Add new page by wizard
-		goToGroupSites();
-		goToAddPageEditor();
+		goToManagePages();
+		goToAddPageGroupEditor();
 		click(UP_LEVEL);  
 		addNewPageWithLayout(NODE_NAME, DISPLAY_NAME, LANGUAGE,true);
 		// go to Edit navigation of group
 		goToGroupSites();
-		click(ELEMENT_EDIT_NAV_GROUP);
+		click(ADMIN_EDIT_NAVIGATION_LINK);
 		//click edit node's page
 		info("Right click on new node");
 		rightClickOnElement(By.linkText("GROUPNAV_26_03_009"));
@@ -166,13 +170,13 @@ public class GateIn_GroupNavigation_Node_EditPage_Container extends GateInBase {
 		mouseOver(ELEMENT_EDIT_CONTAINER, true);
 		mouseOver(ELEMENT_EDIT_CONTAINER_ICON, true);
 		click(ELEMENT_EDIT_CONTAINER_ICON);
-		waitForTextPresent("Container Settings");	
+		waitForTextPresent("Container Setting");	
 		// change information for container
 		type(ELEMENT_INPUT_TITLE,"GROUPNAV_TITLE",true);
 		type(ELEMENT_INPUT_WIDTH, "900px", true);
 		type(ELEMENT_INPUT_HEIGHT, "600px", true);
 		save();
-		waitForTextNotPresent("Container Settings");
+		waitForTextNotPresent("Container Setting");
 		info("--Verify that the changes on container is saved--");
 		captureScreen("GROUPNAV_TITLE");
 		click(ELEMENT_FINISH_ICON);
@@ -180,7 +184,10 @@ public class GateIn_GroupNavigation_Node_EditPage_Container extends GateInBase {
 		save();
 		//Delete node
 		click(ELEMENT_EDIT_NAV_GROUP);
-		deleteNode("Administration","GROUPNAV_26_03_009","GROUPNAV_26_03_009",true);
+		deleteNode("Administrators","Administration","GROUPNAV_26_03_009",true);
+		
+		goToManagePages();
+		deletePage(PageType.GROUP, NODE_NAME);
 	}
 
 	@AfterMethod()
