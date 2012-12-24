@@ -14,17 +14,16 @@ public class ManageApplications extends GateInBase {
 	public static By ELEMENT_CATEGORIES_AREA_TITLE = By.xpath("//div[text()='Categories']");
 
 	//Gadget
-	public static By ELEMENT_GADGET_LINK = By.xpath("//a[contains(text(),'Gadgets')]");
-	public static By ELEMENT_ADD_REMOTE_GADGET_LINK = By.xpath("//div[text()='Add a Remote Gadget']");
+	public static By ELEMENT_GADGET_LINK = By.xpath("//div[@class='ManagementIconContainer ClearFix']/a[contains(text(),'Gadget')]");
+	public static By ELEMENT_ADD_REMOTE_GADGET_LINK = By.xpath("//div[text()='Add a remote gadget']");
 	public static By ELEMENT_URL_TEXBOX = By.id("url");
 	public static By ELEMENT_ADD_BUTTON = By.linkText("Add");
 	
 	
 	//Application Registry portlet -> Edit Portlet
 	public static By ELEMENT_APPS_REG_PORTLET = By.className("PortletLayoutDecorator");
-	public static By ELEMENT_SHOW_IMPORT_CHECKBOX = By.xpath("//input[@id='showImport']");
-	public static By SHOW_IMPORT_CHECKED = By.xpath("//input[@id='showImport' and @value='true']");
-	public static By SHOW_IMPORT_UNCHECK = By.xpath("//input[@id='showImport' and @value='false']");
+	public static By ELEMENT_SHOW_IMPORT_CHECKBOX = By.name("showImport");
+	public static By SHOW_IMPORT_CHECKED = By.xpath("//input[@name='showImport' and @checked='']");
 	public static By ELEMENT_ACCESS_PERMISSION_TAB = By.xpath("//div[text()='Access Permission']");
 	
 	
@@ -35,8 +34,8 @@ public class ManageApplications extends GateInBase {
 	public static final By ELEMENT_FIELD_DESCRIPTION = By.id("description");
 	public static final By ELEMENT_CATEGORY_REMOVE_ICON = By.xpath("//div[@id='UIApplicationOrganizer']//div[@class='TabRepeat ClearFix']/a[@class='ControlIcon DeleteIcon']");
 	public static final String ELEMENT_CATEGORY_EDIT_ICON = "//div[@id='UIApplicationOrganizer']//div[@class='TabRepeat ClearFix']/a[contains(@title,'${categoryName}')]/../a[@class='ControlIcon EditIcon']";
-	public static final String MESSAGE_EMPTY_CATEGORY = "This category is empty. Click the (+) button to add an application.";
-	public static final String MESSAGE_CONFIRM_DELETE_CATEGORY = "Are you sure to delete this category and all its applications?";
+	public static final String MESSAGE_EMPTY_CATEGORY = "This category does not have any application, click (+) button to add application.";
+	public static final String MESSAGE_CONFIRM_DELETE_CATEGORY = "Are you sure to delete this category and all applications on it?";
 	public static final String ELEMENT_CATEGORY_NAME = "//a[@title='${categoryName}']";
 	public static final By ELEMENT_CATEGORIES_FORM = By.xpath("//div[text()='Categories']"); 
 
@@ -75,12 +74,12 @@ public class ManageApplications extends GateInBase {
 		info("-- Add a new category --");
 		String ELEMENT_CURRENT_CATEGORY_NAME = ELEMENT_CATEGORY_NAME.replace("${categoryName}", categoryName);
 		click(ELEMENT_ADD_NEW_CATEGORY);
-		waitForTextPresent("Category Name:");
+		waitForTextPresent("Category name:");
 		type(ELEMENT_FIELD_CATEGORY_NAME, categoryName, true);
 		type(ELEMENT_FIELD_DISPLAY_NAME, displayName, true);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, categoryDescription, true);
 		click(ELEMENT_PERMISSION_SETTING_TAB);
-		waitForTextPresent("Permission Settings");
+		waitForTextPresent("Permission Setting");
 		if (publicMode){
 			check(ELEMENT_CHECKBOX_PUBLIC_MODE);
 			waitForElementNotPresent(ELEMENT_ADD_PERMISSION_BUTTON);
@@ -108,7 +107,7 @@ public class ManageApplications extends GateInBase {
 		type(ELEMENT_FIELD_DISPLAY_NAME, newDisplayName, true);
 		type(ELEMENT_TEXTAREA_DESCRIPTION, newCategoryDescription, true);
 		click(ELEMENT_PERMISSION_SETTING_TAB);
-		waitForTextPresent("Permission Settings");
+		waitForTextPresent("Permission Setting");
 		if (publicMode){
 			check(ELEMENT_CHECKBOX_PUBLIC_MODE);
 			waitForElementNotPresent(ELEMENT_ADD_PERMISSION_BUTTON);
@@ -150,7 +149,7 @@ public class ManageApplications extends GateInBase {
 	}
 
 	public static void makeItPublic(boolean checked){
-		By ELEMNT_PUBLIC_OPTION = By.xpath("//input[@id='publicMode']");
+		By ELEMNT_PUBLIC_OPTION = By.xpath("//input[@name='publicMode']");
 		WebElement element = waitForAndGetElement(ELEMNT_PUBLIC_OPTION);
 		String status = element.getAttribute("checked"); // checked if check otherwise blank
 
@@ -162,10 +161,10 @@ public class ManageApplications extends GateInBase {
 	}
 
 	public static void addApplicationToCategory (String categoryTitle, boolean addNewApps, String newDisplayName, String applicationType, String displayName, boolean publicMode, String groupId, String membership ) {
-		By ELEMENT_ADD_APPS_BUTTON = By.xpath("//a[@title='"+categoryTitle+"']/following::a[@title='Add an Application to this Category']");
+		By ELEMENT_ADD_APPS_BUTTON = By.xpath("//a[@title='"+categoryTitle+"']/following::a[@title='Add application to category']");
 		By ELEMENT_DISPLAY_NAME_TEXTBOX = By.id("displayName");
 		By ELEMNET_ADD_BUTTON = By.linkText("Add");
-		By ELEMENT_APPS_TYPE = By.id("type");
+		By ELEMENT_APPS_TYPE = By.name("type");
 		By ELEMENT_APPS_EXISTING = By.xpath("//span[@class='label' and text()='"+displayName+"']/../..//input[@name='application']");
 		String ELEMENT_APP_LOCATOR = "//span[@id='label' and text()='"+displayName+"']";
 

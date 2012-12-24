@@ -18,7 +18,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_AddCategory extends
 	String categoryName = "testNewCategory";
 	String displayName = "testNewCategory";
 	String categoryDescription = "adding a new category";
-	String messageDuplicateCategory = "This category already exists, please enter another category name.";
+	String messageDuplicateCategory = "This category is existing, please enter another one!";
 	boolean verify = true;
 
 	@BeforeMethod
@@ -42,7 +42,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_AddCategory extends
 	public void test01_AddNewCategoryWithValidValue(){
 		boolean publicMode = false;
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Administration", "*");
+		permissions.put("Platform/Administrators", "*");
 
 		signIn("root", "gtn");
 
@@ -68,7 +68,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_AddCategory extends
 	public void test07_AddSameNameCategories(){
 		boolean publicMode = false;
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Administration", "member");
+		permissions.put("Platform/Administrators", "member");
 
 		signIn("root", "gtn");
 
@@ -97,7 +97,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_AddCategory extends
 	public void test08_AddNewCategoryWithCategoryNameTheSameWithExistingButDifferentByLowerUpperCase(){
 		boolean publicMode = false;
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Administration", "member");
+		permissions.put("Platform/Administrators", "member");
 
 		signIn("root", "gtn");
 
@@ -129,7 +129,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_AddCategory extends
 	public void test014_AddPublicCategoryInApplicationRegistry(){
 		boolean publicMode = true;
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Administration", "member");
+		permissions.put("Platform/Administrators", "member");
 
 		signIn("root", "gtn");
 
@@ -155,7 +155,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_AddCategory extends
 	public void test015_AddPrivateCategoryInApplicationRegistry(){
 		boolean publicMode = false;
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Administration", "member");
+		permissions.put("Platform/Administrators", "member");
 
 		signIn("root", "gtn");
 

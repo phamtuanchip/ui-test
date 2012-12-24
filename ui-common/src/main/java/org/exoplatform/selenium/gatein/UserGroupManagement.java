@@ -187,7 +187,7 @@ public class UserGroupManagement extends GateInBase {
 		info("-- Delete group: " + groupName + "--");
 		int waitTime= wait.length > 0 ? wait[0]: DEFAULT_TIMEOUT;
 		click(ELEMENT_GROUP_REMOVE_ICON);
-
+		pause(500);
 		waitForConfirmation("Are you sure you want to delete this group?");
 		if (verify) {
 			waitForElementNotPresent("//a[@title='"+ groupName +"']",waitTime);
@@ -260,12 +260,12 @@ public class UserGroupManagement extends GateInBase {
 		String deleteIcon = ELEMENT_MEMBERSHIP_DELETE_ICON.replace("${membership}", membershipName);
 		info("--Deleting membership--");
 		click(deleteIcon);
-		waitForConfirmation("Are you sure to delete this membership?");
+		waitForConfirmation("Are you sure you want to delete this membership?");
 		if (!verifyMembership){
+			click(ELEMENT_NEXT_PAGE_ICON);
 			waitForTextNotPresent(membershipName);
 		}
 		else if (verify) {
-			click(ELEMENT_NEXT_PAGE_ICON);
 			waitForTextNotPresent(membershipName);
 		}
 	}

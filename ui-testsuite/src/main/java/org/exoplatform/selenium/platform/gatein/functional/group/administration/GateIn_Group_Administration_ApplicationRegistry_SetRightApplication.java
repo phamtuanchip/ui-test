@@ -60,8 +60,8 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		String DATA_APPLICATION_TYPE = "Portlet";
 		String DATA_APP_DISPLAY_NAME = "Administration Toolbar Portlet";
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Administration", "member");
-		String DATA_GROUP = "Platform/Administration";
+		permissions.put("Platform/Administrators", "member");
+		String DATA_GROUP = "Platform/Administrators";
 		String DATA_MEMBER_SHIP = "manager";
 		String DATA_NODENAME1 = "Case03_01";
 		String DATA_NODENAME2 = "Case03_02"; 
@@ -70,7 +70,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		By ELEMENT_CONTAINER = By.className("PortletLayoutDecorator");
 
 		/*----- Step 1: Add new user and add user to group-----*/	
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToNewStaff();
 		addNewUserAccount(DATA_USER_NAME, DATA_PASS, DATA_PASS, DATA_FIRST_NAME, DATA_LAST_NAME, DATA_EMAIL, DATA_FIRST_NAME, DATA_LANGUAGE, true);
 
@@ -85,11 +85,10 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		//Select group
 		debug("Select group");
 		selectGroup("Platform");
-		selectGroup("Administration");
+		selectGroup("Administrators");
 
 		//Add user to group
 		debug("Add user to group");
-		waitForTextNotPresent("Organization");
 		addUsersToGroup(DATA_USER_NAME, "member", false, true);
 
 		/*----------Step 2: Add new application-------*/
@@ -104,10 +103,10 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 
 		/*-------Step 3: Add new page by user who has access right on portlet-----*/ 
 		debug("Go to Page editor");
-		goToAddPageEditor();
+		goToAddPageGroupEditor();
 
 		addNewPageEditor(DATA_NODENAME1, DATA_NODENAME1, DATA_LANGUAGE, DATA_CATEGORY_NAME, DATA_PORTLET_ID, true);
-		goToEditPageEditor();
+		goToEditPageGroupEditor();
 
 		//Verify portlet is displayed
 		mouseOver(ELEMENT_CONTAINER, true);
@@ -116,7 +115,6 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		waitForTextNotPresent("Page Editor");
 
 		signOut();
-		driver.get(baseUrl);
 
 		/* Step 4: Sign in as new user and add page with portlet which user does not have access right*/
 		signIn(DATA_USER_NAME, DATA_PASS);
@@ -125,21 +123,21 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		goToAddPageEditor();
 
 		debug("Add new page");
-		addNewPageEditor(DATA_NODENAME2, DATA_NODENAME2, DATA_LANGUAGE, DATA_CATEGORY_NAME, DATA_PORTLET_ID, true);
-
-		debug("Verify portlet displayed as protected content");
-		goToEditPageEditor();
-		mouseOver(ELEMENT_CONTAINER, true);
+		type(ELEMENT_INPUT_NODE_NAME, DATA_NODENAME2, true);
+		click(ELEMENT_PAGE_EDITOR_NEXT_STEP);
+		waitForTextPresent("Empty Layout");
+		click(ELEMENT_PAGE_EDITOR_NEXT_STEP);
 		
-		waitForElementPresent(By.xpath("//div[text()='Protected Content']"));
-		click(ELEMENT_PAGE_FINISH_BUTTON);
-		waitForTextNotPresent("Page Editor");
-
+		String category = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", DATA_CATEGORY_NAME);
+		click(category);
+		waitForElementNotPresent("//div[@id='" +DATA_CATEGORY_NAME + "/AdminToolbarPortlet']//img");
+		
+		click(ELEMENT_ABORTEDIT_BUTTON);
+		click("//a[contains(text(),'Yes')]");
 		signOut();
-		driver.get(baseUrl);
 
 		/*-----------------Delete data------------*/
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		debug("Go to application registry");
 		goToApplicationRegistry();
@@ -155,19 +153,11 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		debug("Delete page");
 		deletePage(PageType.GROUP, DATA_NODENAME1);
 		
-		deletePage(PageType.PORTAL, DATA_NODENAME2);
-		
-		debug("Go to portal site");
-		goToPortalSites();
-
-		debug("Delete node");
-		deleteNode("intranet", "Home", DATA_NODENAME2, true);
-
 		debug("Go to group site");
 		goToGroupSites();
 
 		debug("Delete node");
-		deleteNode("Administration", "Application Manager",DATA_NODENAME1 , false);
+		deleteNode("Administrators", "Application Registry",DATA_NODENAME1 , false);
 
 		debug("Go to user and group management");
 		goToUsersAndGroupsManagement();
@@ -190,18 +180,18 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		String DATA_CATEGORY_NAME = "Category04";
 		By DATA_CATEGORY_PATH = By.xpath("//a[@title='"+DATA_CATEGORY_NAME+"']");
 		String DATA_APPLICATION_TYPE = "Portlet";
-		String DATA_APP_DISPLAY_NAME = "Invitation Spaces Portlet";
+		String DATA_APP_DISPLAY_NAME = "Group Navigation Portlet";
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Platform/Administration", "manager");
-		String DATA_GROUP = "Platform/Administration";
+		permissions.put("Platform/Administrators", "manager");
+		String DATA_GROUP = "Platform/Administrators";
 		String DATA_MEMBER_SHIP = "manager";
 		String DATA_NODENAME = "Case04";
 		By ELEMENT_PAGE_DISPLAY_NAME = By.id("i18nizedLabel");
-		By ELEMENT_YES_BUTTON = By.linkText("Yes");
+		By ELEMENT_YES_BUTTON = By.xpath("//a[contains(text(),'Yes')]");
 
 
 		/*----- Step 1: Add new user and add user to group-----*/	
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToNewStaff();
 		addNewUserAccount(DATA_USER_NAME, DATA_PASS, DATA_PASS, DATA_FIRST_NAME, DATA_LAST_NAME, DATA_EMAIL, DATA_FIRST_NAME, DATA_LANGUAGE, true);
 
@@ -216,7 +206,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		//Select group
 		debug("Select group");
 		selectGroup("Platform");
-		selectGroup("Administration");
+		selectGroup("Administrators");
 
 		//Add user to group
 		debug("Add user to group");
@@ -233,7 +223,6 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		addApplicationToCategory(DATA_CATEGORY_NAME, false, null, DATA_APPLICATION_TYPE, DATA_APP_DISPLAY_NAME, false, DATA_GROUP, DATA_MEMBER_SHIP);
 
 		signOut();
-		driver.get(baseUrl);
 
 		/*----Step 3: Add new page when user does not have access right on category----*/
 		signIn(DATA_USER_NAME, DATA_PASS);
@@ -251,15 +240,14 @@ public class GateIn_Group_Administration_ApplicationRegistry_SetRightApplication
 		
 		debug("Verify new user has not access right on category created above");
 		waitForElementNotPresent(DATA_CATEGORY_PATH);
-		click(ELEMENT_ABORT_BUTTON);
-		waitForMessage("Modifications have been made. Are you sure to close without saving?");
+		click(ELEMENT_ABORTEDIT_BUTTON);
+		waitForMessage("Modifications have been made. Are you sure you want to close without saving ?");
 		click(ELEMENT_YES_BUTTON);
 		waitForTextPresent(DATA_FIRST_NAME);
 		signOut();
-		driver.get(baseUrl);
 		
 		//Delete data
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToUsersAndGroupsManagement();
 		deleteUser(DATA_USER_NAME);
 		goToApplicationRegistry();

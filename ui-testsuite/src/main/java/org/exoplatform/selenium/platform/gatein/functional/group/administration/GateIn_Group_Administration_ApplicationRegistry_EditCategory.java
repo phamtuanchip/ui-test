@@ -23,8 +23,8 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 	public String CATE_DISP_NAME_01 = "PLT_APPR_05_02_CATE1";
 	public String CATE_NAME_02 = "PLT_APPR_05_02_CATE2";
 	public String CATE_DISP_NAME_02 = "PLT_APPR_05_02_CATE2";
-	public String APP_ALL_PEOPLE = "All People Portlet";
-	public String APP_ANSWER = "Answers Portlet";
+	public String APP_ACCOUNT_PORTLET = "Account Portlet";
+	public String APP_REGISTRY = "Application Registry";
 
 	public String DATA_USER_NAME_01 = "user10";
 	public String DATA_USER_NAME_02 = "user03";
@@ -34,7 +34,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 	public String DATA_EMAIL03 = DATA_USER_NAME_01+"@exoplatform.com";
 	public String DATA_EMAIL04 = DATA_USER_NAME_02+"@exoplatform.com";
 	public String DATA_LANGUAGE = "English";
-	public String PLATFORM_ADMIN_DATA_GROUP = "Platform/Administration";
+	public String PLATFORM_ADMIN_DATA_GROUP = "Platform/Administrators";
 	public String MANAGER_DATA_MEMBER_SHIP = "manager";
 
 	@BeforeMethod()
@@ -44,7 +44,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 		driver.get(baseUrl);
 		actions = new Actions(driver);
 		driver.manage().window().maximize();
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 
 	//Change access right on category from public to be limited by group(s)
@@ -71,7 +71,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 		//Go to Application Registry page > setting access right for page is public
 		goToApplicationRegistry();
 		waitForElementPresent(ELEMENT_CATEGORIES_AREA_TITLE);
-		goToEditPageEditor();
+		goToEditPageGroupEditor();
 		waitForElementPresent(ELEMENT_VIEW_PAGE_PROPERTIES);
 		click(ELEMENT_VIEW_PAGE_PROPERTIES);
 		waitForElementPresent(ELEMENT_PERMISSION_SETTING_TAB);
@@ -88,8 +88,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 		click(ELEMENT_ACCESS_PERMISSION_TAB);
 		waitForElementPresent(ELEMENT_CHECKBOX_PUBLIC_MODE);
 		makeItPublic(true);
-		waitForElementPresent(ELEMENT_SAVE_CLOSE_BUTTON);
-		click(ELEMENT_SAVE_CLOSE_BUTTON);
+		click(ELEMENT_SAVE_AND_CLOSE_BUTTON);
 		click(ELEMENT_FINISH_ICON);
 
 		//Add new category
@@ -97,8 +96,8 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 		addNewCategoryAtManageApplications(CATE_NAME_01, CATE_DISP_NAME_01, "", true, null, true);
 
 		//Add Apps into added Category
-		addApplicationToCategory(CATE_NAME_01, false, "All People", "Portlet", APP_ALL_PEOPLE, true, null, null);
-		addApplicationToCategory(CATE_NAME_01, false, "Q&A", "Portlet", APP_ANSWER, true, null, null);
+		addApplicationToCategory(CATE_NAME_01, false, "Account", "Portlet", APP_ACCOUNT_PORTLET, true, null, null);
+		addApplicationToCategory(CATE_NAME_01, false, "Application registry", "Portlet", APP_REGISTRY, true, null, null);
 
 		//Edit permission of added Category from Public --> Limited 	
 		Map<String, String> permissions = new HashMap<String, String>();
@@ -106,9 +105,8 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 		editCategoryAtManageApplications(CATE_NAME_01, CATE_DISP_NAME_01, "", false, permissions, false);
 
 		//Sign out and Sign in as added user
-		waitForTextPresent("John Smith");
+		waitForTextPresent("Root Root");
 		signOut();
-		driver.get(baseUrl);
 		signIn(DATA_USER_NAME_01, DATA_PASSWORD);
 
 		//Go to Application Registry page 
@@ -119,7 +117,6 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 
 		//Sign out and Sign in as root
 		signOut();
-		driver.get(baseUrl);
 		signIn("root", "gtn");
 
 		//Go to Application Registry page 
@@ -128,7 +125,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 		//Reset default data
 
 		waitForElementPresent(ELEMENT_CATEGORIES_AREA_TITLE);
-		goToEditPageEditor();
+		goToEditPageGroupEditor();
 		waitForElementPresent(ELEMENT_VIEW_PAGE_PROPERTIES);
 		click(ELEMENT_VIEW_PAGE_PROPERTIES);
 		waitForElementPresent(ELEMENT_PERMISSION_SETTING_TAB);
@@ -175,7 +172,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 		//Go to Application Registry page > setting access right user
 		goToApplicationRegistry();
 		waitForElementPresent(ELEMENT_CATEGORIES_AREA_TITLE);
-		goToEditPageEditor();
+		goToEditPageGroupEditor();
 		waitForElementPresent(ELEMENT_VIEW_PAGE_PROPERTIES);
 		click(ELEMENT_VIEW_PAGE_PROPERTIES);
 		waitForElementPresent(ELEMENT_PERMISSION_SETTING_TAB);
@@ -191,43 +188,39 @@ public class GateIn_Group_Administration_ApplicationRegistry_EditCategory extend
 
 		//Add new category
 		Map<String, String> permissions = new HashMap<String, String>();
-		permissions.put("Organization", "*");
+		permissions.put("Customers", "*");
 		addNewCategoryAtManageApplications(CATE_NAME_02, CATE_DISP_NAME_02, "", false, permissions, true);
 
 		//Sign out and Sign in as added user
 		signOut();
-		driver.get(baseUrl);
 		signIn(DATA_USER_NAME_02, DATA_PASSWORD);
 		//Go to Application Registry page check no Catetory CATE_NAME_02
 		goToApplicationRegistry();
 		waitForElementPresent(ELEMENT_CATEGORIES_AREA_TITLE);
-		goToEditPageEditor();
+		goToEditPageGroupEditor();
 		waitForElementNotPresent(bName02);
 		click(ELEMENT_FINISH_ICON);
 		pause(500);
 		//Sign out and Sign in as root user
 		signOut();
-		driver.get(baseUrl);
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToApplicationRegistry();
 		//Edit permission of added Category from Limited --> public
 		editCategoryAtManageApplications(CATE_NAME_02, CATE_DISP_NAME_02, "", true, null, false);
 
 		//Sign out and Sign in as added user to check can see category
 		signOut();
-		driver.get(baseUrl);
 		signIn(DATA_USER_NAME_02, DATA_PASSWORD);
 		//Verify added user can see above edited Category 
 		goToApplicationRegistry();
 		waitForElementPresent(ELEMENT_CATEGORIES_AREA_TITLE);
-		goToEditPageEditor();
+		goToEditPageGroupEditor();
 		waitForElementPresent(bName02);
 		click(ELEMENT_CLOSE_WINDOWS_BUTTON);
 
 		//Log in as root to edit category
 		//Sign out and Sign in as root
 		signOut();
-		driver.get(baseUrl);
 		signIn("root", "gtn");
 
 		//Go to Application Registry page 

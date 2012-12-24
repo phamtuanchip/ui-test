@@ -35,6 +35,8 @@ public class ManageAccount extends GateInBase {
 	//Sign-in function for eXoGTN
 	public static void signIn(String username, String password) {
 		info("--Sign in as " + username + "--");
+		//click(By.linkText("Login to the ACME social intranet"));
+		//click("//a/b[text()='Sign in']");
 		click(ELEMENT_SIGN_IN_LINK);
 		type(ELEMENT_INPUT_USERNAME, username, true);
 		type(ELEMENT_INPUT_PASSWORD, password, true);

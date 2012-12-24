@@ -46,7 +46,7 @@ public class GateIn_Group_Organization_GroupManagement_Add extends GateInBase {
 	@Test   
 	public void test01_AddGroup () {
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		//Go to user and group management page
 		info("--Go to User and group--");
@@ -75,7 +75,7 @@ public class GateIn_Group_Organization_GroupManagement_Add extends GateInBase {
 		By elementUsername = By.xpath("//input[@id='username']");
 
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		//Go to user and group management page
 		info("--Go to User and group--");

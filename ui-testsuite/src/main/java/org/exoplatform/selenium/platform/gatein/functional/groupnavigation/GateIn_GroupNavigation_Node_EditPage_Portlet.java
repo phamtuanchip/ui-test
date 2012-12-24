@@ -28,7 +28,7 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 	/**
 	 * @param args
 	 */
-	By ELEMENT_EDIT_NAV_GROUP = By.xpath("//td/div[text()='Administration']/ancestor::tr/td/a[text()='Edit Navigation']");
+	By ELEMENT_EDIT_NAV_GROUP = By.xpath("//td/div[text()='Administrators']/ancestor::tr/td/a[text()='Edit Navigation']");
 	By UP_LEVEL = By.xpath("//a[@title='Up Level']");
 	By ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT = By.id("UIPage");
 
@@ -74,7 +74,7 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 		click(ELEMENT_WINDOW_SETTINGS_TAB);
 		info("--Edit current title with valid value--");
 		type(ELEMENT_WINDOWS_TITLE, "test18_ChangePortlet", true);
-		saveAndClose();
+		click(By.id("Save"));
 		mouseOver(ELEMENT_PORTLET_CONTAINER, true);
 		waitForTextPresent("test18_ChangePortlet");
 		//Check Finish
@@ -96,16 +96,16 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 		String DISPLAY_NAME = "GROUPNAV_26_02_023";		
 		String LANGUAGE = "English";	
 		Map<String, String> PORTLET_IDS = new HashMap<String, String>();
-		PORTLET_IDS.put("Collaboration/Calendar","");
-		String CATEGORY_TITLE = "Collaboration";
-		String ELEMENT_COLLABORATION_CATEGORY = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", "Collaboration");
-		By ELEMENT_APPLICATION_COLLABORATION_ANSWERS = By.id("Collaboration/AnswersPortlet");
+		PORTLET_IDS.put("Administration/ApplicationRegistryPortlet","");
+		String CATEGORY_TITLE = "Administration";
+		String ELEMENT_DASHBOARD_CATEGORY = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", "Dashboard");
+		By ELEMENT_APPLICATION_DASHBOARD_PORTLET = By.id("dashboard/DashboardPortlet");
 
 		info("Main program");	  
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		//Add new page by wizard
-		goToGroupSites();
-		goToAddPageEditor();
+		goToApplicationRegistry();
+		goToAddPageGroupEditor();
 		click(UP_LEVEL);   
 		addNewPageEditor(NODE_NAME, DISPLAY_NAME, LANGUAGE, CATEGORY_TITLE, PORTLET_IDS, true);
 		goToGroupSites();
@@ -122,18 +122,19 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 		info("--View layout of portal before change portlet layout--");
 		captureScreen("case23_BeforeChange");
 		info("--Select application tab on edit inline composer --");
-		waitForTextPresent("Administration") ;
-		click(ELEMENT_COLLABORATION_CATEGORY);
-		dragAndDropToObject(ELEMENT_APPLICATION_COLLABORATION_ANSWERS, ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT);
+		waitForTextPresent("Administration");
+		click(ELEMENT_DASHBOARD_CATEGORY);
+		dragAndDropToObject(ELEMENT_APPLICATION_DASHBOARD_PORTLET, ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT);
 		click(ELEMENT_FINISH_ICON);
 		save();
-		mouseOver(By.linkText("My Groups"),true);
+		mouseOver(ELEMENT_MENU_GROUP,true);
+		mouseOver(ELEMENT_MENU_ADMIN,true);
 		click(By.linkText("GROUPNAV_26_02_023"));
 		captureScreen("GROUPNAV_26_02_023");
 		//Delete node
 		goToGroupSites();
 		click(ELEMENT_EDIT_NAV_GROUP);
-		deleteNode("Administration","GROUPNAV_26_02_023","GROUPNAV_26_02_023",true);
+		deleteNode("Administrators","Administration","GROUPNAV_26_02_023",true);
 		
 		goToManagePages();
 		deletePage(PageType.GROUP, NODE_NAME);

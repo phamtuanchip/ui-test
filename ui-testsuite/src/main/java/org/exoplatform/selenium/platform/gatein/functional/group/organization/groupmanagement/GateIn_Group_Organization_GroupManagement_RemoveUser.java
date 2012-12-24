@@ -35,7 +35,7 @@ public class GateIn_Group_Organization_GroupManagement_RemoveUser extends GateIn
 	@Test
 	public void test01_RemoveUserFromExistingGroup () {
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		info("--Go to User and group--");
 		//Go to user and group management page
@@ -59,7 +59,7 @@ public class GateIn_Group_Organization_GroupManagement_RemoveUser extends GateIn
 	public void test03_CheckMembershipOfUserInUserProfileAfterRemovedFromSpecificGroup() {
 
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		info("--Go to User and group--");
 		//Go to user and group management page

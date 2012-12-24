@@ -28,8 +28,8 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 	boolean SELECT = true; 
 	By upLevel = By.xpath("//a[@title='Up Level']");
 
-	public String CAN_NOT_DELETE_GROUP_MANDATORY = "You cannot delete this group because it (or its child) is mandatory";
-	public String CAN_NOT_DELETE_MEMBERSHIP_MANDATORY ="You cannot delete this membership because it is mandatory.";
+	public String CAN_NOT_DELETE_GROUP_MANDATORY = "You can't delete this group because it (or its child) is mandatory.";
+	public String CAN_NOT_DELETE_MEMBERSHIP_MANDATORY ="You can not delete this membership because it is mandatory";
 	public String SIGN_IN_FAILED ="Sign in failed. Wrong username or password.";
 	
 	@BeforeMethod()
@@ -43,7 +43,7 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 	@Test
 	public void test04_checkExistingOfUserInDeteledGroup () {
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		info("--Go to User and group--");
 		//Go to user and group management page
@@ -105,7 +105,7 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 	@Test
 	public void test10_deleteMandatoryGroup () {
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		info("--Go to User and group--");
 		goToUsersAndGroupsManagement();
@@ -117,14 +117,14 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 		
 		//Delete group is mandatory
 		deleteGroup(GROUP_NAME1, false);
-		waitForTextPresent(CAN_NOT_DELETE_GROUP_MANDATORY);
+		waitForMessage(CAN_NOT_DELETE_GROUP_MANDATORY);
 		closeMessageDialog();
 	}
 
 	@Test
 	public void test05_checkExistingOfUserInGroupAfterHisRoleInThatGroupWasDeleted(){
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		info("--Go to User and group--");
 		goToUsersAndGroupsManagement();
@@ -158,7 +158,7 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 	@Test
 	public void test06_checkMembershipInformationOfUserAfterRoleOfHimInAGroupWasDeleted(){
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		info("--Go to User and group--");
 		goToUsersAndGroupsManagement();
@@ -212,7 +212,7 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 	@Test
 	public void test07_deleteMandatoryMembership(){
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		info("--Go to User and group--");
 		goToUsersAndGroupsManagement();
@@ -242,10 +242,10 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 		String searchOption = "User Name";
 		By ELEMENT_USER_NAME = By.name("username");
 		By ELEMENT_PWD = By.name("password");
-		By ELEMENT_SIGNIN = By.linkText("Sign in");
+		By ELEMENT_SIGNIN = By.name("signIn");
 
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		
 		// Go to New Staff
 		info("Go to New Staff");
@@ -265,7 +265,7 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 		
 		//Add new user into group
 		info("Add new user into group");
-		selectGroup("Development");
+		selectGroup("Platform/Administrators");
 		info("Add user into group");
 		addUsersToGroup(USER_NAME, "member", SELECT, true);
 		isElementPresent(USER_NAME);
@@ -287,7 +287,7 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 		info("Check group after delete user");
 		info("Choose Group Management");
 		chooseGroupTab();
-		selectGroup("Development");
+		selectGroup("Platform/Administrators");
 		waitForElementNotPresent(USER_NAME);
 		waitForElementNotPresent("member");
 		signOut();
@@ -297,7 +297,7 @@ public class GateIn_Group_Organization_GroupManagement_Delete extends GateInBase
 		//click(ELEMENT_GO_TO_PORTAL);
 		signIn(USER_NAME, "test_por_02_04_001");
 		waitForTextPresent(SIGN_IN_FAILED);
-		type(ELEMENT_USER_NAME, "john", true);
+		type(ELEMENT_USER_NAME, "root", true);
 		waitForElementPresent(ELEMENT_PWD);
 		type(ELEMENT_PWD, "gtn", true);
 		click(ELEMENT_SIGNIN);		

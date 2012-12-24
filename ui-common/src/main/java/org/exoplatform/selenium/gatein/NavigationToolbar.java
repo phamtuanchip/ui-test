@@ -37,9 +37,8 @@ public class NavigationToolbar extends GateInBase {
 	//Go to Dashboard
 	public static void goToDashboard(){
 		info("--Go to Dashboard page--");
-		WebElement element = driver.findElement(By.id("UserNavigationTabsContainer"));
-		actions.moveToElement(element).build().perform();
-		driver.findElement(By.linkText("Dashboard")).click();	
+		
+		click(By.linkText("Dashboard"));	
 	}
 	/**
 	 * @update for gatein by thuntn

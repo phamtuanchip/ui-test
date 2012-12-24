@@ -266,6 +266,7 @@ public class GateInBase extends TestBase {
 	 * General
 	 * */
 	public static final By ELEMENT_SAVE_CLOSE_BUTTON = By.linkText("Save & Close");
+	public static final By ELEMENT_SAVE_AND_CLOSE_BUTTON = By.linkText("Save And Close");
 	public static final By ELEMENT_OK_BUTTON = By.xpath("//a[text()='OK']");
 	public static final By ELEMENT_APPLY_BUTTON = By.linkText("Apply");
 	public static final By ELEMENT_SAVE_BUTTON = By.linkText("Save");

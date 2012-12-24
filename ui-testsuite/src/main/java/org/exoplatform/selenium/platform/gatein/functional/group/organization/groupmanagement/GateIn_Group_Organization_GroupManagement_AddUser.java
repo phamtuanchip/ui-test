@@ -3,8 +3,10 @@ package org.exoplatform.selenium.platform.gatein.functional.group.organization.g
 import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.gatein.ManageAccount.*;
 import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
+import static org.exoplatform.selenium.gatein.UserGroupManagement.chooseGroupTab;
 
 import org.exoplatform.selenium.gatein.GateInBase;
+import org.exoplatform.selenium.gatein.UserGroupManagement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -24,19 +26,19 @@ public class GateIn_Group_Organization_GroupManagement_AddUser extends GateInBas
 	public String GROUP_MANAGEMENT = "//div[text()='Group Management']";
 	public String DEVELOPMENT_LINK = "//a[@title='Development']";
 	public String USERNAME_INPUT = "//input[@id='username']";
-	public String USERNAME_DATA = "Barbie";
+	public String USERNAME_DATA = "barbie";
 	public String SELECT_USER_ICON = "//a[@title='Select User']";
-	public String SEARCH_INPUT = "//input[@id='QuickSearch']";
+	public String SEARCH_INPUT = "//input[@id='Quick Search']";
 	public String SEARCH_ICON = "//a[@title='Quick Search']";
 	public String DEMO_SEARCH_RESULT = "//div[@title='demo']";
 	public String JOHN_SEARCH_RESULT = "//div[@title='john']";
-	public String JAMES_SEARCH_RESULT = "//div[@title='james']";
-	public String EMPTY_DATA_RESULTS = "Empty Data";
+	public String ROOT_SEARCH_RESULT = "//div[@title='root']";
+	public String EMPTY_DATA_RESULTS = "Empty data";
 	public String ELEMENT_ADD_BUTTON = "//a[text()='Add']";
 	
 	//Product message
-	public String USER_WITHOUT_SPECIFY_MESSAGE = "The field \"Username\" is required.";
-	public String UNAVAILABLE_USER_MESSAGE = "User \""+USERNAME_DATA+"\" does not exist.";
+	public String USER_WITHOUT_SPECIFY_MESSAGE = "The field \"User Name\" is required.";
+	public String UNAVAILABLE_USER_MESSAGE = "User \"" +USERNAME_DATA+ "\" doesn't exist.";
 	
 	//Global variables
 	public WebElement ELEMENT = null;
@@ -48,7 +50,7 @@ public class GateIn_Group_Organization_GroupManagement_AddUser extends GateInBas
 		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get(baseUrl);
 		actions = new Actions(driver);
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 	
 	//Add user into group without specify anyone
@@ -61,16 +63,16 @@ public class GateIn_Group_Organization_GroupManagement_AddUser extends GateInBas
 		goToUsersAndGroupsManagement();
 		
 		//Select Group Management
-		click(GROUP_MANAGEMENT);
+		chooseGroupTab();
 		
 		//Click on Management Group
-		click(DEVELOPMENT_LINK);
+		UserGroupManagement.selectGroup("Platform/Administrators");
 		
 		//Not input value for Username then click Save
 		save();
 		
 		//Confirm alert message
-		waitForTextPresent(USER_WITHOUT_SPECIFY_MESSAGE);
+		waitForMessage(USER_WITHOUT_SPECIFY_MESSAGE);
 		click(ELEMENT_OK_BUTTON);
 		
 		info("-END test01_AddUserIntoGroupWithoutSpecify");
@@ -86,17 +88,17 @@ public class GateIn_Group_Organization_GroupManagement_AddUser extends GateInBas
 		goToUsersAndGroupsManagement();
 		
 		//Select Group Management
-		click(GROUP_MANAGEMENT);
+		chooseGroupTab();
 		
 		//Click on Management Group
-		click(DEVELOPMENT_LINK);
+		UserGroupManagement.selectGroup("Platform/Administrators");
 				
 		//Input Username not exist into System
 		type(USERNAME_INPUT, USERNAME_DATA, true);
 		save();
 		
 		//Confirm alert message
-		waitForTextPresent(UNAVAILABLE_USER_MESSAGE);
+		waitForMessage(UNAVAILABLE_USER_MESSAGE);
 		click(ELEMENT_OK_BUTTON);
 		
 		info("-END test02_AddUnavailableUserIntogroup");
@@ -112,13 +114,12 @@ public class GateIn_Group_Organization_GroupManagement_AddUser extends GateInBas
 		goToUsersAndGroupsManagement();
 		
 		//Select Group Management
-		click(GROUP_MANAGEMENT);
+		chooseGroupTab();
 		
 		//Click on Management Group
-		click(DEVELOPMENT_LINK);
+		UserGroupManagement.selectGroup("Platform/Administrators");
 		
 		//Select User icon
-		waitForElementPresent(SELECT_USER_ICON);
 		click(SELECT_USER_ICON);
 		
 		//Verify Add button & Search input
@@ -152,7 +153,6 @@ public class GateIn_Group_Organization_GroupManagement_AddUser extends GateInBas
 		click(SEARCH_ICON);
 		
 		//Verify Searched users
-		waitForElementPresent(JAMES_SEARCH_RESULT);
 		waitForElementPresent(JOHN_SEARCH_RESULT);
 		
 		//Reset data input
@@ -160,12 +160,13 @@ public class GateIn_Group_Organization_GroupManagement_AddUser extends GateInBas
 		ELEMENT.clear();
 		
 		//Search with not completed word
-		type(SEARCH_INPUT, "e", true);
+		type(SEARCH_INPUT, "o", true);
 		click(SEARCH_ICON);
 		
 		//Verify Searched users
-		waitForElementPresent(JAMES_SEARCH_RESULT);
+		waitForElementPresent(ROOT_SEARCH_RESULT);
 		waitForElementPresent(DEMO_SEARCH_RESULT);
+		waitForElementPresent(JOHN_SEARCH_RESULT);
 		
 		//Reset data input
 		ELEMENT = waitForAndGetElement(By.xpath(SEARCH_INPUT));

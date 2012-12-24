@@ -6,6 +6,7 @@ import static org.exoplatform.selenium.gatein.NavigationToolbar.goToDashboard;
 
 import org.exoplatform.selenium.gatein.GateInBase;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -19,10 +20,11 @@ import org.testng.annotations.Test;
 public class GateIn_Dashboard_DeleteGadget extends GateInBase 
 {
 	//Define data
-	public String GADGET_NAME = "Agenda Gadget";
-	public String GADGET_TITLE_DISPLAY = "My Agenda";
+	public String GADGET_NAME = "Calendar";
+	public String GADGET_TITLE_DISPLAY = "Calendar";
 	public By GADGET_DIRECTORY_LIST = By.xpath("//div[@class='UIPopupWindow UIDragObject NormalStyle']");
-	public By AGENDA_GADGET_ON_LIST = By.xpath("//div[@class='GadgetTitle' and @title='"+GADGET_NAME+"']");
+	public By AGENDA_GADGET_ON_LIST = By.id("Gadgets/Calendar");
+			//By.xpath("//div[@class='GadgetTitle' and @title='"+GADGET_NAME+"']");
 
 	public void deleteGadgetOnDashboard(String gadgetTitleDisplay)
 	{
@@ -34,18 +36,18 @@ public class GateIn_Dashboard_DeleteGadget extends GateInBase
 		waitForTextNotPresent(gadgetTitleDisplay);
 	}
 	
-	@BeforeMethod()
+	@BeforeMethod
 	public void beforeTest()
 	{
 		initSeleniumTest();
 		actions = new Actions(driver);
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 	
 	//Delete gadget with  deleting confirmation
-	@Test()
+	@Test(groups={"pending"})
 	public void test01_DeleteGadgetWithConfirmation()
 	{		
 		//Goto DashBoard
@@ -58,17 +60,19 @@ public class GateIn_Dashboard_DeleteGadget extends GateInBase
 		waitForElementPresent(GADGET_DIRECTORY_LIST);
 
 		//Drag My Agenda Gadget on list and Drop into Container
-		waitForTextPresent("Collaboration");
-		actions.dragAndDropBy(waitForAndGetElement(AGENDA_GADGET_ON_LIST), 2, 2).build().perform();
+		WebElement e = waitForAndGetElement(AGENDA_GADGET_ON_LIST);
+		By b = By.xpath("//div[@class='UIColumns ClearFix']");
+		dragAndDropToObject(AGENDA_GADGET_ON_LIST, b);
+		//actions.dragAndDropBy(e, 10, 10).build().perform();
+		
+		//click(ELEMENT_CLOSE_WINDOW);
 		waitForTextPresent(GADGET_TITLE_DISPLAY);
-		waitForElementPresent(ELEMENT_CLOSE_WINDOW);
-		click(ELEMENT_CLOSE_WINDOW);
 		
 		//Delete data
 		deleteGadgetOnDashboard(GADGET_TITLE_DISPLAY);
 	}
 	
-	@AfterMethod()
+	@AfterMethod
 	public void afterTest()
 	{
 		signOut();

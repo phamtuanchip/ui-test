@@ -35,7 +35,7 @@ public class GateIn_Group_Administration_ApplicationRegistry_Gadget extends Gate
 		By DATA_GADGET_LINK = By.xpath("//a[@title='Gumtree - Londons free classifieds']");
 		String DATA_GADGET_NAME = "Gumtree - Londons free classifieds";
 
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToApplicationRegistry();
 		click(ELEMENT_GADGET_LINK);
 		addRemoteGadget(DATA_URL);
@@ -51,9 +51,9 @@ public class GateIn_Group_Administration_ApplicationRegistry_Gadget extends Gate
 		String DATA_URL = "http://www.labpixies.com/campaigns/todo/todo.xml";
 		By DATA_GADGET_LINK = By.xpath("//a[@title='To-Do List']");
 		String DATA_GADGET_NAME = "To-Do List";
-		String MESSAGE_URL_EXIST = "This URL already exists. Select another URL.";
+		String MESSAGE_URL_EXIST = "This url is existing, please select another one!";
 
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 		goToApplicationRegistry();
 		click(ELEMENT_GADGET_LINK);
 		addRemoteGadget(DATA_URL);

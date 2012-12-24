@@ -37,7 +37,7 @@ public class GateIn_Group_Organization_GroupManagement_EditRole extends GateInBa
 	@Test
 	public void test01_EditMembershipForUserFromExistingGroup () {
 		info("--login portal--");
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 
 		info("--Go to User and group--");
 		//Go to user and group management page
@@ -49,7 +49,7 @@ public class GateIn_Group_Organization_GroupManagement_EditRole extends GateInBa
 
 		//Add user into group
 		info("--Add user into group--");
-		selectGroup("Organization");
+		selectGroup("Platform/Administrators");
 		addUsersToGroup(ELEMENT_USER_NAME, ELEMENT_MEMBER_SHIP, SELECT, true);
 		waitForElementPresent(VERIFY_BEFORE_EDIT_ROLE);
 

@@ -19,8 +19,8 @@ import org.testng.annotations.Test;
 public class GateIn_Dashboard_EditGadget extends GateInBase
 {
 	//Define data
-	public String GADGET_NAME = "Top Rated Topics";
-	public String GADGET_TITLE_DISPLAY = "Top voted rating topic";
+	public String GADGET_NAME = "Calendar";
+	public String GADGET_TITLE_DISPLAY = "Calendar";
 	public By GADGET_DIRECTORY_LIST = By.xpath("//div[@class='UIPopupWindow UIDragObject NormalStyle']");
 	public By BOOKMARKS_GADGET_ON_LIST = By.xpath("//div[@class='GadgetTitle' and @title='"+GADGET_NAME+"']");
 	public By EDIT_ICON = By.xpath("//span[text()='"+GADGET_TITLE_DISPLAY+"']/preceding::span[@title='Edit Gadget']");
@@ -30,18 +30,18 @@ public class GateIn_Dashboard_EditGadget extends GateInBase
 	public By SAVE_BUTTON = By.xpath("//input[@type='button' and @value='Save']");
 
 
-	@BeforeMethod()
+	@BeforeMethod
 	public void beforeTest()
 	{
 		initSeleniumTest();
 		actions = new Actions(driver);
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
-		signIn("john", "gtn");
+		signIn("root", "gtn");
 	}
 
 	//Edit gadget preferences
-	@Test()
+	@Test(groups={"pending"})
 	public void test01_EditGadgetPreference()
 	{
 		//Goto DashBoard
@@ -54,7 +54,6 @@ public class GateIn_Dashboard_EditGadget extends GateInBase
 		waitForElementPresent(GADGET_DIRECTORY_LIST);
 
 		//Drag Bookmarks Gadget on list and Drop into Container
-		waitForTextPresent("Tools");
 		actions.dragAndDropBy(waitForAndGetElement(BOOKMARKS_GADGET_ON_LIST), 2, 2).build().perform();
 		waitForTextPresent(GADGET_NAME);
 		waitForElementPresent(ELEMENT_CLOSE_WINDOW);
@@ -79,7 +78,7 @@ public class GateIn_Dashboard_EditGadget extends GateInBase
 		deleteGadgetOnDashboard("Top voted rating topic");
 	}
 
-	@AfterMethod()
+	@AfterMethod
 	public void afterTest()
 	{
 		driver.quit();
