@@ -6,7 +6,6 @@ import static org.exoplatform.selenium.gatein.NavigationToolbar.goToDashboard;
 
 import org.exoplatform.selenium.gatein.GateInBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -59,8 +58,6 @@ public class GateIn_Dashboard_DeleteGadget extends GateInBase
 		click(ELEMENT_ADD_GADGETS_LINK);
 		waitForElementPresent(GADGET_DIRECTORY_LIST);
 
-		//Drag My Agenda Gadget on list and Drop into Container
-		WebElement e = waitForAndGetElement(AGENDA_GADGET_ON_LIST);
 		By b = By.xpath("//div[@class='UIColumns ClearFix']");
 		dragAndDropToObject(AGENDA_GADGET_ON_LIST, b);
 		//actions.dragAndDropBy(e, 10, 10).build().perform();
