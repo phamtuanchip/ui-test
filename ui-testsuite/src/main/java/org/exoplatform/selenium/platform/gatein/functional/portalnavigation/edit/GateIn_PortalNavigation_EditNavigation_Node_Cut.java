@@ -113,7 +113,7 @@ public class GateIn_PortalNavigation_EditNavigation_Node_Cut extends GateInBase 
 		info("Paste to new place");
 		pasteNode("SiteMap");
 		save();
-		
+		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
 		//Delete new node
 		info("Delete node");
 		editNavigation("classic");

@@ -127,6 +127,7 @@ public class GateIn_GroupNavigation_Node_EditPage_Portlet extends GateInBase {
 		dragAndDropToObject(ELEMENT_APPLICATION_DASHBOARD_PORTLET, ELEMENT_EDIT_PAGE_PAGE_BODY_COMPONENT);
 		click(ELEMENT_FINISH_ICON);
 		save();
+		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
 		mouseOver(ELEMENT_MENU_GROUP,true);
 		mouseOver(ELEMENT_MENU_ADMIN,true);
 		click(By.linkText("GROUPNAV_26_02_023"));

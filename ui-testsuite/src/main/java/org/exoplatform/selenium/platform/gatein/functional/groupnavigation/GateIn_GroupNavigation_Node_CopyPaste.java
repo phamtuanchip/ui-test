@@ -56,7 +56,7 @@ public class GateIn_GroupNavigation_Node_CopyPaste extends GateInBase
 		
 		//Save
 		save();
-		
+		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
 		//Select Edit Navigation of Content Management
 		click(ADMIN_EDIT_NAVI_LINK);
 		click(ELEMENT_APPLICATION_REGIS);
@@ -68,6 +68,7 @@ public class GateIn_GroupNavigation_Node_CopyPaste extends GateInBase
 		waitForConfirmation(MSG_DELETE_NODE);
 		waitForElementNotPresent(CHILD_NODE);
 		save();
+		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
 	}
 	
 	//Copy/Paste a node into another node in different navigation

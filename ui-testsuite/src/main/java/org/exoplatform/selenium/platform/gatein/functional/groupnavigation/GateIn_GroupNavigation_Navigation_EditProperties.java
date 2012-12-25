@@ -22,8 +22,8 @@ public class GateIn_GroupNavigation_Navigation_EditProperties extends GateInBase
 	public By PRIORITY_SELECT = By.xpath("//select[@name='priority']");
 	public By OWNER_TYPE_INPUT = By.xpath("//input[@id='ownerType' and @readonly='' or @readonly ='readonly']");
 	public By OWNER_ID_INPUT = By.xpath("//input[@id='ownerId' and @readonly='' or @readonly ='readonly']");
-	public By PRIORITY_OPTION_1 = By.xpath("//option[@value='1' and @selected='selected']");
-	public By PRIORITY_OPTION_2 = By.xpath("//option[@value='2' and @selected='selected']");
+	public By PRIORITY_OPTION_1 = By.xpath("//option[@value='2' and @selected='selected']");
+	public By PRIORITY_OPTION_2 = By.xpath("//option[@value='6' and @selected='selected']");
 	public By ADMINISTRATION_OLD_POSTION = By.xpath("//div[@id='UIGroupNavigationGrid']//table[1]//div[@title='/platform/administrators']");
 	public By ADMINISTRATION_NEW_POSTION = By.xpath("//div[@id='UIGroupNavigationGrid']//table[2]//div[@title='/platform/administrators']");
 
@@ -59,7 +59,7 @@ public class GateIn_GroupNavigation_Navigation_EditProperties extends GateInBase
 		waitForElementPresent(PRIORITY_OPTION_1);
 
 		//Change number of priority
-		select(PRIORITY_SELECT, "2");
+		select(PRIORITY_SELECT, "6");
 		save();
 
 		//Verify position of Administration after changing order
