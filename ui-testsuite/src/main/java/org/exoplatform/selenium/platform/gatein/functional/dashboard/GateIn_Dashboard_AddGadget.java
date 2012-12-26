@@ -68,7 +68,7 @@ public class GateIn_Dashboard_AddGadget extends GateInBase
 		
 		//Open Hangman Gadget
 		click(MAXIMIZE_ICON);
-		
+		waitForElementNotPresent(MAXIMIZE_ICON);
 		/*--- After adding a gadget on Dashboard, not display icon edit, minimize, delete gadget
 		 *--- Must refresh browser or open this Gadget --> These icon are displayed */ 
 		
