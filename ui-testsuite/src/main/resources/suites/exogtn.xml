@@ -2,6 +2,11 @@
 
 <suite name="EXOGTN Functional Test" verbose="1">
 		<test name="exogtn-func" enabled="true">
+		<groups>
+		  <run>
+		    <exclude name="pending"/>
+		  </run>
+		</groups>
 		<packages>
 			<package name="org.exoplatform.selenium.platform.exogtn.functional.*" />
 		</packages>

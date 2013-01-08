@@ -263,7 +263,9 @@ public class PlatformBase extends TestBase {
 	public static final By ELEMENT_CLOSE_WINDOW = By.xpath("//a[@title='Close Window']");
 	public static final By ELEMENT_FINISH_ICON = By.xpath("//a[@title='Finish']"); //Finish editing portlet icon
 	public static final By ELEMENT_NEXT_BUTTON = By.linkText("Next");	
-	public static final By ELEMENT_ABORT_BUTTON = By.linkText("//a[text()='Abort']");
+	public static final By ELEMENT_ABORT_BUTTON = By.linkText("Abort");
+	public static final By ELEMENT_RESET_BUTTON = By.linkText("Reset");
+	public static final By ELEMENT_BACK_BUTTON = By.xpath("//a[contains(text(),'Back')]");
 
 	/*Portlet in general*/
 	public static final By ELEMENT_EDIT_PORTLET_ICON = By.xpath("//a[@title='Edit Portlet']");

@@ -371,7 +371,7 @@ public class ECMS_DMS_SE_BasicAction_CopyPaste extends EcmsBase {
 	 * Verify result
 	 * Delete data
 	 */
-	@Test
+	@Test (groups={"pending"})
 	public void test18_CopyFolderPasteIntoNodeUserNotHaveAddNodeRight()
 	{
 		String DOCUMENT_FOLDER_NAME="ECMS_DMS_SE_BasicAction_CopyPaste_Document_Folder_18";

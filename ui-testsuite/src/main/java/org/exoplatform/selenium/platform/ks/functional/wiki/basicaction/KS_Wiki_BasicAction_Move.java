@@ -87,7 +87,7 @@ public class KS_Wiki_BasicAction_Move extends KsBase {
 
 		click(ELEMENT_PAGE2);
 
-		movePage(PAGE_NAME1,PAGE_NAME2);
+		movePage(PAGE_NAME2,PAGE_NAME1);
 
 		click(ELEMENT_PAGE1);
 

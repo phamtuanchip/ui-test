@@ -1,14 +1,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Social Functional Test" verbose="1">
-	<test name="social-func" enabled="true">
+<suite name="ECMS Functional Test" verbose="1">
+	<test name="ecms-func" enabled="true">
 		<groups>
 		  <run>
 		    <exclude name="pending"/>
 		  </run>
 		</groups>
 		<packages>
-			<package name="org.exoplatform.selenium.platform.social.functional.*" />
+			<package name="org.exoplatform.selenium.platform.ecms.functional.dms.siteexplorer.*" />
 		</packages>
 	</test>
 

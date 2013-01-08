@@ -248,7 +248,7 @@ public class PageEditor extends EcmsBase {
 
 	//function remove a portlet
 	public static void removePortlet(By sign, By elementPortlet, By iconDelete){
-		if (waitForAndGetElement(sign) != null){
+		if (waitForAndGetElement(sign, 7000, 0) != null){
 			mouseOver(elementPortlet, true);
 			click(iconDelete);
 			acceptAlert();

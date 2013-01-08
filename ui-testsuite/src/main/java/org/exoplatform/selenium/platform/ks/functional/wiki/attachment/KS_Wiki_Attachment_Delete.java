@@ -59,7 +59,9 @@ public class KS_Wiki_Attachment_Delete extends Wiki{
 		attachFileInWiki(ATTACHMENT_PATH);
 		waitForElementPresent(ATTACHMENT_FILE_LINK);
 		
-		deleteFile(ATTACHMENT_NAME);
+		String removeIcon= ELEMENT_REMOVE_ATTACHMENT.replace("{$file}", ATTACHMENT_NAME);
+		click(removeIcon);
+		waitForElementNotPresent(removeIcon);
 		waitForElementNotPresent(ATTACHMENT_FILE_LINK);
 		
 		pause(1000);

@@ -79,6 +79,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     String template = "Two-Column Layout";
     //Create new page with a blank template
     goToWiki();
+    waitForTextPresent("Wiki Home");
     addTemplateWikiPage(title, mode, template);
     info("Create new page successfully");
     //Reset data
@@ -222,7 +223,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//strong[text()='" + content.replace("**", "") + "']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data
@@ -241,7 +242,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     int mode = 0;
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(By.xpath("//em[text()='" + content.replace("//", "") + "']"));
     info("Create new page successfully");
     //Reset data
@@ -261,7 +262,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//del[text()='" + content.replace("--", "") + "']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data
@@ -281,7 +282,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//ins[text()='" + content.replace("__", "") + "']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data
@@ -301,7 +302,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//h1/span[text()='" + content.replace("=", "") + "']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data
@@ -324,7 +325,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//div[@class='WikiContent']//ul/li[text()='item 1']/ul/li[text()='item 2']/ul/li[text()='item 3']/../../../../following::li[text()='item 4']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data
@@ -347,7 +348,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//div[@class='WikiContent']//ol/li[text()='item 1']/ol/li[text()='item 2']/ol/li[text()='item 3']/../../../../following::li[text()='item 4']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data
@@ -367,7 +368,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//div[@class='WikiContent']//table/tbody/tr/th[text()='Title 1']/../th[text()='Title 2']/../following::tr/td[text()='Word 1']/../td[text()='Word 2']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data
@@ -387,7 +388,7 @@ public class KS_Wiki_Action_Add extends Wiki{
     By ELEMENT_CONTENT = By.xpath("//span[@class='wikicreatelink']/a/span[text()='" + content.replace("[[", "").replace("]]", "") + "']");
     //Create new page with a blank template
     goToWiki();
-    addBlankWikiPage(title, content, mode);
+    addBlankWikiPage(title, content, mode, false);
     waitForElementPresent(ELEMENT_CONTENT);
     info("Create new page successfully");
     //Reset data

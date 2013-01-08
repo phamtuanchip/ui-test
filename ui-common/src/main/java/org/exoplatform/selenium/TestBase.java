@@ -340,9 +340,9 @@ public class TestBase {
 			WebElement element = waitForAndGetElement(locator);
 
 			if (!element.isSelected()) {
-				actions.click(element).perform();
+				click(locator);
 			} else {
-				Assert.fail("Element " + locator + " is already checked.");
+				info("Element " + locator + " is already checked.");
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
@@ -398,7 +398,11 @@ public class TestBase {
 		} else {
 			element = waitForAndGetElement(locator);
 		}
-		actions.moveToElement(element).click(element).build().perform();
+		try {
+			actions.moveToElement(element).click(element).build().perform();
+		} catch (StaleElementReferenceException e) {
+		} catch (ElementNotVisibleException e){		
+		}
 	}
 
 	public static void waitForTextPresent(String text,int...wait) {
@@ -492,11 +496,10 @@ public class TestBase {
 	public static void uncheck(Object locator) {
 		try {
 			WebElement element = waitForAndGetElement(locator);
-
 			if (element.isSelected()) {
-				actions.click(element).perform();
+				click(locator);
 			} else {
-				Assert.fail("Element " + locator + " is already unchecked.");
+				info("Element " + locator + " is already unchecked.");
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, 5);

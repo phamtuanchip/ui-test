@@ -1007,7 +1007,7 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 	   * add symlink to locked node
 	   * check add successful
 	   */
-	  @Test(groups={"pending"})
+	  //@Test(groups={"pending"}) -> Case N/A
 	  public void test28_AddSymlinkForNodeToLockedNode(){
 		  String DATA_CONTENT_FOLDER = "ECMS_DMS_SE_Addsymlink_contentfolder_28";
 		  By ELEMENT_CONTENT_FOLDER = By.linkText(DATA_CONTENT_FOLDER);

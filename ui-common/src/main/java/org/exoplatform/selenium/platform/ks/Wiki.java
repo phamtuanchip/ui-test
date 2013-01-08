@@ -253,8 +253,11 @@ public class Wiki extends KsBase {
 	 * @param mode =1: edit a wiki page in richtext
 	 * mode =0 : edit a wiki page in source editor
 	 */
-	public static void addBlankWikiPage(String title, String content,int mode)
-	{
+	public static void addBlankWikiPage(String title, String content,int mode, boolean...verify)
+	{	boolean check = true;
+		if (verify.length > 0){
+			check = verify[0];
+		}		
 		goToAddBlankPage();
 		info("--Add a wiki page from blank--");
 
@@ -267,7 +270,9 @@ public class Wiki extends KsBase {
 
 		save();
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
-		waitForTextPresent(content);
+		if (check){
+			waitForTextPresent(content);	
+		}
 	}
 	
 	/**
@@ -684,9 +689,9 @@ public class Wiki extends KsBase {
 	 */
 	public static void editPagePermission(String user,boolean edit,boolean viewPage){
 
-		By EditPage = By.xpath(ELEMENT_EDIT_PAGE_PERMISSIONS.replace("{$user}", user));
+		By EditPage = By.xpath(ELEMENT_EDIT_PAGE_PERMISSIONS.replace("${user}", user));
 
-		By ViewPage = By.xpath(ELEMENT_VIEW_PAGE_PERMISSIONS.replace("{$user}", user));
+		By ViewPage = By.xpath(ELEMENT_VIEW_PAGE_PERMISSIONS.replace("${user}", user));
 
 		goToPagePermission();
 

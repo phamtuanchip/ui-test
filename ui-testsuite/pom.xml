@@ -52,7 +52,84 @@
 				<testSuite>ks.xml</testSuite>
 			</properties>
 		</profile>
-
+		
+		<profile>
+			<id>ecms-siteexplorer</id>
+			<properties>
+				<testSuite>ecms-siteexplorer.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>ecms-admin</id>
+			<properties>
+				<testSuite>ecms-admin.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>ecms-basicaction</id>
+			<properties>
+				<testSuite>ecms-basicaction.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>ecms-createnode</id>
+			<properties>
+				<testSuite>ecms-createnode.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>ecms-wcm</id>
+			<properties>
+				<testSuite>ecms-wcm.xml</testSuite>
+			</properties>
+		</profile>
+	
+		<profile>
+			<id>ks-answer</id>
+			<properties>
+				<testSuite>ks-answer.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>ks-forum</id>
+			<properties>
+				<testSuite>ks-forum.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>ks-wiki</id>
+			<properties>
+				<testSuite>ks-wiki.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>social-people</id>
+			<properties>
+				<testSuite>social-people.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>social-space</id>
+			<properties>
+				<testSuite>social-space.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>cs</id>
+			<properties>
+				<testSuite>cs.xml</testSuite>
+			</properties>
+		</profile>
+		
 		<profile>
 			<id>regression</id>
 			<properties>
