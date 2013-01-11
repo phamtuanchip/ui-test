@@ -35,15 +35,39 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>ecms_createnode</id>
+			<properties>
+				<testSuite>ecms_createnode.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>ecms_basicaction</id>
+			<properties>
+				<testSuite>ecms_basicaction.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
 			<id>exogtn</id>
 			<properties>
 				<testSuite>exogtn.xml</testSuite>
 			</properties>
 		</profile>
 		<profile>
-			<id>social</id>
+			<id>exogtn_portalnavigation</id>
 			<properties>
-				<testSuite>social.xml</testSuite>
+				<testSuite>exogtn_portalnavigation.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>social_people</id>
+			<properties>
+				<testSuite>social_people.xml</testSuite>
+			</properties>
+		</profile>
+				<profile>
+			<id>social_space</id>
+			<properties>
+				<testSuite>social_space.xml</testSuite>
 			</properties>
 		</profile>
 		<profile>

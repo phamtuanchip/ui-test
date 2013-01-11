@@ -8,10 +8,7 @@
 		  </run>
 		</groups>
 		<packages>
-			<package name="org.exoplatform.selenium.platform.ecms.functional.*" >
-				<exclude name ="org.exoplatform.selenium.platform.ecms.functional.dms.siteexplorer.createnode"/>
-				<exclude name ="org.exoplatform.selenium.platform.ecms.functional.dms.siteexplorer.basicaction"/>
-			</package>
+			<package name="org.exoplatform.selenium.platform.ecms.functional.dms.siteexplorer.basicaction" />
 		</packages>
 	</test>
 

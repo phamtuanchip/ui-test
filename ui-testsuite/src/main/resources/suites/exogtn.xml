@@ -3,7 +3,11 @@
 <suite name="EXOGTN Functional Test" verbose="1">
 		<test name="exogtn-func" enabled="true">
 		<packages>
-			<package name="org.exoplatform.selenium.platform.exogtn.functional.*" />
+			<package name="org.exoplatform.selenium.platform.exogtn.functional.*" >
+				<exclude name ="org.exoplatform.selenium.platform.exogtn.functional.portalnavigation.edit"/>
+				<exclude name ="org.exoplatform.selenium.platform.exogtn.functional.portalnavigation"/>
+				<exclude name ="org.exoplatform.selenium.platform.exogtn.functional.groupnavigation"/>
+			</package>
 		</packages>
 	</test>
 	<listeners>
