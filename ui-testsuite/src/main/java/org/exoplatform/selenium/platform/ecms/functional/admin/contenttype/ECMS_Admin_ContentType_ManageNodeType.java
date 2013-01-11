@@ -5,7 +5,6 @@ import static org.exoplatform.selenium.platform.ecms.WcmAdmin.doNodeTypeSearch;
 import static org.exoplatform.selenium.platform.ecms.WcmAdmin.gotoManageNoteType;
 
 import java.util.List;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;

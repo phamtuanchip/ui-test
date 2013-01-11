@@ -15,6 +15,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
+		<project.version>3.5.0-SNAPSHOT</project.version>                
 		<maven.test.skip>true</maven.test.skip>
 		<maven-surefire-plugin.version>2.14.1</maven-surefire-plugin.version>
 		<selenium-java.version>2.32.0</selenium-java.version>

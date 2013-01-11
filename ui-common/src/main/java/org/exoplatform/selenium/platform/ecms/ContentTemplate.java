@@ -16,6 +16,11 @@ public class ContentTemplate extends EcmsBase {
 	public static final By ELEMENT_ARTICLE_NAME_TEXTBOX = By.id("name");
 	public static final By ELEMENT_ARTICLE_SUMMARY_FRAME = By.xpath("//td[@id='cke_contents_summary']/iframe");
 	public static final By ELEMENT_ARTICLE_CONTENT_FRAME = By.xpath("//td[@id='cke_contents_content']/iframe");
+	public static final By ELEMENT_SUMMARY_SOURCE_BUTTON = By.id("cke_9_label");
+	public static final By ELEMENT_CONTENT_SOURCE_BUTTON = By.id("cke_45_label");
+	public static final By ELEMENT_ARTICLE_SUMMARY_SOURCE_FRAME = By.xpath("//td[@id='cke_contents_summary']/textarea");
+	public static final By ELEMENT_ARTICLE_CONTENT_SOURCE_FRAME = By.xpath("//td[@id='cke_contents_content']/textarea");
+	
 
 	// Announcement
 	public static final By ELEMENT_ANNOUNCEMENT_LINK = By.linkText("Announcement");
@@ -149,6 +154,7 @@ public class ContentTemplate extends EcmsBase {
 	public static final By ELEMENT_UPLOAD_FILE_NAME_ID = By.id("name");
 	public static final By ELEMENT_UPLOAD_IMG_FRAME_XPATH = By.xpath("//iframe[contains(@id,'uploadFrame')]");
 	public static final By ELEMENT_UPLOAD_IMG_ID = By.id("file");
+	public static final By ELEMENT_UPLOAD_FINISH_XPATH = By.xpath("//div[@class='FileNameLabel']");
 
 	// add new article
 	public static void createNewArticle(String title, String name, String sum, String cont) {
@@ -163,6 +169,23 @@ public class ContentTemplate extends EcmsBase {
 		//save
 		click(ELEMENT_SAVE_CLOSE_BUTTON);
 	}
+	public static void createNewArticleUseSource(String title,String name, String sum, String cont) {
+		click(ELEMENT_ARTICLE_LINK);
+		// Input information
+		type(ELEMENT_ARTICLE_TITLE_TEXTBOX,title,false);
+		type(ELEMENT_ARTICLE_NAME_TEXTBOX, name, true);
+		//Click to the Source button on FCKEditor of Summary field
+		click(ELEMENT_SUMMARY_SOURCE_BUTTON);
+		type(ELEMENT_ARTICLE_SUMMARY_SOURCE_FRAME, sum, false);
+		switchToParentWindow();
+		//Click to the Source button on FCKEditor of Content field
+		click(ELEMENT_CONTENT_SOURCE_BUTTON);
+		type(ELEMENT_ARTICLE_CONTENT_SOURCE_FRAME, cont, false);
+		switchToParentWindow();
+		//save
+		click(ELEMENT_SAVE_CLOSE_BUTTON);
+	}
+
 
 	//add new announcement
 	public static void createNewAnnouncement (String name, String sum){
@@ -340,6 +363,16 @@ public class ContentTemplate extends EcmsBase {
 		click(ELEMENT_SAVE_BUTTON);
 		info("Upload file successfully");
 		click(ELEMENT_CLOSE_BUTTON);
+	}
+	public static void uploadTheSameFile(String fileName, String link){
+		goToNode(ELEMENT_UPLOAD_LINK_XPATH);
+		type(ELEMENT_UPLOAD_FILE_NAME_ID, fileName, false);
+		driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_IMG_FRAME_XPATH));
+		type(ELEMENT_UPLOAD_IMG_ID, getAbsoluteFilePath(link), false);
+		info("Upload file "+getAbsoluteFilePath(link));
+		switchToParentWindow();
+		waitForElementPresent(ELEMENT_UPLOAD_FINISH_XPATH);
+		click(ELEMENT_SAVE_BUTTON);
 	}
 
 	public static void addJSFile(String name, String... data)

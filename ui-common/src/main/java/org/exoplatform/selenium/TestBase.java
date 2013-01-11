@@ -46,9 +46,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 public class TestBase {
-	protected static WebDriver driver;
-	protected static Actions actions ;
-	protected static String baseUrl;
+	public static WebDriver driver;
+	public static Actions actions ;
+	public static String baseUrl;
 	protected static int DEFAULT_TIMEOUT = 30000; //milliseconds = 30 seconds
 	protected static int WAIT_INTERVAL = 1000; //milliseconds  
 	public static int loopCount = 0;	
@@ -93,8 +93,8 @@ public class TestBase {
 		WebElement elem = null;
 		try {
 			elem = driver.findElement(by);
-		} catch (NoSuchElementException e) {
-
+		} catch (NoSuchElementException ex) {
+      debug(ex.getMessage() );
 		}
 		return elem;
 	}
@@ -109,7 +109,7 @@ public class TestBase {
 				if (e.isDisplayed()) return e;
 			}
 		} catch (NoSuchElementException ex) {
-			info("NoSuchElementException");
+			debug(ex.getMessage() );
 		}catch(StaleElementReferenceException ex)
 		{
 			checkCycling(ex, 10);
@@ -583,12 +583,12 @@ public class TestBase {
 		return absolutePath;
 	}
 	public static void checkCycling(Exception e, int loopCountAllowed) {
-		info("Exception:" + e.getClass().getName());
+    loopCount++;
+    debug("Exception:" + e.getClass().getName());
 		if (loopCount > loopCountAllowed) {
 			Assert.fail("Cycled: " + e.getMessage());
 		} 
-		info("Repeat... " + loopCount + "time(s)");
-		loopCount++;
+    debug("Repeat... " + loopCount + "time(s)");
 	}
 
 	/*---- Auxiliary functions ----*/

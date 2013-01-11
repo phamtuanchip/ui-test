@@ -89,6 +89,7 @@ public class WcmAdmin extends EcmsBase {
 	public static By ELEMENT_ICON_VIEW_WCM_EDIT= By.xpath("//div[@title='WCM View']/../..//*[@class='EditInfoIcon']");
 	//public static By ELEMENT_LINK_TAB_PUBLICATION= By.xpath("//a[contains(text(),'Publication')]");
 	public static By ELEMENT_MANAGE_VIEW = By.xpath("//a[contains(text(),'Manage View')]");
+	public static final By ELEMENT_MANAGE_VIEW_NAME = By.id("tabName");
 
 	//Edit View Form 
 	public static By ELEMENT_CHECKBOX_VERSION=By.id("manageVersions");
@@ -325,6 +326,17 @@ public class WcmAdmin extends EcmsBase {
 		click(ELEMENT_MANAGE_VIEW);
 		click(By.xpath("//div[@title='" + view + "']/../..//*[@class='EditInfoIcon']"));
 		click(By.xpath("//a[contains(text(),'" + tab + "')]"));
+		selectCheckboxList(viewadd);
+		save();
+		save();
+	}
+	public static void addView_withName(String name,String view, String tab, String viewadd ){
+		goToContentAdministration();
+		click(ELEMENT_CONTENT_PRESENT);
+		click(ELEMENT_MANAGE_VIEW);
+		click(By.xpath("//div[@title='" + view + "']/../..//*[@class='EditInfoIcon']"));
+		click(By.xpath("//a[contains(text(),'" + tab + "')]"));
+		type(ELEMENT_MANAGE_VIEW_NAME,name,false);
 		selectCheckboxList(viewadd);
 		save();
 		save();
@@ -656,7 +668,6 @@ public class WcmAdmin extends EcmsBase {
 	public static void fillAddNewTemplateForm(String templateLabel, String templateName, String groupPath, String membership) {   
 		type(ELEMENT_TEMPLATE_LABEL,templateLabel, false);
 		select(ELEMENT_TEMPLATE_NAME, templateName);
-		click(ELEMENT_IS_DOCUMENT_TEMPLATE);
 		selectMembership(groupPath,membership,"Add Permission");      
 		//Switch between tabs
 		click(ELEMENT_DIALOG_TAB);      
