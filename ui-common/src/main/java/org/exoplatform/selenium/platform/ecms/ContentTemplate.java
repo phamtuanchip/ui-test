@@ -154,6 +154,7 @@ public class ContentTemplate extends EcmsBase {
 	public static final By ELEMENT_UPLOAD_FILE_NAME_ID = By.id("name");
 	public static final By ELEMENT_UPLOAD_IMG_FRAME_XPATH = By.xpath("//iframe[contains(@id,'uploadFrame')]");
 	public static final By ELEMENT_UPLOAD_IMG_ID = By.id("file");
+	public static final By ELEMENT_UPLOAD_FINISH_XPATH = By.xpath("//div[@class='FileNameLabel']");
 
 	//data test
 	public static final String[] DATA_SPECIAL_CHARACTER = {"`","~","!","@","#","$","%","^","&","*","(",")","-","_","+","=","{","}","[","]","|","\\",";",":","'","\"","<",",",".","/","?"};
@@ -366,6 +367,16 @@ public class ContentTemplate extends EcmsBase {
 		click(ELEMENT_SAVE_BUTTON);
 		info("Upload file successfully");
 		click(ELEMENT_CLOSE_BUTTON);
+	}
+	public static void uploadTheSameFile(String fileName, String link){
+		goToNode(ELEMENT_UPLOAD_LINK_XPATH);
+		type(ELEMENT_UPLOAD_FILE_NAME_ID, fileName, false);
+		driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_IMG_FRAME_XPATH));
+		type(ELEMENT_UPLOAD_IMG_ID, getAbsoluteFilePath(link), false);
+		info("Upload file "+getAbsoluteFilePath(link));
+		switchToParentWindow();
+		waitForElementPresent(ELEMENT_UPLOAD_FINISH_XPATH);
+		click(ELEMENT_SAVE_BUTTON);
 	}
 
 	public static void addJSFile(String name, String... data)
