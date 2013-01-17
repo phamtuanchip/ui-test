@@ -8,7 +8,7 @@
 		  </run>
 		</groups>
 		<classes>
-			<class name="org.exoplatform.selenium.platform.ks.functional.forum.topic.KS_Forum_Topic_Tag" />
+			<class name="org.exoplatform.selenium.platform.ks.functional.forum.topic.KS_Forum_Topic_Sort" />
 		</classes>
 	</test>
 	<listeners>

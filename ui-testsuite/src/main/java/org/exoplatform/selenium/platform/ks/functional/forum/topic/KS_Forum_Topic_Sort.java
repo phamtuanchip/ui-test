@@ -77,6 +77,7 @@ public class KS_Forum_Topic_Sort extends ForumBase {
 
 		click(ELEMENT_CATEGORY.replace("{$category}", category));
 		deleteCategory(category);
+		assert false;
 	}
 	@BeforeMethod
 	public void beforeTest(){
