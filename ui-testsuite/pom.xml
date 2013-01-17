@@ -76,6 +76,12 @@
 				<testSuite>ks.xml</testSuite>
 			</properties>
 		</profile>
+		<profile>
+			<id>ks_test</id>
+			<properties>
+				<testSuite>ks_test.xml</testSuite>
+			</properties>
+		</profile>
 
 		<profile>
 			<id>regression</id>
