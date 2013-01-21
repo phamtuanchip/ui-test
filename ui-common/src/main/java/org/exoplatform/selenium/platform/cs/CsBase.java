@@ -46,7 +46,7 @@ public class CsBase extends PlatformBase{
 	public static final By ELEMENT_LIST_VIEW_TAB = By.xpath("//a[@class='IconHolder UIListContainerIcon' and contains(text(),'List')]");
 	public static final By ELEMENT_WORK_WEEK_VIEW_TAB = By.xpath("//a[@class='IconHolder UIWorkingViewIcon' and contains(text(),'Work week')]");
 	public static final By ELEMENT_CALENDAR_ADD_EVENT_CATEGORY_HEADER_BAR = By.xpath("//div[@class='AddCategoryIcon' and @title='Event Categories Management']");
-
+	
 	//Left panel 
 	//Click on Calendar Actions Button
 	public static final By ELEMENT_CALENDAR_ACTIONS_BUTTON = By.xpath("//*[@id='UICalendars']//div[@class='ActionsButton']");
@@ -84,6 +84,7 @@ public class CsBase extends PlatformBase{
 	//Event tab
 	public static void goToEvent(){		
 		click(ELEMENT_EVENT_TAB);
+		
 	}
 
 	//Task tab
@@ -256,5 +257,13 @@ public class CsBase extends PlatformBase{
 		type(ELEMENT_TASK_EXPORT_FILE, fileName, true);
 		save();
 		waitForElementNotPresent(ELEMENT_TASK_EXPORT_POPUP);
+	}
+	
+	/**function return value id of calendar page
+	 * @author lientm
+	 * @return
+	 */
+	public static String getPageId(){
+		return waitForAndGetElement(By.xpath("//*[@id='UIPage']/div/div")).getAttribute("id");
 	}
 }

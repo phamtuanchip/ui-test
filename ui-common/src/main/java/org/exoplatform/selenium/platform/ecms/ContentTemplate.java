@@ -150,10 +150,6 @@ public class ContentTemplate extends EcmsBase {
 	public static final By ELEMENT_UPLOAD_IMG_FRAME_XPATH = By.xpath("//iframe[contains(@id,'uploadFrame')]");
 	public static final By ELEMENT_UPLOAD_IMG_ID = By.id("file");
 
-	//data test
-	public static final String[] DATA_SPECIAL_CHARACTER = {"`","~","!","@","#","$","%","^","&","*","(",")","-","_","+","=","{","}","[","]","|","\\",";",":","'","\"","<",",",".","/","?"};
-	public static final String DATA_SPECIAL_CHARACTER_STRING = "~`!@#$%^&*()-_=+[]{}\\|;:'\",<.>?/";
-
 	// add new article
 	public static void createNewArticle(String title, String name, String sum, String cont) {
 		click(ELEMENT_ARTICLE_LINK);

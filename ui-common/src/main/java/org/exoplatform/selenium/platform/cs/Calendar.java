@@ -22,7 +22,7 @@ public class Calendar extends CsBase {
 	public static String ELEMENT_CAL_CONTAIN_ICON = "//a[@title='{$calendar}']/ancestor::li";
 	public static String ELEMENT_COLOR_CAL_PANE_ICON = "//a[contains(@class,'{$color}')]/img";
 	public static String ELEMENT_COLOR_CAL_ICON = "//a[@title='{$calendar}']/ancestor::li//div[@class='CalendarCheckboxBlock']/a[@class='{$color}']";
-	public static String ELEMENT_COLOR_ICON = "//a[@title='{$calendar}']/ancestor::li//div[@class='CalendarCheckboxBlock']/a";
+	public static String ELEMENT_COLOR_ICON = "//a[@title='{$calendar}']/ancestor::li";
 	public static By ELEMENT_ADD_REMOTE_CAL_LINK = By.xpath("//*[@id='tmpMenuElement']//a[contains(text(),'Remote Calendar')]");
 	public static By ELEMENT_IMPORT_CAL_LINK = By.xpath("//*[@id='tmpMenuElement']//a[contains(text(),'Import')]");
 	public static String ELEMENT_GROUP_LINK = "//div[@title='{$group}']";
@@ -34,6 +34,7 @@ public class Calendar extends CsBase {
 	public static By ELEMENT_NAME_CAL_INPUT = By.id("displayName");
 	public static By ELEMENT_DESC_CAL_INPUT = By.xpath("//div[@class='calendarDetail']//*[@id='description']");
 	public static By ELEMENT_GROUP_CAL_INPUT = By.xpath("//div[@class='calendarDetail']//select[@name='category']");
+	public static By ELEMENT_GROUP_CAL_INPUT_OPTION_DEFAULT = By.xpath("//div[@class='calendarDetail']//select[@name='category']/option[1]");
 	public static By ELEMENT_COUNTRY_CAL_INPUT = By.id("locale");
 	public static By ELEMENT_TIME_ZONE_CAL_INPUT = By.id("timeZone");
 	public static By ELEMENT_COLOR_CAL_INPUT = By.xpath("//div[@class='UIColorPickerInput']/span");
@@ -42,12 +43,17 @@ public class Calendar extends CsBase {
 	public static By ELEMENT_GROUP_TAB_CAL = By.xpath("//div[@class='MiddleTab' and text()='Groups']");
 	public static By ELEMENT_ADD_GROUP_CAL_ICON = By.xpath("//img[@class='AddNewNodeIcon']");
 	public static String ELEMENT_COLOR_ADD_CAL_ICON = "//div[@class='calendarDetail']//a[contains(@class,'{$color}')]/img";
-
+	public static String MESSAGE_ADD_CALENDAR_NOGROUP = "Please add a calendar group first.";
+	public static String MESSAGE_ADD_CALENDAR_INVALID_NAME = "Only alpha, digit, underscore, dash and space characters allowed for the field \"Display Name\".";
+	public static String MESSAGE_ADD_CALENDAR_DUPLICATE_NAME = "The name ${calendarName} already exists.";
+	public static String MESSAGE_EDIT_SHARED_CALENDAR = "Shared calendars cannot be modified.";
+	
 	//--------------Add a group screen-------------
 	public static By ELEMENT_GROUP_NAME_INPUT = By.id("categoryName");
 	public static By ELEMENT_GROUP_DESC_INPUT = By.xpath("//form[@id='UICalendarCategoryForm']//*[@id='description']");
 	public static By ELEMENT_GROUP_SAVE_BUTTON = By.xpath("//form[@id='UICalendarCategoryForm']//a[text()='Save']");
-
+	public static By ELEMENT_GROUP_DELETE_ICON = By.xpath("//*[@id='UICategoryList']/table/tbody/tr[2]//img[@class='DeleteIcon']");
+	
 	//-------------Share a calendar--------------
 	public static By ELEMENT_TITLE_SHARE_CAL_FORM = By.xpath("//span[@class='PopupTitle' and text()='Share Calendar']");
 	public static By ELEMENT_USER_NAME_INPUT = By.id("username");
@@ -60,11 +66,15 @@ public class Calendar extends CsBase {
 	public static String ELEMENT_EDIT_SHARE_ICON = "//div[@title='{$user}']/../..//img[@alt='Edit']";
 	public static String ELEMENT_DELETE_SHARE_ICON = "//div[@title='{$user}']/../..//img[@alt='Delete']";
 	public static By ELEMENT_ADD_BUTTON = By.linkText("Add");
+	public static String ELEMENT_SHARED_ICON = "//*[@class='SharedCalendarIcon' and @title='${calendarName}']";
+
 	//----------Add a remote calendar-------------
 	//Subscribe a calendar
 	public static By ELEMENT_ICALENDAR_RADIO = By.id("type_ICalendar(.ics)");
 	public static By ELEMENT_CALDAV_RADIO = By.id("type_CalDAV");
 	public static By ELEMENT_URL_REMOTE_CAL = By.id("url");
+	public static String MSG_ADD_REMOETE_EMPTY_URL = "The field \"URL\" is required.";
+	public static String MSG_ADD_REMOTE_INVALID_URL = "The field \"URL\" does not contain a valid URL.";
 	// Add a remote calendar
 	public static By ELEMENT_NAME_REMOTE_CAL_INPUT = By.xpath("//div[@class='UIForm UIRemoteCalendar']//*[@id='name']");
 	public static By ELEMENT_DESC_REMOTE_CAL_INPUT = By.xpath("//div[@class='UIForm UIRemoteCalendar']//*[@id='description']");
@@ -76,6 +86,9 @@ public class Calendar extends CsBase {
 	public static By ELEMENT_PASS_REMOTE_INPUT = By.id("password");
 	public static String ELEMENT_COLOR_PANE_REMOTE_ICON = "//div[@class='UIForm UIRemoteCalendar']//a[contains(@class,'{$color}')]/img";
 	public static String MSG_ADD_REMOTE_SUCCESS = "The remote calendar was imported successfully.";
+	public static String MSG_ADD_REMOTE_EMPTY_NAME = "The field \"Display Name\" is required.";
+	public static String MSG_ADD_REMOTE_EMPTY_USER = "Require username to authenticate.";
+	public static String MSG_ADD_REMOTE_EMPTY_PASS = "The remote URL is invalid or wrong authentication.";
 
 	//-----------Import calendars------------
 	public static By ELEMENT_GROUP_IMPORT_CAL_INPUT = By.name("category");
@@ -86,6 +99,10 @@ public class Calendar extends CsBase {
 	public static By ELEMENT_GROUP_IMPORT_INPUT = By.xpath("//form[@id='UIImportForm']//select[@name='category']");
 	public static String ELEMENT_COLOR_IMPORT_ICON = "//form[@id='UIImportForm']//a[contains(@class,'{$color}')]/img";
 	public static String MSG_DELETE_SHARE_CAL = "Are you sure to delete this category?";
+	
+	//------------Remove calendars-----------
+	public static String MSG_REMOVE_CALENDAR_NOT_HAVE_RIGHT = "You have no permission to delete.";
+	
 	/**
 	 * @author thuntn
 	 * @param name: name of calendar
@@ -96,7 +113,7 @@ public class Calendar extends CsBase {
 	 * @param user: users have edit permission 
 	 * @param membership: membership edit permission, optional
 	 */
-	public void addCalendar(String name, String desc, String group, String color, String[] groupUser, String[] user, String...membership ) {
+	public static void addCalendar(String name, String desc, String group, String color, String[] groupUser, String[] user, String...membership ) {
 		info("--Add a calendar--");
 
 		goToAddCalendarForm();
@@ -179,7 +196,6 @@ public class Calendar extends CsBase {
 		goToAddGroupForm();
 		inputFormGroup(name, desc);
 		save();
-		waitForElementNotPresent(ELEMENT_GROUP_NAME_INPUT);
 	}
 	/** Input a form 'Add/Edit Group'
 	 * @author thuntn
@@ -199,7 +215,7 @@ public class Calendar extends CsBase {
 	 * @return: color of calendar
 	 */
 	public static String getColorOfCalendar(String calendar){
-		String color = waitForAndGetElement(ELEMENT_COLOR_ICON.replace("{$calendar}", calendar)).getAttribute("class");
+		String color = waitForAndGetElement(ELEMENT_COLOR_ICON.replace("{$calendar}", calendar)).getAttribute("calcolor");
 		return color;
 	}
 	/** Get ID of a calendar
@@ -227,8 +243,8 @@ public class Calendar extends CsBase {
 	/** Go to a form 'Edit Calendar'
 	 * @author thuntn
 	 */
-	public static void goToEditCalendar(String calendar){
-
+	public static void goToEditCalendar(String calendar, boolean...permission){
+		boolean check = permission.length > 0 ? permission[0] : true;
 		info("--Go to edit calendar form--");
 
 		String idCal = getIDOfCalendar(calendar);
@@ -242,8 +258,9 @@ public class Calendar extends CsBase {
 				executeActionCalendar(idCal,"EditCalendar", color, 2);
 			}
 		}
-
-		waitForElementPresent(ELEMENT_NAME_CAL_INPUT);
+		if (check){
+			waitForElementPresent(ELEMENT_NAME_CAL_INPUT);
+		}
 	}
 	/** Edit a calendar
 	 * @author thuntn
@@ -269,12 +286,36 @@ public class Calendar extends CsBase {
 		save();
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
 	}
+	
+	/**function edit calendar in Calendar Detail tab
+	 * @author lientm
+	 * @param oldName
+	 * @param name
+	 * @param desc
+	 * @param group
+	 * @param color
+	 * @param verify
+	 */
+	public static void quickEditCalendar(String oldName, String name, String desc, String group, String color, boolean...verify){
+		boolean check = true;
+		if (verify.length > 0){
+			check = verify[0];
+		}
+		goToEditCalendar(oldName);
+		info("--Edit a calendar--");
+		inputFormCalendarDetail(name, desc, group, color);
+		save();
+		if (check){
+			waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
+		}
+	}
 	/** Delete a calendar
 	 * @author thuntn
 	 * @param name: name of calendar
 	 */
-	public static void deleteCalendar(String name){
-
+	public static void deleteCalendar(String name, boolean...verify){
+		boolean check = verify.length > 0 ? verify[0] : true;
+		
 		info("--Delete a Calendar-");
 		String idCal = getIDOfCalendar(name);
 		String color = getColorOfCalendar(name);
@@ -282,12 +323,15 @@ public class Calendar extends CsBase {
 			executeActionCalendar(idCal,"RemoveCalendar", color, 0);
 		}else{
 			if(waitForAndGetElement(ELEMENT_SHARE_CAL_ICON.replace("{$calendar}", name),2000,0) != null){
-				executeActionCalendar(idCal,"RemoveCalendar", color, 1);
+				executeActionCalendar(idCal,"RemoveSharedCalendar", color, 1);
 			}else{
 				executeActionCalendar(idCal,"RemoveCalendar", color, 2);
 			}
 		}
-		waitForElementNotPresent(ELEMENT_CALENDAR_ICON.replace("{$calendar}", name));
+		if (check){
+			waitForElementNotPresent(ELEMENT_CALENDAR_ICON.replace("{$calendar}", name));
+			info("Remove calendar successfully");
+		}
 	}
 
 	/** Go to a form 'Share a calendar' 
@@ -705,5 +749,70 @@ public class Calendar extends CsBase {
 		String color = getColorOfCalendar(calendarName);
 		executeActionCalendar(idCal, "ExportCalendar", color, type);
 		exportItem(fileName);
+	}
+	
+	/**function delete a group
+	 * @author lientm
+	 * @param groupName: name of group
+	 * @param verify
+	 */
+	public static void deleteGroup(String groupName, boolean...verify){
+		boolean check = true;
+		if (verify.length > 0){
+			check = verify[0];
+		}
+		String groupId = getIDOfGroup(groupName);
+		String pageId = getPageId();
+		info("Execute delete group with name: " + groupName);
+		((JavascriptExecutor)driver).executeScript("javascript:if(confirm('Are%20you%20sure%20to%20delete%20this%20group%20and%20all%20its%20calendars?'))eXo.webui.UIForm.submitEvent('" + pageId + "#UICalendars','DeleteGroup'," +
+				"'&subComponentId=UICalendars&objectId=" + groupId + "')");
+		acceptAlert();
+		if (check){
+			waitForTextNotPresent(groupName);
+			info("Delete group successfully");
+		}
+	}
+	
+	public static void deleteAllGroup(){
+		goToAddGroupForm();
+		while (waitForAndGetElement(ELEMENT_GROUP_DELETE_ICON, 5000, 0) != null){
+			click(ELEMENT_GROUP_DELETE_ICON);
+			acceptAlert();
+		}
+		close();
+	}
+	
+	/**function add new calendar with the fields in Detail tab
+	 * @author lientm
+	 * @param name
+	 * @param desc
+	 * @param group
+	 * @param color
+	 * @param verify
+	 */
+	public static void quickAddCalendar(String name, String desc, String group, String color, boolean...verify){
+		boolean check = true;
+		if (verify.length > 0){
+			check = verify[0];
+		}
+		info("Add Calendar");
+		goToAddCalendarForm();
+		inputFormCalendarDetail(name, desc, group, color);
+		save();
+		if (check){
+			waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
+		}
+	}
+	
+	/**function execute refresh calendar
+	 * @author lientm
+	 * @param calendarName
+	 * @param type
+	 */
+	public static void refreshCalendar(String calendarName, int type){
+		String idCal = getIDOfCalendar(calendarName);
+		String color = getColorOfCalendar(calendarName);
+		info("Refresh calendar");
+		executeActionCalendar(idCal, "RefreshRemoteCalendar", color, type);
 	}
 }
