@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 public class Event extends Task{
 
 	//-----------------------------Add event form-------------------------------------------------
+	public static final By ELEMENT_QUICK_ADD_EVENT_POPUP = By.xpath("//*[@id='UIQuckAddEventPopupWindow']//span[text()='Quick Add Event']");
 	public static final By ELEMENT_INPUT_EVENT_DESCRIPTION = By.id("description");
 	public static final By ELEMENT_SELECT_TYPE_CALENDAR = By.xpath("//*[@id='UIQuickAddEvent']//select[@name='calendar']");
 	public static final By ELEMENT_TYPE_EVENT_CATEGORY = By.id("category");
@@ -329,7 +330,104 @@ public class Event extends Task{
 			pause(1000);
 		}		
 	}
-
+	
+	/**function input data in quick and event form
+	 * @author lientm
+	 * @param name: summary of event
+	 * @param desc: description of event
+	 * @param allDay: = true: full day
+	 *                = false: not full day
+	 * @param from: format mm/dd/yyyy hh:mm
+	 * @param to: format mm/dd/yyyy hh:mm
+	 * @param opt[0]: calendar name
+	 * 		  opt[1]: category name
+	 */
+	public static void inputDataQuickAddEventForm(String name, String desc, String from, String to, boolean allDay, String...opt){
+		if (name != null){
+			type(ELEMENT_INPUT_EVENT_SUMMARY, name, true);
+		}
+		if (desc != null){
+			type(ELEMENT_INPUT_EVENT_DESCRIPTION, desc, true);
+		}
+		WebElement day = waitForAndGetElement(ELEMENT_ALLDAY_CHECKBOX);
+		if (allDay && !day.isSelected()){
+			check(ELEMENT_ALLDAY_CHECKBOX);
+		} else if (!allDay && day.isSelected()){
+			uncheck(ELEMENT_ALLDAY_CHECKBOX);
+		}
+		if (from != null){
+			if (from != ""){
+				if (allDay){
+					type(ELEMENT_TIME_FROM_CHECKBOX, from, true);
+				}else {
+					String[] dateTime = from.split(" ");
+					type(ELEMENT_TIME_FROM_CHECKBOX, dateTime[0], true);
+					type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX, dateTime[1], true);
+				}
+			} else {
+				type(ELEMENT_TIME_FROM_CHECKBOX, from, true);
+				type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX, from, true);
+			}
+		}
+		if (to != null){
+			if (to != ""){
+				if (allDay){
+					type(ELEMENT_TIME_TO_CHECKBOX, to, true);
+				}else{
+					String[] dateTime = to.split(" ");
+					type(ELEMENT_TIME_TO_CHECKBOX, dateTime[0], true);
+					type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX, dateTime[1], true);
+				}
+			} else {
+				type(ELEMENT_TIME_TO_CHECKBOX, to, true);
+				type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX, to, true);
+			}
+		}
+		if (opt.length > 0 && opt[0] != null){
+			select(ELEMENT_SELECT_TYPE_CALENDAR, opt[0]);
+		}
+		if (opt.length > 1 && opt[1] != null){
+			select(ELEMENT_TYPE_EVENT_CATEGORY, opt[1]);
+		}
+		save();
+	}
+	
+	/**function and event form
+	 * @author lientm
+	 * @param name
+	 * @param desc
+	 * @param from
+	 * @param to
+	 * @param allDay
+	 * @param opt
+	 */
+	public static void addEvent(String name, String desc, String from, String to, boolean allDay, String...opt){
+		info("Add new event");
+		goToEvent();
+		inputDataQuickAddEventForm(name, desc, from, to, allDay, opt);
+		if (opt.length < 3){
+			waitForElementNotPresent(ELEMENT_QUICK_ADD_EVENT_POPUP);
+		}
+	}
+	
+	/**function quick add event with summary and description
+	 * @author lientm
+	 * @param name
+	 * @param desc
+	 * @param verify
+	 */
+	public static void quickAddEvent(String name, String desc, String calendar, boolean...verify){
+		boolean check = true;
+		if (verify.length > 0){
+			check = verify[0];
+		}
+		if (check){
+			addEvent(name, desc, null, null, false, calendar);
+		}else {
+			addEvent(name, desc, null, null, false, calendar, null, "");
+		}
+	}
+	
 	///////////
 	/**
 	 * 
@@ -434,7 +532,8 @@ public class Event extends Task{
 				throw new IllegalArgumentException("-- Argument should be a String --");
 			}
 			priority = (String)optionals[1];
-		}
+		}		select(ELEMENT_SELECT_TYPE_CALENDAR, typeCalendarAndEventCategory[0]);
+		select(ELEMENT_TYPE_EVENT_CATEGORY, typeCalendarAndEventCategory[1]);
 		if (optionals.length > 2){
 			if (!(optionals[2] instanceof Boolean)) { 
 				throw new IllegalArgumentException("-- Argument should be a boolean --");
@@ -459,7 +558,8 @@ public class Event extends Task{
 		}	
 		////
 		if (location.isEmpty()){
-			info("-- Location field is empty --");
+			info("-- Location field is empty --");		select(ELEMENT_SELECT_TYPE_CALENDAR, typeCalendarAndEventCategory[0]);
+			select(ELEMENT_TYPE_EVENT_CATEGORY, typeCalendarAndEventCategory[1]);
 		}else{
 			type(ELEMENT_EVENT_LOCATION, location, true);
 		}

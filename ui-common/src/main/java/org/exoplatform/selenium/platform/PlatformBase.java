@@ -301,7 +301,10 @@ public class PlatformBase extends TestBase {
 	public static final By ELEMENT_BUTTON_BACK = By.xpath("//a[@class='URLBackToButton']");
 
 	//Others
-
+	//data test
+	public static final String[] DATA_SPECIAL_CHARACTER = {"`","~","!","@","#","$","%","^","&","*","(",")","-","_","+","=","{","}","[","]","|","\\",";",":","'","\"","<",",",".","/","?"};
+	public static final String DATA_SPECIAL_CHARACTER_STRING = "~`!@#$%^&*()-_=+[]{}\\|;:'\",<.>?/";
+	public static final String[] DATA_SPECIAL_CHARACTER_NOT_FULL = {"`","~","!","@","#","$","%","^","&","*","(",")","+","=","{","}","[","]","|","\\",";",":","'","\"","<",",",".","/","?"};
 
 	//Set view permissions for portal
 	public static void setViewPermissions(String groupId, String membership) {

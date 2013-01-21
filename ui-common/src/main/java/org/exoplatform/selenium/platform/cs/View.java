@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 public class View extends Task {
 	public static String ELEMENT_CALENDAR_CHECKBOX = "//*[@id='${calendarName}' and @type='checkbox']";
 	public static By ELEMENT_SELECT_CATEGORY = By.id("eventCategories");
+	public static By ELEMENT_WEEK_VIEW_NEXT_ICON = By.xpath("//*[@id='UIWeekView']//*[@class='NextIcon']");
+	public static By ELEMENT_WEEK_VIEW_BACK_ICON = By.xpath("//*[@id='UIWeekView']//*[@class='BackIcon']");
 	
 	/**function show/hire a task/event by check/uncheck calendar
 	 * @author lientm
@@ -46,5 +48,19 @@ public class View extends Task {
 	public static void selectCategoryView(String category){
 		select(ELEMENT_SELECT_CATEGORY, category);
 		pause(1000);
+	}
+	
+	/**function go to a week on week view
+	 * @author lientm
+	 * @param elementWeek
+	 */
+	public static void goToWeek(By elementWeek, boolean next){
+		while (waitForAndGetElement(elementWeek, 5000, 0) == null){
+			if (next){
+				click(ELEMENT_WEEK_VIEW_NEXT_ICON);
+			}else{
+				click(ELEMENT_WEEK_VIEW_BACK_ICON);
+			}
+		}
 	}
 }

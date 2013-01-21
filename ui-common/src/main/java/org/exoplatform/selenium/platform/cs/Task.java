@@ -13,12 +13,12 @@ public class Task extends Calendar {
 	public static By ELEMENT_RIGHT_PANEL_ADD_TASK = By.xpath("//a[contains(text(), 'Add New Task')]");
 	public static By ELEMENT_TASK_NAME = By.xpath("//form[@id='UIQuickAddTask']//*[@id='eventName']");
 	public static By ELEMENT_TASK_NOTE = By.xpath("//form[@id='UIQuickAddTask']//*[@id='description']");
-	public static By ELEMENT_TASK_FROM_DATE = By.xpath("//*[@id='UIQuickAddEvent']//*[@name='from']");
-	public static By ELEMENT_TASK_FROM_TIME = By.xpath("//*[@id='UIQuickAddEvent']//*[@id='fromTime']/../input[@class='UIComboboxInput']");
-	public static By ELEMENT_TASK_TO_DATE = By.xpath("//*[@id='UIQuickAddEvent']//*[@name='to']");
-	public static By ELEMENT_TASK_TO_TIME = By.xpath("//*[@id='UIQuickAddEvent']//*[@id='toTime']/../input[@class='UIComboboxInput']");
-	public static By ELEMENT_TASK_ALL_DAY = By.xpath("//*[@id='UIQuickAddEvent']//*[@id='allDay']");
-	public static By ELEMENT_TASK_CALENDAR = By.xpath("//*[@id='UIQuickAddEvent']//select[@name='calendar']");
+	public static By ELEMENT_TASK_FROM_DATE = By.xpath("//*[@id='UIQuickAddTask']//*[@name='from']");
+	public static By ELEMENT_TASK_FROM_TIME = By.xpath("//*[@id='UIQuickAddTask']//*[@id='fromTime']/../input[@class='UIComboboxInput']");
+	public static By ELEMENT_TASK_TO_DATE = By.xpath("//*[@id='UIQuickAddTask']//*[@name='to']");
+	public static By ELEMENT_TASK_TO_TIME = By.xpath("//*[@id='UIQuickAddTask']//*[@id='toTime']/../input[@class='UIComboboxInput']");
+	public static By ELEMENT_TASK_ALL_DAY = By.xpath("//*[@id='UIQuickAddTask']//*[@id='allDay']");
+	public static By ELEMENT_TASK_CALENDAR = By.xpath("//*[@id='UIQuickAddTask']//select[@name='calendar']");
 	public static By ELEMENT_TASK_CATEGORY = By.xpath("//*[@id='UIQuickAddTask']//*[@id='category']");
 	public static By ELEMENT_TASK_MORE_DETAIL_BUTTON = By.xpath("//*[contains(@onclick,'UIQuickAddTask') and text()='More Details']");
 	
@@ -74,6 +74,8 @@ public class Task extends Calendar {
 	public static By ELEMENT_TASK_VIEW_DETAIL_POPUP = By.id("UICalendarPopupWindow");
 	public static String ELEMENT_TASK_VIEW_DETAIL_NAME = "//*[@class='TaskDescription' and text()='${taskName}']";
 	public static By ELEMENT_TASK_VIEW_CLOSE_POPUP = By.xpath("//*[@id='UICalendarPopupWindow']//a[@title='Close Window']");
+	public static String ELEMENT_TASK_GET_COLOR_WEEK = "//*[text()='${taskName}' and @class='EventContainer']/..";
+	public static String ELEMENT_TASK_GET_COLOR_MONTH = "//*[@title='${taskName}']/div";
 	
 	//--------------------------------------------common function-------------------------------------------------
 	/**function go to add task from a calendar
@@ -145,10 +147,10 @@ public class Task extends Calendar {
 				type(ELEMENT_TASK_TO_TIME, to, true);
 			}
 		}
-		if (opt.length > 0){
+		if (opt.length > 0 && opt[0] != null){
 			select(ELEMENT_TASK_CALENDAR, opt[0]);
 		}
-		if (opt.length > 1){
+		if (opt.length > 1 && opt[1] != null){
 			select(ELEMENT_TASK_CATEGORY, opt[1]);
 		}
 	}
@@ -159,6 +161,7 @@ public class Task extends Calendar {
 	public static void addTaskFromMenu(String name, String note, boolean allDay, String from, String to,  String...opt){
 		info("Add new task with name: " + name + "from Menu -> Task");
 		goToTask();
+		waitForElementPresent(ELEMENT_QUICK_ADD_TASK_POPUP);
 		inputDataTask(name, note, allDay, from, to, opt);
 		save();
 		if (opt.length < 3){
@@ -581,5 +584,22 @@ public class Task extends Calendar {
 		waitForElementPresent(task_name);
 		click(ELEMENT_TASK_VIEW_CLOSE_POPUP);
 		waitForElementNotPresent(ELEMENT_TASK_VIEW_DETAIL_POPUP);
+	}
+	
+	/**function get color of Task or event
+	 * @author lientm
+	 * @param taskName
+	 * @return
+	 */
+	public static String getColorOfTask(String taskName, int...mode){
+		int view = mode.length > 0 ? mode[0] : 1;
+		String color;
+		if (view == 1){
+			color = waitForAndGetElement(ELEMENT_TASK_GET_COLOR_WEEK.replace("${taskName}", taskName)).getAttribute("class");
+		}else{
+			color = waitForAndGetElement(ELEMENT_TASK_GET_COLOR_MONTH.replace("${taskName}", taskName)).getAttribute("class");
+		}
+		info("Color of task/view is " + color.split(" ")[1]);
+		return color.split(" ")[1];
 	}
 }
