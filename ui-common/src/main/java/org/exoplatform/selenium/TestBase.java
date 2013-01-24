@@ -58,6 +58,7 @@ public class TestBase {
 	public static void initSeleniumTest(){
 		String browser = System.getProperty("browser");
 		if("chrome".equals(browser)){
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/driver/chromedriver");
 			driver = new ChromeDriver();
 			chromeFlag = true;
 		} else if ("iexplorer".equals(browser)){

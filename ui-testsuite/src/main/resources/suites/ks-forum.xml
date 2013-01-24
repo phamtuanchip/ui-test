@@ -9,6 +9,7 @@
 		</groups>
 		<packages>
 			<package name="org.exoplatform.selenium.platform.ks.functional.forum.*" />
+			<package name="org.exoplatform.selenium.platform.ks.functional.faq" />
 		</packages>
 	</test>
 	<listeners>
