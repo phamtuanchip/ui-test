@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 
-import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
-
 public class PortalManagement extends GateInBase {
 	//Portal navigation
 	public static final String ELEMENT_CLASSIC_NAVIGATION = "classic";
@@ -49,38 +47,6 @@ public class PortalManagement extends GateInBase {
 		save();
 	}
 
-	//Edit a portal
-	public static void editPortal(String portalName, String portalLocale, String portalSkin, String portalSession, 
-			boolean publicMode, Map<String, String> permissions, String editGroupId, String editMembership){
-		info("--Create new portal--");
-
-		String editIcon = ELEMENT_SELECT_EDIT_PORTAL_CONFIG.replace("${portalName}", portalName);		
-		click(editIcon);
-
-		waitForTextPresent("Portal Setting");
-
-		select(ELEMENT_SELECT_LOCALE, portalLocale);
-		select(ELEMENT_SELECT_SKIN, portalSkin);
-		click(ELEMENT_PROPERTIES_TAB);
-		select(ELEMENT_SELECT_SESSION_ALIVE, portalSession);
-		click(ELEMENT_PERMISSION_SETTING_TAB);
-
-		click (ELEMENT_CHECKBOX_PUBLIC_MODE);
-
-		if (publicMode) {
-			waitForAndGetElement(ELEMENT_ADD_PERMISSION_BUTTON);
-			check(ELEMENT_CHECKBOX_PUBLIC_MODE);
-			waitForElementNotPresent(ELEMENT_ADD_PERMISSION_BUTTON);
-		} else {
-			for (String key : permissions.keySet()) {
-				setViewPermissions(key, permissions.get(key));
-			}
-		}
-		click(ELEMENT_EDIT_PERMISSION_SETTING);
-		setEditPermissions(editGroupId, editMembership);
-		save();
-	}
-
 	//Delete a portal	
 	public static void deletePortal(String portalName){
 		String portalDeleteIcon = ELEMENT_PORTAL_DELETE_ICON.replace("${portalName}", portalName);
@@ -91,14 +57,4 @@ public class PortalManagement extends GateInBase {
 		//		pause(30000);
 		waitForTextNotPresent(portalName, 180000);
 	}
-
-	//Verify the existence of portal
-	public static void verifyPortalExists(String portalName) {
-		String portal = ELEMENT_PORTAL_IN_LIST.replace("${portalName}", portalName);
-
-		info("--Verify portal (" + portalName + ") exists--");
-		goToPortalSites();
-		waitForAndGetElement(portal);
-	}
-
 }

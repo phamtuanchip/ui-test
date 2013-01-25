@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="GateIn Functional Test" verbose="1">
-		<test name="exogtn-func" enabled="true">
+		<test name="gatein-func" enabled="true">
 			<groups>
 				<run>
 					<exclude name="pending" />

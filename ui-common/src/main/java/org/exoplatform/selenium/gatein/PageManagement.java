@@ -1,9 +1,5 @@
 package org.exoplatform.selenium.gatein;
 
-import static org.exoplatform.selenium.TestLogger.info;
-import static org.exoplatform.selenium.gatein.NavigationManagement.deleteNode;
-import static org.exoplatform.selenium.gatein.NavigationToolbar.*;
-
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -147,21 +143,4 @@ public class PageManagement extends GateInBase {
 		waitForTextNotPresent("Page Editor");
 	}
 
-	public static void deletePageAtManagePageAndPortalNavigation(String pageName, boolean PageTypePortal, String portalName, 
-			boolean PageTypeGroup, String groupName){
-		info("-- Deleting "+ pageName +" at Manage page and Portal Navigation--");
-		goToManagePages();
-		if (PageTypePortal){
-			deletePage(PageType.PORTAL, pageName);
-			//delete page at Portal navigation
-			goToPortalSites();
-			deleteNode(portalName, "", pageName, true);
-		}
-		if (PageTypeGroup){
-			deletePage(PageType.GROUP, pageName);
-			//delete page at Portal/Group navigation
-			goToGroupSites();
-			deleteNode(groupName, "", pageName, true);
-		}
-	}
 }

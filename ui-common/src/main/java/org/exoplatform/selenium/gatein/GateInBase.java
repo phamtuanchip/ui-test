@@ -3,22 +3,14 @@ package org.exoplatform.selenium.gatein;
 import static org.exoplatform.selenium.TestLogger.debug;
 import static org.exoplatform.selenium.TestLogger.info;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.exoplatform.selenium.TestBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -640,118 +632,6 @@ public class GateInBase extends TestBase {
 		click(ELEMENT_NEXT_BUTTON);	
 	}
 	
-	public static void getDriverAutoSave(){
-		FirefoxProfile fp = new FirefoxProfile();	
-		fp.setPreference("browser.download.folderList", 2);
-		info("-------"+System.getProperty("user.dir"));
-		fp.setPreference("browser.download.dir", System.getProperty("user.dir"));
-		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall;application/x-zip;application/x-zip-compressed;application/octet-stream;application/zip;application/pdf;application/msword;text/plain;application/octet;application/xml;text/xml;application/x-xml");
-		driver = new FirefoxDriver(fp);
-		baseUrl = System.getProperty("baseUrl");
-		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
-	}
-	/**
-	 * 
-	 * Get cookies of current browser then delete all cookies
-	 * @return set of cookies of browser
-	 */
-  public static Set<Cookie> getBrowserCookies(){
-    Set<Cookie> cookies = driver.manage().getCookies();
-    driver.manage().deleteAllCookies();
-    return cookies;   
-  }
-  
-  /**
-   * Set cookies for current browser
-   * @param cookies : Set of cookies
-   */
-  public static void setBrowserCookies(Set<Cookie> cookies){
-    for(Cookie cookie : cookies){
-      driver.manage().addCookie(cookie);
-    }
-  }
-  
-  /**
-   * Add by @author vuna2
-   * Open a new browser by Javascript
-   */
-  public static void openNewBrowser(){
-	//Open new browser by Javascript
-	//String handlesBefore = driver.getWindowHandle();
-	((JavascriptExecutor) driver).executeScript("window.open()");  
-	//driver.manage().deleteAllCookies();
-	for(String winHandle : driver.getWindowHandles()){
-	        driver.switchTo().window(winHandle);
-	}
-	 driver.navigate().to(baseUrl);
-  }
-  
-  /**
-   * Add by @author vuna2
-   * @param cookies: Set of cookies (browsers)
-   * @param handlesBefore: handle the current browser
-   */
-  public static void backToPreviousBrowser(Set<Cookie> cookies, String handlesBefore){
-	driver.manage().deleteAllCookies();
-	  
-	//Add cookies back to previous browser 
-	setBrowserCookies(cookies);
-	
-	//Switch back to previous browser    
-	driver.switchTo().window(handlesBefore); 
-  }
-
-	//Function to add data to frame
-	public static void inputDataToFrame (By framelocator, String data, boolean...validate){
-		try {
-			WebElement inputsummary = null;
-
-			for (int repeat = 0;; repeat++) {
-				if (repeat >= DEFAULT_TIMEOUT/WAIT_INTERVAL) {
-					Assert.fail("Fail to input data to frame " + framelocator);
-				}
-				driver.switchTo().frame(waitForAndGetElement(framelocator));
-				inputsummary = driver.switchTo().activeElement();
-
-				inputsummary.click();
-
-				if (validate.length >0)
-					if (validate[0]){
-						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "'");
-						if (data.equals(inputsummary.getText())) break;
-					}
-					else{
-						inputsummary.sendKeys(data);
-						break;
-					}
-				else {
-					inputsummary.sendKeys(data);
-					if (data.equals(inputsummary.getText())) break;
-				}
-
-				switchToParentWindow();
-			}
-		} catch (StaleElementReferenceException e) {
-			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
-			pause(WAIT_INTERVAL);
-			driver.switchTo().defaultContent();
-			inputDataToFrame (framelocator, data);
-		} catch (ElementNotVisibleException e) {
-			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
-			pause(WAIT_INTERVAL);
-			driver.switchTo().defaultContent();
-			inputDataToFrame (framelocator,data);
-		}catch (WebDriverException e) {
-			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
-			pause(WAIT_INTERVAL);
-			driver.switchTo().defaultContent();
-			inputDataToFrame (framelocator,data);
-		}
-		finally {
-			loopCount = 0;
-		}
-	}
-
 	// Select option from combo box
 	public static void selectOption(Object locator, String option) {
 		try {
@@ -774,31 +654,4 @@ public class GateInBase extends TestBase {
 			loopCount = 0;
 		}
 	}
-
-	////////
-	//Common code for test cases using 2 popup windows / browsers
-	////////
-	/**
-	 * Add by @author vuna2
-	 * <li> Switch to a new browser/ Popup window</li> 
-	 */
-	public static void switchToNewWindow(){
-		Set<String> windowids = driver.getWindowHandles(); 
-		Iterator<String> iter= windowids.iterator();
-		while(iter.hasNext()) {
-			String windowHandle = iter.next(); 
-			driver.switchTo().window(windowHandle);
-		} 
-	}
-
-	/**
-	 * Add by @author vuna2
-	 * @param previousWindowHandle: handle the previous (current) browser (String)
-	 */
-	public static void backToPreviousBrowser(String previousWindowHandle){
-		// Close the popup window
-		driver.close(); 
-		// Switch back to previous window.
-		driver.switchTo().window(previousWindowHandle);
-	}	  
 }

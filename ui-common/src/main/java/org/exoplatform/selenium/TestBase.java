@@ -51,8 +51,7 @@ public class TestBase {
 	public static final int ACTION_REPEAT = 5;
 	public static boolean agreementCheck = false;
 
-	//public static final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
-	public static final String DEFAULT_BASEURL="http://localhost:8080";
+	public static final String DEFAULT_BASEURL="http://localhost:8080/portal";
 
 	public static void initSeleniumTest(){
 		String browser = System.getProperty("browser");
