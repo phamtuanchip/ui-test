@@ -1,10 +1,13 @@
 package org.exoplatform.selenium.platform.ecms.functional.admin.contenttype;
 
 import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.platform.ecms.WcmAdmin.doNodeTypeSearch;
+import static org.exoplatform.selenium.platform.ecms.WcmAdmin.gotoManageNoteType;
+
 import java.util.List;
-import org.apache.commons.lang.RandomStringUtils;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
-import static org.exoplatform.selenium.platform.ecms.WcmAdmin.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
