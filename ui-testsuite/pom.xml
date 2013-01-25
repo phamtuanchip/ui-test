@@ -5,14 +5,13 @@
 	<parent>
 		<groupId>org.exoplatform.selenium</groupId>
 		<artifactId>ui-test</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>3.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ui-testsuite</artifactId>
 	<packaging>jar</packaging>
 
 	<properties>
-		<cargo.skip>false</cargo.skip>
 		<!-- <selenium.port>4444</selenium.port> -->
 		<!-- <servlet.port>18880</servlet.port> -->
 		<!-- <selenium.background>true</selenium.background> -->
@@ -35,224 +34,10 @@
 			</properties>
 		</profile>
 		
-		<profile>
-			<id>regression</id>
-			<properties>
-				<testSuite>regression.xml</testSuite>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
 	</profiles>
 
 	<build>
 		<plugins>
-			<!-- Unpack the app server -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${maven-dependency-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>a-unpack</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-
-						<configuration>
-							<skip>${cargo.skip}</skip>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.exoplatform.platform</groupId>
-									<artifactId>exo.platform.packaging.tomcat</artifactId>
-									<version>${org.exoplatform.platform.version}</version>
-									<type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/platform-server/</outputDirectory>
-									<excludes>tomcat-bundle/bin/setenv.sh,tomcat-bundle/conf/server.xml</excludes>
-								</artifactItem>
-							</artifactItems>
-
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Copy configuration file -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>a-copy-resources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/platform-server/tomcat-bundle/bin</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/src/main/resources/sql/bin/</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>b-copy-resources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/platform-server/tomcat-bundle/conf</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/src/main/resources/sql/conf/</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>c-copy-resources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/platform-server/tomcat-bundle/lib</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/src/main/resources/sql/lib/</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-
-				</executions>
-			</plugin>
-
-			<!-- SQL configuration -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.5</version>
-
-				<dependencies>
-					<!-- specify the dependent jdbc driver -->
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>5.1.16</version>
-						<type>jar</type>
-					</dependency>
-				</dependencies>
-
-				<!-- common configuration shared by all executions -->
-				<configuration>
-					<skip>${cargo.skip}</skip>
-					<driver>com.mysql.jdbc.Driver</driver>
-					<url>jdbc:mysql://localhost:3306/plf_data</url>
-					<username>root</username>
-					<password>123456789</password>
-					<!-- You can comment out username/password configurations and have maven 
-						to look them up in your settings.xml using ${settingsKey} -->
-					<settingsKey>sensibleKey</settingsKey>
-					<!-- all executions are ignored if -Dmaven.test.skip=true -->
-					<skip>${maven.test.skip}</skip>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>drop-db-before-test-if-any</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<skip>${cargo.skip}</skip>
-							<!-- need another database to drop the targeted one -->
-							<url>jdbc:mysql://localhost:3306/</url>
-							<autocommit>true</autocommit>
-							<sqlCommand>drop database if exists plf_data</sqlCommand>
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-db</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<skip>${cargo.skip}</skip>
-							<url>jdbc:mysql://localhost:3306/</url>
-							<autocommit>true</autocommit>
-							<sqlCommand>create database if not exists plf_data</sqlCommand>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- SQL configuration END -->
-
-			<!-- Start/Stop the tomcat server used for tests -->
-			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<configuration>
-					<skip>${cargo.skip}</skip>
-					<!-- Container configuration -->
-					<container>
-						<containerId>tomcat6x</containerId>
-						<home>
-							${project.build.directory}/platform-server/tomcat-bundle/
-						</home>
-						<type>installed</type>
-						<timeout>800000</timeout>
-						<systemProperties>
-							<org.apache.commons.logging.Log>org.apache.commons.logging.impl.SimpleLog</org.apache.commons.logging.Log>
-							<java.security.auth.login.config>../conf/jaas.conf</java.security.auth.login.config>
-							<gatein.data.dir>${project.build.directory}/platform-server/tomcat-bundle/gatein/data</gatein.data.dir>
-							<gatein.portlet.config>${project.build.directory}/platform-server/tomcat-bundle/gatein/conf/portlet.xml</gatein.portlet.config>
-							<exo.product.developing>false</exo.product.developing>
-							<exo.conf.dir.name>gatein/conf</exo.conf.dir.name>
-							<exo.shared.dir>${project.build.directory}/platform-server/tomcat-bundle/gatein</exo.shared.dir>
-							<exo.profiles>default</exo.profiles>
-						</systemProperties>
-					</container>
-
-					<!-- Configuration to use with the container -->
-					<configuration>
-						<type>existing</type>
-						<home>${project.build.directory}/platform-server/tomcat-bundle/</home>
-						<!-- <properties> -->
-						<!-- <cargo.servlet.port>8080</cargo.servlet.port> -->
-						<!-- </properties> -->
-					</configuration>
-				</configuration>
-
-				<!-- start server before integration tests -->
-				<executions>
-					<execution>
-						<id>start-container</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-					</execution>
-					<!-- stop server after integration tests -->
-					<execution>
-						<id>stop-container</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-
-			</plugin>
-
 			<!-- Execute integration tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -46,35 +46,12 @@ public class ManageAccount extends GateInBase {
 /**
  * @update by thuntn
  */
-	//Sign-out for eXoGTN
+//	//Sign-out for eXoGTN
 	public static void signOut(){
 		mouseOver(ELEMENT_SIGN_OUT_ICON, true);
 		click(ELEMENT_SIGN_OUT_LINK);
 		pause(500);
 		driver.get(baseUrl);
-	}
-
-	// Edit user in My Account
-	// Hover [user name] -> My Account
-	public static void editUserInMyAccount(String firstName, String lastName, String email, String currentPassword, String newPassword,
-			String confirmNewPassword){
-		info("-- Edit user in My Account --");
-
-		type(ELEMENT_INPUT_FIRSTNAME, firstName, true);
-		type(ELEMENT_INPUT_LASTNAME, lastName, true);
-		type(ELEMENT_INPUT_EMAIL, email, true);
-		click(ELEMENT_CHANGE_PASSWORD_TAB);
-		waitForTextPresent("Current Password:");
-
-		type(ELEMENT_INPUT_CURRENTPASSWORD, currentPassword, true);
-		type(ELEMENT_INPUT_NEW_PASSWORD_MYACCOUNT, newPassword, true);
-		type(ELEMENT_INPUT_NEW_CONFIRM_PASSWORD_MYACCOUNT, confirmNewPassword, true);
-		click(ELEMENT_ACCOUNT_PROFILE_TAB);
-
-		save();	
-		waitForMessage("The account information has been updated.");
-		closeMessageDialog();
-		close();
 	}
 
 	// Add a new user account
