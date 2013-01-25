@@ -15,6 +15,7 @@
 		<!-- <selenium.port>4444</selenium.port> -->
 		<!-- <servlet.port>18880</servlet.port> -->
 		<!-- <selenium.background>true</selenium.background> -->
+		<testSuite>gatein.xml</testSuite>
 	</properties>
 
 	<dependencies>

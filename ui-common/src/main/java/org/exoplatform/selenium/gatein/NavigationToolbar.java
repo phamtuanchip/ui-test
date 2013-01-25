@@ -134,7 +134,7 @@ public class NavigationToolbar extends GateInBase {
 
 	//Go to register page in public mode
 	public static void goToRegisterPageInPublicMode(WebDriver driverTest){
-		String registerPageLink = baseUrl.concat("/portal/classic/register");
+		String registerPageLink = baseUrl.concat("/classic/register");
 		driverTest.navigate().to(registerPageLink);
 		waitForTextPresent(TEXT_REGISTER_ACCOUNT);
 	}

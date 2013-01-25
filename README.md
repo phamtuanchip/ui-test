@@ -20,8 +20,9 @@ How to build the project
 2. Launch test
 Here are steps to build this project.
 - Step 1: Start server to run GateIn product.
-- Step 2: On terminal, go to ui-test folder.
-- Step 3: type a command: mvn clean install [-DbaseUrl] [-Dbrowser] to run all tests on all browsers
+- Step 2: clone this project from github: type a command: git clone git@github.com:exoplatform/ui-test.git
+- Step 3: On terminal, go to ui-test folder.
+- Step 4: type a command: mvn clean install [-DbaseUrl] [-Dbrowser] to run all tests on all browsers
 	+ baseUrl: url of server, default localhost
 	+ browser: firefox, chrome,ie, default firefox. However, chrome, ie are not supported at this momment
 
