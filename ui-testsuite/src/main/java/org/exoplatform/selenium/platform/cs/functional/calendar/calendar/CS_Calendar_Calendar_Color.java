@@ -64,8 +64,8 @@ public class CS_Calendar_Calendar_Color extends Calendar {
 		String desc = "CS_Calendar_Color_description_01";
 		String color = "OrangeRed ColorCell";
 		String newColor = "Red";
-		String eventName = "CS_Calendar_event_01";
-		String taskName = "CS_Calendar_task_01";
+		String eventName = "CS_Calendar_Color_event_01";
+		String taskName = "CS_Calendar_Color_task_01";
 		
 		info("Add a calendar in personal calendar");
 		quickAddCalendar(calendarName, desc, null, color);
@@ -84,8 +84,8 @@ public class CS_Calendar_Calendar_Color extends Calendar {
 		String desc = "CS_Calendar_Color_description_02";
 		String color = "OrangeRed ColorCell";
 		String newColor = "Red";
-		String eventName = "CS_Calendar_event_02";
-		String taskName = "CS_Calendar_task_02";
+		String eventName = "CS_Calendar_Color_event_02";
+		String taskName = "CS_Calendar_Color_task_02";
 		String[] groupUser = {"/developers"};
 		String[] user = {"john"};
 		String[] membership = {};
@@ -107,8 +107,8 @@ public class CS_Calendar_Calendar_Color extends Calendar {
 		String desc = "CS_Calendar_Color_description_03";
 		String color = "SeaGreen ColorCell";
 		String newColor = "Red";
-		String eventName = "CS_Calendar_event_03";
-		String taskName = "CS_Calendar_task_03";
+		String eventName = "CS_Calendar_Color_event_03";
+		String taskName = "CS_Calendar_Color_task_03";
 		String[] user = {"demo"};
 		String[] group = {};
 		

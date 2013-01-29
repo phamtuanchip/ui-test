@@ -77,6 +77,11 @@ public class Task extends Calendar {
 	public static String ELEMENT_TASK_GET_COLOR_WEEK = "//*[text()='${taskName}' and @class='EventContainer']/..";
 	public static String ELEMENT_TASK_GET_COLOR_MONTH = "//*[@title='${taskName}']/div";
 	
+	//----------------------import----------------------------------------------------------------------
+	public static By ELEMENT_POPUP_IMPORT_TASK = By.xpath("//*[@id='UICalendarPopupWindow']//span[@class='PopupTitle' and text()='Calendar']");
+	public static By ELEMENT_IMPORT_FOMAT_TYPE = By.id("type");
+	public static By ELEMENT_IMPORT_CALENDAR_SELECT = By.xpath("//select[@name='impotTo']");
+	
 	//--------------------------------------------common function-------------------------------------------------
 	/**function go to add task from a calendar
 	 * @author lientm
@@ -574,8 +579,8 @@ public class Task extends Calendar {
 		
 		for (int i = 0; i < 5; i++){
 			rightClickOnElement(task);
-			WebElement delete = waitForAndGetElement(ELEMENT_TASK_VIEW, 5000, 0);
-			if (delete != null){
+			WebElement view = waitForAndGetElement(ELEMENT_TASK_VIEW, 5000, 0);
+			if (view != null){
 				click(ELEMENT_TASK_VIEW);
 				break;
 			}
@@ -601,5 +606,25 @@ public class Task extends Calendar {
 		}
 		info("Color of task/view is " + color.split(" ")[1]);
 		return color.split(" ")[1];
+	}
+	
+	/**function import task/event to calendar
+	 * @author lientm
+	 * @param calendarName
+	 * @param type
+	 * @param path: path to file upload
+	 */
+	public static void importTaskEventToCalendar(String calendarName, int type, String path){
+		String idCal = getIDOfCalendar(calendarName);
+		String color = getColorOfCalendar(calendarName);
+		
+		executeActionCalendar(idCal, "ImportCalendar", color, type);
+		waitForElementPresent(ELEMENT_POPUP_IMPORT_TASK);
+		info("Import task/event to calendar");
+		uploadCalendar(path);
+		String[] paths= path.split("/");
+		waitForElementPresent(ELEMENT_UPLOAD_FILE_NAME.replace("{$filename}", paths[paths.length-1]));
+		save();
+		waitForElementNotPresent(ELEMENT_POPUP_IMPORT_TASK);
 	}
 }

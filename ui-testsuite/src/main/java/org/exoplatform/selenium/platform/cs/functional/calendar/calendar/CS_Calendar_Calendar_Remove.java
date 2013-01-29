@@ -75,6 +75,7 @@ public class CS_Calendar_Calendar_Remove extends Calendar {
 		
 		info("shared this calendar");
 		shareCalendar(calendarName, user, group, false);
+		waitForElementPresent(element_shared);
 		signOut();
 		
 		info("Remove calendar with user demo");
@@ -121,6 +122,7 @@ public class CS_Calendar_Calendar_Remove extends Calendar {
 		
 		info("shared this calendar");
 		shareCalendar(calendarName, user, group, true);
+		waitForElementPresent(element_shared);
 		signOut();
 		
 		info("Remove calendar with user demo");
