@@ -67,6 +67,9 @@ public class Calendar extends CsBase {
 	public static String ELEMENT_DELETE_SHARE_ICON = "//div[@title='{$user}']/../..//img[@alt='Delete']";
 	public static By ELEMENT_ADD_BUTTON = By.linkText("Add");
 	public static String ELEMENT_SHARED_ICON = "//*[@class='SharedCalendarIcon' and @title='${calendarName}']";
+	public static String MSG_SHARED_INVALID_USER = "User ${user} was not found, please check again.";
+	public static String MSG_SHARED_NULL_USER = "Who would you like to share to?";
+	public static String ELEMENT_SHARED_EDIT_ICON = "//*[text()='${user}']/../..//img[@class='EditIcon']";
 
 	//----------Add a remote calendar-------------
 	//Subscribe a calendar
@@ -102,6 +105,9 @@ public class Calendar extends CsBase {
 	
 	//------------Remove calendars-----------
 	public static String MSG_REMOVE_CALENDAR_NOT_HAVE_RIGHT = "You have no permission to delete.";
+	
+	//------------Edit calendars---------------
+	public static String MSG_EDIT_CALENDAR_NOT_HAVE_RIGHT = "You are not allowed to edit this calendar.";
 	
 	/**
 	 * @author thuntn
@@ -706,12 +712,16 @@ public class Calendar extends CsBase {
 	 * @param calendar: name of calendar
 	 * @param oldUserGroup: name of user/group which need to be edited
 	 */
-	public static void deleteShareCalendar(String calendar, String oldUserGroup){
+	public static void deleteShareCalendar(String calendar, String... oldUserGroup){
 		info("--Delete a calendar share permission--");
 		goToShareCalendar(calendar);
-		click(ELEMENT_DELETE_SHARE_ICON.replace("{$user}", oldUserGroup));
-		waitForConfirmation(MSG_DELETE_SHARE_CAL);
-		waitForElementNotPresent(ELEMENT_DELETE_SHARE_ICON.replace("{$user}", oldUserGroup));
+		if (oldUserGroup.length > 0){
+			for (int i = 0; i < oldUserGroup.length; i ++){
+				click(ELEMENT_DELETE_SHARE_ICON.replace("{$user}", oldUserGroup[i]));
+				waitForConfirmation(MSG_DELETE_SHARE_CAL);
+				waitForElementNotPresent(ELEMENT_DELETE_SHARE_ICON.replace("{$user}", oldUserGroup[i]));
+			}
+		}
 	}
 	
 	/**function set up to show/hire calendar
@@ -814,5 +824,28 @@ public class Calendar extends CsBase {
 		String color = getColorOfCalendar(calendarName);
 		info("Refresh calendar");
 		executeActionCalendar(idCal, "RefreshRemoteCalendar", color, type);
+	}
+	
+	/**change edit permission for shared user of shared calendar
+	 * @author lientm
+	 * @param calendarName
+	 * @param user
+	 * @param edit: = true: have edit permission
+	 *              = false: do not have edit permission
+	 */
+	public static void editPermissionSharedCalendar(String calendarName, String user, boolean edit){
+		By element_edit = By.xpath(ELEMENT_SHARED_EDIT_ICON.replace("${user}", user));
+		
+		goToShareCalendar(calendarName);
+		click(element_edit);
+		WebElement permission_edit = waitForAndGetElement(ELEMENT_EDIT_PERMISSION_CHECK);
+		if (edit && !permission_edit.isSelected()){
+			check(ELEMENT_EDIT_PERMISSION_CHECK);
+		}else if (!edit && permission_edit.isSelected()) {
+			uncheck(ELEMENT_EDIT_PERMISSION_CHECK);
+		}
+		save();
+		cancel();
+		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);		
 	}
 }
