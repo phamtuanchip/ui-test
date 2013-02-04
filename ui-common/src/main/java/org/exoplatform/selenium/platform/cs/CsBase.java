@@ -56,6 +56,10 @@ public class CsBase extends PlatformBase{
 	public static final By ELEMENT_CALENDAR_SETTINGS_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon SettingCalendarIcon']");
 	public static By ELEMENT_GET_ID_PANE = By.xpath("//*[@id='CalendarApplicationMinWidth']/../..");
 	public static String IDPAGE = "";
+	
+	//Right click on a cell
+	public static final By ELEMENT_ADD_EVENT_OPTION = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon QuickAddEvent']");
+	public static final By ELEMENT_ADD_TASK_OPTION = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon QuickAddTask']");
 
 	//Quick add event tab -> More details
 	public static final By ELEMENT_MORE_DETAILS_BUTTON = By.xpath("//*[@id='QuickAddEventContainer']//a[contains(text(), 'More Details')]");
@@ -84,7 +88,6 @@ public class CsBase extends PlatformBase{
 	//Event tab
 	public static void goToEvent(){		
 		click(ELEMENT_EVENT_TAB);
-		
 	}
 
 	//Task tab

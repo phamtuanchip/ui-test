@@ -3,7 +3,10 @@ package org.exoplatform.selenium.platform.cs;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
+import static org.exoplatform.selenium.platform.ManageAccount.signOut;
 import static org.exoplatform.selenium.platform.UserGroupManagement.*;
+import static org.exoplatform.selenium.platform.ks.ForumBase.checkFileExisted;
 import static org.exoplatform.selenium.TestLogger.*;
 
 public class Calendar extends CsBase {
@@ -47,6 +50,9 @@ public class Calendar extends CsBase {
 	public static String MESSAGE_ADD_CALENDAR_INVALID_NAME = "Only alpha, digit, underscore, dash and space characters allowed for the field \"Display Name\".";
 	public static String MESSAGE_ADD_CALENDAR_DUPLICATE_NAME = "The name ${calendarName} already exists.";
 	public static String MESSAGE_EDIT_SHARED_CALENDAR = "Shared calendars cannot be modified.";
+	public static By ELEMENT_ENABLE_PUBLIC_ACCESS = By.xpath("//*[@id='calendarDetail']//a[contains(text(), 'Enable Public Access')]");
+	public static By ELEMENT_ICAL_PUBLIC_URL = By.xpath("//*[@id='calendarDetail']//td[contains(text(), 'Public URL')]/..//img[@class='ICalIcon']");
+	public static By ELEMENT_CALENDAR_FEED_LINK = By.xpath("//*[@id='UIFeed']//*[@class='FeedLink']");
 	
 	//--------------Add a group screen-------------
 	public static By ELEMENT_GROUP_NAME_INPUT = By.id("categoryName");
@@ -847,5 +853,64 @@ public class Calendar extends CsBase {
 		save();
 		cancel();
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON);		
+	}
+	
+	/**function quick add a calendar then share its
+	 * @author lientm
+	 * @param calendarName
+	 * @param desc
+	 * @param color
+	 * @param user
+	 * @param group
+	 * @param edit
+	 */
+	public static void addCalendarAndShare(String calendarName, String desc, String color, String[] user, String[] group, boolean edit){
+		By element_shared = By.xpath(ELEMENT_SHARED_ICON.replace("${calendarName}", calendarName));
+		
+		info("Add a calendar in personal calendar");
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		assert getColorOfCalendar(calendarName).equalsIgnoreCase(color.split(" ")[0]);
+		
+		info("shared this calendar");
+		shareCalendar(calendarName, user, group, edit);
+		waitForElementPresent(element_shared);
+	}
+	
+	/**function enable public access for calendar then go to public access link
+	 * @author lientm
+	 * @param calendarName
+	 */
+	public static void goToPublicAccessLinkOfCalendar(String calendarName){
+		info("enable public access for calendar");
+		goToEditCalendar(calendarName);
+		if (waitForAndGetElement(ELEMENT_ENABLE_PUBLIC_ACCESS, 5000, 0) != null){
+			click(ELEMENT_ENABLE_PUBLIC_ACCESS);
+		}
+		click(ELEMENT_ICAL_PUBLIC_URL);
+		String url = getText(ELEMENT_CALENDAR_FEED_LINK);
+		close();
+		save();	
+		signOut();
+		
+		driver.get(url.substring(1, url.length() - 1));
+		String[] calendar = url.split("/");
+		assert checkFileExisted(calendar[calendar.length - 2] + ".ics");
+	}
+	
+	//function use for check event, task have existed but display is none
+	public static WebElement waitForElementPresentNotDisplay(Object locator, int... opParams) {
+		WebElement elem = null;
+		int timeout = opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT;
+		int isAssert = opParams.length > 1 ? opParams[1]: 1;
+
+		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
+			elem = getElement(locator);
+			//elem = getDisplayedElement(locator);
+			if (null != elem) return elem;
+			pause(WAIT_INTERVAL);
+		}
+		if (isAssert == 1)
+			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
+		return null;
 	}
 }

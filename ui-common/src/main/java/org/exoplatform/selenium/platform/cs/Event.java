@@ -24,15 +24,18 @@ public class Event extends Task{
 	public static final By ELEMENT_SET_TIME_TO_HOUR_CHECKBOX = By.xpath("//*[@id='toTime']/..//input[@class='UIComboboxInput']");
 	public static final String ELEMENT_INPUT_SET_TIME_FROM_HOUR = "//*[@id='UIQuickAddEvent']//a[@class='UIComboboxItem' and @value='${hour}']";
 	public static final String ELEMENT_INPUT_SET_TIME_TO_HOUR = "//*[@id='toTime']/../div//a[@class='UIComboboxItem' and @value='${hour}']";
-
+	public static final String ELEMENT_EVENT = "//*[@class='busyIcon']/../..//*[@class='EventContainer' and text()='${eventName}']";
+	public static final By ELEMENT_EVENT_MORE_DETAIL_BUTTON = By.xpath("//*[@id='UIQuckAddEventPopupWindow']//a[text() =  'More Details']");
+	
 	//-----------------------------Add detail event form-------------------------------------------
 	public static final By ELEMENT_ADD_DETAIL_EVENT_FORM = By.xpath("//*[@id='UICalendarPopupWindow']//span[text()='Add/Edit Event']");
 	//----Detail tab-------------
+	public static final By ELEMENT_ADD_DETAIL_EVENT_DETAIL_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Detail']");
 	public static final By ELEMENT_EVENT_LOCATION = By.id("place");
 	public static final By ELEMENT_EVENT_PRIORITY = By.id("priority");
 	public static final By ELEMENT_REPEAT_CHECKBOX = By.id("isRepeat");
 	public static final By ELEMENT_ATTACH_FILE_ICON = By.xpath(" //*[@id='eventDetail']//div[@class='AddAttachmentIcon']//img[@class='AddNewNodeIcon']");
-
+	
 	public static final By ELEMENT_INPUT_EVENT_SUMMARY_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='eventName']");
 	public static final By ELEMENT_INPUT_EVENT_DESCRIPTION_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='description']");
 	public static final By ELEMENT_TIME_FROM_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//input[@format='MM/dd/yyyy' and @name='from']");
@@ -59,6 +62,7 @@ public class Event extends Task{
 	public static final By ELEMENT_CALENDAR_POPUP_WINDOW = By.xpath("//*[@id='UICalendarChildPopupWindow']/div[2]/div");
 	
 	//-------------Reminder tab--------
+	public static final By ELEMENT_ADD_DETAIL_EVENT_REMINDER_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Reminders']");
 	public static final By ELEMENT_REMIND_BY_MAIL_CHECKBOX = By.id("mailReminder");
 	public static final By ELEMENT_EMAIL_REPEAT = By.id("emailIsRepeat");
 	public static final By ELEMENT_POPUP_EMAIL_REPEAT = By.id("popupIsRepeat");
@@ -73,6 +77,7 @@ public class Event extends Task{
 	public static final By ELEMENT_REPEAT_POPUP_INTERVAL = By.id("popupRepeatInterval");
 	
 	//----------More details --> Participants tab--------
+	public static final By ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Participants']");
 	public static final By ELEMENT_SHARED_EVENT_PUBLIC = By.id("shareEvent_public");
 	public static final By ELEMENT_SHARED_EVENT_PRIVATE = By.id("shareEvent_private");
 	public static final By ELEMENT_AVAILABLE_STATUS_BUSY = By.id("status_busy");
@@ -86,6 +91,7 @@ public class Event extends Task{
 	public static final By ELEMENT_INPUT_INVITATION_MESSAGE = By.id("invitation-msg");
 	
 	//------More details --> Schedule tab---------------
+	public static final By ELEMENT_ADD_DETAIL_EVENT_SCHEDULE_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Schedule']");
 	public static final By ELEMENT_SELECTED_DATE_CHECKBOX = By.id("checkTime"); 
 	public static final By ELEMENT_SCHEDULE_ALLDAY_CHECBOX = By.id("dateAll");
 	public static final By ELEMENT_SCHEDULE_FROM_TIME_BOX = By.xpath("//*[@id='timeFrom']/..//input[@class='UIComboboxInput']");
@@ -407,6 +413,7 @@ public class Event extends Task{
 		inputDataQuickAddEventForm(name, desc, from, to, allDay, opt);
 		if (opt.length < 3){
 			waitForElementNotPresent(ELEMENT_QUICK_ADD_EVENT_POPUP);
+			waitForElementPresentNotDisplay(By.xpath(ELEMENT_EVENT.replace("${eventName}", name)));
 		}
 	}
 	
@@ -428,159 +435,108 @@ public class Event extends Task{
 		}
 	}
 	
-	///////////
-	/**
-	 * 
-	 * @param type: type of event to be created (QUICKLY or DETAIL)
-	 * @param eventInformation: [0]-> event summary; [1]-> event descriptions
-	 * @param setTime: boolean
-	 * @param time: [0] -> date; [1] -> hour
-	 * @param allDay: boolean
-	 * @param typeCalendarAndEventCategory
-	 */
-	public static void quickAddEvent(typeAddEvent type, String[] eventInformation, boolean setTime, String[] time, 
-			boolean allDay, String[] typeCalendarAndEventCategory){
-		switch (type) {
-		case QUICKLY:
-			type(ELEMENT_INPUT_EVENT_SUMMARY, eventInformation[0], true);
-			type(ELEMENT_INPUT_EVENT_DESCRIPTION, eventInformation[0], true);
-			if(setTime){
-				//Set time from
-				click(ELEMENT_TIME_FROM_CHECKBOX);
-				click(ELEMENT_SET_TIME_DATE.replace("${date}", time[0]));
-				click(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX);
-				click(ELEMENT_INPUT_SET_TIME_FROM_HOUR.replace("${hour}", time[1]));		
-				//Set time to
-				if (time.length > 2){
-					click(ELEMENT_TIME_TO_CHECKBOX);
-					click(ELEMENT_SET_TIME_DATE.replace("${date}", time[2]));
-					click(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX);
-					click(ELEMENT_INPUT_SET_TIME_TO_HOUR.replace("${hour}", time[3]));					
-				}
-			}	
-			if (allDay){
-				check(ELEMENT_ALLDAY_CHECKBOX);
-			}	
-			select(ELEMENT_SELECT_TYPE_CALENDAR, typeCalendarAndEventCategory[0]);
-			select(ELEMENT_TYPE_EVENT_CATEGORY, typeCalendarAndEventCategory[1]);
-			save();
-			break;
-		case DETAIL:
-			type(ELEMENT_INPUT_EVENT_SUMMARY_DETAILS, eventInformation[0], true);
-			type(ELEMENT_INPUT_EVENT_DESCRIPTION_DETAILS, eventInformation[0], true);
-			if(setTime){
-				click(ELEMENT_TIME_FROM_CHECKBOX_DETAILS);
-				click(ELEMENT_SET_TIME_DATE_DETAILS.replace("${date}", time[0]));
-				click(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS);
-				click(ELEMENT_INPUT_SET_TIME_FROM_HOUR_DETAILS.replace("${hour}", time[1]));
-				//Set time to
-				if (time.length > 2){
-					click(ELEMENT_TIME_TO_CHECKBOX_DETAILS);
-					click(ELEMENT_SET_TIME_DATE_DETAILS.replace("${date}", time[2]));
-					click(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS);
-					click(ELEMENT_INPUT_SET_TIME_TO_HOUR_DETAILS.replace("${hour}", time[3]));
-				}
-			}
-			if (allDay){
-				check(ELEMENT_ALLDAY_CHECKBOX_DETAILS);
-			}	
-			select(ELEMENT_SELECT_TYPE_CALENDAR_DETAILS, typeCalendarAndEventCategory[0]);
-			select(ELEMENT_TYPE_EVENT_CATEGORY_DETAILS, typeCalendarAndEventCategory[1]);
-			break;	
-		default:
-			break;
-		}
-		pause(1000);   	  	
-	}
-
-	// type of event to be created
-	public static enum typeAddEvent{
-		QUICKLY, DETAIL;
-	}
-
-	////////////////////
-	/**
-	 * 
-	 * @param type
-	 * @param eventInformation
-	 * @param setTime
-	 * @param time
+	/**function input data in detail tab when add event detail
+	 * @author lientm
+	 * @param summary
+	 * @param desc
+	 * @param location
 	 * @param allDay
-	 * @param typeCalendarAndEventCategory
-	 * @param optionals
+	 * @param from
+	 * @param to
+	 * @param repeat
+	 * @param typeRepeat
+	 * @param occurrencesAndDate
+	 * @param opt
+	 * @param file
 	 */
-	public static void addEventInMoreDetails(typeAddEvent type, String[] eventInformation, boolean setTime, String[] time,
-			boolean allDay, String[] typeCalendarAndEventCategory, Object... optionals){
-		String location = "";
-		String priority = "";
-		boolean repeat = false;
-		String[] typeRepeat = null;
-		String[] occurrencesAndDate = null;
-		String pathFile = "";
-
-		click(ELEMENT_MORE_DETAILS_BUTTON);
-		//waitForTextPresent("Detail");
-		
-		if (optionals.length > 0){
-			if (!(optionals[0] instanceof String)) { 
-				throw new IllegalArgumentException("-- Argument should be a String --");
-			}
-			location = (String)optionals[0];
+	public static void inputDataDetailEvent_DetailTab(String name, String desc, String location, boolean allDay, String from, String to,
+			            boolean repeat, String[] typeRepeat, String[] occurrencesAndDate, String[] opt, String... file){
+		if (name != null){
+			type(ELEMENT_INPUT_EVENT_SUMMARY_DETAILS, name, true);
 		}
-		if (optionals.length > 1){
-			if (!(optionals[1] instanceof String)) { 
-				throw new IllegalArgumentException("-- Argument should be a String --");
-			}
-			priority = (String)optionals[1];
-		}		select(ELEMENT_SELECT_TYPE_CALENDAR, typeCalendarAndEventCategory[0]);
-		select(ELEMENT_TYPE_EVENT_CATEGORY, typeCalendarAndEventCategory[1]);
-		if (optionals.length > 2){
-			if (!(optionals[2] instanceof Boolean)) { 
-				throw new IllegalArgumentException("-- Argument should be a boolean --");
-			}
-			repeat = (Boolean)optionals[2];
-			
-			if (!(optionals[3] instanceof String[])) { 
-				throw new IllegalArgumentException("-- Argument should be an array (String) --");
-			}
-			typeRepeat = (String[])optionals[3];
-			
-			if (!(optionals[4] instanceof String[])) { 
-				throw new IllegalArgumentException("-- Argument should be an array (String) --");
-			}
-			occurrencesAndDate = (String[])optionals[4];		
+		if (desc != null){
+			type(ELEMENT_INPUT_EVENT_DESCRIPTION_DETAILS, desc, true);
 		}
-		if (optionals.length > 5){
-			if (!(optionals[5] instanceof String)) { 
-				throw new IllegalArgumentException("-- Argument should be a String --");
-			}  
-			pathFile = (String)optionals[5];
-		}	
-		////
-		if (location.isEmpty()){
-			info("-- Location field is empty --");		select(ELEMENT_SELECT_TYPE_CALENDAR, typeCalendarAndEventCategory[0]);
-			select(ELEMENT_TYPE_EVENT_CATEGORY, typeCalendarAndEventCategory[1]);
-		}else{
+		if (location != null){
 			type(ELEMENT_EVENT_LOCATION, location, true);
 		}
-
-		if (priority.isEmpty()){
-			info("-- Priority field is empty --");
-		}else{	
-			select(ELEMENT_EVENT_PRIORITY, priority);
+		WebElement day = waitForAndGetElement(ELEMENT_ALLDAY_CHECKBOX_DETAILS);
+		if (allDay && !day.isSelected()){
+			check(ELEMENT_ALLDAY_CHECKBOX_DETAILS);
+		} else if (!allDay && day.isSelected()){
+			uncheck(ELEMENT_ALLDAY_CHECKBOX_DETAILS);
 		}
-
-		if (repeat){
+		if (from != null){
+			if (from != ""){
+				if (allDay){
+					type(ELEMENT_TIME_FROM_CHECKBOX_DETAILS, from, true);
+				}else {
+					String[] dateTime = from.split(" ");
+					type(ELEMENT_TIME_FROM_CHECKBOX_DETAILS, dateTime[0], true);
+					type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS, dateTime[1], true);
+				}
+			} else {
+				type(ELEMENT_TIME_FROM_CHECKBOX_DETAILS, from, true);
+				type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS, from, true);
+			}
+		}
+		if (to != null){
+			if (to != ""){
+				if (allDay){
+					type(ELEMENT_TIME_TO_CHECKBOX_DETAILS, to, true);
+				}else{
+					String[] dateTime = to.split(" ");
+					type(ELEMENT_TIME_TO_CHECKBOX_DETAILS, dateTime[0], true);
+					type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS, dateTime[1], true);
+				}
+			} else {
+				type(ELEMENT_TIME_TO_CHECKBOX_DETAILS, to, true);
+				type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS, to, true);
+			}
+		}
+		WebElement repeat_checkbox = waitForAndGetElement(ELEMENT_REPEAT_CHECKBOX);
+		if (repeat && !repeat_checkbox.isSelected()){
 			check(ELEMENT_REPEAT_CHECKBOX);
 			repeatingEvent(typeRepeat, occurrencesAndDate);
-			pause(1000);
-		}	
-		if (pathFile != ""){
-			attachSomeFiles(pathFile);
-		}	
-		quickAddEvent(type, eventInformation, setTime, time, allDay, typeCalendarAndEventCategory);		
+		} else if (!allDay && day.isSelected()){
+			uncheck(ELEMENT_REPEAT_CHECKBOX);
+		}
+		if (opt[0] != null && opt[0] != ""){
+			select(ELEMENT_EVENT_PRIORITY, opt[0]);
+		}
+		if (opt[1] != null && opt[1] != ""){
+			select(ELEMENT_SELECT_TYPE_CALENDAR_DETAILS, opt[1]);
+		}
+		if (opt[2] != null && opt[2] != ""){
+			select(ELEMENT_TYPE_EVENT_CATEGORY_DETAILS, opt[2]);
+		}
+		attachSomeFiles(file);
+	}
+
+	/**function quick add a Detail Event
+	 * @author lientm
+	 * @param summary
+	 * @param desc
+	 * @param calendar
+	 */
+	public static void quickAddDetailEvent(String name, String desc, String calendar, boolean...verify){
+		String[] typeRepeat = {};
+		String[] occurrencesAndDate = {};
+		String[] opt = {"", calendar, ""};
+		boolean check = verify.length > 0 ? verify[0] : true;
+		
+		click(ELEMENT_EVENT_MORE_DETAIL_BUTTON);
+		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_FORM);
+		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_DETAIL_TAB);
+		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_REMINDER_TAB);
+		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB);
+		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_SCHEDULE_TAB);
+		inputDataDetailEvent_DetailTab(name, desc, null, false, null, null, false, typeRepeat, occurrencesAndDate, opt);
 		save();
-		pause(1000);
+		if (check){
+			waitForElementNotPresent(ELEMENT_ADD_DETAIL_EVENT_FORM);
+			waitForElementPresent(By.xpath(ELEMENT_EVENT.replace("${eventName}", name)));
+		}		
 	}
 
 	/**
