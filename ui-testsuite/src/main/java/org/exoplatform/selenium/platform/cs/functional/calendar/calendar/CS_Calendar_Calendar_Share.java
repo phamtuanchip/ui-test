@@ -22,9 +22,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class CS_Calendar_Calendar_Share extends Calendar {
-	public String ELEMENT_SHARED_CALENDAR_OPTION_ADD_TASK = ".//*[@id='UIQuickAddTask']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
-	public String ELEMENT_SHARED_CALENDAR_OPTION_ADD_EVENT = "//*[@id='UIQuickAddEvent']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
-	public String ELEMENT_SHARED_CALENDAR_OPTION_IMPORT = "//*[@id='UIImportForm']//select[@name='impotTo']//option[contains(@value, '${calendarId}')]";
+	public static String ELEMENT_SHARED_CALENDAR_OPTION_ADD_TASK = ".//*[@id='UIQuickAddTask']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
+	public static String ELEMENT_SHARED_CALENDAR_OPTION_ADD_EVENT = "//*[@id='UIQuickAddEvent']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
+	public static String ELEMENT_SHARED_CALENDAR_OPTION_IMPORT = "//*[@id='UIImportForm']//select[@name='impotTo']//option[contains(@value, '${calendarId}')]";
 	
 	@BeforeMethod
 	public void beforeTest(){
@@ -42,7 +42,7 @@ public class CS_Calendar_Calendar_Share extends Calendar {
 		driver.quit();
 	}
 	
-	public void checkUserHaveEditSharedCalendar(String eventName, String taskName, 
+	public static void checkUserHaveEditSharedCalendar(String eventName, String taskName, 
 			String calendarName, String color, String newColor, String path, String fileName){
 		info("user can add task/event, change color calendar in shared group");
 		addTaskViewCheckColor(eventName, taskName, "john - " + calendarName, color);
@@ -53,7 +53,7 @@ public class CS_Calendar_Calendar_Share extends Calendar {
 		exportCalendar("john- " + calendarName, fileName, 1);
 	}
 	
-	public void checkUserNotHaveEditSharedCalendar(String calendarName, String newColor){
+	public static void checkUserNotHaveEditSharedCalendar(String calendarName, String newColor){
 		String id = getIDOfCalendar(calendarName);
 		String color = getColorOfCalendar(calendarName);
 		
@@ -81,18 +81,6 @@ public class CS_Calendar_Calendar_Share extends Calendar {
 		signIn("john", "gtn");
 		goToCalendarPage();
 		deleteCalendar(calendarName);
-	}
-	
-	public void addCalendarAndShare(String calendarName, String desc, String color, String[] user, String[] group, boolean edit){
-		By element_shared = By.xpath(ELEMENT_SHARED_ICON.replace("${calendarName}", calendarName));
-		
-		info("Add a calendar in personal calendar");
-		quickAddCalendar(calendarName, desc, "My Group", color);
-		assert getColorOfCalendar(calendarName).equalsIgnoreCase(color.split(" ")[0]);
-		
-		info("shared this calendar");
-		shareCalendar(calendarName, user, group, edit);
-		waitForElementPresent(element_shared);
 	}
 	
 	//Case01: Share a personal calendar

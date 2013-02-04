@@ -719,7 +719,8 @@ public class TestBase {
 		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall;application/x-zip" +
 				";application/x-zip-compressed;application/octet-stream" +
 				";application/zip;application/pdf;application/msword;text/plain;" +
-				"application/octet;text/calendar;text/x-vcalendar");
+				"application/octet;text/calendar;text/x-vcalendar;text/Calendar;" +
+				"text/x-vCalendar");
 		driver = new FirefoxDriver(fp);
 		baseUrl = System.getProperty("baseUrl");
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;

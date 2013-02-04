@@ -21,6 +21,7 @@ public class Task extends Calendar {
 	public static By ELEMENT_TASK_CALENDAR = By.xpath("//*[@id='UIQuickAddTask']//select[@name='calendar']");
 	public static By ELEMENT_TASK_CATEGORY = By.xpath("//*[@id='UIQuickAddTask']//*[@id='category']");
 	public static By ELEMENT_TASK_MORE_DETAIL_BUTTON = By.xpath("//*[contains(@onclick,'UIQuickAddTask') and text()='More Details']");
+	public static final String ELEMENT_TASK = "//*[@class='needs-actionIcon']/../..//*[@class='EventContainer' and text()='${taksName}']";
 	
 	//----------------------Add/Edit More detail task form--------------------------------------------------
 	//-----Detail tab-----------
@@ -171,6 +172,7 @@ public class Task extends Calendar {
 		save();
 		if (opt.length < 3){
 			waitForElementNotPresent(ELEMENT_QUICK_ADD_TASK_POPUP);
+			waitForElementPresentNotDisplay(ELEMENT_TASK.replace("${taksName}", name));
 		}
 	}
 	
@@ -192,6 +194,7 @@ public class Task extends Calendar {
 		save();
 		if (opt.length < 3){
 			waitForElementNotPresent(ELEMENT_QUICK_ADD_TASK_POPUP);
+			waitForElementPresentNotDisplay(ELEMENT_TASK.replace("${taksName}", name));
 		}
 	}
 	
@@ -501,7 +504,7 @@ public class Task extends Calendar {
 	 * @param taskName: name of task
 	 * @param mode: view mode
 	 */
-	public static void deleteTask(String taskName, int...mode){
+	public static void deleteTask(String taskName, boolean check, int...mode){
 		By task = getTaskFromViewMode(taskName, mode);
 
 		for (int i = 0; i < 5; i++){
@@ -513,7 +516,9 @@ public class Task extends Calendar {
 			}
 		}
 		acceptAlert();
-		waitForElementNotPresent(task);
+		if (check){
+			waitForElementNotPresent(task);
+		}
 	}
 	
 	/**function drag drop a task
