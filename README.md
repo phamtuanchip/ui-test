@@ -14,17 +14,17 @@ ui-testsuite includes all testcases which are executed to test our product - Gat
 How to build the project
 =======================
 1. Prerequisite
-- Make sure that mvn 3.0.4 or later version is installed. 
-- Package GateIn 3.5 must be available. 
-- Browsers must be available, at least Firefox
+* Make sure that mvn 3.0.4 or later version is installed. 
+* Package GateIn 3.5 must be available. 
+* Browsers must be available, at least Firefox
 2. Launch test
 Here are steps to build this project.
-- Step 1: Start server to run GateIn product.
-- Step 2: clone this project from github: type a command: git clone git@github.com:exoplatform/ui-test.git
-- Step 3: On terminal, go to ui-test folder.
-- Step 4: type a command: mvn clean install [-DbaseUrl] [-Dbrowser] to run all tests on all browsers
+* Step 1: Start server to run GateIn product.
+* Step 2: clone this project from github: type a command: git clone git@github.com:exoplatform/ui-test.git
+* Step 3: On terminal, go to ui-test folder.
+* Step 4: type a command: mvn clean install [-DbaseUrl] [-Dbrowser] to run all tests on all browsers
 	+ baseUrl: url of server, default localhost
-	+ browser: firefox, chrome,ie, default firefox. However, chrome, ie are not supported at this momment
+	+ browser: default firefox. (Chrome, ie which is Internet Explorer are not supported yet)
 
 
 
