@@ -235,7 +235,7 @@ public class KsBase extends PlatformBase {
 				By ELEMENT_FIRST = By.xpath("//*[@id='UIListUsers']/tbody/tr[2]/td/*[text()='" + temp[i] + "']");
 				By ELEMENT_SECOND = By.xpath("//*[@id='UIListUsers']/tbody/tr[3]");
 				if (type.length > i){
-					type(ELEMENT_SEARCH_USER_INPUT, user, true);
+					type(ELEMENT_SEARCH_USER_INPUT, temp[i], true);
 					switch (type[i]){
 					case 1:
 						select(ELEMENT_SELECT_SEARCH, "Username");

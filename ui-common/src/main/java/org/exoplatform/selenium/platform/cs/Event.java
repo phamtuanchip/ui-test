@@ -1,7 +1,14 @@
 package org.exoplatform.selenium.platform.cs;
 
 import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.platform.ks.ForumBase.ELEMENT_DELETE;
+
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -12,101 +19,115 @@ import org.openqa.selenium.WebElement;
 public class Event extends Task{
 
 	//-----------------------------Add event form-------------------------------------------------
-	public static final By ELEMENT_QUICK_ADD_EVENT_POPUP = By.xpath("//*[@id='UIQuckAddEventPopupWindow']//span[text()='Quick Add Event']");
-	public static final By ELEMENT_INPUT_EVENT_DESCRIPTION = By.id("description");
-	public static final By ELEMENT_SELECT_TYPE_CALENDAR = By.xpath("//*[@id='UIQuickAddEvent']//select[@name='calendar']");
-	public static final By ELEMENT_TYPE_EVENT_CATEGORY = By.id("category");
-	public static final By ELEMENT_ALLDAY_CHECKBOX = By.id("allDay");
-	public static final By ELEMENT_TIME_FROM_CHECKBOX = By.xpath("//*[@id='UIQuickAddEvent']//input[@format='MM/dd/yyyy' and @name='from']");
-	public static final By ELEMENT_TIME_TO_CHECKBOX = By.xpath("//*[@id='UIQuickAddEvent']//input[@format='MM/dd/yyyy' and @name='to']");
-	public static final String ELEMENT_SET_TIME_DATE = "//a[contains(@href,'eXo.cs.UIDateTimePicker.setDate') and contains(text(),'${date}')]";
-	public static final By ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX = By.xpath("//*[@id='UIQuickAddEvent']//input[@class='UIComboboxInput']");
-	public static final By ELEMENT_SET_TIME_TO_HOUR_CHECKBOX = By.xpath("//*[@id='toTime']/..//input[@class='UIComboboxInput']");
-	public static final String ELEMENT_INPUT_SET_TIME_FROM_HOUR = "//*[@id='UIQuickAddEvent']//a[@class='UIComboboxItem' and @value='${hour}']";
-	public static final String ELEMENT_INPUT_SET_TIME_TO_HOUR = "//*[@id='toTime']/../div//a[@class='UIComboboxItem' and @value='${hour}']";
-	public static final String ELEMENT_EVENT = "//*[@class='busyIcon']/../..//*[@class='EventContainer' and text()='${eventName}']";
-	public static final By ELEMENT_EVENT_MORE_DETAIL_BUTTON = By.xpath("//*[@id='UIQuckAddEventPopupWindow']//a[text() =  'More Details']");
+	public static By ELEMENT_QUICK_ADD_EVENT_POPUP = By.xpath("//*[@id='UIQuckAddEventPopupWindow']//span[text()='Quick Add Event']");
+	public static By ELEMENT_INPUT_EVENT_DESCRIPTION = By.id("description");
+	public static By ELEMENT_SELECT_TYPE_CALENDAR = By.xpath("//*[@id='UIQuickAddEvent']//select[@name='calendar']");
+	public static By ELEMENT_TYPE_EVENT_CATEGORY = By.xpath("//*[@id='UIQuickAddEvent']//select[@id='category']");
+	public static By ELEMENT_ALLDAY_CHECKBOX = By.id("allDay");
+	public static By ELEMENT_TIME_FROM_CHECKBOX = By.xpath("//*[@id='UIQuickAddEvent']//input[@format='MM/dd/yyyy' and @name='from']");
+	public static By ELEMENT_TIME_TO_CHECKBOX = By.xpath("//*[@id='UIQuickAddEvent']//input[@format='MM/dd/yyyy' and @name='to']");
+	public static String ELEMENT_SET_TIME_DATE = "//a[contains(@href,'eXo.cs.UIDateTimePicker.setDate') and contains(text(),'${date}')]";
+	public static By ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX = By.xpath("//*[@id='UIQuickAddEvent']//input[@class='UIComboboxInput']");
+	public static By ELEMENT_SET_TIME_TO_HOUR_CHECKBOX = By.xpath("//*[@id='toTime']/..//input[@class='UIComboboxInput']");
+	public static String ELEMENT_INPUT_SET_TIME_FROM_HOUR = "//*[@id='UIQuickAddEvent']//a[@class='UIComboboxItem' and @value='${hour}']";
+	public static String ELEMENT_INPUT_SET_TIME_TO_HOUR = "//*[@id='toTime']/../div//a[@class='UIComboboxItem' and @value='${hour}']";
+	public static String ELEMENT_EVENT = "//*[@class='busyIcon']/../..//*[@class='EventContainer' and contains(text(),'${eventName}')]";
+	public static String ELEMENT_EVENT_HIGH_PRIORITY = "//*[@class='busyIcon']/*[@class='highPriorityIcon']/../../..//*[@class='EventContainer' and contains(text(),'${eventName}')]";
+	public static String ELEMENT_EVENT_NORMAL_PRIORITY = "//*[@class='busyIcon']/*[@class='normalPriorityIcon']/../../..//*[@class='EventContainer' and contains(text(),'${eventName}')]";
+	public static String ELEMENT_EVENT_LOW_PRIORITY = "//*[@class='busyIcon']/*[@class='lowPriorityIcon']/../../..//*[@class='EventContainer' and contains(text(),'${eventName}')]";
+	public static By ELEMENT_EVENT_MORE_DETAIL_BUTTON = By.xpath("//*[@id='UIQuckAddEventPopupWindow']//a[text() =  'More Details']");
 	
 	//-----------------------------Add detail event form-------------------------------------------
-	public static final By ELEMENT_ADD_DETAIL_EVENT_FORM = By.xpath("//*[@id='UICalendarPopupWindow']//span[text()='Add/Edit Event']");
+	public static By ELEMENT_ADD_DETAIL_EVENT_FORM = By.xpath("//*[@id='UICalendarPopupWindow']//span[text()='Add/Edit Event']");
 	//----Detail tab-------------
-	public static final By ELEMENT_ADD_DETAIL_EVENT_DETAIL_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Detail']");
-	public static final By ELEMENT_EVENT_LOCATION = By.id("place");
-	public static final By ELEMENT_EVENT_PRIORITY = By.id("priority");
-	public static final By ELEMENT_REPEAT_CHECKBOX = By.id("isRepeat");
-	public static final By ELEMENT_ATTACH_FILE_ICON = By.xpath(" //*[@id='eventDetail']//div[@class='AddAttachmentIcon']//img[@class='AddNewNodeIcon']");
+	public static By ELEMENT_ADD_DETAIL_EVENT_DETAIL_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Detail']");
+	public static By ELEMENT_EVENT_LOCATION = By.id("place");
+	public static By ELEMENT_EVENT_PRIORITY = By.id("priority");
+	public static By ELEMENT_REPEAT_CHECKBOX = By.id("isRepeat");
+	public static By ELEMENT_ATTACH_FILE_ICON = By.xpath(" //*[@id='eventDetail']//div[@class='AddAttachmentIcon']//img[@class='AddNewNodeIcon']");
 	
-	public static final By ELEMENT_INPUT_EVENT_SUMMARY_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='eventName']");
-	public static final By ELEMENT_INPUT_EVENT_DESCRIPTION_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='description']");
-	public static final By ELEMENT_TIME_FROM_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//input[@format='MM/dd/yyyy' and @name='from']");
-	public static final By ELEMENT_TIME_TO_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//input[@format='MM/dd/yyyy' and @name='to']");
-	public static final String ELEMENT_SET_TIME_DATE_DETAILS = "//*[@id='eventDetail']" + ELEMENT_SET_TIME_DATE;
-	public static final By ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//input[@class='UIComboboxInput']");
-	public static final By ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='toTime']/..//input[@class='UIComboboxInput']");
-	public static final String ELEMENT_INPUT_SET_TIME_FROM_HOUR_DETAILS = "//*[@id='eventDetail']//a[@class='UIComboboxItem' and @value='${hour}']";
-	public static final String ELEMENT_INPUT_SET_TIME_TO_HOUR_DETAILS = "//*[@id='eventDetail']" + ELEMENT_INPUT_SET_TIME_TO_HOUR;
-	public static final By ELEMENT_ALLDAY_CHECKBOX_DETAILS = By.id("//*[@id='eventDetail']//*[@id='allDay']");
-	public static final By ELEMENT_SELECT_TYPE_CALENDAR_DETAILS = By.xpath("//*[@id='eventDetail']//select[@name='calendar']");
-	public static final By ELEMENT_TYPE_EVENT_CATEGORY_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='category']");
+	public static By ELEMENT_INPUT_EVENT_SUMMARY_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='eventName']");
+	public static By ELEMENT_INPUT_EVENT_DESCRIPTION_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='description']");
+	public static By ELEMENT_TIME_FROM_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//input[@format='MM/dd/yyyy' and @name='from']");
+	public static By ELEMENT_TIME_TO_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//input[@format='MM/dd/yyyy' and @name='to']");
+	public static String ELEMENT_SET_TIME_DATE_DETAILS = "//*[@id='eventDetail']" + ELEMENT_SET_TIME_DATE;
+	public static By ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//input[@class='UIComboboxInput']");
+	public static By ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='toTime']/..//input[@class='UIComboboxInput']");
+	public static String ELEMENT_INPUT_SET_TIME_FROM_HOUR_DETAILS = "//*[@id='eventDetail']//a[@class='UIComboboxItem' and @value='${hour}']";
+	public static String ELEMENT_INPUT_SET_TIME_TO_HOUR_DETAILS = "//*[@id='eventDetail']" + ELEMENT_INPUT_SET_TIME_TO_HOUR;
+	public static By ELEMENT_ALLDAY_CHECKBOX_DETAILS = By.xpath("//*[@id='eventDetail']//*[@id='allDay']");
+	public static By ELEMENT_SELECT_TYPE_CALENDAR_DETAILS = By.xpath("//*[@id='eventDetail']//select[@name='calendar']");
+	public static By ELEMENT_TYPE_EVENT_CATEGORY_DETAILS = By.xpath("//*[@id='eventDetail']//select[@id='category']");
+	public static String MSG_ADD_EVENT_FROM_GREATER_TO = "The To date must be greater than the From date.";
+	public static String MSG_ADD_EVENT_ATTACHMENT_GREATER_10MB = "The total size of files must be less than 10MB.";
+	public static String MSG_ADD_EVENT_ATTACHMENT_NO_FILE = "Please upload the selected file by using the upload icon.";
+	public static String ELEMENT_ADD_EVENT_FILE_ATTACHMENT = "//*[@id='eventDetail']//a[contains(@title,'${fileName}')]";
+	public static String ELEMENT_ADD_EVENT_FILE_REMOVE_ICON = "//*[@id='eventDetail']//a[contains(@title,'${fileName}')]/..//a[@title='Remove']";
 	
 	//Repeating event
-	public static final By ELEMENT_REPEATING_EVENT = By.id("repeatType");
-	public static final By ELEMENT_INTERVAL_REPEATING_EVENT = By.id("interval"); 
-	public static final By ELEMENT_REPEAT_TYPE_NEVER = By.id("endNever");
-	public static final By ELEMENT_REPEAT_TYPE_AFTER= By.id("endAfter");
-	public static final By ELEMENT_REPEAT_TYPE_AFTER_OCCURRENCES = By.id("endAfterNumber");
-	public static final By ELEMENT_REPEAT_TYPE_DATE = By.id("endByDate");	
-	public static final By ELEMENT_REPEAT_INPUT_TYPE_DATE = By.xpath("//*[@id='endDate']/input[@format='MM/dd/yyyy']");
+	public static By ELEMENT_REPEATING_EVENT = By.id("repeatType");
+	public static By ELEMENT_INTERVAL_REPEATING_EVENT = By.id("interval"); 
+	public static By ELEMENT_REPEAT_TYPE_NEVER = By.id("endNever");
+	public static By ELEMENT_REPEAT_TYPE_AFTER= By.id("endAfter");
+	public static By ELEMENT_REPEAT_TYPE_AFTER_OCCURRENCES = By.id("endAfterNumber");
+	public static By ELEMENT_REPEAT_TYPE_DATE = By.id("endByDate");	
+	public static By ELEMENT_REPEAT_INPUT_TYPE_DATE = By.xpath("//*[@id='endDate']/input[@format='MM/dd/yyyy']");
 	//More details --> Attachments
-	public static final By ELEMENT_CHOOSE_FILE_LINK = By.id("file");
-	public static final By ELEMENT_CALENDAR_POPUP_WINDOW = By.xpath("//*[@id='UICalendarChildPopupWindow']/div[2]/div");
+	public static By ELEMENT_CHOOSE_FILE_LINK = By.id("file");
+	public static By ELEMENT_CALENDAR_POPUP_WINDOW = By.xpath("//*[@id='UICalendarChildPopupWindow']/div[2]/div");
 	
 	//-------------Reminder tab--------
-	public static final By ELEMENT_ADD_DETAIL_EVENT_REMINDER_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Reminders']");
-	public static final By ELEMENT_REMIND_BY_MAIL_CHECKBOX = By.id("mailReminder");
-	public static final By ELEMENT_EMAIL_REPEAT = By.id("emailIsRepeat");
-	public static final By ELEMENT_POPUP_EMAIL_REPEAT = By.id("popupIsRepeat");
-	public static final By ELEMENT_MAIL_REMINDER_TIME = By.id("mailReminderTime");
-	public static final By ELEMENT_EMAIL_REPEAT_INTERVAL = By.id("emailRepeatInterval");
-	public static final By ELEMENT_ADD_MORE_PEOPLE_BUTTON = By.xpath("//*[@id='eventReminder']//img[@class='AddNewNodeIcon']");
-	public static final By ELEMENT_INPUT_KEYWORD_NAME = By.id("keyWord");
-	public static final By ELEMENT_SEARCH_ICON_REMINDERS_TAB = By.xpath("//*[@id='UIAddressForm']//a[@class='SearchIcon']");
-	public static final String ELEMENT_USER_CHECKBOX = "//input[@class='checkbox' and @id='${username}']";
-	public static final By ELEMENT_POPUP_NOTIFICATION = By.id("popupReminder");
-	public static final By ELEMENT_POPUP_REMINDER_TIME = By.id("popupReminderTime");
-	public static final By ELEMENT_REPEAT_POPUP_INTERVAL = By.id("popupRepeatInterval");
+	public static By ELEMENT_ADD_DETAIL_EVENT_REMINDER_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Reminders']");
+	public static By ELEMENT_REMIND_BY_MAIL_CHECKBOX = By.id("mailReminder");
+	public static By ELEMENT_EMAIL_REPEAT = By.id("emailIsRepeat");
+	public static By ELEMENT_POPUP_EMAIL_REPEAT = By.id("popupIsRepeat");
+	public static By ELEMENT_MAIL_REMINDER_TIME = By.id("mailReminderTime");
+	public static By ELEMENT_EMAIL_REPEAT_INTERVAL = By.id("emailRepeatInterval");
+	public static By ELEMENT_ADD_MORE_PEOPLE_BUTTON = By.xpath("//*[@id='eventReminder']//img[@class='AddNewNodeIcon']");
+	public static By ELEMENT_INPUT_KEYWORD_NAME = By.id("keyWord");
+	public static By ELEMENT_SEARCH_ICON_REMINDERS_TAB = By.xpath("//*[@id='UIAddressForm']//a[@class='SearchIcon']");
+	public static String ELEMENT_USER_CHECKBOX = "//input[@class='checkbox' and @id='${username}']";
+	public static By ELEMENT_POPUP_NOTIFICATION = By.id("popupReminder");
+	public static By ELEMENT_POPUP_REMINDER_TIME = By.id("popupReminderTime");
+	public static By ELEMENT_REPEAT_POPUP_INTERVAL = By.id("popupRepeatInterval");
 	
 	//----------More details --> Participants tab--------
-	public static final By ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Participants']");
-	public static final By ELEMENT_SHARED_EVENT_PUBLIC = By.id("shareEvent_public");
-	public static final By ELEMENT_SHARED_EVENT_PRIVATE = By.id("shareEvent_private");
-	public static final By ELEMENT_AVAILABLE_STATUS_BUSY = By.id("status_busy");
-	public static final By ELEMENT_AVAILABLE_STATUS_AVAILABLE = By.id("status_available");
-	public static final By ELEMENT_AVAILABLE_STATUS_OUTSIDE = By.id("status_outside");
-	public static final By ELEMENT_INVITATION_TYPE_NEVER = By.id("send_never");
-	public static final By ELEMENT_INVITATION_TYPE_ALWAYS = By.id("send_always");
-	public static final By ELEMENT_INVITATION_TYPE_ASK = By.id("send_ask");
-	public static final By ELEMENT_ADD_MORE_PARTICIPANT_ICON = By.xpath("//*[@id='eventShare']//img[@class='AddNewNodeIcon']");
-	public static final By ELEMENT_ADD_CONTACT_PARTICIPANT_ICON = By.xpath("//*[@id='UIInvitationForm']//img[@class='AddContactParticipantIcon']");
-	public static final By ELEMENT_INPUT_INVITATION_MESSAGE = By.id("invitation-msg");
+	public static By ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Participants']");
+	public static By ELEMENT_SHARED_EVENT_PUBLIC = By.id("shareEvent_public");
+	public static By ELEMENT_SHARED_EVENT_PRIVATE = By.id("shareEvent_private");
+	public static By ELEMENT_AVAILABLE_STATUS_BUSY = By.id("status_busy");
+	public static By ELEMENT_AVAILABLE_STATUS_AVAILABLE = By.id("status_available");
+	public static By ELEMENT_AVAILABLE_STATUS_OUTSIDE = By.id("status_outside");
+	public static By ELEMENT_INVITATION_TYPE_NEVER = By.id("send_never");
+	public static By ELEMENT_INVITATION_TYPE_ALWAYS = By.id("send_always");
+	public static By ELEMENT_INVITATION_TYPE_ASK = By.id("send_ask");
+	public static By ELEMENT_ADD_MORE_PARTICIPANT_ICON = By.xpath("//*[@id='eventShare']//img[@class='AddNewNodeIcon']");
+	public static By ELEMENT_ADD_CONTACT_PARTICIPANT_ICON = By.xpath("//*[@id='UIInvitationForm']//img[@class='AddContactParticipantIcon']");
+	public static By ELEMENT_INPUT_INVITATION_MESSAGE = By.id("invitation-msg");
+	public static By ELEMENT_INPUT_PARTICIPANT_TEXTAREA = By.id("participant");
+	public static String ELEMENT_PARTICIPANT_IN_TEXTAREA = "//*[@id='participant' and contains(text(), '${user}')]";
+	public static String ELEMENT_PARTICIPANT_IN_LIST = "//*[@id='UIParticipantList']//*[@title='${user}']";
+	public static String ELEMENT_PARTICIPANT_REMOVE_ICON = "//*[@title='${user}']/../..//img[@class='DeleteIcon']";
+	public static By ELEMENT_SELECT_USER_PARTICIPANT = By.xpath("//*[@id='UIInvitationForm']//img[@class='SelectUserIcon']");
+	public static String MSG_PARTICIPANT_INVALID = "'${user}; ' is not a valid participant.";
 	
 	//------More details --> Schedule tab---------------
-	public static final By ELEMENT_ADD_DETAIL_EVENT_SCHEDULE_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Schedule']");
-	public static final By ELEMENT_SELECTED_DATE_CHECKBOX = By.id("checkTime"); 
-	public static final By ELEMENT_SCHEDULE_ALLDAY_CHECBOX = By.id("dateAll");
-	public static final By ELEMENT_SCHEDULE_FROM_TIME_BOX = By.xpath("//*[@id='timeFrom']/..//input[@class='UIComboboxInput']");
-	public static final String ELEMENT_SCHEDULE_INPUT_FROM_TIME_BOX = "//*[@id='timeFrom']/..//div[@class='UIComboboxItemContainer']/a[@value='${hour}']";
-	public static final By ELEMENT_SCHEDULE_TO_TIME_BOX = By.xpath("//*[@id='timeTo']/..//input[@class='UIComboboxInput']");
-	public static final String ELEMENT_SCHEDULE_INPUT_TO_TIME_BOX = "//*[@id='timeTo']/..//div[@class='UIComboboxItemContainer']/a[@value='${hour}']";
-	public static final By ELEMENT_SCHEDULE_ADD_USER_ICON = By.xpath("//*[@id='RowContainerDay']//div[@class='AddUserIcon' and @title='Add Attendee']");
-	public static final By ELEMENT_SCHEDULE_INPUT_USERNAME = By.id("QuickSearch");
-	public static final By ELEMENT_SCHEDULE_GROUP_SEARCH_ICON = By.xpath("//a[@class='SearchIcon' and @title='Group:']");
-	public static final By ELEMENT_SCHEDULE_USER_SEARCH_ICON = By.xpath("//a[@class='SearchIcon' and @title='Quick Search']");
+	public static By ELEMENT_ADD_DETAIL_EVENT_SCHEDULE_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[@class='MiddleTab' and text()='Schedule']");
+	public static By ELEMENT_SELECTED_DATE_CHECKBOX = By.id("checkTime"); 
+	public static By ELEMENT_SCHEDULE_ALLDAY_CHECBOX = By.id("dateAll");
+	public static By ELEMENT_SCHEDULE_FROM_TIME_BOX = By.xpath("//*[@id='timeFrom']/..//input[@class='UIComboboxInput']");
+	public static String ELEMENT_SCHEDULE_INPUT_FROM_TIME_BOX = "//*[@id='timeFrom']/..//div[@class='UIComboboxItemContainer']/a[@value='${hour}']";
+	public static By ELEMENT_SCHEDULE_TO_TIME_BOX = By.xpath("//*[@id='timeTo']/..//input[@class='UIComboboxInput']");
+	public static String ELEMENT_SCHEDULE_INPUT_TO_TIME_BOX = "//*[@id='timeTo']/..//div[@class='UIComboboxItemContainer']/a[@value='${hour}']";
+	public static By ELEMENT_SCHEDULE_ADD_USER_ICON = By.xpath("//*[@id='RowContainerDay']//div[@class='AddUserIcon' and @title='Add Attendee']");
+	public static By ELEMENT_SCHEDULE_INPUT_USERNAME = By.id("QuickSearch");
+	public static By ELEMENT_SCHEDULE_GROUP_SEARCH_ICON = By.xpath("//a[@class='SearchIcon' and @title='Group:']");
+	public static By ELEMENT_SCHEDULE_USER_SEARCH_ICON = By.xpath("//a[@class='SearchIcon' and @title='Quick Search']");
 
 	//Left panel/Calendars
-	public static final String ELEMENT_PERSONAL_CALENDARS = "//*[contains(text(),'Personal Calendars')]/../..//a[@title='${titleCalendar}']";
-	public static final String ELEMENT_CALENDARS_SETTINGS =	ELEMENT_PERSONAL_CALENDARS + "/../..//div[@class='IconHoverSetting']";
-	public static final By ELEMENT_ADD_EVENT_LINK = By.xpath(" //*[@id='tmpMenuElement']//a[@class='ItemIcon AddNewEvent']");
+	public static String ELEMENT_PERSONAL_CALENDARS = "//*[contains(text(),'Personal Calendars')]/../..//a[@title='${titleCalendar}']";
+	public static String ELEMENT_CALENDARS_SETTINGS =	ELEMENT_PERSONAL_CALENDARS + "/../..//div[@class='IconHoverSetting']";
+	public static By ELEMENT_ADD_EVENT_LINK = By.xpath(" //*[@id='tmpMenuElement']//a[@class='ItemIcon AddNewEvent']");
 
 	//----------------common function for event-------------------------------
 	/**
@@ -368,11 +389,9 @@ public class Event extends Task{
 				}else {
 					String[] dateTime = from.split(" ");
 					type(ELEMENT_TIME_FROM_CHECKBOX, dateTime[0], true);
-					type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_TIME_FROM_CHECKBOX, from, true);
-				type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX, from, true);
 			}
 		}
 		if (to != null){
@@ -382,11 +401,9 @@ public class Event extends Task{
 				}else{
 					String[] dateTime = to.split(" ");
 					type(ELEMENT_TIME_TO_CHECKBOX, dateTime[0], true);
-					type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_TIME_TO_CHECKBOX, to, true);
-				type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX, to, true);
 			}
 		}
 		if (opt.length > 0 && opt[0] != null){
@@ -473,11 +490,9 @@ public class Event extends Task{
 				}else {
 					String[] dateTime = from.split(" ");
 					type(ELEMENT_TIME_FROM_CHECKBOX_DETAILS, dateTime[0], true);
-					type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_TIME_FROM_CHECKBOX_DETAILS, from, true);
-				type(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX_DETAILS, from, true);
 			}
 		}
 		if (to != null){
@@ -487,11 +502,9 @@ public class Event extends Task{
 				}else{
 					String[] dateTime = to.split(" ");
 					type(ELEMENT_TIME_TO_CHECKBOX_DETAILS, dateTime[0], true);
-					type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_TIME_TO_CHECKBOX_DETAILS, to, true);
-				type(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX_DETAILS, to, true);
 			}
 		}
 		WebElement repeat_checkbox = waitForAndGetElement(ELEMENT_REPEAT_CHECKBOX);
@@ -525,6 +538,7 @@ public class Event extends Task{
 		String[] opt = {"", calendar, ""};
 		boolean check = verify.length > 0 ? verify[0] : true;
 		
+		info("Quick add detail event with name, description, calendar");
 		click(ELEMENT_EVENT_MORE_DETAIL_BUTTON);
 		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_FORM);
 		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_DETAIL_TAB);
@@ -533,12 +547,27 @@ public class Event extends Task{
 		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_SCHEDULE_TAB);
 		inputDataDetailEvent_DetailTab(name, desc, null, false, null, null, false, typeRepeat, occurrencesAndDate, opt);
 		save();
+		save();
 		if (check){
 			waitForElementNotPresent(ELEMENT_ADD_DETAIL_EVENT_FORM);
-			waitForElementPresent(By.xpath(ELEMENT_EVENT.replace("${eventName}", name)));
+			waitForElementPresentNotDisplay(By.xpath(ELEMENT_EVENT.replace("${eventName}", name)));
+			info("Quick add detail event successfully");
 		}		
 	}
 
+	public static void addEventSetParticipant(String eventName, String participant){
+		goToEvent();
+		info("Quick add event with set participants");
+		click(ELEMENT_EVENT_MORE_DETAIL_BUTTON);		
+		type(ELEMENT_INPUT_EVENT_SUMMARY_DETAILS, eventName, true);
+		click(ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB);
+		click(ELEMENT_ADD_MORE_PARTICIPANT_ICON);
+		type(ELEMENT_INPUT_PARTICIPANT_TEXTAREA, participant, true);
+		save();
+		save();
+		waitForElementNotPresent(ELEMENT_INPUT_PARTICIPANT_TEXTAREA);
+	}
+	
 	/**
 	 * 
 	 * @param typeRepeat: String (Daily, Weekly,etc...)
@@ -580,4 +609,51 @@ public class Event extends Task{
 			}
 		}
     }
+    
+    /**function check dates default display in Add/Edit Event
+     * @author lientm
+     * @param time: optional (use when need check hour)
+     */
+    public static void checkDateDefaultWhenAddEvent(String...time){
+    	info("Check date default display in from and to when add new event");
+    	assert getValue(ELEMENT_TIME_FROM_CHECKBOX).equalsIgnoreCase(getCurrentDate("MM/dd/yyyy"));
+    	assert getValue(ELEMENT_TIME_TO_CHECKBOX).equalsIgnoreCase(getCurrentDate("MM/dd/yyyy"));
+    	if (time.length > 1){
+    		assert getValue(ELEMENT_SET_TIME_FROM_HOUR_CHECKBOX).equalsIgnoreCase(time[0]);
+    		assert getValue(ELEMENT_SET_TIME_TO_HOUR_CHECKBOX).equalsIgnoreCase(time[1]);
+    	}
+    }
+    
+	public static List<WebElement> getListElement(By parent, By locator) {
+		WebElement e = waitForAndGetElement(parent);
+		try {
+			List<WebElement> element = e.findElements(locator);
+			if (e != null){
+				return element;
+			}
+		} catch (NoSuchElementException ex) {
+			info("NoSuchElementException");
+		}catch(StaleElementReferenceException ex)
+		{
+			checkCycling(ex, 10);
+			pause(WAIT_INTERVAL);
+			getListElement(parent, locator);
+		}
+		finally{
+			loopCount=0;
+		}
+		return null;
+	}
+	
+	/**function check invitation mail after add event then delete its
+	 * @author lientm
+	 * @param eventName
+	 */
+	public static void checkContentInvitationWhenAddEventThenDetele(String eventName){
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		
+		click(mail);
+		
+		click(ELEMENT_DELETE);
+	}
 }

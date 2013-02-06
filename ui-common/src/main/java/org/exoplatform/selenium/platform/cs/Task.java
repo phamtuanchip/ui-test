@@ -5,6 +5,7 @@ import static org.exoplatform.selenium.platform.ks.KsBase.selectUserPermission;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 public class Task extends Calendar {
 	
@@ -39,10 +40,12 @@ public class Task extends Calendar {
 	public static By ELEMENT_ADD_TASK_DETAIL_CALENDAR = By.xpath("//*[@id='UITaskForm']//select[@name='calendar']");
 	public static By ELEMENT_ADD_TASK_DETAIL_CATEGORY = By.xpath("//*[@id='UITaskForm']//*[@id='category']");
 	public static By ELEMENT_ADD_TASK_DETAIL_STATUS = By.id("status");
-	public static By ELEMENT_ADD_TASK_DETAIL_ATTACH = By.xpath("//*[@id='UITaskForm']//a[@title='Attach File']/img[@class='AddNewNodeIcon']");
+	public static By ELEMENT_ADD_TASK_DETAIL_ATTACH = By.xpath("//a[@title='Attach File']/img[@class='AddNewNodeIcon']");
 	public static String ELEMENT_ADD_TASK_DETAIL_ATTACH_FRAME = "//*[@id='UIAttachFileForm']//tbody/tr[${No}]//iframe";
 	public static By ELEMENT_ADD_TASK_DETAIL_ATTACH_FILE = By.id("file");
 	public static String ELEMENT_ADD_TASK_DETAIL_ATTACH_FINISH = "//*[@id='UIAttachFileForm']//tbody/tr[${No}]//div[contains(text(),'${fileName}')]";
+	public static By ELEMENT_ATTACHMENT_SAVE_BUTTON = By.xpath("//*[@id='UIAttachFileForm']//a[text()='Save']");
+	
 	//-------Reminder tab-------
 	public static By ELEMENT_ADD_TASK_DETAIL_REMAIDER_TAB = By.xpath("//*[@class='MiddleTab' and text()='Reminders']");
 	public static By ELEMENT_ADD_TASK_DETAIL_SEND_EMAIL = By.id("mailReminder");
@@ -91,7 +94,7 @@ public class Task extends Calendar {
 	 * 									1: with share calendar
 	 * 									2: with group calendar
 	 */
-	public static void goToTaskFromCalendar(String calendarName, String calType){
+	public static void goToAddTaskFromCalendar(String calendarName, String calType){
 		String id = getIDOfCalendar(calendarName);
 		String color = getColorOfCalendar(calendarName);
 		info("Go to add task for calendar " + id + ", it has color " + color);
@@ -132,11 +135,9 @@ public class Task extends Calendar {
 				}else {
 					String[] dateTime = from.split(" ");
 					type(ELEMENT_TASK_FROM_DATE, dateTime[0], true);
-					type(ELEMENT_TASK_FROM_TIME, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_TASK_FROM_TIME).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_TASK_FROM_TIME, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_TASK_FROM_DATE, from, true);
-				type(ELEMENT_TASK_FROM_TIME, from, true);
 			}
 		}
 		if (to != null){
@@ -146,11 +147,9 @@ public class Task extends Calendar {
 				}else{
 					String[] dateTime = to.split(" ");
 					type(ELEMENT_TASK_TO_DATE, dateTime[0], true);
-					type(ELEMENT_TASK_TO_TIME, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_TASK_TO_TIME).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_TASK_TO_TIME, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_TASK_TO_DATE, to, true);
-				type(ELEMENT_TASK_TO_TIME, to, true);
 			}
 		}
 		if (opt.length > 0 && opt[0] != null){
@@ -189,7 +188,7 @@ public class Task extends Calendar {
 	 * @author lientm
 	 */
 	public static void addTaskFromCalendar(String calendarName, String calType, String name, String note, String from, String to, boolean allDay, String...opt){
-		goToTaskFromCalendar(calendarName, calType);
+		goToAddTaskFromCalendar(calendarName, calType);
 		inputDataTask(name, note, allDay, from, to, opt);
 		save();
 		if (opt.length < 3){
@@ -294,11 +293,9 @@ public class Task extends Calendar {
 				}else{
 					String[] dateTime = from.split(" ");
 					type(ELEMENT_ADD_TASK_DETAIL_FROM_DATE, dateTime[0], true);
-					type(ELEMENT_ADD_TASK_DETAIL_FROM_TIME, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_ADD_TASK_DETAIL_FROM_TIME).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_ADD_TASK_DETAIL_FROM_TIME, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_ADD_TASK_DETAIL_FROM_DATE, from, true);
-				type(ELEMENT_ADD_TASK_DETAIL_FROM_TIME, from, true);
 			}
 		}
 		if (to != null){
@@ -308,11 +305,9 @@ public class Task extends Calendar {
 				}else{
 					String[] dateTime = to.split(" ");
 					type(ELEMENT_ADD_TASK_DETAIL_TO_DATE, dateTime[0], true);
-					type(ELEMENT_ADD_TASK_DETAIL_TO_TIME, dateTime[1], true);
+					waitForAndGetElement(ELEMENT_ADD_TASK_DETAIL_TO_TIME).sendKeys(Keys.LEFT_CONTROL + "a");
+					type(ELEMENT_ADD_TASK_DETAIL_TO_TIME, dateTime[1], false);
 				}
-			} else {
-				type(ELEMENT_ADD_TASK_DETAIL_TO_DATE, to, true);
-				type(ELEMENT_ADD_TASK_DETAIL_TO_TIME, to, true);
 			}
 		}
 		if (opt[0] != null && opt[0] != ""){

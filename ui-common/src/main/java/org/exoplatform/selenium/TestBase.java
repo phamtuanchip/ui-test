@@ -12,6 +12,11 @@ import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -720,7 +725,8 @@ public class TestBase {
 				";application/x-zip-compressed;application/octet-stream" +
 				";application/zip;application/pdf;application/msword;text/plain;" +
 				"application/octet;text/calendar;text/x-vcalendar;text/Calendar;" +
-				"text/x-vCalendar");
+				"text/x-vCalendar;image/jpeg;image/jpg;image/jp_;application/jpg;" +
+				"application/x-jpg;image/pjpeg;image/pipeg;image/vnd.swiftview-jpeg;image/x-xbitmap;image/png");
 		driver = new FirefoxDriver(fp);
 		baseUrl = System.getProperty("baseUrl");
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
@@ -735,5 +741,25 @@ public class TestBase {
 		driver = new FirefoxDriver(fp);
 		baseUrl = System.getProperty("baseUrl");
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
+	}
+	
+	public static String getCurrentDate(String fomat){
+		DateFormat dateFormat = new SimpleDateFormat(fomat);
+		Date date = new Date();
+		return (dateFormat.format(date));
+	}
+	
+	public static String addDateFormCurrentDate(String fomat, int day){
+		String dt = getCurrentDate(fomat);  // Start date
+		SimpleDateFormat sdf = new SimpleDateFormat(fomat);
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse(dt));
+			c.add(Calendar.DATE, day);
+			dt = sdf.format(c.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dt;
 	}
 }
