@@ -34,6 +34,7 @@ public class Calendar extends CsBase {
 
 	public static String ELEMENT_GROUP_ICON = "//div[@title='{$group}']/..";
 	//-----Add a calendar-----
+	public static By ELEMENT_ADD_CALENDAR_POPUP = By.xpath("//*[@id='UICalendarPopupWindow']//span[@class='PopupTitle' and text()='Calendar']");
 	public static By ELEMENT_NAME_CAL_INPUT = By.id("displayName");
 	public static By ELEMENT_DESC_CAL_INPUT = By.xpath("//div[@class='calendarDetail']//*[@id='description']");
 	public static By ELEMENT_GROUP_CAL_INPUT = By.xpath("//div[@class='calendarDetail']//select[@name='category']");
@@ -144,6 +145,7 @@ public class Calendar extends CsBase {
 	 */
 	public static void inputFormCalendarDetail(String name, String desc, String group, String color){
 		info("--Input data to Form 'Add Calendar'--");
+		waitForElementPresent(ELEMENT_ADD_CALENDAR_POPUP);
 		if (name != null)
 			type(ELEMENT_NAME_CAL_INPUT, name, true);
 		if (desc != null)
@@ -811,7 +813,7 @@ public class Calendar extends CsBase {
 		if (verify.length > 0){
 			check = verify[0];
 		}
-		info("Add Calendar");
+		info("Quick Add Calendar");
 		goToAddCalendarForm();
 		inputFormCalendarDetail(name, desc, group, color);
 		save();
