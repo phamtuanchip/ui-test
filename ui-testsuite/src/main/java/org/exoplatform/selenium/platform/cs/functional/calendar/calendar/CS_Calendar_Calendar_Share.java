@@ -22,9 +22,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class CS_Calendar_Calendar_Share extends Calendar {
-	public static String ELEMENT_SHARED_CALENDAR_OPTION_ADD_TASK = ".//*[@id='UIQuickAddTask']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
-	public static String ELEMENT_SHARED_CALENDAR_OPTION_ADD_EVENT = "//*[@id='UIQuickAddEvent']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
-	public static String ELEMENT_SHARED_CALENDAR_OPTION_IMPORT = "//*[@id='UIImportForm']//select[@name='impotTo']//option[contains(@value, '${calendarId}')]";
 	
 	@BeforeMethod
 	public void beforeTest(){

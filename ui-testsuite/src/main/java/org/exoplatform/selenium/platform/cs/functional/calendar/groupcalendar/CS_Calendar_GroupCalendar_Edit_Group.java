@@ -12,7 +12,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class CS_Calendar_GroupCalendar_Edit_Group extends Calendar {
-	public String ELEMENT_CALENDAR_IN_GROUP_CALENDAR = "//h6[contains(text(),'Group Calendars')]/../..//div[@title='${group}']/../following-sibling::ul[1]//a[@title='${calendarName}']";
 	
 	@BeforeMethod
 	public void beforeTest(){

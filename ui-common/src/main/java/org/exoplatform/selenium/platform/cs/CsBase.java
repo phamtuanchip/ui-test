@@ -5,6 +5,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.platform.PlatformBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 
 /**
  * 
@@ -14,58 +15,61 @@ import org.openqa.selenium.JavascriptExecutor;
 public class CsBase extends PlatformBase{
 
 	//Go to the calendar's page
-	public static final By ELEMENT_CALENDAR_LINK = By.xpath("//a[text()='intranet']/..//a[text()='Calendar']");
+	public static By ELEMENT_CALENDAR_LINK = By.xpath("//a[text()='intranet']/..//a[text()='Calendar']");
 	
 	/*============= Calendar page ===========*/
 	//Event tab
-	public static final By ELEMENT_EVENT_TAB = By.xpath("//a[@class='IconHolder QuickAddEvent' and contains(text(),'Event')]"); 
-	public static final By ELEMENT_INPUT_EVENT_SUMMARY = By.id("eventName");
+	public static By ELEMENT_EVENT_TAB = By.xpath("//a[@class='IconHolder QuickAddEvent' and contains(text(),'Event')]"); 
+	public static By ELEMENT_INPUT_EVENT_SUMMARY = By.id("eventName");
 	public static By ELEMENT_GET_ID_PAGE = By.xpath("//*[@id='UIPage']/div[@class='UIRowContainer']/div");
 
 	//Task tab
-	public static final By ELEMENT_TASK_TAB = By.xpath("//a[@class='IconHolder AddNewTask' and contains(text(),'Task')]");
-	public static final By ELEMENT_INPUT_TASK_NAME = By.xpath("//*[@id='eventName']/../../td[contains(text(),'Task')]");
+	public static By ELEMENT_TASK_TAB = By.xpath("//a[@class='IconHolder AddNewTask' and contains(text(),'Task')]");
+	public static By ELEMENT_INPUT_TASK_NAME = By.xpath("//*[@id='eventName']/../../td[contains(text(),'Task')]");
 
 	//Settings tab
-	public static final By ELEMENT_SETTINGS_TAB = By.xpath("//*[@class='IconHolder SettingCalendarIcon' and contains(text(),'Settings')]");
-	public static final By ELEMENT_VIEW_TYPE_FIELD = By.id("viewType");
-	public static final By ELEMENT_SENT_INVITAION_NEVER = By.id("send_never");
-	public static final By ELEMENT_SENT_INVITAION_ALWAY = By.id("send_always");
-	public static final By ELEMENT_SENT_INVITAION_ASK = By.id("send_ask");
-	public static final By ELEMENT_DISPLAY_CALENDAR_TAB = By.xpath("//*[@class='MiddleTab' and text()='Displayed Calendars']");
-	public static final String ELEMENT_CALENDAR_CHECKBOX = "//form[@id='UICalendarSettingForm']//*[@id='${calendarId}']";
+	public static By ELEMENT_SETTINGS_TAB = By.xpath("//*[@class='IconHolder SettingCalendarIcon' and contains(text(),'Settings')]");
+	public static By ELEMENT_VIEW_TYPE_FIELD = By.id("viewType");
+	public static By ELEMENT_SENT_INVITAION_NEVER = By.id("send_never");
+	public static By ELEMENT_SENT_INVITAION_ALWAY = By.id("send_always");
+	public static By ELEMENT_SENT_INVITAION_ASK = By.id("send_ask");
+	public static By ELEMENT_DISPLAY_CALENDAR_TAB = By.xpath("//*[@class='MiddleTab' and text()='Displayed Calendars']");
+	public static String ELEMENT_CALENDAR_CHECKBOX = "//form[@id='UICalendarSettingForm']//*[@id='${calendarId}']";
+	public static By ELEMENT_SHOW_WORKING_TIME = By.id("showWorkingTime");
+	public static By ELEMENT_WORKING_TIME_START = By.id("beginTime");
+	public static By ELEMENT_WORKING_TIME_END = By.id("endTime");
 	
 	//RSS tab
-	public static final By ELEMENT_CALENDAR_RSS_TAB = By.xpath("//*[@class='IconHolder CalendarRssIcon' and contains(text(),'RSS')]");
+	public static By ELEMENT_CALENDAR_RSS_TAB = By.xpath("//*[@class='IconHolder CalendarRssIcon' and contains(text(),'RSS')]");
 
 	//Header bar
-	public static final By ELEMENT_DAY_VIEW_TAB = By.xpath("//a[@class='IconHolder UIDayViewIcon' and contains(text(),'Day')]");
-	public static final By ELEMENT_WEEK_VIEW_TAB = By.xpath("//a[@class='IconHolder UIWeekViewIcon' and contains(text(),'Week')]");
-	public static final By ELEMENT_MONTH_VIEW_TAB = By.xpath("//a[@class='IconHolder UIMonthViewIcon' and contains(text(),'Month')]");
-	public static final By ELEMENT_YEAR_VIEW_TAB = By.xpath("//a[@class='IconHolder UIYearViewIcon' and contains(text(),'Year')]");
-	public static final By ELEMENT_LIST_VIEW_TAB = By.xpath("//a[@class='IconHolder UIListContainerIcon' and contains(text(),'List')]");
-	public static final By ELEMENT_WORK_WEEK_VIEW_TAB = By.xpath("//a[@class='IconHolder UIWorkingViewIcon' and contains(text(),'Work week')]");
-	public static final By ELEMENT_CALENDAR_ADD_EVENT_CATEGORY_HEADER_BAR = By.xpath("//div[@class='AddCategoryIcon' and @title='Event Categories Management']");
+	public static By ELEMENT_DAY_VIEW_TAB = By.xpath("//a[@class='IconHolder UIDayViewIcon' and contains(text(),'Day')]");
+	public static By ELEMENT_WEEK_VIEW_TAB = By.xpath("//a[@class='IconHolder UIWeekViewIcon' and contains(text(),'Week')]");
+	public static By ELEMENT_MONTH_VIEW_TAB = By.xpath("//a[@class='IconHolder UIMonthViewIcon' and contains(text(),'Month')]");
+	public static By ELEMENT_YEAR_VIEW_TAB = By.xpath("//a[@class='IconHolder UIYearViewIcon' and contains(text(),'Year')]");
+	public static By ELEMENT_LIST_VIEW_TAB = By.xpath("//a[@class='IconHolder UIListContainerIcon' and contains(text(),'List')]");
+	public static By ELEMENT_WORK_WEEK_VIEW_TAB = By.xpath("//a[@class='IconHolder UIWorkingViewIcon' and contains(text(),'Work week')]");
+	public static By ELEMENT_CALENDAR_ADD_EVENT_CATEGORY_HEADER_BAR = By.xpath("//div[@class='AddCategoryIcon' and @title='Event Categories Management']");
 	
 	//Left panel 
 	//Click on Calendar Actions Button
-	public static final By ELEMENT_CALENDAR_ACTIONS_BUTTON = By.xpath("//*[@id='UICalendars']//div[@class='ActionsButton']");
-	public static final By ELEMENT_CALENDAR_ADD_GROUP_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon AddGroupIcon']");
-	public static final By ELEMENT_CALENDAR_ADD_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon AddCalendarIcon']");
-	public static final By ELEMENT_CALENDAR_ADD_EVENT_CATEGORY_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon AddCategoryIcon']");
-	public static final By ELEMENT_CALENDAR_SETTINGS_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon SettingCalendarIcon']");
+	public static By ELEMENT_CALENDAR_ACTIONS_BUTTON = By.xpath("//*[@id='UICalendars']//div[@class='ActionsButton']");
+	public static By ELEMENT_CALENDAR_ADD_GROUP_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon AddGroupIcon']");
+	public static By ELEMENT_CALENDAR_ADD_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon AddCalendarIcon']");
+	public static By ELEMENT_CALENDAR_ADD_EVENT_CATEGORY_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon AddCategoryIcon']");
+	public static By ELEMENT_CALENDAR_SETTINGS_LINK = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon SettingCalendarIcon']");
 	public static By ELEMENT_GET_ID_PANE = By.xpath("//*[@id='CalendarApplicationMinWidth']/../..");
 	public static String IDPAGE = "";
 	
 	//Right click on a cell
-	public static final By ELEMENT_ADD_EVENT_OPTION = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon QuickAddEvent']");
-	public static final By ELEMENT_ADD_TASK_OPTION = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon QuickAddTask']");
+	public static By ELEMENT_ADD_EVENT_OPTION = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon QuickAddEvent']");
+	public static By ELEMENT_ADD_TASK_OPTION = By.xpath("//*[@id='tmpMenuElement']//a[@class='ItemIcon QuickAddTask']");
 
 	//Quick add event tab -> More details
-	public static final By ELEMENT_MORE_DETAILS_BUTTON = By.xpath("//*[@id='QuickAddEventContainer']//a[contains(text(), 'More Details')]");
-	public static final By ELEMENT_REMINDERS_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[text()='Reminders']");
-	public static final By ELEMENT_PARTICIPANTS_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[text()='Participants']");
-	public static final By ELEMENT_SCHEDULE_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[text()='Schedule']");
+	public static By ELEMENT_MORE_DETAILS_BUTTON = By.xpath("//*[@id='QuickAddEventContainer']//a[contains(text(), 'More Details')]");
+	public static By ELEMENT_REMINDERS_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[text()='Reminders']");
+	public static By ELEMENT_PARTICIPANTS_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[text()='Participants']");
+	public static By ELEMENT_SCHEDULE_TAB = By.xpath("//*[@id='UIPopupAddEventContainer']//*[text()='Schedule']");
 	
 	//Quick Search
 	public static By ELEMENT_QUICK_SEARCH = By.id("value");
@@ -268,5 +272,77 @@ public class CsBase extends PlatformBase{
 	 */
 	public static String getPageId(){
 		return waitForAndGetElement(By.xpath("//*[@id='UIPage']/div/div")).getAttribute("id");
+	}
+	
+	//function use for check event, task have existed but display is none
+	public static WebElement waitForElementPresentNotDisplay(Object locator, int... opParams) {
+		WebElement elem = null;
+		int timeout = opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT;
+		int isAssert = opParams.length > 1 ? opParams[1]: 1;
+
+		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
+			elem = getElement(locator);
+			//elem = getDisplayedElement(locator);
+			if (null != elem) return elem;
+			pause(WAIT_INTERVAL);
+		} 
+		if (isAssert == 1)
+			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
+		return null;
+	}
+	
+	//function use for check event, task have not existed and display is none
+	public static WebElement waitForElementNotPresentNotDisplay(Object locator, int... opParams) {
+		WebElement elem = null;
+		int timeout = opParams.length > 0 ? opParams[0] : DEFAULT_TIMEOUT;
+		int isAssert = opParams.length > 1 ? opParams[1]: 1;
+
+		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
+						elem = getElement(locator);
+			//elem = getDisplayedElement(locator);
+			if (null == elem) return null;
+			pause(WAIT_INTERVAL);
+		} 
+
+		if (isAssert == 1)
+			assert false: ("Timeout after " + timeout + "ms waiting for element not present: " + locator);
+		return elem;
+	}
+	
+	//function get a WebElement that is not display
+	public static WebElement waitForAndGetElementNotDisplay(Object locator, int... opParams) {
+		WebElement elem = null;
+		int timeout = opParams.length > 0 ? opParams[0] : DEFAULT_TIMEOUT;
+		int isAssert = opParams.length > 1 ? opParams[1]: 1;
+
+		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
+			elem = getElement(locator);
+			//elem = getDisplayedElement(locator);
+			if (null != elem)
+				return elem;
+			pause(WAIT_INTERVAL);
+		}
+		if (isAssert == 1)		
+			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
+		return null;
+	}
+	
+	/**function setting to show working time of calendar
+	 * @author lientm
+	 * @param show
+	 * @param start
+	 * @param end
+	 */
+	public static void settingShowWorkingTime(boolean show, String start, String end){
+		goToSettings();
+		if (show){
+			check(ELEMENT_SHOW_WORKING_TIME);
+			select(ELEMENT_WORKING_TIME_START, start);
+			select(ELEMENT_WORKING_TIME_END, end);
+		}else{
+			uncheck(ELEMENT_SHOW_WORKING_TIME);
+		}
+		save();
+		waitForElementNotPresent(ELEMENT_SHOW_WORKING_TIME);
 	}
 }

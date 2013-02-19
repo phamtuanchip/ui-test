@@ -258,6 +258,7 @@ public class PlatformBase extends TestBase {
 	public static final By ELEMENT_OK_BUTTON = By.xpath("//a[text()='OK']");
 	public static final By ELEMENT_APPLY_BUTTON = By.linkText("Apply");
 	public static final By ELEMENT_SAVE_BUTTON = By.linkText("Save");
+	public static final By ELEMENT_SAVE_AND_BUTTON = By.linkText("Save and Send");
 	public static final By ELEMENT_CANCEL_BUTTON = By.linkText("Cancel");
 	public static final By ELEMENT_CLOSE_BUTTON = By.linkText("Close");
 	public static final By ELEMENT_CLOSE_WINDOW = By.xpath("//a[@title='Close Window']");
