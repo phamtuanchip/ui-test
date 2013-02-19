@@ -31,6 +31,7 @@ public class Calendar extends CsBase {
 	public static String ELEMENT_GROUP_LINK = "//div[@title='{$group}']";
 	public static String ELEMENT_COLOR_CHECK = "//a[@title='{$calendar}']/..//span[@class='ColorOpacity']";
 	public static By ELEMENT_SELECT_THIS_GROUP = By.linkText("Select this Group");
+	public static String ELEMENT_CALENDAR_IN_GROUP_CALENDAR = "//h6[contains(text(),'Group Calendars')]/../..//div[@title='${group}']/../following-sibling::ul[1]//a[@title='${calendarName}']";
 
 	public static String ELEMENT_GROUP_ICON = "//div[@title='{$group}']/..";
 	//-----Add a calendar-----
@@ -77,6 +78,9 @@ public class Calendar extends CsBase {
 	public static String MSG_SHARED_INVALID_USER = "User ${user} was not found, please check again.";
 	public static String MSG_SHARED_NULL_USER = "Who would you like to share to?";
 	public static String ELEMENT_SHARED_EDIT_ICON = "//*[text()='${user}']/../..//img[@class='EditIcon']";
+	public static String ELEMENT_SHARED_CALENDAR_OPTION_ADD_TASK = "//*[@id='UIQuickAddTask']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
+	public static String ELEMENT_SHARED_CALENDAR_OPTION_ADD_EVENT = "//*[@id='UIQuickAddEvent']//select[@name='calendar']//option[contains(@value, '${calendarId}')]";
+	public static String ELEMENT_SHARED_CALENDAR_OPTION_IMPORT = "//*[@id='UIImportForm']//select[@name='impotTo']//option[contains(@value, '${calendarId}')]";
 
 	//----------Add a remote calendar-------------
 	//Subscribe a calendar
@@ -146,10 +150,12 @@ public class Calendar extends CsBase {
 	public static void inputFormCalendarDetail(String name, String desc, String group, String color){
 		info("--Input data to Form 'Add Calendar'--");
 		waitForElementPresent(ELEMENT_ADD_CALENDAR_POPUP);
-		if (name != null)
+		if (name != null){
 			type(ELEMENT_NAME_CAL_INPUT, name, true);
-		if (desc != null)
-			type(ELEMENT_DESC_CAL_INPUT, desc, true);
+		}
+		if (desc != null){
+			type(ELEMENT_DESC_CAL_INPUT, desc, true);	
+		}
 		if (group != null){
 			WebElement option = null; 
 			click(ELEMENT_GROUP_CAL_INPUT);
@@ -815,10 +821,11 @@ public class Calendar extends CsBase {
 		}
 		info("Quick Add Calendar");
 		goToAddCalendarForm();
+		pause(3000);
 		inputFormCalendarDetail(name, desc, group, color);
 		save();
 		if (check){
-			waitForElementNotPresent(ELEMENT_SAVE_BUTTON);
+			waitForElementNotPresent(ELEMENT_ADD_CALENDAR_POPUP);
 		}
 	}
 	
@@ -897,22 +904,5 @@ public class Calendar extends CsBase {
 		driver.get(url.substring(1, url.length() - 1));
 		String[] calendar = url.split("/");
 		assert checkFileExisted(calendar[calendar.length - 2] + ".ics");
-	}
-	
-	//function use for check event, task have existed but display is none
-	public static WebElement waitForElementPresentNotDisplay(Object locator, int... opParams) {
-		WebElement elem = null;
-		int timeout = opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT;
-		int isAssert = opParams.length > 1 ? opParams[1]: 1;
-
-		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
-			elem = getElement(locator);
-			//elem = getDisplayedElement(locator);
-			if (null != elem) return elem;
-			pause(WAIT_INTERVAL);
-		}
-		if (isAssert == 1)
-			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
-		return null;
 	}
 }

@@ -17,7 +17,7 @@ import org.openqa.selenium.WebElement;
  * @Date: Tuesday, 8 January, 2013
  */
 public class Event extends Task{
-
+	
 	//-----------------------------Add event form-------------------------------------------------
 	public static By ELEMENT_QUICK_ADD_EVENT_POPUP = By.xpath("//*[@id='UIQuckAddEventPopupWindow']//span[text()='Quick Add Event']");
 	public static By ELEMENT_INPUT_EVENT_DESCRIPTION = By.id("description");
@@ -555,17 +555,66 @@ public class Event extends Task{
 		}		
 	}
 
-	public static void addEventSetParticipant(String eventName, String participant){
+	public static void addEventSetParticipant(String eventName, String calendarName, String participant, int privacy, int available, int invitation, boolean ...notAsk){
+		boolean not_ask = notAsk.length > 0 ? notAsk[0] : true;
+		boolean send = notAsk.length > 1 ? notAsk[1] : true;
+		
 		goToEvent();
 		info("Quick add event with set participants");
 		click(ELEMENT_EVENT_MORE_DETAIL_BUTTON);		
 		type(ELEMENT_INPUT_EVENT_SUMMARY_DETAILS, eventName, true);
+		select(ELEMENT_SELECT_TYPE_CALENDAR_DETAILS, calendarName);
 		click(ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB);
+		switch (privacy) {
+		case 1:
+			check(ELEMENT_SHARED_EVENT_PRIVATE);		
+			break;
+		case 2:
+			check(ELEMENT_SHARED_EVENT_PUBLIC);
+			break;	
+		default:
+			break;
+		}
+		switch (available) {
+		case 1:
+			check(ELEMENT_AVAILABLE_STATUS_BUSY);
+			break;
+		case 2:
+			check(ELEMENT_AVAILABLE_STATUS_AVAILABLE);
+			break;
+		case 3:
+			check(ELEMENT_AVAILABLE_STATUS_OUTSIDE);
+			break;
+		default:
+			break;
+		}
+		//Set a type of invite  
+		switch (invitation) {
+		case 1:
+			check(ELEMENT_INVITATION_TYPE_NEVER);
+			break;
+		case 2:
+			check(ELEMENT_INVITATION_TYPE_ALWAYS);
+			break;
+		case 3:
+			check(ELEMENT_INVITATION_TYPE_ASK);
+			break;
+		default:
+			break;
+		}		
 		click(ELEMENT_ADD_MORE_PARTICIPANT_ICON);
 		type(ELEMENT_INPUT_PARTICIPANT_TEXTAREA, participant, true);
 		save();
 		save();
-		waitForElementNotPresent(ELEMENT_INPUT_PARTICIPANT_TEXTAREA);
+		if (!not_ask){
+			assert getText(By.id("confirm")).equalsIgnoreCase("\"Are you sure to save this event and send invitations?\"");
+			if (!send){
+				save();
+			}else {
+				click(ELEMENT_SAVE_AND_BUTTON);
+			}
+		}
+		waitForElementNotPresent(ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB);
 	}
 	
 	/**
@@ -649,11 +698,25 @@ public class Event extends Task{
 	 * @author lientm
 	 * @param eventName
 	 */
-	public static void checkContentInvitationWhenAddEventThenDetele(String eventName){
+	public static void checkInvitationWhenAddEventThenDetele(String eventName){
 		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		By attach_file = By.xpath("//b[text()='icalendar.ics']");
 		
 		click(mail);
-		
+		waitForElementPresent(attach_file);
 		click(ELEMENT_DELETE);
+	}
+	
+	/**function check status of a participant
+	 * @author lientm
+	 * @param participant: name of participant
+	 * @param status: name of status (pending, yes)
+	 */
+	public static void checkStatusOfParticipant(String participant, String status){
+		By element_status = By.xpath("//*[@id='UIParticipantList']//td/div[text()='" + participant + "']/../../td[3]/div");
+		
+		click(ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB);
+		assert waitForAndGetElementNotDisplay(element_status).getAttribute("title").equalsIgnoreCase(status);
+		cancel();
 	}
 }

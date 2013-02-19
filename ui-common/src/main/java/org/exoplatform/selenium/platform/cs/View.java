@@ -2,10 +2,9 @@ package org.exoplatform.selenium.platform.cs;
 
 import static org.exoplatform.selenium.TestLogger.info;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class View extends Event {
-	public static String ELEMENT_CALENDAR_CHECKBOX = "//*[@id='${calendarName}' and @type='checkbox']";
+	public static String ELEMENT_CALENDAR_CHECKBOX = "//*[@id='${calendarName}']//span[@class='IconCheckBox checkbox']";
 	public static By ELEMENT_SELECT_CATEGORY = By.id("eventCategories");
 	
 	//--------------------------Week view--------------------------------------------
@@ -39,25 +38,18 @@ public class View extends Event {
 	 * @param name: name of task/event
 	 * @param show: = true -> show
 	 *              = false -> hire
-	 * @param mode: = 1 -> day/week view mode
-	 *              != 1 -> month view mode
 	 */
-	public static void showHideTaskEvent(String calendarName, String name, boolean show, int...mode){
+	public static void showHideEvent(String calendarName, String name, boolean show, int...mode){
 		String calendar = getIDOfCalendar(calendarName);
 		By element_checkbox = By.xpath(ELEMENT_CALENDAR_CHECKBOX.replace("${calendarName}", calendar));
-		WebElement checkbox = waitForAndGetElement(element_checkbox);
 		
 		if (show){
-			if (!checkbox.isSelected()){
-				check(element_checkbox);
-			}
+			check(element_checkbox);
 			By task = getTaskFromViewMode(name, mode);
-			waitForElementPresent(task);
+			waitForElementPresentNotDisplay(task);
 			info("Show task/event of calendar successfully");
 		}else {
-			if (checkbox.isSelected()){
-				uncheck(element_checkbox);
-			}
+			uncheck(element_checkbox);
 			By task = getTaskFromViewMode(name, mode);
 			waitForElementNotPresent(task);
 			info("Hire task/event of calendar successfully");

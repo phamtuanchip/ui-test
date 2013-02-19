@@ -743,13 +743,44 @@ public class TestBase {
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
 	}
 	
+	public static void getDriverAutoSaveAndOpenWindow(){
+		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/TestOutput";
+
+		FirefoxProfile fp = new FirefoxProfile();	
+		fp.setPreference("browser.link.open_newwindow.restriction", 2);
+		fp.setPreference("browser.download.folderList", 2);
+		info("Save file to " + pathFile);
+		fp.setPreference("browser.download.dir", pathFile);
+		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall;application/x-zip" +
+				";application/x-zip-compressed;application/octet-stream" +
+				";application/zip;application/pdf;application/msword;text/plain;" +
+				"application/octet;text/calendar;text/x-vcalendar;text/Calendar;" +
+				"text/x-vCalendar;image/jpeg;image/jpg;image/jp_;application/jpg;" +
+				"application/x-jpg;image/pjpeg;image/pipeg;image/vnd.swiftview-jpeg;image/x-xbitmap;image/png");
+		driver = new FirefoxDriver(fp);
+		baseUrl = System.getProperty("baseUrl");
+		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
+		termsAndConditions();
+	}
+	
+	/**function get current Date of system follow a fomat
+	 * @author lientm
+	 * @param fomat
+	 * @return
+	 */
 	public static String getCurrentDate(String fomat){
 		DateFormat dateFormat = new SimpleDateFormat(fomat);
 		Date date = new Date();
 		return (dateFormat.format(date));
 	}
 	
-	public static String addDateFormCurrentDate(String fomat, int day){
+	/**function get a date from add date to current date
+	 * @author lientm
+	 * @param fomat
+	 * @param day
+	 * @return
+	 */
+	public static String addDateFromCurrentDate(String fomat, int day){
 		String dt = getCurrentDate(fomat);  // Start date
 		SimpleDateFormat sdf = new SimpleDateFormat(fomat);
 		Calendar c = Calendar.getInstance();

@@ -100,6 +100,7 @@ public class Task extends Calendar {
 		info("Go to add task for calendar " + id + ", it has color " + color);
 		String script = "javascript:eXo.calendar.UICalendarPortlet.addQuickShowHiddenWithId(this,%202,%20'objectId=" + id +
 				"&calType=" + calType + "&calColor=" + color + "&categoryId=defaultEventCategoryIdAll');";
+		info("script: " + script);
 		((JavascriptExecutor) driver).executeScript(script);
 		waitForElementPresent(ELEMENT_QUICK_ADD_TASK_POPUP);
 	}

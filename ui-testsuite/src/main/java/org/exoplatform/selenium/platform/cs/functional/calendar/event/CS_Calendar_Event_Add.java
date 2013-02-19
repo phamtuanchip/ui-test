@@ -1,14 +1,19 @@
 package org.exoplatform.selenium.platform.cs.functional.calendar.event;
 
 import static org.exoplatform.selenium.platform.ManageAccount.signIn;
+import static org.exoplatform.selenium.platform.ManageAccount.signOut;
+import static org.exoplatform.selenium.platform.NavigationToolbar.goToUsersAndGroupsManagement;
+import static org.exoplatform.selenium.platform.UserGroupManagement.searchUser;
 import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.cs.EventCategory.addEventCategory;
 import static org.exoplatform.selenium.platform.cs.EventCategory.deleteEventCategory;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.checkAlertInfo;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.checkAlertWarning;
+import static org.exoplatform.selenium.platform.ks.ForumBase.ELEMENT_DELETE;
 import static org.exoplatform.selenium.platform.ks.ForumBase.checkFileExisted;
 import static org.exoplatform.selenium.platform.ks.KsBase.selectUserPermission;
 import static org.exoplatform.selenium.platform.ks.ForumBase.goToMail;
+import static org.exoplatform.selenium.platform.UserGroupManagement.editUser;
 
 import java.util.List;
 
@@ -29,10 +34,16 @@ public class CS_Calendar_Event_Add extends View {
 	public String ELEMENT_CATEGORY_SELECT_OPTION_DETAIL_ADD = "//*[@id='eventDetail']//select[@id='category']/option[@selected='selected' and text()='${category}']";	
 	public String ELEMENT_EVENT_REPEAT = "//*[@title='${eventName}' and contains(@starttimefull, '${time_from}:00') and contains(@endtimefull,'${time_to}:00')]";
 	public By ELEMENT_EVENT_PARENT = By.xpath("//*[@id='UIMonthView']//*[@class='RowContainerDay MainWorkingPanel']");
+	public String OLD_MAIL_ADDRESS_DEMO = "jack.miller@acme.exoplatform.com";
+	public By ELEMENT_YES_LINK_IN_MAIL = By.xpath("//a[@target='_blank' and text()='Yes']");
+	public By ELEMENT_NO_LINK_IN_MAIL = By.xpath("//a[@target='_blank' and text()='No']");
+	public By ELEMENT_YES_IMPORT_LINK_IN_MAIL = By.xpath("//a[@target='_blank' and text()='Import to your eXo Calendar']");
+	public By ELEMENT_NOT_SURE_LINK_IN_MAIL = By.xpath("//a[@target='_blank' and text()='Not sure']");
+	public String participant_mail = "exomailtest01@gmail.com";
 	
 	@BeforeMethod
 	public void beforeTest(){
-		getDriverAutoSave();
+		getDriverAutoSaveAndOpenWindow();
 		actions = new Actions(driver);
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
@@ -66,9 +77,26 @@ public class CS_Calendar_Event_Add extends View {
 		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_REMINDER_TAB);
 		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_PARTICIPANT_TAB);
 		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_SCHEDULE_TAB);
-		inputDataDetailEvent_DetailTab(eventName, desc, null, false, from, to, false, typeRepeat, occurrencesAndDate, opt);
+		inputDataDetailEvent_DetailTab(eventName, desc, null, allDay, from, to, false, typeRepeat, occurrencesAndDate, opt);
 		save();
 		save();
+	}
+	
+	public void updateEmailForUser(String user, String participant_mail){
+		goToUsersAndGroupsManagement();
+		searchUser(user, "User Name");
+		editUser(user);
+		type(ELEMENT_INPUT_EMAIL, participant_mail, true);
+		save();
+		closeMessageDialog();
+		pause(1000);
+	}
+	
+	public void goToCheckParticipantStatus(String eventName, String status){
+		signIn("john", "gtn");
+		goToCalendarPage();
+		goToEditEvent(eventName);
+		checkStatusOfParticipant(participant_mail, status);
 	}
 	
 	//Case01: Add quick event from action bar
@@ -86,7 +114,7 @@ public class CS_Calendar_Event_Add extends View {
 	}
 	
 	//Case02: Add quick event from left pane
-	@Test
+	@Test(groups={"pending"})
 	public void test02_QuickAddEventFromLeftPanel(){
 		String calendarName = "CS_Calendar_Event_Add_Calendar_02";
 		String desc = "CS_Calendar_Event_Add_description_02";
@@ -206,7 +234,7 @@ public class CS_Calendar_Event_Add extends View {
 		String time_to = "12:30";
 		String from = FROM.replace("${time_from}", time_from);
 		String to = TO.replace("${time_to}", time_to);
-		By elementEvent = By.xpath(ELEMENT_EVENT_DAY_VIEW.replace("${eventName}", eventName).replace("${time_from}", time_from).replace("${time_to}", time_to));
+		By elementEvent = By.xpath(ELEMENT_EVENT_WEEK_VIEW.replace("${eventName}", eventName).replace("${time_from}", time_from).replace("${time_to}", time_to));
 		
 		addEventCategory(eventCatName, desc);
 		quickAddCalendar(calendarName, desc, "My Group", color);
@@ -437,9 +465,9 @@ public class CS_Calendar_Event_Add extends View {
 		String time_from = "00:00";
 		String time_to = "23:59";
 		String from = getCurrentDate("MM/dd/yyyy");
-		String to = addDateFormCurrentDate("MM/dd/yyyy", 2);
+		String to = addDateFromCurrentDate("MM/dd/yyyy", 2);
 		By elementEventWeekView = By.xpath(ELEMENT_EVENT_ALLFEWDAY_WEEKVIEW.replace("${eventName}", eventName).replace("${time_from}",
-				time_from).replace("${time_to}", time_to).replace("${to_date}", addDateFormCurrentDate("EEE MMM dd yyyy", 2)));
+				time_from).replace("${time_to}", time_to).replace("${to_date}", addDateFromCurrentDate("EEE MMM dd yyyy", 2)));
 		
 		quickAddCalendar(calendarName, desc, "My Group", color);
 		
@@ -463,9 +491,9 @@ public class CS_Calendar_Event_Add extends View {
 		String time_from = "10:00";
 		String time_to = "20:59";
 		String from = getCurrentDate("MM/dd/yyyy") + " " + time_from;
-		String to = addDateFormCurrentDate("MM/dd/yyyy", 2) + " " + time_to;
+		String to = addDateFromCurrentDate("MM/dd/yyyy", 2) + " " + time_to;
 		By elementEventWeekView = By.xpath(ELEMENT_EVENT_FULLFEWDAY_WEEKVIEW.replace("${eventName}", eventName).replace("${time_from}",
-				time_from).replace("${time_to}", time_to).replace("${to_date}", addDateFormCurrentDate("EEE MMM dd yyyy", 2)));
+				time_from).replace("${time_to}", time_to).replace("${to_date}", addDateFromCurrentDate("EEE MMM dd yyyy", 2)));
 		
 		quickAddCalendar(calendarName, desc, "My Group", color);
 		
@@ -489,9 +517,9 @@ public class CS_Calendar_Event_Add extends View {
 		String time_from = "10:00";
 		String time_to = "20:59";
 		String from = getCurrentDate("MM/dd/yyyy") + " " + time_from;
-		String to = addDateFormCurrentDate("MM/dd/yyyy", 2) + " " + time_to;
+		String to = addDateFromCurrentDate("MM/dd/yyyy", 2) + " " + time_to;
 		By elementEvent = By.xpath(ELEMENT_EVENT_FEWDAY_MONTH_VIEW.replace("${eventName}", eventName).replace("${time_from}", time_from)
-				.replace("${time_to}", time_to).replace("${to_date}", addDateFormCurrentDate("EEE MMM dd yyyy", 2)));
+				.replace("${time_to}", time_to).replace("${to_date}", addDateFromCurrentDate("EEE MMM dd yyyy", 2)));
 
 		quickAddCalendar(calendarName, desc, "My Group", color);
 		goToMonthViewTab();
@@ -558,6 +586,7 @@ public class CS_Calendar_Event_Add extends View {
 		
 		click(elementTime_MonthView);
 		addDetailEvent_DetailTab(eventName, desc, null, false, from, to, calendarName, "");
+		waitForElementNotPresent(ELEMENT_ADD_DETAIL_EVENT_FORM);
 		List<WebElement> event = getListElement(ELEMENT_EVENT_PARENT, By.xpath(ELEMENT_EVENT_REPEAT.replace("${eventName}", eventName).replace("${time_from}", time_from)
 				.replace("${time_to}", time_to)));
 		info("Number of event is " + event.size());
@@ -578,7 +607,7 @@ public class CS_Calendar_Event_Add extends View {
 		String from = FROM.replace("${time_from}", time_from);
 		String to = TO.replace("${time_to}", time_to);
 		String[] typeRepeat = {"Daily", "2", "Date"};
-		String[] occurrencesAndDate = {"", addDateFormCurrentDate("MM/dd/yyyy", 5)};
+		String[] occurrencesAndDate = {"", addDateFromCurrentDate("MM/dd/yyyy", 5)};
 		String[] opt = {"", calendarName, ""};
 		
 		quickAddCalendar(calendarName, desc, "My Group", color);
@@ -590,6 +619,7 @@ public class CS_Calendar_Event_Add extends View {
 		inputDataDetailEvent_DetailTab(eventName, desc, null, false, from, to, true, typeRepeat, occurrencesAndDate, opt);
 		save();
 		save();
+		waitForElementNotPresent(ELEMENT_ADD_DETAIL_EVENT_FORM);
 		
 		List<WebElement> event = getListElement(ELEMENT_EVENT_PARENT, By.xpath(ELEMENT_EVENT_REPEAT.replace("${eventName}", eventName).replace("${time_from}", time_from)
 					.replace("${time_to}", time_to)));
@@ -847,7 +877,6 @@ public class CS_Calendar_Event_Add extends View {
 		String calendarName = "CS_Calendar_Event_Add_Calendar_51";
 		String desc = "CS_Calendar_Event_Add_description_51";
 		String color = "OrangeRed ColorCell";
-		String participant = "exomailtest01@gmail.com";
 		String eventName = "CS_Calendar_Event_Add_51";
 		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
 		
@@ -855,13 +884,586 @@ public class CS_Calendar_Event_Add extends View {
 		
 		setSendEventInvitationForCalendar(1);
 		
-		addEventSetParticipant(eventName, participant);
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 0);
 	    String handlesBefore = driver.getWindowHandle();
-		pause(120000);
+		pause(60000);
 		goToMail();
 		waitForElementNotPresent(mail);
 		
 		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+		setSendEventInvitationForCalendar(2);
+	}
+	
+	//Case52: Check Send invitation mail when use calendar setting to be Always send invitation
+	@Test(groups={"pending"})
+	public void test52_CheckSendInvitationMail_CalendarSettingAlwaysSendInvitation(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_52";
+		String desc = "CS_Calendar_Event_Add_description_52";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_52";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		setSendEventInvitationForCalendar(2);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 0);
+	    String handlesBefore = driver.getWindowHandle();
+		pause(60000);
+		goToMail();
+		checkInvitationWhenAddEventThenDetele(eventName);
+		
+		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+	}
+	
+	//Case53: Check Send invitation mail when use calendar setting to be Ask when send invitation
+	@Test(groups={"pending"})
+	public void test53_CheckSendInvitationMail_CalendarSettingAskWhenSendInvitation(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_53";
+		String desc = "CS_Calendar_Event_Add_description_53";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_53";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		setSendEventInvitationForCalendar(3);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 0, false);
+	    String handlesBefore = driver.getWindowHandle();
+		pause(60000);
+		goToMail();
+		checkInvitationWhenAddEventThenDetele(eventName);
+		
+		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+		setSendEventInvitationForCalendar(2);
+	}
+	
+	//Case54: Check Send invitation mail when use calendar setting to be Ask sending invitation but don't send invitation when confirm 
+	@Test
+	public void test54_CheckSendInvitationMail_CalendarSettingAskWhenSendInvitation_DoNotSend(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_54";
+		String desc = "CS_Calendar_Event_Add_description_54";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_54";
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		setSendEventInvitationForCalendar(3);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 0, false, false);
+	    String handlesBefore = driver.getWindowHandle();
+		pause(60000);
+		goToMail();
+		waitForElementNotPresent(mail);
+		
+		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+		setSendEventInvitationForCalendar(2);
+	}
+	
+	//Case55: Check Send invitation mail when Choose Never send invitation mail while creating event
+	@Test
+	public void test55_CheckSendInvitationMail_ChooseNeverSendInvitationMail_WhileCreatingEvent(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_55";
+		String desc = "CS_Calendar_Event_Add_description_55";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_55";
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 1);
+	    String handlesBefore = driver.getWindowHandle();
+		pause(60000);
+		goToMail();
+		waitForElementNotPresent(mail);
+		
+		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+	}
+	
+	//Case56: Check Send invitation mail when Choose Always send invitation mail while creating event
+	@Test(groups={"pending"})
+	public void test56_CheckSendInvitationMail_ChooseAlwaysSendInvitationMail_WhileCreatingEvent(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_56";
+		String desc = "CS_Calendar_Event_Add_description_56";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_56";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 2);
+	    String handlesBefore = driver.getWindowHandle();
+		pause(60000);
+		goToMail();
+		checkInvitationWhenAddEventThenDetele(eventName);
+		
+		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+	}
+	
+	//Case57: Check Send invitation mail when Choose Ask send invitation mail while creating event
+	@Test(groups={"pending"})
+	public void test57_CheckSendInvitationMail_ChooseAskSendInvitationMail_WhileCreatingEvent(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_57";
+		String desc = "CS_Calendar_Event_Add_description_57";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_57";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 3, false);
+	    String handlesBefore = driver.getWindowHandle();
+		pause(60000);
+		goToMail();
+		checkInvitationWhenAddEventThenDetele(eventName);
+		
+		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+	}
+	
+	//Case58: Check Send invitation mail in case Choose Ask send invitation mail but choose only Save event when confirm  while creating event
+	@Test
+	public void test58_CheckSendInvitationMail_ChooseAskDoNotSendInvitationMail_WhileCreatingEvent(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_58";
+		String desc = "CS_Calendar_Event_Add_description_58";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_58";
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 3, false, false);
+	    String handlesBefore = driver.getWindowHandle();
+		pause(60000);
+		goToMail();
+		waitForElementNotPresent(mail);
+		
+		driver.switchTo().window(handlesBefore);
+		deleteCalendar(calendarName);
+	}
+	
+	//Case59: Check status of participant after create event with No invitation mail
+	@Test
+	public void test59_CheckStatusOfParticipant_NoInvitationMail(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_59";
+		String desc = "CS_Calendar_Event_Add_description_59";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_59";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 1);
+		goToEditEvent(eventName);
+		checkStatusOfParticipant(participant_mail, "");
+		
+		deleteCalendar(calendarName);
+	}
+	
+	//Case60: Check status of participant after create event with invitation mail
+	@Test
+	public void test60_CheckStatusOfParticipant_SendInvitationMail(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_60";
+		String desc = "CS_Calendar_Event_Add_description_60";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_60";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		
+		addEventSetParticipant(eventName, calendarName, participant_mail, 0, 0, 2);
+		goToEditEvent(eventName);
+		checkStatusOfParticipant(participant_mail, "pending");
+		
+		deleteCalendar(calendarName);
+	}
+	
+	//Case61: Check status of participant after create event with invitation mail and the participant agree attend the event
+	@Test
+	public void test61_CheckStatusOfParticipant_SendInvitationMail_AgreeAttentEvent(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_61";
+		String desc = "CS_Calendar_Event_Add_description_61";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_61";
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		String user = "demo";
+		
+		//update mail address for user demo is participant
+		updateEmailForUser(user, participant_mail);
+		
+		goToCalendarPage();
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		addEventSetParticipant(eventName, calendarName, user, 0, 0, 2);
+		signOut();
+		signIn(user, "gtn");
+		
+	    String handlesBefore = driver.getWindowHandle();
+	    pause(60000);
+		goToMail();
+		click(mail);
+		click(ELEMENT_YES_LINK_IN_MAIL);
+		click(ELEMENT_DELETE);
+		
+		driver.switchTo().window(handlesBefore);
+		signOut();
+		goToCheckParticipantStatus(eventName, "yes");
+		
+		deleteCalendar(calendarName);
+		updateEmailForUser(user, OLD_MAIL_ADDRESS_DEMO);
+	}
+	
+	//Case62: Check status of participant after create event with invitation mail and the participant want to add event to his calendar
+	@Test
+	public void test62_CheckStatusOfParticipant_SendInvitationMail_AddEventToHisCalendar(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_62";
+		String desc = "CS_Calendar_Event_Add_description_62";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_62";
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		String user = "demo";
+		
+		//update mail address for user demo is participant
+		updateEmailForUser(user, participant_mail);
+		
+		goToCalendarPage();
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		addEventSetParticipant(eventName, calendarName, user, 0, 0, 2);
+		signOut();
+		signIn(user, "gtn");
+		
+	    String handlesBefore = driver.getWindowHandle();
+	    pause(60000);
+		goToMail();
+		click(mail);
+		String handlesBefore1 = driver.getWindowHandle();
+		
+		info("Import event from invitation mail");
+		click(ELEMENT_YES_IMPORT_LINK_IN_MAIL);
+		for(String winHandle : driver.getWindowHandles()){
+			driver.switchTo().window(winHandle);
+		}
+		waitForElementPresent(ELEMENT_ADD_DETAIL_EVENT_FORM);
+		save();
+		save();
+		waitForElementPresentNotDisplay(By.xpath("//*[@class='EventContainer' and text()='" + eventName + "']"));
+		deleteTask(eventName, true);
+		
+		driver.switchTo().window(handlesBefore1);
+		click(ELEMENT_DELETE);
+		
+		driver.switchTo().window(handlesBefore);
+		signOut();
+		goToCheckParticipantStatus(eventName, "yes");
+		
+		deleteCalendar(calendarName);
+		updateEmailForUser(user, OLD_MAIL_ADDRESS_DEMO);
+	}
+	
+	//Case63: Check status of participant after create event with invitation mail but the participant do not want to attend at the event
+	@Test
+	public void test63_CheckStatusOfParticipant_SendInvitationMail_NotWantToAttendEvent(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_63";
+		String desc = "CS_Calendar_Event_Add_description_63";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_63";
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		String user = "demo";
+		
+		//update mail address for user demo is participant
+		updateEmailForUser(user, participant_mail);
+		
+		goToCalendarPage();
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		addEventSetParticipant(eventName, calendarName, user, 0, 0, 2);
+		signOut();
+		signIn(user, "gtn");
+		
+	    String handlesBefore = driver.getWindowHandle();
+	    pause(60000);
+		goToMail();
+		click(mail);
+		click(ELEMENT_NO_LINK_IN_MAIL);
+		click(ELEMENT_DELETE);
+		
+		driver.switchTo().window(handlesBefore);
+		signOut();
+		goToCheckParticipantStatus(eventName, "no");
+		
+		deleteCalendar(calendarName);
+		updateEmailForUser(user, OLD_MAIL_ADDRESS_DEMO);
+	}
+	
+	//Case64: Check Status of participant when he switch between yes/no attend at the event in case  before No or status
+	@Test
+	public void test64_CheckStatusOfParticipant_SendInvitationMail_SwitchAttendEvent(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_64";
+		String desc = "CS_Calendar_Event_Add_description_64";
+		String color = "OrangeRed ColorCell";
+		String eventName = "CS_Calendar_Event_Add_64";
+		By mail = By.xpath("//b[contains(text(), '[Invitation] "+ eventName + "')]");
+		String user = "demo";
+		
+		//update mail address for user demo is participant
+		updateEmailForUser(user, participant_mail);
+		
+		goToCalendarPage();
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		addEventSetParticipant(eventName, calendarName, user, 0, 0, 2);
+		signOut();
+		signIn(user, "gtn");
+		
+	    String handlesBefore = driver.getWindowHandle();
+	    pause(60000);
+		goToMail();
+		click(mail);
+		String handlesBefore1 = driver.getWindowHandle();
+		click(ELEMENT_YES_LINK_IN_MAIL);
+		
+		driver.switchTo().window(handlesBefore);
+		signOut();
+		goToCheckParticipantStatus(eventName, "yes");
+		signOut();
+		signIn(user, "gtn");
+		
+		info("Click not sure link in invitation mail");
+		driver.switchTo().window(handlesBefore1);
+		click(ELEMENT_NOT_SURE_LINK_IN_MAIL);
+		click(ELEMENT_DELETE);
+		
+		driver.switchTo().window(handlesBefore);
+		signOut();
+		goToCheckParticipantStatus(eventName, "pending");
+		
+		deleteCalendar(calendarName);
+		updateEmailForUser(user, OLD_MAIL_ADDRESS_DEMO);
+	}
+	
+	//Case73: Add new event into a shared calendar when shared user has edit right
+	@Test
+	public void test73_AddNewEventIntoSharedCalendar_HasEditRight(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_73";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_73";
+		String color = "SeaGreen ColorCell";
+		String[] user = {"demo"};
+		String[] group = {};
+		String eventName = "CS_Calendar_Event_Add_73";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		shareCalendar(calendarName, user, group, true);
+		signOut();
+		
+		info("User demo can add event for this shared calendar");
+		signIn("demo", "gtn");
+		goToCalendarPage();
+		waitForElementPresent(ELEMENT_SHARE_CAL_ICON.replace("{$calendar}", "john- " + calendarName));
+		quickAddEvent(eventName, null, "john - " + calendarName);
+		signOut();
+		
+		signIn("john", "gtn");
+		goToCalendarPage();
+		deleteCalendar(calendarName);
+	}
+	
+	//Case74: Add new event into a shared calendar when shared user does not have edit right
+	@Test
+	public void test74_AddNewEventIntoSharedCalendar_DoesNotHaveEditRight(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_74";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_74";
+		String color = "SeaGreen ColorCell";
+		String[] user = {"demo"};
+		String[] group = {};
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		shareCalendar(calendarName, user, group, false);
+		signOut();
+		
+		info("User demo can add event for this shared calendar");
+		signIn("demo", "gtn");
+		goToCalendarPage();
+		waitForElementPresent(ELEMENT_SHARE_CAL_ICON.replace("{$calendar}", "john- " + calendarName));
+		goToEvent();
+		String id = getIDOfCalendar("john- " + calendarName);
+		waitForElementNotPresent(By.xpath(ELEMENT_SHARED_CALENDAR_OPTION_ADD_EVENT.replace("${calendarId}", id)));
+		signOut();
+		
+		signIn("john", "gtn");
+		goToCalendarPage();
+		deleteCalendar(calendarName);
+	}
+	
+	//Case75: Add new event into a group calendar when user has edit right
+	@Test
+	public void test75_AddNewEventInGroupCalendar_HasEditRight(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_75";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_75";
+		String color = "SeaGreen ColorCell";
+		String eventName = "CS_Calendar_Event_Add_75";
+		String[] groupUser = {"/developers"};
+		String[] user = {"demo"};
+		By calendarGroup = By.xpath(ELEMENT_CALENDAR_IN_GROUP_CALENDAR.replace("${group}", groupUser[0]).replace("${calendarName}", calendarName));
+		
+		info("Add a calendar in group calendar");
+		addCalendar(calendarName, desc, "My Group", color, groupUser, user);
+		signOut();
+		
+		info("User demo can add event for this group calendar");
+		signIn("demo", "gtn");
+		goToCalendarPage();
+		waitForElementPresent(calendarGroup);
+		quickAddEvent(eventName, null, calendarName + " (" + groupUser[0].substring(1) + ")");
+		signOut();
+		
+		signIn("john", "gtn");
+		goToCalendarPage();
+		deleteCalendar(calendarName);
+	}
+	
+	//Case76: Add new event into a group calendar when user does not have edit right
+	@Test
+	public void test76_AddNewEventInGroupCalendar_DoesNotHaveEditRight(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_76";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_76";
+		String color = "SeaGreen ColorCell";
+		String[] groupUser = {"/developers"};
+		String[] user = {};
+		By calendarGroup = By.xpath(ELEMENT_CALENDAR_IN_GROUP_CALENDAR.replace("${group}", groupUser[0]).replace("${calendarName}", calendarName));
+		
+		info("Add a calendar in group calendar");
+		addCalendar(calendarName, desc, "My Group", color, groupUser, user);
+		signOut();
+		
+		info("User demo can add event for this group calendar");
+		signIn("demo", "gtn");
+		goToCalendarPage();
+		waitForElementPresent(calendarGroup);
+		goToEvent();
+		String id = getIDOfCalendar(calendarName);
+		waitForElementNotPresent(By.xpath(ELEMENT_SHARED_CALENDAR_OPTION_ADD_EVENT.replace("${calendarId}", id)));
+		signOut();
+		
+		signIn("john", "gtn");
+		goToCalendarPage();
+		deleteCalendar(calendarName);
+	}
+	
+	//Case77: Add new event into an imported calendar
+	@Test
+	public void test77_AddNewEvent_InImportedCalendar(){
+		String path = "TestData/CS_Calendar_Share_02.ics";
+		String calendarName = "CS_Calendar_Event_Add_Calendar_77";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_77";
+		String color = "SeaGreen ColorCell";
+		String eventName = "CS_Calendar_Event_Add_77";
+		By elementCalendar = By.xpath(ELEMENT_MY_CAL_ICON.replace("{$calendar}", calendarName));
+		
+		importCalendar(path, calendarName, desc, "My Group", color);
+		waitForElementPresent(elementCalendar);
+		info("Import calendar successfully");
+		
+		quickAddEvent(eventName, null, calendarName);
+		deleteCalendar(calendarName);
+	}
+	
+	//Case78: Add new event when its calendar is not selected to view
+	@Test
+	public void test78_AddNewEvent_CalendarIsNotSelectedToView(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_78";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_78";
+		String color = "SeaGreen ColorCell";
+		String eventName = "CS_Calendar_Event_Add_78";
+		String fileName = "CS_Event_Add_78_HireCalendar.jpg";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		String id = getIDOfCalendar(calendarName);
+		click(By.xpath(ELEMENT_CALENDAR_CHECKBOX.replace("${calendarName}", id)));
+		
+		quickAddEvent(eventName, null, calendarName, false);
+		waitForElementNotPresent(ELEMENT_QUICK_ADD_EVENT_POPUP);
+		captureScreen(fileName);
+		waitForElementNotPresent(By.xpath(ELEMENT_EVENT.replace("${eventName}", eventName)));
+		
+		deleteCalendar(calendarName);
+	}
+	
+	//Case79: Add new event into a category when it is not selected to view
+	@Test
+	public void test79_AddNewEvent_CategoryIsNotSelectedToView(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_79";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_79";
+		String color = "SeaGreen ColorCell";
+		String eventName = "CS_Calendar_Event_Add_79";
+		String fileName = "CS_Event_Add_79_HireCategory.jpg";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);	
+		addEvent(eventName, null, null, null, false, calendarName, "Meeting");
+		
+		selectCategoryView("Calls");
+		captureScreen(fileName);
+		waitForElementNotPresent(By.xpath(ELEMENT_EVENT.replace("${eventName}", eventName)));
+		
+		deleteCalendar(calendarName);
+	}
+	
+	//Case80: Add new event in not working time
+	@Test
+	public void test80_AddNewEventInNotWorkingTime(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_79";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_79";
+		String color = "SeaGreen ColorCell";
+		String eventName = "CS_Calendar_Event_Add_79";
+		String start = "12:00";
+		String end = "14:00";
+		String time_from = "10:00";
+		String time_to = "10:30";
+		String from = FROM.replace("${time_from}", time_from);
+		String to = TO.replace("${time_to}", time_to);
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		settingShowWorkingTime(true, start, end);
+		waitForElementPresent(By.xpath("//*[contains(@class,'WorkOffTime')]//*[contains(@startfull,'11:30:00')]"));
+		waitForElementPresent(By.xpath("//*[contains(@class,'WorkOffTime')]//*[contains(@startfull,'14:00:00')]"));
+		waitForElementPresent(By.xpath("//tr[not(contains(@class,'WorkOffTime'))]//td[contains(@startfull,'12:00:00')]"));
+		waitForElementPresent(By.xpath("//tr[not(contains(@class,'WorkOffTime'))]//td[contains(@startfull,'13:30:00')]"));
+		
+		addEvent(eventName, null, from, to, false, calendarName);
+		deleteCalendar(calendarName);
+		settingShowWorkingTime(true, "00:00", "23:59");
+	}
+	
+	//Case81: Add new event in same day with 4 other events or tasks in Month View
+	@Test
+	public void test81_AddNewEventInSameDayWith4Events_MonthView(){
+		String calendarName = "CS_Calendar_Event_Add_Calendar_81";
+		String desc = "CS_Calendar_Event_Add_Calendar_description_81";
+		String color = "SeaGreen ColorCell";
+		String eventName1 = "CS_Calendar_Event_Add_81_1";
+		String eventName2 = "CS_Calendar_Event_Add_81_2";
+		String eventName3 = "CS_Calendar_Event_Add_81_3";
+		String eventName4 = "CS_Calendar_Event_Add_81_4";
+		String eventName5 = "CS_Calendar_Event_Add_81_5";
+		String fileName1 = "CS_Event_Add_81_More4Event_InDay.jpg";
+		String fileName2 = "CS_Event_Add_81_More4Event_ClickMore.jpg";
+		
+		quickAddCalendar(calendarName, desc, "My Group", color);
+		quickAddEvent(eventName1, null, calendarName);
+		quickAddEvent(eventName2, null, calendarName);
+		quickAddEvent(eventName3, null, calendarName);
+		quickAddEvent(eventName4, null, calendarName);
+		
+		goToMonthViewTab();
+		quickAddEvent(eventName5, null, calendarName, false);
+		captureScreen(fileName1);
+		waitForElementPresentNotDisplay(By.xpath("//*[@id='UIMonthView']//*[@class='MoreEvent']//*[text()='" + eventName1 + "']"));
+		waitForElementPresentNotDisplay(By.xpath("//*[@id='UIMonthView']//*[@class='MoreEvent']//*[text()='" + eventName2 + "']"));
+		waitForElementPresentNotDisplay(By.xpath("//*[@class='DayContentContainer EventBoxes']//*[text()='" + eventName3 + "']"));
+		waitForElementPresentNotDisplay(By.xpath("//*[@class='DayContentContainer EventBoxes']//*[text()='" + eventName4 + "']"));
+		waitForElementPresentNotDisplay(By.xpath("//*[@class='DayContentContainer EventBoxes']//*[text()='" + eventName5 + "']"));
+		
+		click(By.xpath("//*[@class='MoreEventLabel' and contains(text(),'more')]"));
+		captureScreen(fileName2);
+		
 		deleteCalendar(calendarName);
 	}
 }
