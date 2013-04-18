@@ -2,7 +2,7 @@ package org.exoplatform.selenium.platform.ecms.functional.admin.contenttype;
 
 import static org.exoplatform.selenium.TestLogger.info;
 import java.util.List;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import static org.exoplatform.selenium.platform.ecms.WcmAdmin.*;
 import org.openqa.selenium.By;
