@@ -12,6 +12,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
+		<database.mysql>false</database.mysql>
 		<cargo.skip>false</cargo.skip>
 		<maven.test.skip>false</maven.test.skip>
 		<!-- <selenium.port>4444</selenium.port> -->
@@ -147,7 +148,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${maven-dependency-plugin.version}</version>
+				<version>2.7</version>
 				<executions>
 					<execution>
 						<id>a-unpack</id>
@@ -156,7 +157,6 @@
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
-							<skip>${cargo.skip}</skip> 
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.exoplatform.platform</groupId>
@@ -165,7 +165,6 @@
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/platform-server/</outputDirectory>
-									<excludes>tomcat-bundle/bin/setenv.sh,tomcat-bundle/conf/server.xml</excludes>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
@@ -174,8 +173,10 @@
 			</plugin>
 
 			<!-- Copy configuration file -->
+<!-- 			
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.3</version>
 				<executions>
 					<execution>
 						<id>a-copy-resources</id>
@@ -184,12 +185,13 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
+							<overWrite>false</overWrite>
 							<outputDirectory>${project.build.directory}/platform-server/tomcat-bundle/bin</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.basedir}/src/main/resources/sql/bin/</directory>
 								</resource>
-							</resources>
+							</resources>							
 						</configuration>
 					</execution>
 					<execution>
@@ -205,6 +207,7 @@
 									<directory>${project.basedir}/src/main/resources/sql/conf/</directory>
 								</resource>
 							</resources>
+							<overWrite>false</overWrite>
 						</configuration>
 					</execution>
 					<execution>
@@ -220,12 +223,13 @@
 									<directory>${project.basedir}/src/main/resources/sql/lib/</directory>
 								</resource>
 							</resources>
+							<overWrite>false</overWrite>
 						</configuration>
 					</execution>
 
 				</executions>
 			</plugin>
-
+-->
 			<!-- SQL configuration -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
