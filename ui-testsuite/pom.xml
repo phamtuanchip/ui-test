@@ -15,6 +15,8 @@
 		<database.mysql>false</database.mysql>
 		<cargo.skip>false</cargo.skip>
 		<maven.test.skip>false</maven.test.skip>
+		<server.dir>/home/hainh/platform-server/</server.dir>
+		<unpack.server.skip>false</unpack.server.skip>
 		<!-- <selenium.port>4444</selenium.port> -->
 		<!-- <servlet.port>18880</servlet.port> -->
 		<!-- <selenium.background>true</selenium.background> -->
@@ -157,6 +159,7 @@
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
+							<skip>${unpack.server.skip}</skip>
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.exoplatform.platform</groupId>
