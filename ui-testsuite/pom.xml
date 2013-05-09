@@ -15,7 +15,7 @@
 		<database.mysql>false</database.mysql>
 		<cargo.skip>false</cargo.skip>
 		<maven.test.skip>false</maven.test.skip>
-		<server.dir>/home/hainh/platform-server/</server.dir>
+		<server.dir>/home/selenium/platform-server/</server.dir>
 		<unpack.server.skip>false</unpack.server.skip>
 		<!-- <selenium.port>4444</selenium.port> -->
 		<!-- <servlet.port>18880</servlet.port> -->
