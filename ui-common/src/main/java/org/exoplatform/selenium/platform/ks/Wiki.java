@@ -10,6 +10,7 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 /* @author: Thuntn
  * @date: 14/11/2012
@@ -20,7 +21,7 @@ public class Wiki extends KsBase {
 	//Add page menu
 	public static final By ELEMENT_ADD_PAGE_LINK = By.xpath("//div[@id='UIWikiPageControlArea_PageToolBar_Add_' and contains(text(),'Add Page')]");
 	public static final By ELEMENT_BLANK_PAGE_LINK=By.linkText("Blank Page");
-	public static final By ELEMENT_FROM_TEMPLATE_LINK=By.xpath("//*[@id='UIWikiPageControlArea_PageToolBar_Add_']/div/ul/li[2]/a");
+	public static final By ELEMENT_FROM_TEMPLATE_LINK=By.xpath("//a[@class='AddPageFromTemplate Icon']");
 	
 	//Edit menu
 	public static final By ELEMENT_EDIT_PAGE_LINK= By.xpath("//a[@class='EditPage Icon' and @title='Edit']");
@@ -40,7 +41,7 @@ public class Wiki extends KsBase {
 
 	//Browse menu
 	public static final By ELEMENT_BROWSE_LINK = By.xpath("//div[contains(text(),'Browse')]");
-	public static final By ELEMENT_SPACE_SETTING_LINK= By.linkText("Space Settings");
+	public static final By ELEMENT_WIKI_SETTING_LINK= By.linkText("Wiki Settings");
 	//Search area
 	public static final By ELEMENT_QUICK_SEARCH = By.id("wikiSearchValue");
 
@@ -95,6 +96,7 @@ public class Wiki extends KsBase {
 	public static final String ELEMENT_DELETE_TEMPLATE_ICON = "//tr/td/div[@title='{$template}']/../../td/div/a[@class='DeleteTemplateIcon' and contains(text(),'Delete')]";
 	public static final By ELEMENT_SEARCH_TEMPLATE_INPUT=By.id("TemplateSeachBox");
 	//Add template page
+	public static final By ELEMENT_SELECT_TEMPLATE_POPUP = By.xpath("//*[@id='UIWikiPopupWindowL1']//span[text()='Select Template']");
 	public static final By ELEMENT_TITLE_TEMPLATE_INPUT= By.id("TitleInput");
 	public static final By ELEMENT_DESC_TEMPLATE_INPUT= By.id("Description");
 	public static final By ELEMENT_CONTENT_TEMPLATE_INPUT= By.id("Markup");
@@ -384,8 +386,16 @@ public class Wiki extends KsBase {
 	 */
 	public static void goToAddTemplateWikiPage(){
 		info("--Go to add template wiki page--");
-		mouseOver(ELEMENT_ADD_PAGE_LINK, true);
-		mouseOverAndClick(ELEMENT_FROM_TEMPLATE_LINK);
+		for (int repeat = 1;; repeat++)	{
+			if (repeat >= ACTION_REPEAT) {
+				Assert.fail("Cannot perform the action after " + ACTION_REPEAT + "tries");
+				}
+			mouseOver(ELEMENT_ADD_PAGE_LINK, true);
+			mouseOverAndClick(ELEMENT_FROM_TEMPLATE_LINK);
+			if (waitForElementPresent(ELEMENT_SELECT_TEMPLATE_POPUP, 30000, 0) != null) break;
+			pause(WAIT_INTERVAL);
+			info("retry...[" + repeat + "]");
+		}
 	}
 
 	/** Add a wiki page from template
@@ -402,12 +412,8 @@ public class Wiki extends KsBase {
 
 		goToAddTemplateWikiPage();
 		info("--Add a wiki page from template--");
-
 		click(eTemplate);
-		goToAddTemplateWikiPage();
-		info("--Add a wiki page from template--");
-
-		click(eTemplate);
+		
 		if (mode == 1){ 
 
 			modifyDataForWikiPageRichTextEditor(title, null);
@@ -833,7 +839,7 @@ public class Wiki extends KsBase {
 
 		mouseOverAndClick(ELEMENT_BROWSE_LINK);
 
-		mouseOverAndClick(ELEMENT_SPACE_SETTING_LINK);
+		mouseOverAndClick(ELEMENT_WIKI_SETTING_LINK);
 
 		click(ELEMENT_TEMPLATE_LINK);
 
@@ -917,7 +923,7 @@ public class Wiki extends KsBase {
 	 */
 	public static void goToSpacePermission(){
 		mouseOver(ELEMENT_BROWSE_LINK,true);
-		mouseOverAndClick(ELEMENT_SPACE_SETTING_LINK);
+		mouseOverAndClick(ELEMENT_WIKI_SETTING_LINK);
 		click(ELEMENT_PERMISSION_LINK);
 		pause(1000);
 		waitForElementPresent(ELEMENT_SELECT_USER);

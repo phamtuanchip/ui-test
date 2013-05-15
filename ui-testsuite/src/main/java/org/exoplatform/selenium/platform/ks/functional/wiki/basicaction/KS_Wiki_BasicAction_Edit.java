@@ -110,7 +110,7 @@ public class KS_Wiki_BasicAction_Edit extends KsBase {
 
 		goToWiki();
 
-		addBlankWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT, 0);
+		addBlankWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT, 0, false);
 
 		editParagraph("paragraph1",DATA_PARAGRAPH1_NEW);
 	
@@ -132,7 +132,7 @@ public class KS_Wiki_BasicAction_Edit extends KsBase {
 
 		goToWiki();
 
-		addBlankWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT, 0);
+		addBlankWikiPage(DATA_WIKI_TITLE, DATA_WIKI_CONTENT, 0, false);
 
 		editParagraph("level2",DATA_PARAGRAPH2_NEW);
 	
