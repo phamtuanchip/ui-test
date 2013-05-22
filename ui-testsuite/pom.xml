@@ -71,16 +71,23 @@
 		</profile>
 		
 		<profile>
-			<id>ecms-basicaction</id>
+			<id>ecms-siteexplorer-basicaction</id>
 			<properties>
-				<testSuite>ecms-basicaction.xml</testSuite>
+				<testSuite>ecms-siteexplorer-basicaction.xml</testSuite>
 			</properties>
 		</profile>
 		
 		<profile>
-			<id>ecms-createnode</id>
+			<id>ecms-siteexplorer-createnode</id>
 			<properties>
-				<testSuite>ecms-createnode.xml</testSuite>
+				<testSuite>ecms-siteexplorer-createnode.xml</testSuite>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>ecms-siteexplorer-other</id>
+			<properties>
+				<testSuite>ecms-siteexplorer-other.xml</testSuite>
 			</properties>
 		</profile>
 		
@@ -102,6 +109,33 @@
 			<id>ks-forum</id>
 			<properties>
 				<testSuite>ks-forum.xml</testSuite>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>ks-forum-admin</id>
+			<properties>
+				<testSuite>ks-forum-admin.xml</testSuite>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>ks-forum-category</id>
+			<properties>
+				<testSuite>ks-forum-category.xml</testSuite>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>ks-forum-topic</id>
+			<properties>
+				<testSuite>ks-forum-topic.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>ks-forum-other</id>
+			<properties>
+				<testSuite>ks-forum-other.xml</testSuite>
 			</properties>
 		</profile>
 		

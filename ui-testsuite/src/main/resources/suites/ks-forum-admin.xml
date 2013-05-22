@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="KS Functional Test" verbose="1">
+		<test name="ks-func" enabled="true">
+		<groups>
+		  <run>
+		    <exclude name="pending"/>
+		  </run>
+		</groups>
+		<packages>
+			<package name="org.exoplatform.selenium.platform.ks.functional.forum.administration" />
+		</packages>
+	</test>
+	<listeners>
+    <listener class-name="org.exoplatform.selenium.TestReportListener"/>
+  </listeners>
+</suite>
