@@ -41,9 +41,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 public class TestBase {
-	protected static WebDriver driver;
-	protected static Actions actions ;
-	protected static String baseUrl;
+	public static WebDriver driver;
+	public static Actions actions ;
+	public static String baseUrl;
 	protected static int DEFAULT_TIMEOUT = 30000; //milliseconds = 30 seconds
 	protected static int WAIT_INTERVAL = 1000; //milliseconds  
 	public static int loopCount = 0;	
