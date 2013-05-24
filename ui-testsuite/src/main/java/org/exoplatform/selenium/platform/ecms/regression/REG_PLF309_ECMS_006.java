@@ -16,8 +16,6 @@ import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.selenesedriver.FindElement;
-import org.openqa.selenium.internal.selenesedriver.FindElements;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -87,8 +85,6 @@ public class REG_PLF309_ECMS_006 {
 			info("Go to acme document folder");
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
 			
-		 
-			
 		  // Go to add new Content
 			goToAddNewContent();
 			// Create new content with File template
@@ -104,7 +100,7 @@ public class REG_PLF309_ECMS_006 {
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
 			// Upload PDF file
 			uploadFile(fileName,"TestData/"+fileName);
-			// Open uploade file
+			// Open uploaded file
 			click(ELEMENT_UPLOADED);
 		  // Verify: In the action bar: there is no action: Add Folder, Add Content, Upload file, Import Node
 			Assert.assertFalse(driver.findElement(ELEMENT_NEW_CONTENT_LINK).isDisplayed());
