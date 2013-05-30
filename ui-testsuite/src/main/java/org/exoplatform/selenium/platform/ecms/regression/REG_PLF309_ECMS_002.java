@@ -4,25 +4,24 @@ import static org.exoplatform.selenium.TestBase.actions;
 import static org.exoplatform.selenium.TestBase.baseUrl;
 import static org.exoplatform.selenium.TestBase.captureScreen;
 import static org.exoplatform.selenium.TestBase.click;
-import static org.exoplatform.selenium.TestBase.dragAndDropToObject;
 import static org.exoplatform.selenium.TestBase.driver;
 import static org.exoplatform.selenium.TestBase.initSeleniumTest;
+import static org.exoplatform.selenium.TestBase.pause;
+import static org.exoplatform.selenium.TestBase.type;
 import static org.exoplatform.selenium.TestBase.waitForElementPresent;
 import static org.exoplatform.selenium.TestLogger.info;
-import static org.exoplatform.selenium.platform.PageEditor.selectContentPath;
-import static org.exoplatform.selenium.platform.PlatformBase.ELEMENT_MENU_CONTENT_LINK;
+import static org.exoplatform.selenium.platform.PageEditor.addContentListEmptyLayout;
+import static org.exoplatform.selenium.platform.PageEditor.selectCLVPath;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.deletePermission;
-import static org.exoplatform.selenium.platform.ecms.ActionBar.goToPermissionManagement;
-import static org.exoplatform.selenium.platform.ecms.EcmsBase.ELEMENT_ADD_CONTENT_LIST_PORTLET;
-import static org.exoplatform.selenium.platform.ecms.EcmsBase.ELEMENT_DROP_TARGET_HAS_LAYOUT;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.enableEditMode;
+import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToNode;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToNodeByPath;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToOverView;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToPageCreationWinzard;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToSiteExplorer;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.loginEcms;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
-import static org.exoplatform.selenium.platform.ecms.WcmAdmin.addView;
+import static org.exoplatform.selenium.platform.ecms.WcmAdmin.addView_withName;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -73,19 +72,21 @@ public class REG_PLF309_ECMS_002 {
 		
 		@Test
 		public void checkCLVdisplayed() {
-			String COLLABORATION_SITECONTENT_ACME_DOCUMENT = "collaboration/sites content/live/acme/documents";
+			String COLLABORATION_SITECONTENT_ACME_DOCUMENT = "sites content/live/acme/documents";
+			String CONTENT_LIST_PATH = "General Drives/collaboration/sites content/live/acme/";
 			By ELEMENT_COLLABORATION_DRIVER = By.xpath("//a[@class='DriveLabel' and @title = 'collaboration']");
-			By ELEMENT_ADMIN_VIEW = By.xpath("//a[@class='DefaultViewSelected e_admin-view-selected ViewIcon' and @title = 'Admin View']");
-			By ELEMENT_ICON_EDIT_PORTLET = By.xpath("//a[@class='EditIcon' and @title = 'Edit Portlet']");
-			String viewName= "Admin View";
-			String tabName = "Permission View";
-			String newViewAdd = "View Permissions";
-		  
+			By ELEMENT_ADMIN_VIEW = By.xpath("//a[@class='DefaultView e_admin-view ViewIcon' and @title = 'Admin View']");
+			By ELEMENT_PERMISSION_TAB = By.xpath("//a[@class='TabLabel' and @title = 'Permission']");
+			By ELEMENT_SAVEPAGE_BUTTON = By.xpath("//a[@class='EdittedSaveButton' and @title = 'Finish']");
+			By ELEMENT_PERMISSION_LINK = By.linkText("Permissions");
+			By ELEMENT_NEXT_LINK = By.linkText("Next");
+			By ELEMENT_PAGE_NAME = By.xpath("//input[@id='pageName']");
+			
 			info("Start REG_PLF309_ECMS_002");
 			
 			// Add View Permission tab in Admin view
 			info("Add View Permission tab in Admin view");
-			addView(viewName, tabName, newViewAdd);
+			addView_withName("Permission" ,"Admin View", "Add Tab", "viewPermissions");
 
 			//goto Site Explorer
 			info("Go to Site Explorer");
@@ -100,27 +101,34 @@ public class REG_PLF309_ECMS_002 {
 			info("Change to Admin View");
 			click(ELEMENT_ADMIN_VIEW);
 			waitForElementPresent(ELEMENT_ADMIN_VIEW);
-			
+			//Change to Permission tab
+			info("Change to Permission tab");
+			click(ELEMENT_PERMISSION_TAB);
 			// Click to View Permission on action bar
 			info("Click to View Permission on action bar");
-			goToPermissionManagement();
-			
+			goToNode(ELEMENT_PERMISSION_LINK);
 			// Remove all permissions and keep only permissions for *:/platform/administrators group
 			info(" Remove all permissions and keep only permissions for *:/platform/administrators group");
 			deletePermission("*:/platform/web-contributors", true);
-			deletePermission("__system", true);
 			deletePermission("any", true);
 			
 			goToOverView();
 			//Go to EditPage Editor 
 			goToPageCreationWinzard();
+			
+			type(ELEMENT_PAGE_NAME,"REG_PLF309_ECMS_002",false);
+			click(ELEMENT_NEXT_LINK);
+			pause(1000);
+			click(ELEMENT_NEXT_LINK);
+			pause(1000);
 			//Add Content List portlet
-			click(ELEMENT_MENU_CONTENT_LINK);
-			dragAndDropToObject(ELEMENT_ADD_CONTENT_LIST_PORTLET,ELEMENT_DROP_TARGET_HAS_LAYOUT);
-			//Edit portlet
-			click(ELEMENT_ICON_EDIT_PORTLET);
-			waitForElementPresent(ELEMENT_ICON_EDIT_PORTLET);
-			selectContentPath(COLLABORATION_SITECONTENT_ACME_DOCUMENT);
+			info("Add Content List portlet into page");
+			addContentListEmptyLayout();
+			//Select content path
+			info("Select content path");
+			selectCLVPath(CONTENT_LIST_PATH,"documents");
+			pause(1000);
+			click(ELEMENT_SAVEPAGE_BUTTON);
 			captureScreen("REG_PLF309_ECMS_002_1");
 			
 			// Step 4: Change to edit mode
