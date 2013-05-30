@@ -2,19 +2,23 @@ package org.exoplatform.selenium.platform.ecms.regression;
 
 import static org.exoplatform.selenium.TestBase.actions;
 import static org.exoplatform.selenium.TestBase.baseUrl;
+import static org.exoplatform.selenium.TestBase.click;
 import static org.exoplatform.selenium.TestBase.driver;
 import static org.exoplatform.selenium.TestBase.initSeleniumTest;
+import static org.exoplatform.selenium.TestBase.isElementPresent;
+import static org.exoplatform.selenium.TestBase.pause;
 import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.platform.PlatformBase.ELEMENT_SAVE_BUTTON;
+import static org.exoplatform.selenium.platform.ecms.ContentTemplate.uploadFile;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToNodeByPath;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToSiteExplorer;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.loginEcms;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
-import static org.exoplatform.selenium.platform.ecms.WcmAdmin.*;
-import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
+import static org.exoplatform.selenium.platform.ecms.WcmAdmin.goToManageDriver;
+import static org.exoplatform.selenium.platform.ecms.WcmAdmin.selectCheckboxList;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.seleniumemulation.IsElementPresent;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -55,11 +59,12 @@ public class REG_PLF309_ECMS_009 {
 	  @Test
 		public void CheckThumbnailViewPDF_file() {
 	  	String driveName = "Managed Sites";
-	  	By locator = By.xpath("//div[@class='ActionContainer' and contains(text(),'" + driveName + "')]/ancestor::tr//img[@class='Edit16x16Icon']");
+	  	By.xpath("//div[@class='ActionContainer' and contains(text(),'" + driveName + "')]/ancestor::tr//img[@class='Edit16x16Icon']");
+	  	By locator = By.xpath("//div[@title='" + driveName + "']/../..//*[@class='Edit16x16Icon']");
 	  	By ELEMENT_APPLY_VIEW_TAB = By.xpath("//div[contains(text(),'Apply Views')]");
-	  	By ELEMENT_SIMPLE_VIEW = By.xpath("//a[@class='DefaultView simple-view ViewIcon' and @title = 'Simple View']");
+	  	By ELEMENT_SIMPLE_VIEW = By.xpath("//a[@class='DefaultView simple-view ViewIcon' and @title='Simple View']");
 	  	By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
-	  	String view = "Simple View";
+	  	String view = "simple-view";
 	  	String ACME_DOCUMENT_FOLDER = "acme/documents";
 	  	String fileName = "REG_PLF309_ECMS_009_PDF_file.pdf";
 	  	
@@ -86,11 +91,11 @@ public class REG_PLF309_ECMS_009 {
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
 		  // Upload PDF file
 			uploadFile(fileName,"TestData/"+fileName);
-			
+			pause(3000);
 			// Change to simple View
 			click(ELEMENT_SIMPLE_VIEW);
-	  	
-	    assert isTextNotPresent(fileName);
+			
+			assert isElementPresent(By.xpath("//div[@title='REG_PLF309_ECMS_009_PDF_file.pdf']"));
 	  	
 	  }
 
