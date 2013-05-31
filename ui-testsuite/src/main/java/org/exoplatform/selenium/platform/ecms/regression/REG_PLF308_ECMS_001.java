@@ -3,21 +3,23 @@ package org.exoplatform.selenium.platform.ecms.regression;
 import static org.exoplatform.selenium.TestBase.actions;
 import static org.exoplatform.selenium.TestBase.baseUrl;
 import static org.exoplatform.selenium.TestBase.captureScreen;
-import static org.exoplatform.selenium.TestBase.driver;
 import static org.exoplatform.selenium.TestBase.click;
+import static org.exoplatform.selenium.TestBase.driver;
 import static org.exoplatform.selenium.TestBase.initSeleniumTest;
-import static org.exoplatform.selenium.TestBase.waitForElementPresent;
+import static org.exoplatform.selenium.TestBase.mouseOver;
+import static org.exoplatform.selenium.TestBase.pause;
+import static org.exoplatform.selenium.TestBase.type;
 import static org.exoplatform.selenium.TestLogger.info;
-import static org.exoplatform.selenium.platform.PageEditor.selectContentPath;
+import static org.exoplatform.selenium.platform.PageEditor.addContentDetailEmptyLayout;
+import static org.exoplatform.selenium.platform.UserGroupManagement.selectGroup;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.createNewFile;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.enableEditMode;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToNodeByPath;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToOverView;
+import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToPageCreationWinzard;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToSiteExplorer;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.loginEcms;
-import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToPageCreationWinzard;
-import static org.exoplatform.selenium.TestBase.dragAndDropToObject;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
 import org.openqa.selenium.By;
@@ -70,13 +72,17 @@ public class REG_PLF308_ECMS_001 {
 	  	By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 	  	String ACME_DOCUMENT_FOLDER = "acme/documents";
 	  	String name_content_title="REG_PLF309_ECMS_006";
-	  	By ELEMENT_MENU_CONTENT_LINK = By.linkText("Content");
-	  	By ELEMENT_ADD_SINGLE_CONTENT_DETAIL_PORTLET = By.xpath("//div[text()='Content Detail']");
-	  	By ELEMENT_DROP_TARGET_HAS_LAYOUT = By.xpath("//div[@class='UIRowContainer EmptyContainer']");
-	  	By ELEMENT_ICON_EDIT_PORTLET = By.xpath("//a[@class='EditIcon' and @title = 'Edit Portlet']");
-	  	By ELEMENT_EDIT_LAYOUT_FINISH_BUTTON = By.xpath("//div[@id='UIPortalComposer']//a[@class='EdittedSaveButton']");
 	  	By ELEMENT_CLOSE_BUTTON = By.linkText("Close");
 	  	By ELEMENT_FAST_PUBLICH_ICON = By.xpath("//a[@class='FastPublishIcon' and @title = 'Publish']");
+	  	By ELEMENT_PAGE_NAME = By.xpath("//input[@id='pageName']");
+	  	By ELEMENT_NEXT_LINK = By.linkText("Next");
+	  	By ELEMENT_SAVEPAGE_BUTTON = By.xpath("//a[@class='EdittedSaveButton' and @title = 'Finish']");
+	  	By ELEMENT_FRAME_CONTAIN_PORTLET = By.xpath("//div[contains(@id,'UIPortlet')]");
+	  	By ELEMENT_EDIT_PORTLET_ICON = By.xpath("//a[@title='Edit Portlet']");
+	  	By ELEMENT_SELECT_CONTENT_PATH_LINK = By.xpath("//img[@class='AddIcon16x16 SelectFolderPathIcon']");
+	  	String path = "General Drives/Sites Management/acme/documents";
+	  	By ELEMENT_SELECT_CLV_PATH = By.xpath("//td/a[text()='" + name_content_title + "']");
+	  	By ELEMENT_SAVE_BUTTON = By.linkText("Save");
 	  	
 	    //goto Site Explorer
 			info("Go to Site Explorer");
@@ -95,14 +101,28 @@ public class REG_PLF308_ECMS_001 {
 	  	goToOverView();
 	    //Go to EditPage Editor 
 			goToPageCreationWinzard();
-			//Add Content List portlet
-			click(ELEMENT_MENU_CONTENT_LINK);
-			dragAndDropToObject(ELEMENT_ADD_SINGLE_CONTENT_DETAIL_PORTLET,ELEMENT_DROP_TARGET_HAS_LAYOUT);
-			click(ELEMENT_ICON_EDIT_PORTLET);
-			waitForElementPresent(ELEMENT_ICON_EDIT_PORTLET);
-			selectContentPath(ACME_DOCUMENT_FOLDER);
+			type(ELEMENT_PAGE_NAME,"REG_PLF309_ECMS_001",false);
+			click(ELEMENT_NEXT_LINK);
+			pause(1000);
+			click(ELEMENT_NEXT_LINK);
+			pause(1000);
+		  //Add Content List portlet
+			info("Add Content List portlet into page");
+			addContentDetailEmptyLayout();
+			//Select content path
+			info("click to edit button on Content Detail Portlet");
+			mouseOver(ELEMENT_FRAME_CONTAIN_PORTLET, true);
+			click(ELEMENT_EDIT_PORTLET_ICON);
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+			info("Select content path");
+			selectGroup(path);
+			info("Click to the created document");
+			click(ELEMENT_SELECT_CLV_PATH);
+			click(ELEMENT_SAVE_BUTTON);
 			click(ELEMENT_CLOSE_BUTTON);
-			click(ELEMENT_EDIT_LAYOUT_FINISH_BUTTON);
+			
+			pause(1000);
+			click(ELEMENT_SAVEPAGE_BUTTON);
 			
 		  //Change to Edit mode
 	  	enableEditMode(true);
