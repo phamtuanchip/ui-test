@@ -103,7 +103,7 @@ public class TestBase {
 				if (e.isDisplayed()) return e;
 			}
 		} catch (NoSuchElementException ex) {
-			info("NoSuchElementException");
+			info("No element for " + locator );
 		}catch(StaleElementReferenceException ex)
 		{
 			checkCycling(ex, 10);
@@ -135,10 +135,13 @@ public class TestBase {
 		int isAssert = opParams.length > 1 ? opParams[1]: 1;
 
 		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
-			//elem = getElement(locator);
-			elem = getDisplayedElement(locator);
-			if (null != elem) return elem;
-			pause(WAIT_INTERVAL);
+      if ( isElementNotPresent (locator)) {
+        pause(WAIT_INTERVAL);
+      }
+      else {
+        elem = getDisplayedElement(locator);
+        if (null != elem) return elem;
+      }
 		}
 		if (isAssert == 1)
 			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
@@ -158,28 +161,19 @@ public class TestBase {
 		int isAssert = opParams.length > 1 ? opParams[1]: 1;
 
 		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
-			//			elem = getElement(locator);
-			elem = getDisplayedElement(locator);
-			if (null == elem) return null;
-			pause(WAIT_INTERVAL);
+      if ( isElementPresent (locator)) {
+        pause(WAIT_INTERVAL);  
+      }
+      else {
+        return null;
+      }
 		} 
 
 		if (isAssert == 1)
 			assert false: ("Timeout after " + timeout + "ms waiting for element not present: " + locator);
 		return elem;
 	}
-	//
-	//  public WebElement waitForAndGetElement(Object locator, int... timeInMillis) {
-	//    WebElement elem = null;
-	//    int timeout = timeInMillis.length>0 ? timeInMillis[0] : DEFAULT_TIMEOUT;
-	//    for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
-	//      elem = getElement(locator);
-	//      if (null != elem) return elem;
-	//      pause(WAIT_INTERVAL);
-	//    }
-	//    debug("Timeout after " + timeout + "ms waiting for element " + locator);
-	//    return elem;
-	//  }
+
 
 	/*
 	 * @opPram[0]: timeout
@@ -193,11 +187,13 @@ public class TestBase {
 		int isAssert = opParams.length > 1 ? opParams[1]: 1;
 
 		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
-			//elem = getElement(locator);
-			elem = getDisplayedElement(locator);
-			if (null != elem)
-				return elem;
-			pause(WAIT_INTERVAL);
+      if ( isElementNotPresent (locator)) {
+        pause(WAIT_INTERVAL);
+      }
+      else {
+        elem = getDisplayedElement(locator);
+        if (null != elem) return elem;
+      }
 		}
 		if (isAssert == 1)		
 			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
@@ -574,12 +570,10 @@ public class TestBase {
 		return absolutePath;
 	}
 	public static void checkCycling(Exception e, int loopCountAllowed) {
-		info("Exception:" + e.getClass().getName());
+	  loopCount++;
 		if (loopCount > loopCountAllowed) {
 			Assert.fail("Cycled: " + e.getMessage());
 		} 
-		info("Repeat... " + loopCount + "time(s)");
-		loopCount++;
 	}
 
 	/*---- Auxiliary functions ----*/
