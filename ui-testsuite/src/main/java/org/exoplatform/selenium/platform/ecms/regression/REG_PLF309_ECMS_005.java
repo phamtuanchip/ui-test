@@ -63,7 +63,7 @@ public class REG_PLF309_ECMS_005 {
 		  By ELEMENT_WEBCONTENT_TITLE_TEXTBOX = By.id("title");	
 			By ELEMENT_WEBCONTENT_NAME_TEXTBOX = By.id("name");
 			By ELEMENT_WEBCONTENT_JS_TEXTAREA = By.xpath("//textarea[contains(@id,'ContentJS')]");
-			By ELEMENT_WEBCONTENT_ADVANCE_TAB = By.xpath("//div[contains(text(),'Advanced')]");
+			By ELEMENT_WEBCONTENT_ADVANCE_TAB = By.xpath("//div[@class='MiddleTab' and contains(text(),'Advanced')]");
 			By ELEMENT_SAVE_CLOSE_BUTTON = By.linkText("Save & Close");
 			String title_name ="REG_PLF309_ECMS_005";
 			info("Start REG_PLF309_ECMS_001");
