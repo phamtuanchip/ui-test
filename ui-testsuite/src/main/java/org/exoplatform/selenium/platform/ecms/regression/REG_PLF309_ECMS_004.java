@@ -8,14 +8,19 @@ import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.sun.jna.platform.win32.Sspi.TimeStamp;
 
 public class REG_PLF309_ECMS_004 {
 	
@@ -74,20 +79,29 @@ public class REG_PLF309_ECMS_004 {
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
 			
 			// Go to add new Content
+			info("Add new content");
 			goToAddNewContent();
+			info("Choose podcast link");
 			click(ELEMENT_PODCAST_LINK);
 			
-			// Verifie Current Date/Time is shown in Published field
-			Date date = new Date();
-			assert isElementPresent(ELEMENT_PUBLISH_DATE):date;
-			// Close this session
+			info("Get the current date to compare with the published date field");
+			Date date;
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			date = new Date();
+			info("Current date: "+format.format(date));
+			
+			info("Verifie Current Date/Time is shown in Published field");
+			assert isElementPresent(ELEMENT_PUBLISH_DATE):format.format(date);
+			info("Close this session");
 			click(ELEMENT_CLOSE_BUTTON);
 			
-		  // Return to  add new Content
+			info("Return to add new content");
 			goToAddNewContent();
+			info("Choose Sample node template");
 			click(ELEMENT_SAMPLENODE_LINK);
-			assert isElementPresent(ELEMENT_DATETIME):date;
+			info("Check current date is show in datetime field");
+			date = new Date();
+			assert isElementPresent(ELEMENT_DATETIME):format.format(date);
 			click(ELEMENT_CLOSE_BUTTON);
 	  }
-
 }
