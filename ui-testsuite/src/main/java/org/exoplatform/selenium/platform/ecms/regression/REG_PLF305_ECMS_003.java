@@ -1,6 +1,9 @@
 package org.exoplatform.selenium.platform.ecms.regression;
 
 import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
+import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
+import static org.exoplatform.selenium.platform.ecms.ContextMenu.*;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -22,11 +25,12 @@ public class REG_PLF305_ECMS_003 extends EcmsBase {
 	public static By ELEMENT_TEXTAREA = By.xpath("//textarea[@class='cke_source cke_enable_context_menu']");
 	public static final By ELEMENT_SAVE_AND_CLOSE_BUTTON = By.linkText("Save & Close");
 	public static By ELEMENT_CONTENT = By.xpath("//div[@class='ContainerLeft FL']");	
-	public static final By ELEMENT_IFRAME=By.xpath("//td[contains(@id,'cke_contents_contentHtml')]/iframe");
+	public static final By ELEMENT_IFRAME=By.xpath("//td[@class='cke_contents' and @role='presentation']/iframe");
 	private String CONTENT_TO_ADD = "aaa";
 	
 	@BeforeMethod
 	public void beforeMethods(){
+		info("\n\n |||||||| Test case REG_PLF305_ECMS_003 - BEGIN |||||||| \n");
 		initSeleniumTest();
 		driver.get(baseUrl);
 		actions = new Actions(driver);
@@ -43,44 +47,84 @@ public class REG_PLF305_ECMS_003 extends EcmsBase {
 	
 	/*-- Case No 003 / ID 003 
 	 *-- Edit HTML in Content Explorer
-	 *	- Login as root
+	 *	- Login as John
 		- Go to Content Explorer
-		- Open drive acme, select a document which has default.html file
-		- Right-click on default.html, select Edit
-		- In Edit form, edit something then click Save as Draft
+		- Go to acme folder
+		- Create new sub-folder "REG_PLF305_ECMS_003"
+		- Go into new folder
+		- Create new Free layout webcontent, named "FLWC1"
+		- Edit file default.html of FLWC1
+		- Click Save		
 		Expected result: No error "ERROR [portal:UIPortalApplication] Error during the processAction phase 
 javax.jcr.ItemExistsException: [collaboration] ADD PROPERTY." appears on console.
 	 * --*/
 	@Test
 	public void test03_EditHTMLinContentExplorer(){
 		//goto Site Explorer
-		info("Go to Site Explorer");
+		info("\n === Go to Site Explorer ===");
 		goToSiteExplorer();	
 		
-		// Edit default.html
-		info("Go to default/web contents/site artifacts");
-		goToNodeByPath("default/web contents/site artifacts");
-		info("Click on Welcome node");
-		click(ELEMENT_WELCOME);	
-		pause(1000);
-		info("Click on default.html");
-		click(ELEMENT_DEFAULT);	
-		pause(1000);
-		info("Click on Publication > Edit");
-		click(ELEMENT_PUBLICATION);
-		pause(1000);
-		click(ELEMENT_EDIT);
+		// Go to acme folder
+		info("\n === Go to acme folder ===");
+		goToNodeByPath("acme");
+		pause(4000);
+		
+		// Create new folder REG_PLF305_ECMS_003 - OK
+		info("\n === Create new folder REG_PLF305_ECMS_003 ===");
+		createNewContentFolder("REG_PLF305_ECMS_003", "regplf305ecms003");
 		pause(1000);
 		
-		info("Add text 'aaa' to Rich Text Editor content");		
-		inputDataToFrame(ELEMENT_IFRAME,CONTENT_TO_ADD);		
-		switchToParentWindow();		
+		// Go into new folder - OK
+		info("\n === Go into new folder REG_PLF305_ECMS_003 ===");
+		goToNodeByPath("REG_PLF305_ECMS_003");
+		pause(4000);
 		
-		info("Click Save button");
-		click(ELEMENT_SAVE_BUTTON);
-		pause(1000);		
+		// Create new Free layout webcontent, named "FLWC1" - OK
+		info("\n === Create new Free layout webcontent, named FLWC1 ===");
+		goToAddNewContent();
+		createNewFreeLayoutWebContent("FLWC1", "flwc1", "First content", "", "", "", "");
+		pause(5000);
 		
-		info("Click Save & Close button");
-		click(ELEMENT_SAVE_AND_CLOSE_BUTTON);		
+		// Go to default.html of FLWC1 - OK
+//		info("\n === Go to default.html of FLWC1 - temps used ===");
+//		goToNodeByPath("FLWC1");
+//		pause(4000);
+		click(By.xpath("//a[contains(text(),'default.html')]"));
+		pause(4000);
+		
+		// Click Edit 
+		info("\n === Edit default.html ===");
+		waitForElementPresent(By.xpath("//a[@class='SubTabIcon DefaultActionIcon EditDocumentIcon']"));
+		click(By.xpath("//a[@class='SubTabIcon DefaultActionIcon EditDocumentIcon']"));
+		pause(4000);
+		info("\n === Update content of default.html ===");
+		inputDataToFrame(By.xpath("//td[contains(@id,'cke_contents_contentHtml')]/iframe"),"Second content",true);
+		pause(2000);
+		switchToParentWindow();
+		pause(2000);
+		
+		// Click Save button		
+		info("\n === Click Save & Close button ===");
+		saveAndClose();
+		pause(10000);
+		
+		info("\n\n ====================================");
+		info("\n ===== ATTENTION !!!! \n");
+		info("\n If you don't see any \n ***ERROR [portal:UIPortalApplication] Error during the processAction phase*** \n" +
+				" on console, that means this test case is PASSED. \n" +
+				"Otherwise, please clone issue ECMS-1940. Thanks!");
+		info("\n ==================================== \n");
+		
+		
+		// Return to acme folder
+		info("\n === Return to acme folder ===");
+		goToNodeByPath("acme");
+		pause(4000);
+		info("\n === Delete data in REG_PLF305_ECMS_003 folder ===");
+		deleteData(By.xpath("//div[contains(text(),'REG_PLF305_ECMS_003')]"));
+		pause(5000);
+				
+		// END
+		info("\n\n ||||| END Test case REG_PLF305_ECMS_003 ||||| \n\n\n");
 	}
 }
