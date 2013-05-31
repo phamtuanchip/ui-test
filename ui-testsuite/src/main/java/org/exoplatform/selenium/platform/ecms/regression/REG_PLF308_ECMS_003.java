@@ -15,6 +15,8 @@ import static org.exoplatform.selenium.platform.ecms.EcmsBase.loginEcms;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -76,7 +78,11 @@ public class REG_PLF308_ECMS_003 {
 			click(ELEMENT_NEWFILE_LINK);	
 			type(ELEMENT_NEWFILE_NAME_TEXTBOX, name, false);
 		  //Click Enter
-			info("Click enter");
+			info("Click tab");
+			WebElement element = driver.findElement(ELEMENT_NEWFILE_TITLE_TEXTBOX);
+		  element.sendKeys(Keys.TAB);
+		  
+		  info("CHECK: Title of document is automatically generated, and no JS error is shown");
 			assert isElementPresent(ELEMENT_NEWFILE_TITLE_TEXTBOX):"REG_PLF308_ECMS_003";
 			
 	  }
