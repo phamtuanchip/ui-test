@@ -3,8 +3,11 @@ package org.exoplatform.selenium.platform.ecms.regression;
 import static org.exoplatform.selenium.TestBase.actions;
 import static org.exoplatform.selenium.TestBase.baseUrl;
 import static org.exoplatform.selenium.TestBase.click;
+import static org.exoplatform.selenium.TestBase.doubleClickOnElement;
 import static org.exoplatform.selenium.TestBase.driver;
 import static org.exoplatform.selenium.TestBase.initSeleniumTest;
+import static org.exoplatform.selenium.TestBase.isElementNotPresent;
+import static org.exoplatform.selenium.TestBase.pause;
 import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.createNewFile;
@@ -72,7 +75,7 @@ public class REG_PLF309_ECMS_006 {
 	  	By ELEMENT_NEW_FOLDER_LINK = By.linkText("New Folder");
 	  	By ELEMENT_UPLOAD_LINK = By.linkText("Upload");
 	  	String fileName = "REG_PLF309_ECMS_006_PDF.pdf";
-	  	By ELEMENT_UPLOADED = By.xpath("//div[contains(@title='fileName']");
+	  	By ELEMENT_UPLOADED = By.xpath("//div[@title='"+fileName+"']");
 	  	
 	  	
 	    //goto Site Explorer
@@ -87,29 +90,26 @@ public class REG_PLF309_ECMS_006 {
 			
 		  // Go to add new Content
 			goToAddNewContent();
-			// Create new content with File template
+			info("Create new content with File template");
 			createNewFile(name_content_title,name_content_title,name_content_title);
 			
-			// Verify: In the action bar: there is no action: Add Folder, Add Content, Upload file, Import Node
-			Assert.assertFalse(driver.findElement(ELEMENT_NEW_CONTENT_LINK).isDisplayed());
-			Assert.assertFalse(driver.findElement(ELEMENT_NEW_FOLDER_LINK).isDisplayed());
-			Assert.assertFalse(driver.findElement(ELEMENT_UPLOAD_LINK).isDisplayed());
+			info("Verify: In the action bar: there is no action: Add Folder, Add Content, Upload file, Import Node");
+			assert isElementNotPresent(ELEMENT_NEW_CONTENT_LINK);
+			assert isElementNotPresent(ELEMENT_NEW_FOLDER_LINK);
+			assert isElementNotPresent(ELEMENT_UPLOAD_LINK);
 			
-		  // Go to document of acme file
 			info("Go to acme document folder");
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
-			// Upload PDF file
+			info("Upload PDF file");
 			uploadFile(fileName,"TestData/"+fileName);
-			// Open uploaded file
-			click(ELEMENT_UPLOADED);
-		  // Verify: In the action bar: there is no action: Add Folder, Add Content, Upload file, Import Node
-			Assert.assertFalse(driver.findElement(ELEMENT_NEW_CONTENT_LINK).isDisplayed());
-			Assert.assertFalse(driver.findElement(ELEMENT_NEW_FOLDER_LINK).isDisplayed());
-			Assert.assertFalse(driver.findElement(ELEMENT_UPLOAD_LINK).isDisplayed());
-					
+			pause(1000);
+			info("Open the uploaded file");
+			doubleClickOnElement(ELEMENT_UPLOADED);
 			
-			
+			info("Verify: In the action bar: there is no action: Add Folder, Add Content, Upload file, Import Node");
+			assert isElementNotPresent("Add Folder");
+			assert isElementNotPresent("New Content");
+			assert isElementNotPresent("Upload");
 			
 	  }
-
 }
