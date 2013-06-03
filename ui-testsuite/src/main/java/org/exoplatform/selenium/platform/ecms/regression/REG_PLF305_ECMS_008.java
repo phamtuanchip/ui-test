@@ -23,6 +23,7 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 	
 	@BeforeMethod
 	public void beforeMethods(){
+		info("\n\nBEGIN Test case REG_PLF305_ECMS_008 \n\n");
 		initSeleniumTest();
 		driver.get(baseUrl);
 		actions = new Actions(driver);
@@ -33,6 +34,7 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 	@AfterMethod
 	public void afterMethods(){
 		info("Logout ECMS");
+		info("\n\nEND Test case REG_PLF305_ECMS_008 \n\n");
 		driver.quit();
 		actions = null;
 	}
@@ -48,41 +50,41 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 	 * --*/
 	@Test
 	public void test08_PublishDocumentInLockedFolder(){
-		info("Go to Site Explorer");
+		info("\n=== Go to Site Explorer ===");
 		goToSiteExplorer();		
 		pause(1000);
 		
-		info("Go to node acme");
+		info("\n=== Go to node acme ===");
 		goToNode("acme");
 		pause(1000);
 		
-		info("Lock node documents");
+		info("\n=== Lock node documents ===");
 		lockNode(By.xpath("//a[contains(text(),'documents')]"));
 		pause(1000);
 		
-		info("Go to node documents");
+		info("\n=== Go to node documents ===");
 		click(By.xpath("//a[contains(text(),'documents')]"));
 		pause(1000);
 		
-		info("Add new article in folder documents locked");
+		info("\n=== Add new article in folder documents locked ===");
 		goToAddNewContent();
 		pause(1000);
 		createNewArticle(DATA_ARTICLE_NAME, DATA_ARTICLE_NAME, "", "");
 		waitForElementPresent(ELEMENT_ARTICLE);
 		assert isElementPresent(ELEMENT_ARTICLE):"Create new article unsuccessfully";
-		info("Create new article successfully");
+		info("\n=== Create new article successfully");
 		pause(1000);
 		
-		info("Click Publication");
+		info("\n=== Click Publication ====");
 		click(By.xpath("//a[contains(text(),'Publications')]"));
 		pause(500);
 		click(ELEMENT_SAVE_BUTTON);
 		pause(500);
 		waitForElementPresent(ELEMENT_ARTICLE);
 		assert isElementPresent(ELEMENT_ARTICLE):"Publish new article unsuccessfully";
-		info("Public new article successfully");
+		info("\n=== Public new article successfully ===");
 		
-		info("Delete new article");
+		info("\n=== Delete new article ===");
 		deleteDocument(ELEMENT_ARTICLE);
 		pause(3000);
 	} // End test08_PublishDocumentInLockedFolder
