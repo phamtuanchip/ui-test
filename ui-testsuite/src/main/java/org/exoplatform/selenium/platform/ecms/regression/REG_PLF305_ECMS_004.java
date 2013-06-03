@@ -19,6 +19,7 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 	
 	@BeforeMethod
 	public void beforeMethods(){
+		info("\n\n======= BEGIN Test REG_PLF305_ECMS_004 ======\n\n");
 		initSeleniumTest();
 		driver.get(baseUrl);
 		actions = new Actions(driver);
@@ -29,6 +30,7 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 	@AfterMethod
 	public void afterMethods(){
 		info("Logout ECMS");
+		info("\n\n======= END Test REG_PLF305_ECMS_004 ======\n\n");
 		driver.quit();
 		actions = null;
 	}
@@ -42,15 +44,15 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 	 * --*/
 	@Test
 	public void test04_UploadIllustrationImageInFreeLayoutWebContent(){
-		info("Go to Site Explorer");
+		info("\n === Go to Site Explorer ===");
 		goToSiteExplorer();
-		info("Go to node 'intranet'");
+		info("\n === Go to node 'intranet' ===");
 		goToNode("intranet");
-		info("Click add new content");
+		info("\n === Click add new content ===");
 		goToAddNewContent();
 		pause(3000);
 		
-		info("Create new free layout webcontent");
+		info("\n === Create new free layout webcontent 'wc1' and upload an illustration image ===");
 		String title = "wc1";
 		String mainContent = "Example of free layout webcontent";		
 		String img = "TestData/ECMS_DMS_SE_BasicAction_CutPaste.png";
@@ -58,18 +60,18 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 		
 		createNewFreeLayoutWebContent(title, title, mainContent, img, summary, "", "");
 		
-		info("Go to folder medias > images");
+		info("\n === Go to folder medias > images ===");
 		pause(2000);
 		goToNode(title);
 		click(By.xpath("(//a[contains(text(),'medias')])[2]"));
 		goToNode("images");
 		pause(5000);
 		
-		info("Check that uploaded illustration image is located under wc1/medias/images/illustration");
+		info("\n === Check that uploaded illustration image is located under wc1/medias/images/illustration");
 		assert isElementPresent(By.xpath("//div[@title='illustration']"));
 		pause(3000);
 		
-		info("Delete free layout webcontent");
+		info("\n === Delete free layout webcontent");
 		goToNode("intranet");
 		deleteDocument(By.xpath("//a[contains(text(),'"+title+"')]"));
 		pause(3000);
