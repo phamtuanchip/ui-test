@@ -87,8 +87,8 @@ public class TestBase {
 		WebElement elem = null;
 		try {
 			elem = driver.findElement(by);
-		} catch (NoSuchElementException e) {
-
+		} catch (NoSuchElementException ex) {
+      debug(ex.getMessage() );
 		}
 		return elem;
 	}
@@ -103,7 +103,7 @@ public class TestBase {
 				if (e.isDisplayed()) return e;
 			}
 		} catch (NoSuchElementException ex) {
-			info("NoSuchElementException");
+			debug(ex.getMessage() );
 		}catch(StaleElementReferenceException ex)
 		{
 			checkCycling(ex, 10);
@@ -574,12 +574,12 @@ public class TestBase {
 		return absolutePath;
 	}
 	public static void checkCycling(Exception e, int loopCountAllowed) {
-		info("Exception:" + e.getClass().getName());
+    loopCount++;
+    debug("Exception:" + e.getClass().getName());
 		if (loopCount > loopCountAllowed) {
 			Assert.fail("Cycled: " + e.getMessage());
 		} 
-		info("Repeat... " + loopCount + "time(s)");
-		loopCount++;
+    debug("Repeat... " + loopCount + "time(s)");
 	}
 
 	/*---- Auxiliary functions ----*/
