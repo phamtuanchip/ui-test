@@ -12,4 +12,7 @@
 			<package name="org.exoplatform.selenium.platform.social.regression.*" />
 		</packages>
 	</test>
+  <listeners>
+    <listener class-name="org.exoplatform.selenium.TestReportListener"/>
+  </listeners>
 </suite>
