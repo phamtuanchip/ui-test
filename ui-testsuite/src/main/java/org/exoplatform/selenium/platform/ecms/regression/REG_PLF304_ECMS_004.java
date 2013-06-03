@@ -87,7 +87,7 @@ public class REG_PLF304_ECMS_004 extends EcmsBase {
     goToOverView();
     
     info("Create new page with SCV");
-    PageEditor.addSCVPageAndContentFolderPaths(RandomStringUtils.randomAlphanumeric(10), "General Drives/Sites Management/"+ ACME_DOCUMENT_FOLDER + "/" + mockArticleData );    
+    PageEditor.addSCVPageAndContentFolderPaths("a" + RandomStringUtils.randomAlphanumeric(10), "General Drives/Sites Management/"+ ACME_DOCUMENT_FOLDER + "/" + mockArticleData );    
     pause (500);
     
     click(By.xpath(elementMockAttachmentData));

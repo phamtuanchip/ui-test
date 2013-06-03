@@ -114,6 +114,7 @@ public class REG_PLF304_ECMS_002 extends EcmsBase {
     info ("Create nt:file");
     goToAddNewContent();
     click(ContentTemplate.ELEMENT_NEWFILE_LINK);
+    waitForElementPresent(ContentTemplate.ELEMENT_NEWFILE_NAME_TEXTBOX);
     type(ContentTemplate.ELEMENT_NEWFILE_NAME_TEXTBOX, RandomStringUtils.randomAlphanumeric(10), false);
     type(ELEMENT_NEWFILE_CATEGORY,RandomStringUtils.randomAlphanumeric(10), false);
     inputDataToFrame( ContentTemplate.ELEMENT_NEWFILE_CONTENT_FRAME ,RandomStringUtils.randomAlphanumeric(10));
@@ -121,7 +122,6 @@ public class REG_PLF304_ECMS_002 extends EcmsBase {
     click(ELEMENT_SAVE_CLOSE_BUTTON);
     pause(500);
     assert isTextPresent("Categories are wrong. Please select good categories");
-    
     info("End REG_PLF304_ECMS_002");
   }
   
