@@ -83,25 +83,20 @@ public class REG_PLF309_ECMS_004 {
 			goToAddNewContent();
 			info("Choose podcast link");
 			click(ELEMENT_PODCAST_LINK);
-			
+			pause(3000);
 			info("Get the current date to compare with the published date field");
-			Date date;
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-			date = new Date();
-			info("Current date: "+format.format(date));
-			
+			SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			info("Verifie Current Date/Time is shown in Published field");
-			assert isElementPresent(ELEMENT_PUBLISH_DATE):format.format(date);
+			assert isElementPresent(ELEMENT_PUBLISH_DATE):simpleFormat.format(new Date());
 			info("Close this session");
 			click(ELEMENT_CLOSE_BUTTON);
-			
 			info("Return to add new content");
 			goToAddNewContent();
 			info("Choose Sample node template");
 			click(ELEMENT_SAMPLENODE_LINK);
+			pause(3000);
 			info("Check current date is show in datetime field");
-			date = new Date();
-			assert isElementPresent(ELEMENT_DATETIME):format.format(date);
+			assert isElementPresent(ELEMENT_DATETIME):simpleFormat.format(new Date());
 			click(ELEMENT_CLOSE_BUTTON);
 	  }
 }

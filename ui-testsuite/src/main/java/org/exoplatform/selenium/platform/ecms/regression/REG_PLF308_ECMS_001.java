@@ -71,7 +71,7 @@ public class REG_PLF308_ECMS_001 {
 		public void check_FastPublishContent_Displayed() {
 	  	By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 	  	String ACME_DOCUMENT_FOLDER = "acme/documents";
-	  	String name_content_title="REG_PLF309_ECMS_006";
+	  	String name_content_title="REG_PLF308_ECMS_001";
 	  	By ELEMENT_CLOSE_BUTTON = By.linkText("Close");
 	  	By ELEMENT_FAST_PUBLICH_ICON = By.xpath("//a[@class='FastPublishIcon' and @title = 'Publish']");
 	  	By ELEMENT_PAGE_NAME = By.xpath("//input[@id='pageName']");
@@ -84,32 +84,29 @@ public class REG_PLF308_ECMS_001 {
 	  	By ELEMENT_SELECT_CLV_PATH = By.xpath("//td/a[text()='" + name_content_title + "']");
 	  	By ELEMENT_SAVE_BUTTON = By.linkText("Save");
 	  	
-	    //goto Site Explorer
 			info("Go to Site Explorer");
 			goToSiteExplorer();
 			
-			//Choose Management Sites
+			info("Choose Management Sites");
 			chooseDrive(DRIVER_SITES_MANAGEMENT);
 			 // Go to document of acme file
-			info("Go to acme document folder");
+			info("Go to acme document folder: acme/documents");
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
-		  // Go to add new Content
+		  info("Go to add new Content");
 			goToAddNewContent();
-			// Create new content with File template
+			info("Create new content with File template");
 			createNewFile(name_content_title,name_content_title,name_content_title);
-		  //Go to Acme home page
+			info("Go to Acme home page");
 	  	goToOverView();
-	    //Go to EditPage Editor 
+	  	info("Create new page");
 			goToPageCreationWinzard();
-			type(ELEMENT_PAGE_NAME,"REG_PLF309_ECMS_001",false);
+			type(ELEMENT_PAGE_NAME,"REG_PLF308_ECMS_001",false);
 			click(ELEMENT_NEXT_LINK);
 			pause(1000);
 			click(ELEMENT_NEXT_LINK);
 			pause(1000);
-		  //Add Content List portlet
 			info("Add Content List portlet into page");
 			addContentDetailEmptyLayout();
-			//Select content path
 			info("click to edit button on Content Detail Portlet");
 			mouseOver(ELEMENT_FRAME_CONTAIN_PORTLET, true);
 			click(ELEMENT_EDIT_PORTLET_ICON);
@@ -126,6 +123,8 @@ public class REG_PLF308_ECMS_001 {
 			
 		  //Change to Edit mode
 	  	enableEditMode(true);
+	  	pause(3000);
+	  	
 	  	//Fast public content
 	  	click(ELEMENT_FAST_PUBLICH_ICON);
 	  	info("Document is sent to request approval or published, and can be view in Published mode in SCV and no exception");
