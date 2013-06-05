@@ -1,13 +1,14 @@
 package org.exoplatform.selenium.platform.ecms.regression;
 
+import static org.exoplatform.selenium.TestBase.click;
 import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.NavigationToolbar.goToEditPageEditor;
-import static org.exoplatform.selenium.platform.ecms.ActionBar.ELEMENT_PUBLICATION;
+import static org.exoplatform.selenium.platform.PlatformBase.ELEMENT_SAVE_BUTTON;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.createNewArticle;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
-import static org.exoplatform.selenium.platform.ecms.WcmAdmin.addView_withName;
-import static org.exoplatform.selenium.platform.ecms.functional.wcm.viewer.listcontent.ECMS_WCM_Viewer_ListContent_EditIcon.*;
+import static org.exoplatform.selenium.platform.ecms.WcmAdmin.goToManageDriver;
+import static org.exoplatform.selenium.platform.ecms.WcmAdmin.selectCheckboxList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +16,7 @@ import java.util.Map;
 import org.exoplatform.selenium.platform.PageEditor;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.SiteExplorer;
-import org.exoplatform.selenium.platform.ecms.functional.wcm.viewer.listcontent.ECMS_WCM_Viewer_ListContent_EditIcon;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -68,70 +67,93 @@ public class REG_PLF307_ECMS_006 extends EcmsBase{
 	 */
 	@Test
 	public void test_displayContentPortlet(){
-		String ELEMENT_NEW_VIEW="Relation";
-		String ELEMENT_ARTICLE_TITLE="REG_PLF307_ECMS_006";
+		String fileName="REG_PLF307_ECMS_006";
 		String ELEMENT_ARTICLE_RELATION_TITLE="REG_PLF307_ECMS_006_RELATION";
 		String ELEMENT_ATICLE_SUMMARY="contents";
-		By ELEMENT_NEW_VIEW_TAB = By.xpath("//a[contains(text(),'"+ELEMENT_NEW_VIEW+"')]");
-		By ELEMENT_NEW_ARTICLE = By.xpath("//a[contains(text(),'"+ELEMENT_ARTICLE_TITLE+"')]");
+		By ELEMENT_CREATED = By.xpath("//div[@title='"+fileName+"']");
 		By ELEMENT_RELATIONS_LINK = By.linkText("Relations");
-		By ELEMENT_RELATION_TAB = By.xpath("//div[contains(text(),'Select Relation')]");
 		By ELEMENT_COLLABORATION_DRIVER = By.xpath("//a[@class='DriveLabel' and @title = 'collaboration']");
+		By ELEMENT_SITE_MANAGEMENT_DRIVER = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
+		By ELEMENT_SELECT_RELATION_TAB =By.xpath("//div[text()='Select Relation']");
 		By ELEMENT_SELECT_RELATION=By.xpath("//div[@class='Select16x16Icon' and contains(@style,'margin-left:15px;')]");
+		By ELEMENT_ADMIN_VIEW = By.xpath("//a[@class='DefaultView e_admin-view ViewIcon' and @title = 'Admin View']");
+		By ELEMENT_WCM_VIEW = By.xpath("//a[@class='DefaultView wcm-view ViewIcon' and @title = 'WCM View']");
 		By ELEMENT_CLOSE_BUTTON = By.linkText("Close");
+		String driveName = "Managed Sites";
+		By ELEMENT_APPLY_VIEW_TAB = By.xpath("//div[contains(text(),'Apply Views')]");
+		By locator = By.xpath("//div[@title='" + driveName + "']/../..//*[@class='Edit16x16Icon']");
 		Map<String, String> ELEMENT_PORTLET_ID = new HashMap<String, String>();
 		ELEMENT_PORTLET_ID.put("Content/ContentListViewerPortlet","");
 		String namePage="REG_PLF307_ECMS_006_PAGE";
-		String pathContent = "General Drives/Sites Management/REG_PLF307_ECMS_006";
+		String pathContent = "General Drives/Sites Management";
 
-		//Go to Site Explorer
+		info("Go to Site Explorer");
 		goToSiteExplorer();
-		//Choose ACME Driver
-//		chooseDrive(ELEMENT_ACME_DRIVER);
-		//Add new content
+		info("Go to Site Manage Driver");
+		chooseDrive(ELEMENT_SITE_MANAGEMENT_DRIVER);
+		info("Add new content");
 		goToAddNewContent();
-		//Create an article
-		createNewArticle(ELEMENT_ARTICLE_TITLE, ELEMENT_ARTICLE_TITLE, ELEMENT_ATICLE_SUMMARY, ELEMENT_ATICLE_SUMMARY);
-		//Choose Collaboration driver
+		info("Create an article");
+		createNewArticle(fileName, fileName, ELEMENT_ATICLE_SUMMARY, ELEMENT_ATICLE_SUMMARY);
+		pause(1000);
+		info("Choose Collaboration driver");
 		chooseDrive(ELEMENT_COLLABORATION_DRIVER);
-		//Add new content
+		info("Add new content");
 		goToAddNewContent();
-		//Create an article
+		info("Create an article");
 		createNewArticle(ELEMENT_ARTICLE_RELATION_TITLE, ELEMENT_ARTICLE_RELATION_TITLE, ELEMENT_ATICLE_SUMMARY, ELEMENT_ATICLE_SUMMARY);
-		//Add view to WCM view
-		addView_withName(ELEMENT_NEW_VIEW,"WCM View", "Add Tab","manageRelations");
-		info("Logout ECMS");
-		logoutEcms();
-		info("Login ECMS with "+DATA_USER);
-		loginEcms(DATA_USER, DATA_PASS);
-		//Go to Site Explorer
+		pause(1000);
+		info("STARTING ......Add Admin view to Sites Managed Drive");
+	  info("Go to Manage Driver");
+  	goToManageDriver();
+  	info("Click to Edit button of Managed Sites");
+  	click(locator);
+    info("Choose applied view: Admin View");
+  	click(ELEMENT_APPLY_VIEW_TAB);
+  	selectCheckboxList("e_admin-view");
+  	click(ELEMENT_SAVE_BUTTON);
+  	info("END add ADMIN VIEW");
+  	
+  	info("Go to Site Explorer");
 		goToSiteExplorer();
-		//Choose the created article
-		click(ELEMENT_NEW_ARTICLE);
-		//Click to Relation tab view on action bar
-		click(ELEMENT_NEW_VIEW_TAB);
-		//Click to Relations link
+		info("Go to Site Manage Drive");
+		chooseDrive(ELEMENT_SITE_MANAGEMENT_DRIVER);
+		pause(1000);
+		info("Open the created article");
+		doubleClickOnElement(ELEMENT_CREATED);
+		pause(3000);
+		info("Change to Admin View");
+		click(ELEMENT_ADMIN_VIEW);
+		info("Click to Relations link");
 		click(ELEMENT_RELATIONS_LINK);
-		click(ELEMENT_RELATION_TAB);
-		//Add relation for the created document
+		pause(1000);
+		click(ELEMENT_SELECT_RELATION_TAB);
+		pause(1000);
+		info("Cloose add link for document");
 		click(ELEMENT_SELECT_RELATION);
-		//Close add link for document
 		click(ELEMENT_CLOSE_BUTTON);
-		//Public document
-		click(ELEMENT_PUBLICATION_TAB_LINK);
+		pause(1000);
+		info("Change to WCM View");
+		click(ELEMENT_WCM_VIEW);
+		info("Open the created article");
+		doubleClickOnElement(ELEMENT_CREATED);
+		info("Publish document");
 		SiteExplorer.publishDocument();
-		//Go to ACME Home Page
+		info("Go to ACME Home Page");
 		goToOverView();
-		//Go to Add Page Editor with Editor
+		info("Go to Add Page Editor with Editor");
 		PageEditor.goToPageEditor_EmptyLayout(namePage);
-		// Create CLV page
+		info("Create CLV page");
 		PageEditor.addContentListEmptyLayout();
 		click(ELEMENT_NEWPAGE_SAVE_BUTTON);
-		//Edit CLV page
+		pause(1000);
+		info("Edit CLV page");
 		goToEditPageEditor();
-		PageEditor.selectCLVPath(pathContent,"article","content");
+		info("Select CLV path");
+		PageEditor.selectCLVPath(pathContent,"REG_PLF307_ECMS_006","content");
+		pause(1000);
+		info("Finish edit page");
 		click(ELEMENT_PAGE_EDIT_FINISH);
-		waitForElementNotPresent(ELEMENT_PAGE_EDIT_FINISH);
 		captureScreen("REG_PLF307_ECMS_006");
 	}
 }
