@@ -17,7 +17,7 @@ public class REG_PLF307_ECMS_009 extends EcmsBase{
 	public static final By DATA_CHOOSE_NAME = By.xpath("//div[@title='Fire']");
 	public static final By ELEMENT_COLLABORATION_TAB = By.xpath("//a[contains(text(),'Collaboration')]");
 	public static final By ELEMENT_COMMENT_ACTION_BAR = By.xpath("//a[contains(text(),'Comment')]");
-	public static final By ELEMENT_CONTENT_COMMENT_FRAME = By.xpath("//td[@id='cke_contents_comment']/textarea");
+	public static final By ELEMENT_CONTENT_COMMENT_FRAME = By.xpath("//iframe[contains(@title,'Rich text editor, comment, press ALT 0 for help.')]");
 	public static final By ELEMENT_SAVE_BUTTON = By.xpath("//a[contains(text(),'Save')]");
 	public static final By ELEMENT_BACK_BUTTON = By.xpath("//a[@title = 'Back to the previous node']");
 	public static final By ELEMENT_QUICK_SEARCH_BUTTON = By.xpath("//a[@title = 'Quick Search']");
@@ -48,26 +48,34 @@ public class REG_PLF307_ECMS_009 extends EcmsBase{
 	@Test
 	public void test_searchResultContainsinComment(){
 		String ELEMENT_CONTENT_COMMENT="ecms regression test";
-		//Go to Site Explorer
+		
+		info("Go to Site Explorer");
 		goToSiteExplorer();
-		//Choose acme-category drive
+		info("Choose acme-category drive");
 		chooseDrive(ELEMENT_ACME_DRIVER);
-		//Choose docuement to comment
-		click(DATA_CHOOSE_NAME);
-		//Choose Collaboration tab
+		pause(1000);
+		info("Choose document to comment");
+		doubleClickOnElement(DATA_CHOOSE_NAME);
+		pause(1000);
+		info("Choose Collaboration tab");
 		click(ELEMENT_COLLABORATION_TAB);
-		//Click to the Comment link on Action Bar
+		info("Click to the Comment link on Action Bar");
 		click(ELEMENT_COMMENT_ACTION_BAR);
-		//Type the content to comment
-		type(ELEMENT_CONTENT_COMMENT_FRAME, ELEMENT_CONTENT_COMMENT, false);
-		//Save the comment
+		info("Type the content to comment");
+		waitForElementPresent(ELEMENT_CONTENT_COMMENT_FRAME);
+		type(ELEMENT_CONTENT_COMMENT_FRAME,ELEMENT_CONTENT_COMMENT, false);
+		info("Save the comment");
 		click(ELEMENT_SAVE_BUTTON);
-		//Back to root
+		info("Back to previous node");
 		click(ELEMENT_BACK_BUTTON);
-		//Quick Search
+		info("Quick Search");
+		info("Type the keyword to search");
+		waitForElementPresent(ELEMENT_SEARCH_INPUT);
 		type(ELEMENT_SEARCH_INPUT,ELEMENT_CONTENT_COMMENT,false);
 		click(ELEMENT_QUICK_SEARCH_BUTTON);
-		captureScreen("REG_PLF307_ECMS_009");
+		pause(3000);
+		info("Check the result");
+		
 	}
 
 }
