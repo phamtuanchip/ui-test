@@ -19,7 +19,8 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 	
 	@BeforeMethod
 	public void beforeMethods(){
-		info("\n\n======= BEGIN Test REG_PLF305_ECMS_004 ======\n\n");
+		info("\n\n======= BEGIN Test REG_PLF305_ECMS_004 ======");
+		info("\n======= Upload illustration image in free layout web content ======\n\n");
 		initSeleniumTest();
 		driver.get(baseUrl);
 		actions = new Actions(driver);
@@ -60,21 +61,31 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 		
 		createNewFreeLayoutWebContent(title, title, mainContent, img, summary, "", "");
 		
-		info("\n === Go to folder medias > images ===");
-		pause(2000);
+		info("\n\n === Go to folder medias > images ===");
+		// Go to folder medias
+		info("\n === Go to folder medias ===");
+		waitForElementPresent(By.linkText(title));
+		mouseOver(By.linkText(title),false);
 		goToNode(title);
+		waitForElementPresent(By.xpath("(//a[contains(text(),'medias')])[2]"));
+		mouseOver(By.xpath("(//a[contains(text(),'medias')])[2]"),false);
 		click(By.xpath("(//a[contains(text(),'medias')])[2]"));
+		// Go to folder images
+		info("\n === Go to folder images ===");
+		waitForElementPresent(By.linkText("images"));
+		mouseOver(By.linkText("images"),false);
 		goToNode("images");
-		pause(5000);
 		
-		info("\n === Check that uploaded illustration image is located under wc1/medias/images/illustration");
-		assert isElementPresent(By.xpath("//div[@title='illustration']"));
-		pause(3000);
+		info("\n\n === Check that uploaded illustration image is located under wc1/medias/images/illustration");
+		waitForElementPresent(By.xpath("//div[@title='illustration']"));
+		mouseOver(By.xpath("//div[@title='illustration']"),false);
+		info("\n === Uploaded illustration image is found in wc1/medias/images/ ! OK !!! ===");
 		
-		info("\n === Delete free layout webcontent");
+		info("\n\n === Delete free layout webcontent");
 		goToNode("intranet");
-		deleteDocument(By.xpath("//a[contains(text(),'"+title+"')]"));
-		pause(3000);
+		waitForElementPresent(By.linkText(title));
+		deleteDocument(By.linkText(title));
+		info("\n === Free layout webcontent wc1 is deleted ! ===");
 				
 	} // End test04_UploadIllustrationImageInFreeLayoutWebContent
 
