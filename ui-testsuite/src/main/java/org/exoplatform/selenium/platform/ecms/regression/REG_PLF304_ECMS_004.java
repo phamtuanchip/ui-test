@@ -1,11 +1,16 @@
 package org.exoplatform.selenium.platform.ecms.regression;
 
 import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.platform.PageManagement.deletePageAtManagePageAndPortalNavigation;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.createNewArticle;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.createNewCssFile;
+import static org.exoplatform.selenium.platform.ecms.ContextMenu.deleteDocument;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
+import static org.exoplatform.selenium.platform.ecms.ContextMenu.deleteDocument;
 
 import org.exoplatform.selenium.platform.PageEditor;
+
 import org.exoplatform.selenium.platform.ecms.ActionBar;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.SiteExplorer;
@@ -56,6 +61,8 @@ public class REG_PLF304_ECMS_004 extends EcmsBase {
     String mockArticleData = RandomStringUtils.randomAlphanumeric(10);
     String mockAttachmentData = RandomStringUtils.randomAlphanumeric(10);
     String mockAttachmentContent = mockAttachmentData + " content";
+    String mockPageName = "a" + RandomStringUtils.randomAlphanumeric(10);
+    By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
     
     String elementMockAttachmentData = "//a[contains(text(),\""+ mockAttachmentData +  "\")]";
     
@@ -65,6 +72,9 @@ public class REG_PLF304_ECMS_004 extends EcmsBase {
     info("Go to Site Explorer");
     goToSiteExplorer();
 
+    info("Choose Management Sites");
+    chooseDrive(DRIVER_SITES_MANAGEMENT);
+    
     // Go to document of acme file
     info("Go to acme document folder");
     goToNodeByPath(ACME_DOCUMENT_FOLDER);
@@ -87,12 +97,30 @@ public class REG_PLF304_ECMS_004 extends EcmsBase {
     goToOverView();
     
     info("Create new page with SCV");
-    PageEditor.addSCVPageAndContentFolderPaths("a" + RandomStringUtils.randomAlphanumeric(10), "General Drives/Sites Management/"+ ACME_DOCUMENT_FOLDER + "/" + mockArticleData );    
+    PageEditor.addSCVPageAndContentFolderPaths(mockPageName, "General Drives/Sites Management/"+ ACME_DOCUMENT_FOLDER + "/" + mockArticleData );    
     pause (500);
     
     click(By.xpath(elementMockAttachmentData));
     pause (500);
     assert isTextPresent(mockAttachmentContent);
+    
+    // Delete page
+    deletePageAtManagePageAndPortalNavigation(mockPageName, true, "acme", false, "");
+    
+    // Delete data
+    //goto Site Explorer
+    info("Go to Site Explorer");
+    goToSiteExplorer();
+
+    info("Choose Management Sites");
+    chooseDrive(DRIVER_SITES_MANAGEMENT);
+    
+    // Go to document of acme file
+    info("Go to acme document folder");
+    goToNodeByPath(ACME_DOCUMENT_FOLDER);
+    
+    deleteDocument(By.linkText(mockArticleData));  
+    
     
     info("End REG_PLF304_ECMS_004");
     

@@ -13,6 +13,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.createNewCssFile;
 import static org.exoplatform.selenium.platform.ecms.ContextMenu.deleteDocument;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 
@@ -61,6 +62,7 @@ public class REG_PLF304_ECMS_001 extends EcmsBase {
     By OBSOLETE_STATUS = By.xpath("//a[contains(text(),'Obsolete')]");
     By ELEMENT_PUBLICATION_TAB= By.xpath("//a[contains(text(),'Publications')]");
     By ELEMENT_CLOSE_BUTTON = By.xpath("//a[contains(text(),'Close')]");
+    By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 
     info("Start REG_PLF304_ECMS_001");
 
@@ -68,6 +70,9 @@ public class REG_PLF304_ECMS_001 extends EcmsBase {
     info("Go to Site Explorer");
     goToSiteExplorer();
 
+    info("Choose Management Sites");
+    chooseDrive(DRIVER_SITES_MANAGEMENT);
+    
     // Go to document of acme file
     info("Go to acme document folder");
     goToNodeByPath(ACME_DOCUMENT_FOLDER);

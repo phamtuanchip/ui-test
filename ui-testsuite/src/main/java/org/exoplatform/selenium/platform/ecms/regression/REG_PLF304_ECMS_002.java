@@ -2,6 +2,7 @@ package org.exoplatform.selenium.platform.ecms.regression;
 
 import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 import static org.exoplatform.selenium.platform.ecms.WcmAdmin.openManageTemplateForm;
 
 import java.awt.Toolkit;
@@ -64,6 +65,7 @@ public class REG_PLF304_ECMS_002 extends EcmsBase {
     By TEXT_AREA = By.xpath("//textarea[@id='content']");
     By ELEMENT_SAVE_BUTTON = By.xpath("//a[contains(text(),'Refresh') and @class[contains(.,'ActionButton')]]/parent::div//a[contains(text(),'Save')]");
     By ELEMENT_NEWFILE_CATEGORY = By.xpath("//input[@id='categories0']");
+    By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
     
     info("Start REG_PLF304_ECMS_002");
 
@@ -103,6 +105,10 @@ public class REG_PLF304_ECMS_002 extends EcmsBase {
     //goto Site Explorer
     info("Go to Site Explorer");
     goToSiteExplorer();
+    
+    info("Choose Management Sites");
+    chooseDrive(DRIVER_SITES_MANAGEMENT);
+    
     
     // Go to document of acme file
     info("Go to acme document folder");
