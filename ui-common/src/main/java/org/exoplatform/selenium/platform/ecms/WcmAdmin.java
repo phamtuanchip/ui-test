@@ -668,7 +668,6 @@ public class WcmAdmin extends EcmsBase {
 	public static void fillAddNewTemplateForm(String templateLabel, String templateName, String groupPath, String membership) {   
 		type(ELEMENT_TEMPLATE_LABEL,templateLabel, false);
 		select(ELEMENT_TEMPLATE_NAME, templateName);
-		click(ELEMENT_IS_DOCUMENT_TEMPLATE);
 		selectMembership(groupPath,membership,"Add Permission");      
 		//Switch between tabs
 		click(ELEMENT_DIALOG_TAB);      
