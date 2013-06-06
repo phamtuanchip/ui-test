@@ -1,18 +1,13 @@
 package org.exoplatform.selenium.platform.ecms.regression;
 
 import static org.exoplatform.selenium.TestLogger.info;
-import static org.exoplatform.selenium.platform.PageEditor.*;
-import static org.exoplatform.selenium.platform.UserGroupManagement.selectGroup;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.*;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
-import static org.exoplatform.selenium.platform.ecms.ContextMenu.*;
 import static org.exoplatform.selenium.platform.ecms.WcmAdmin.*; 
-import static org.exoplatform.selenium.platform.PageManagement.deletePage;
+import static org.exoplatform.selenium.platform.PageManagement.deletePageAtManagePageAndPortalNavigation;
 import static org.exoplatform.selenium.platform.NavigationToolbar.*;
 
-import org.exoplatform.selenium.platform.PlatformBase.PageType;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
@@ -33,6 +28,8 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 	private String NewFreeLayoutWebContentBrName = "flwc1br";
 	private String NewFreeLayoutWebContentBrCont = "Brazil Portuguese content";
 	private String NewPageName = "Test_REG_PLF305_ECMS_001";
+	private String NewFolderButton = "New Folder";
+	private String FreeLayoutWebContentLink = "Free layout webcontent";
 	
 	@BeforeMethod
 	public void beforeMethods(){
@@ -50,6 +47,44 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 		info("\n\nEND Test case REG_PLF305_ECMS_001 \n\n");
 		driver.quit();
 		actions = null;
+	}
+	
+	private void goToIntranet(){
+		info("\n=== Go to intranet ===");
+		waitForElementPresent(By.xpath("//a[@class='ArrowIcon TBIcon' and contains(text(),'My Sites')]"));
+		mouseOver(By.xpath("//a[@class='ArrowIcon TBIcon' and contains(text(),'My Sites')]"),true);
+		pause(500);
+		click(By.xpath("//a[contains(text(),'intranet')]"));
+		waitForElementPresent(By.linkText("All Updates"));
+	}
+	
+	private void unSelectCheckboxList(String viewList){
+		String[] temp = viewList.split("/");
+		if (temp.length != 0){
+			for (int i=0; i < temp.length ; i++ ){
+				if (waitForAndGetElement(By.id(temp[i])) != null){
+					if(waitForAndGetElement(By.id(temp[i])).isSelected() == true){
+						click(By.id(temp[i]));
+						info("Uncheck checkbox with id " + temp[i]);
+					}
+				}else{
+					info("Can not found checkbox with id " + temp[i]);
+				}
+			}
+		}else{
+			info("Input checkbox list wrong");
+		}
+	}
+	
+	private void removeView(String view, String tab, String viewadd ){
+		goToContentAdministration();
+		click(ELEMENT_CONTENT_PRESENT);
+		click(ELEMENT_MANAGE_VIEW);
+		click(By.xpath("//div[@title='" + view + "']/../..//*[@class='EditInfoIcon']"));
+		click(By.xpath("//a[contains(text(),'" + tab + "')]"));
+		unSelectCheckboxList(viewadd);
+		save();
+		save();
 	}
 	
 	/*-- Case No 001 / ID REG_PLF305_ECMS_001 
@@ -72,232 +107,213 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 		// === Enable Add Translation in Public tab ===		
 		info("\n=== Enable Add Translation in Publication tab ===");
 		addView("WCM View", "Publication", "addLocalizationLink");
+		waitForElementPresent(By.xpath("//div[@title='WCM View']"));
 		
 		// Go to Sites Explorer
 		info("\n=== Go Sites Explorer ===");
 		goToSiteExplorer();
-		pause(2000);
+		waitForElementPresent(By.xpath("//div[contains(text(),'Sites Management')]"));
 		info("\n=== Go to node acme ===");
 		goToNode("acme");
-		pause(2000);
+		waitForElementPresent(By.linkText(NewFolderButton));
 		
 		// Create new folder REG_PLF305_ECMS_001 
 		info("\n === Create new folder REG_PLF305_ECMS_001 ===");
 		createNewContentFolder(ContentFolderTitle, ContentFolderName);
-		pause(2000);
+		waitForElementPresent(By.linkText(ContentFolderTitle));
 		// Go into new folder
 		info("\n === Go into new folder REG_PLF305_ECMS_001 ===");
 		goToNodeByPath(ContentFolderTitle);
-		pause(4000);
+		waitForElementPresent(By.linkText(NewFolderButton));
+		
 		// Create new Free layout webcontent, named "FLWC1en", in english 
 		info("\n === Create new Free layout webcontent, named 'FLWC1en' ===");
 		goToAddNewContent();
+		waitForElementPresent(By.linkText(FreeLayoutWebContentLink));
 		createNewFreeLayoutWebContent(NewFreeLayoutWebContentEnTitle, NewFreeLayoutWebContentEnName, NewFreeLayoutWebContentEnCont, "", "", "", "");
-		pause(5000);
-		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentEnCont+"')]"));
+		waitForElementPresent(By.xpath("//div[contains(text(),'Document View')]"));
+		
 		//Return to parent folder
 		info("\n === Return to parent folder REG_PLF305_ECMS_001 ===");
 		goToNodeByPath(ContentFolderTitle);
-		pause(4000);
+		waitForElementPresent(By.linkText(NewFolderButton));
 		
 		// Create new Free layout webcontent, named "FLWC1br", in brazil portuguese
 		info("\n === Create new Free layout webcontent, named 'FLWC1br' ===");
 		goToAddNewContent();
+		waitForElementPresent(By.linkText(FreeLayoutWebContentLink));
 		createNewFreeLayoutWebContent(NewFreeLayoutWebContentBrTitle, NewFreeLayoutWebContentBrName, NewFreeLayoutWebContentBrCont, "", "", "", "");
-		pause(5000);
-		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentBrCont+"')]"));
+		waitForElementPresent(By.xpath("//div[contains(text(),'Document View')]"));
 		// Change language of FLWC1br to Brazil portuguese
+		waitForElementPresent(By.xpath("//a[@class='SubTabIcon DefaultActionIcon EditDocumentIcon' and @title='Edit']"));
 		click(By.xpath("//a[@class='SubTabIcon DefaultActionIcon EditDocumentIcon' and @title='Edit']"));
-		pause(2000);
+		waitForElementPresent(By.id("content-lang"));
 		selectOption(By.id("content-lang"), "pt_BR");
-		pause(2000);
+		pause(1000);
 		saveAndClose();
-		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentBrCont+"')]"));
+		waitForElementPresent(By.xpath("//div[contains(text(),'Document View')]"));
 		info("\n === New Free layout webcontent 'FLWC1br' is created! ===");
-		pause(2000);
 		
 		// Add translation for FLWC1en
 		info("\n\n=== Add translation for FLWC1en ===");
+		waitForElementPresent(By.linkText(NewFreeLayoutWebContentEnTitle));
+		mouseOver(By.linkText(NewFreeLayoutWebContentEnTitle),false);
 		goToNodeByPath(NewFreeLayoutWebContentEnTitle);
+		waitForElementPresent(By.xpath("//div[contains(text(),'Document View')]"));
 		click(By.linkText("Add Translation"));
-		pause(2000);
 		waitForElementPresent(ELEMENT_ADD_SYMLINK_POPUP);
 		click(By.xpath("//img[@class='MultiFieldAction AddNewNodeIcon']"));
-		pause(1000);
+		waitForElementPresent(By.xpath("//a[@class='Item default16x16Icon exo_webContent16x16Icon' and contains(text(),'"+NewFreeLayoutWebContentBrTitle+"')]"));
 		click(By.xpath("//a[@class='Item default16x16Icon exo_webContent16x16Icon' and contains(text(),'"+NewFreeLayoutWebContentBrTitle+"')]"));
-		pause(2000);
+		pause(1000);
+		waitForElementPresent(By.linkText("Save"));
 		save();
-		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentEnCont+"')]"));
-		pause(5000);
+		waitForElementPresent(By.xpath("//div[contains(text(),'Document View')]"));
 		info("\n === Translation for FLWC1en is added ! ===");
 		
 		// Publish FLWC1en
 		info("\n\n=== Publish FLWC1en ===");
+		waitForElementPresent(By.linkText("Publications"));
+		mouseOver(By.linkText("Publications"),false);
 		click(By.linkText("Publications"));
+		waitForElementPresent(By.id("UIPopupWindow"));		
+		waitForElementPresent(By.xpath("//a[contains(text(),'Published')]"));
+		mouseOver(By.xpath("//a[contains(text(),'Published')]"),false);
 		pause(2000);
-		waitForElementPresent(By.id("UIPopupWindow"));
 		click(By.xpath("//a[contains(text(),'Published')]"));
-		pause(2000);
+		// Wait for publish task completed
+		waitForElementPresent(By.xpath("//td[contains(text(),'Published')]"));
 		save();
-		pause(2000);
+		waitForElementPresent(By.xpath("//div[contains(text(),'Document View')]"));
 		info("\n=== FLWC1en published ! ===");
+		
 		
 		// Publish FLWC1br
 		info("\n\n=== Publish FLWC1br ===");
-		info("\n=== Go Sites Explorer ===");
-		goToSiteExplorer();
-		pause(2000);
-		info("\n=== Go to node acme ===");
-		goToNode("acme");
-		pause(2000);
-		goToNodeByPath(ContentFolderTitle);
-		pause(4000);
+		info("\n=== Go to node FLWC1br ===");
 		goToNodeByPath(NewFreeLayoutWebContentBrTitle);
-		pause(4000);
-//		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentBrCont+"')]"));
-//		pause(2000);
+		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentBrCont+"')]"));
+		info("\n=== Click on Publications tab ===");
 		waitForElementPresent(By.linkText("Publications"));
 		click(By.linkText("Publications"));
-		pause(2000);
-		waitForElementPresent(By.id("UIPopupWindow"));
+		info("\n=== Click on Published ===");
+		waitForElementPresent(By.xpath("//a[contains(text(),'Published')]"));
 		click(By.xpath("//a[contains(text(),'Published')]"));
-		pause(2000);
-		save();
-		pause(2000);
-		info("\n=== FLWC1br published ! ===");
-		pause(2000);
+		// Wait for publish task completed
+		waitForElementPresent(By.xpath("//td[contains(text(),'Published')]"));
+		info("\n=== Click Save ===");
+		save();		
+		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentBrCont+"')]"));
+		info("\n=== FLWC1br published ! ===");	
 		
-		// Go to intranet
+				
+		// ==== Create a new SCV page ====
 		info("\n\n=== Create a new SCV page ===");
-		info("\n=== Go to intranet ===");
-		mouseOver(By.xpath("//a[contains(text(),'My Sites')]"),true);
-		pause(500);
-		click(By.xpath("//a[contains(text(),'intranet')]"));
-		pause(3000);
+		goToIntranet();
 		
 		// === Add a new page Test ===
 		// Mouser over Edit > Page and click Add Page
 		info("\n=== Mouser over Edit > Page and click Add Page ===");
-		mouseOver(By.linkText("Edit"),true);
-		pause(1000);
-		mouseOver(By.linkText("Page"),true);
-		pause(1000);
-		click(By.linkText("Add Page"));
 		goToAddPageEditor();
-		pause(5000);
 		
 		// Fill in page name
 		info("\n=== Fill in page name ===");
-		type(By.id("pageName"),NewPageName,true);
-		pause(2000);
+		// Wait Node Name appears
+		waitForElementPresent(By.id("pageName"));
+		type(By.id("pageName"),NewPageName,false);
+		pause(1000);
 		// Pass to second step
 		info("\n=== Pass to second step ===");
 		next();
-		pause(2000);
+		waitForElementPresent(By.linkText("Next"));
 		// Pass to third step
 		info("\n=== Pass to third step ===");
 		next();
-		pause(2000);
+		pause(4000);
 		
 		// ==== Add new SCV portlet ====
-		info("\n=== Add new SCV portlet ===");
-		click(By.xpath("//a[contains(text(),'Content')]"));
-		pause(4000);		
+		info("\n\n=== Add new SCV portlet ===");
+		waitForElementPresent(By.xpath("//a[@title='Content']"));
+		click(By.xpath("//a[@title='Content']"));
+		waitForElementPresent(By.id("Content/SingleContentViewer"));		
 		mouseOver(By.id("Content/SingleContentViewer"),true);
 		pause(1000);
 		click(By.id("Content/SingleContentViewer"));
 		pause(1000);
 		dragAndDropToObject("//div[@id='Content/SingleContentViewer']//img", "//div[@id='UIPage']");
-		pause(2000);
 		
 		// Select FLWC1en node in Content Path
 		info("\n=== Select FLWC1en node in Content Path ===");
-		mouseOver(ELEMENT_FRAME_CONTAIN_PORTLET,true);		
+		waitForElementPresent(ELEMENT_FRAME_CONTAIN_PORTLET);
+		mouseOver(ELEMENT_FRAME_CONTAIN_PORTLET,true);	
+		waitForElementPresent(ELEMENT_EDIT_PORTLET_ICON);
 		click(ELEMENT_EDIT_PORTLET_ICON);
-		pause(1000);
+		waitForElementPresent(ELEMENT_SELECT_CONTENT_PATH_LINK);
 		click(ELEMENT_SELECT_CONTENT_PATH_LINK);
-		pause(1000);
+		waitForElementPresent(By.xpath("//a[contains(text(),'General Drives')]"));
 		click(By.xpath("//a[contains(text(),'General Drives')]"));
-		pause(1000);
+		waitForElementPresent(By.xpath("//a[contains(text(),'Sites Management')]"));
 		click(By.xpath("//a[contains(text(),'Sites Management')]"));
-		pause(1000);
+		waitForElementPresent(By.linkText("acme"));
 		click(By.linkText("acme"));
-		pause(1000);
+		waitForElementPresent(By.xpath("//a[contains(text(),'"+ContentFolderTitle+"')]"));
 		click(By.xpath("//a[contains(text(),'"+ContentFolderTitle+"')]"));
-		pause(1000);
+		waitForElementPresent(By.xpath("//div[@id='RightWorkspace']/div/div/table/thead/tr/td/a[contains(text(),'"+NewFreeLayoutWebContentEnTitle+"')]"));
 		click(By.xpath("//div[@id='RightWorkspace']/div/div/table/thead/tr/td/a[contains(text(),'"+NewFreeLayoutWebContentEnTitle+"')]"));		
-		pause(2000);
+		waitForElementPresent(By.linkText("Save"));
 		// Save and close edit portlet popup
 		info("\n=== Save and close edit portlet popup ===");
 		save();
-		pause(2000);
+		pause(1000);
 		close();
-		pause(2000);
+		waitForElementPresent(By.xpath("//a[@class='EdittedSaveButton' and @title='Finish']"));
 		info("\n=== Click Finish button to close edit mode ===");
 		click(By.xpath("//a[@class='EdittedSaveButton' and @title='Finish']"));
+		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentEnCont+"')]"));
 		pause(4000);
 		
 		// ==== END Add new SCV portlet ====
 		
 		// Change language to Brazil Portuguese
-		info("\n=== Change language to Brazil Portuguese ===");
+		info("\n\n=== Change language to Brazil Portuguese ===");
 		goToChangeLanguageForUserInterface();
+		waitForElementPresent(By.linkText("Portuguese - Brazil"));
 		click(By.linkText("Portuguese - Brazil"));
-		pause(1000);
+		waitForElementPresent(By.linkText("Apply"));
 		click(By.linkText("Apply"));
-		pause(2000);
 		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentBrCont+"')]"));
 		info("\n=== Brazil Portuguese content appears correctly ! ===");
+		pause(4000);
 		
 		// Change language to English
-		info("\n=== Change language to English ===");
+		info("\n\n=== Change language to English ===");
 		goToChangeLanguageForUserInterface();
+		waitForElementPresent(By.xpath("//div[contains(text(),'English')]"));
 		click(By.xpath("//div[contains(text(),'English')]"));
-		pause(1000);
+		waitForElementPresent(By.linkText("Aplicar"));		
 		click(By.linkText("Aplicar"));
-		pause(4000);
+		waitForElementPresent(By.xpath("//p[contains(text(),'"+NewFreeLayoutWebContentEnCont+"')]"));
 		
-		// Delete page Test_REG_PLF305_ECMS_001 in Page Management portlet
-		info("\n\n=== Delete page Test_REG_PLF305_ECMS_001 in Page Management portlet ===");
-		goToManagePages();
-		pause(4000);
-		deletePage(PageType.PORTAL, NewPageName);
-		info("\n=== Page Test_REG_PLF305_ECMS_001 is deleted in Page Management portlet ! ===");
-		
-		// Delete node in navigation
-		info("\n\n=== Delete node Test_REG_PLF305_ECMS_001 in navigation ===");
-		mouseOver(By.linkText("Edit"),true);
-		pause(500);
-		mouseOver(By.linkText("Site"),true);
-		pause(500);
-		click(By.linkText("Navigation"));
-		pause(1000);
-		rightClickOnElement(By.linkText(NewPageName));
-		pause(500);
-		click(By.linkText("Delete Node"));
-		pause(1000);		
-		
-		// Click OK on alert popup to confirm delete action
-		Alert alert = driver.switchTo().alert();
-		alert.accept();
-		pause(500);		
-		save();		
-		pause(4000);
-		info("\n=== Node Test_REG_PLF305_ECMS_001 is removed from navigation ! ===");
+		// Delete node in navigation & Page Management
+		deletePageAtManagePageAndPortalNavigation(NewPageName, true, "intranet", false, null);						
 		
 		//Delete folder REG_PLF305_ECMS_001
 		info("\n\n=== Delete folder REG_PLF305_ECMS_001 ===");
 		info("\n=== Go Sites Explorer ===");
 		goToSiteExplorer();
-		pause(4000);
+		waitForElementPresent(By.linkText("acme"));
 		info("\n=== Go to node acme ===");
 		goToNode("acme");
-		pause(4000);
+		waitForElementPresent(By.xpath("//div[contains(text(),'"+ContentFolderTitle+"')]"));
 		info("\n === Delete data in REG_PLF305_ECMS_001 folder ===");
 		deleteData(By.xpath("//div[contains(text(),'"+ContentFolderTitle+"')]"));
-		pause(5000);
+		waitForElementNotPresent(By.xpath("//div[contains(text(),'"+ContentFolderTitle+"')]"));
 		info("\n === Folder REG_PLF305_ECMS_001 is deleted successfully ! ===");
 		pause(2000);
+		
+		// Remove Add Translation in Public tab of WCM view
+		info("\n\n=== Remove Add Translation in Public tab of WCM view ===");
+		removeView("WCM View", "Publication", "addLocalizationLink");
 		
 	} // End test01_AddBrazilianPortugueseTranslation
 
