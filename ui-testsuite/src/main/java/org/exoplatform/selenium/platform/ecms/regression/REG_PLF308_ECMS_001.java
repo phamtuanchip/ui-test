@@ -22,6 +22,7 @@ import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToSiteExplorer;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.loginEcms;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
+import org.exoplatform.selenium.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
@@ -73,7 +74,8 @@ public class REG_PLF308_ECMS_001 {
 	  	String ACME_DOCUMENT_FOLDER = "acme/documents";
 	  	String name_content_title="REG_PLF308_ECMS_001";
 	  	By ELEMENT_CLOSE_BUTTON = By.linkText("Close");
-	  	By ELEMENT_FAST_PUBLICH_ICON = By.xpath("//a[@class='FastPublishIcon' and @title = 'Publish']");
+	  	By ELEMENT_FAST_PUBLIC_ICON = By.xpath("//a[@class='FastPublishIcon' and @title = 'Publish']");
+	  	By ELEMENT_MOUSEOVER_EDIT_CONTENT = By.xpath("//div[@class='InlineText' and @title ='Double-click to edit']");
 	  	By ELEMENT_PAGE_NAME = By.xpath("//input[@id='pageName']");
 	  	By ELEMENT_NEXT_LINK = By.linkText("Next");
 	  	By ELEMENT_SAVEPAGE_BUTTON = By.xpath("//a[@class='EdittedSaveButton' and @title = 'Finish']");
@@ -117,16 +119,17 @@ public class REG_PLF308_ECMS_001 {
 			click(ELEMENT_SELECT_CLV_PATH);
 			click(ELEMENT_SAVE_BUTTON);
 			click(ELEMENT_CLOSE_BUTTON);
-			
-			pause(1000);
+			info("END TO: Create new page");
 			click(ELEMENT_SAVEPAGE_BUTTON);
-			
-		  //Change to Edit mode
+			info("Change to edit mode");
 	  	enableEditMode(true);
 	  	pause(3000);
-	  	
-	  	//Fast public content
-	  	click(ELEMENT_FAST_PUBLICH_ICON);
+	  	info("Mouse over to the content");
+	  	mouseOver(ELEMENT_MOUSEOVER_EDIT_CONTENT, true);
+	  	info("Wait for element Fast Public icon present");
+	  	TestBase.waitForElementPresent(ELEMENT_FAST_PUBLIC_ICON);
+	  	info("Click to the: Fast Public button");
+	  	click(ELEMENT_FAST_PUBLIC_ICON);
 	  	info("Document is sent to request approval or published, and can be view in Published mode in SCV and no exception");
 	  	captureScreen("REG_PLF308_ECMS_001");
 	  	
