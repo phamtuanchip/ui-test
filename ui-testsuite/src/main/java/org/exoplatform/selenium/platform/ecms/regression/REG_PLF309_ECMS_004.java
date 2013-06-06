@@ -73,17 +73,14 @@ public class REG_PLF309_ECMS_004 {
 			//goto Site Explorer
 			info("Go to Site Explorer");
 			goToSiteExplorer();
-			
 		  // Go to document of acme file
 			info("Go to acme document folder");
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
-			
 			// Go to add new Content
 			info("Add new content");
 			goToAddNewContent();
 			info("Choose podcast link");
 			click(ELEMENT_PODCAST_LINK);
-			pause(3000);
 			info("Get the current date to compare with the published date field");
 			SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			info("Verifie Current Date/Time is shown in Published field");
@@ -94,8 +91,9 @@ public class REG_PLF309_ECMS_004 {
 			goToAddNewContent();
 			info("Choose Sample node template");
 			click(ELEMENT_SAMPLENODE_LINK);
-			pause(3000);
 			info("Check current date is show in datetime field");
+			info("Date 1: "+getValue(ELEMENT_DATETIME));
+			info("expected: "+simpleFormat.format(new Date()));
 			assert isElementPresent(ELEMENT_DATETIME):simpleFormat.format(new Date());
 			click(ELEMENT_CLOSE_BUTTON);
 	  }
