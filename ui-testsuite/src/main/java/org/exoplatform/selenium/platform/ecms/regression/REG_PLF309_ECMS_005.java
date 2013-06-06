@@ -12,6 +12,7 @@ import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToNodeByPath;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.goToSiteExplorer;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.loginEcms;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -64,20 +65,19 @@ public class REG_PLF309_ECMS_005 {
 			By ELEMENT_WEBCONTENT_NAME_TEXTBOX = By.id("name");
 			By ELEMENT_WEBCONTENT_JS_TEXTAREA = By.xpath("//textarea[contains(@id,'ContentJS')]");
 			By ELEMENT_WEBCONTENT_ADVANCE_TAB = By.xpath("//div[@class='MiddleTab' and contains(text(),'Advanced')]");
+			By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 			By ELEMENT_SAVE_CLOSE_BUTTON = By.linkText("Save & Close");
 			String title_name ="REG_PLF309_ECMS_005";
-			info("Start REG_PLF309_ECMS_001");
+			info("=======Start REG_PLF309_ECMS_005========");
 
-			//goto Site Explorer
 			info("Go to Site Explorer");
 			goToSiteExplorer();
+			info("Choose  Sites Management");
+			chooseDrive(DRIVER_SITES_MANAGEMENT);
 
-			// Go to document of acme file
 			info("Go to acme document folder");
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
-			//pause(1000);
 
-			// Create a free webcontent file
 			info ("Create free webcontent file");
 			goToAddNewContent();
 			click(FREE_WEBCONTENT);
@@ -102,5 +102,6 @@ public class REG_PLF309_ECMS_005 {
 			// Verify the js is called with an alert
 			info("Verify the js is called with an alert");
 			captureScreen("REG_PLF309_ECMS_005");
+			info("=======End REG_PLF309_ECMS_005========");
 		}
 }

@@ -7,6 +7,7 @@ import static org.exoplatform.selenium.TestBase.initSeleniumTest;
 import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.EcmsBase.*;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,14 +67,15 @@ public class REG_PLF309_ECMS_004 {
 	  	By ELEMENT_SAMPLENODE_LINK =By.linkText("Sample node");
 	  	By ELEMENT_PUBLISH_DATE = By.xpath("//input[contains(@id,'publishedDate')]");
 	  	By ELEMENT_DATETIME = By.xpath("//input[contains(@id,'datetime')]");
+	  	By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 	  	By ELEMENT_CLOSE_BUTTON = By.linkText("Close");
 	  
-	  	info("Start REG_PLF309_ECMS_004");
+	  	info("=========Start REG_PLF309_ECMS_004==========");
 
-			//goto Site Explorer
 			info("Go to Site Explorer");
 			goToSiteExplorer();
-		  // Go to document of acme file
+			info("Choose  Sites Management");
+			chooseDrive(DRIVER_SITES_MANAGEMENT);
 			info("Go to acme document folder");
 			goToNodeByPath(ACME_DOCUMENT_FOLDER);
 			// Go to add new Content
@@ -96,5 +98,6 @@ public class REG_PLF309_ECMS_004 {
 			info("expected: "+simpleFormat.format(new Date()));
 			assert isElementPresent(ELEMENT_DATETIME):simpleFormat.format(new Date());
 			click(ELEMENT_CLOSE_BUTTON);
+			info("=========End REG_PLF309_ECMS_004==========");
 	  }
 }
