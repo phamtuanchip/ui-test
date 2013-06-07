@@ -77,8 +77,8 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 		goToNode("images");
 		
 		info("\n\n === Check that uploaded illustration image is located under wc1/medias/images/illustration");
-		waitForElementPresent(By.xpath("//div[@title='illustration']"));
-		mouseOver(By.xpath("//div[@title='illustration']"),false);
+		waitForElementPresent(By.xpath("//div[contains(text(),'illustration')]"));
+		mouseOver(By.xpath("//div[contains(text(),'illustration')]"),false);
 		info("\n === Uploaded illustration image is found in wc1/medias/images/ ! OK !!! ===");
 		
 		info("\n\n === Delete free layout webcontent");
