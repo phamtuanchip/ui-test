@@ -128,6 +128,8 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 		
 		// Create new Free layout webcontent, named "FLWC1en", in english 
 		info("\n === Create new Free layout webcontent, named 'FLWC1en' ===");
+		waitForElementPresent(By.linkText("New Content"));
+		mouseOver(By.linkText("New Content"),false);
 		goToAddNewContent();
 		waitForElementPresent(By.linkText(FreeLayoutWebContentLink));
 		createNewFreeLayoutWebContent(NewFreeLayoutWebContentEnTitle, NewFreeLayoutWebContentEnName, NewFreeLayoutWebContentEnCont, "", "", "", "");
@@ -140,6 +142,8 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 		
 		// Create new Free layout webcontent, named "FLWC1br", in brazil portuguese
 		info("\n === Create new Free layout webcontent, named 'FLWC1br' ===");
+		waitForElementPresent(By.linkText("New Content"));
+		mouseOver(By.linkText("New Content"),false);
 		goToAddNewContent();
 		waitForElementPresent(By.linkText(FreeLayoutWebContentLink));
 		createNewFreeLayoutWebContent(NewFreeLayoutWebContentBrTitle, NewFreeLayoutWebContentBrName, NewFreeLayoutWebContentBrCont, "", "", "", "");
