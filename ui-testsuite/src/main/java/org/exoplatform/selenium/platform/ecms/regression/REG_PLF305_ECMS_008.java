@@ -4,6 +4,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
 import static org.exoplatform.selenium.platform.ecms.ContextMenu.*;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -19,6 +20,7 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 	private String DATA_ARTICLE_NAME = "Article1";
 	private By ELEMENT_ARTICLE = By.linkText(DATA_ARTICLE_NAME);
 	private By ELEMENT_SAVE_BUTTON = By.linkText("Save");
+	By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 	
 	
 	@BeforeMethod
@@ -52,7 +54,8 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 	@Test
 	public void test08_PublishDocumentInLockedFolder(){
 		info("\n=== Go to Site Explorer ===");
-		goToSiteExplorer();		
+		goToSiteExplorer();	
+		chooseDrive(DRIVER_SITES_MANAGEMENT);
 		waitForElementPresent(By.linkText("acme"));
 		
 		info("\n=== Go to node acme ===");
