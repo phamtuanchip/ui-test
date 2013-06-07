@@ -6,6 +6,7 @@ import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
 import static org.exoplatform.selenium.platform.ecms.WcmAdmin.*; 
 import static org.exoplatform.selenium.platform.PageManagement.deletePageAtManagePageAndPortalNavigation;
 import static org.exoplatform.selenium.platform.NavigationToolbar.*;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
 
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;
@@ -30,6 +31,7 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 	private String NewPageName = "Test_REG_PLF305_ECMS_001";
 	private String NewFolderButton = "New Folder";
 	private String FreeLayoutWebContentLink = "Free layout webcontent";
+	By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 	
 	@BeforeMethod
 	public void beforeMethods(){
@@ -112,6 +114,7 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 		// Go to Sites Explorer
 		info("\n=== Go Sites Explorer ===");
 		goToSiteExplorer();
+		chooseDrive(DRIVER_SITES_MANAGEMENT);
 		waitForElementPresent(By.xpath("//div[contains(text(),'Sites Management')]"));
 		info("\n=== Go to node acme ===");
 		goToNode("acme");
@@ -305,6 +308,7 @@ public class REG_PLF305_ECMS_001 extends EcmsBase {
 		info("\n\n=== Delete folder REG_PLF305_ECMS_001 ===");
 		info("\n=== Go Sites Explorer ===");
 		goToSiteExplorer();
+		chooseDrive(DRIVER_SITES_MANAGEMENT);
 		waitForElementPresent(By.linkText("acme"));
 		info("\n=== Go to node acme ===");
 		goToNode("acme");

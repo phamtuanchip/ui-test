@@ -4,6 +4,8 @@ import static org.exoplatform.selenium.TestLogger.info;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.goToAddNewContent;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.createNewFreeLayoutWebContent;
 import static org.exoplatform.selenium.platform.ecms.ContextMenu.deleteDocument;
+import static org.exoplatform.selenium.platform.ecms.SiteExplorer.chooseDrive;
+
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -14,7 +16,8 @@ import org.testng.annotations.Test;
 public class REG_PLF305_ECMS_004 extends EcmsBase{
 	/*-- Data for these test cases --*/
 	public String DATA_USER = "john";
-	public String DATA_PASS = "gtn";	
+	public String DATA_PASS = "gtn";
+	By DRIVER_SITES_MANAGEMENT = By.xpath("//a[@class='DriveLabel' and @title = 'Sites Management']");
 	
 	
 	@BeforeMethod
@@ -47,6 +50,7 @@ public class REG_PLF305_ECMS_004 extends EcmsBase{
 	public void test04_UploadIllustrationImageInFreeLayoutWebContent(){
 		info("\n === Go to Site Explorer ===");
 		goToSiteExplorer();
+		chooseDrive(DRIVER_SITES_MANAGEMENT);
 		info("\n === Go to node 'intranet' ===");
 		goToNode("intranet");
 		info("\n === Click add new content ===");
