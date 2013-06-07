@@ -23,7 +23,8 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 	
 	@BeforeMethod
 	public void beforeMethods(){
-		info("\n\nBEGIN Test case REG_PLF305_ECMS_008 \n\n");
+		info("\n\n=== BEGIN Test case REG_PLF305_ECMS_008 ===");
+		info("\n=== Publish document in a locked folder === \n\n");
 		initSeleniumTest();
 		driver.get(baseUrl);
 		actions = new Actions(driver);
@@ -52,32 +53,42 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 	public void test08_PublishDocumentInLockedFolder(){
 		info("\n=== Go to Site Explorer ===");
 		goToSiteExplorer();		
-		pause(1000);
+		waitForElementPresent(By.linkText("acme"));
 		
 		info("\n=== Go to node acme ===");
+		mouseOver(By.linkText("acme"),false);
 		goToNode("acme");
-		pause(1000);
 		
 		info("\n=== Lock node documents ===");
+		waitForElementPresent(By.xpath("//a[contains(text(),'documents')]"));
+		mouseOver(By.xpath("//a[contains(text(),'documents')]"),false);
 		lockNode(By.xpath("//a[contains(text(),'documents')]"));
-		pause(1000);
 		
 		info("\n=== Go to node documents ===");
+		waitForElementPresent(By.xpath("//a[contains(text(),'documents')]"));
+		mouseOver(By.xpath("//a[contains(text(),'documents')]"),false);
 		click(By.xpath("//a[contains(text(),'documents')]"));
-		pause(1000);
 		
 		info("\n=== Add new article in folder documents locked ===");
+		// Click New Content
+		waitForElementPresent(By.linkText("New Content"));
+		mouseOver(By.linkText("New Content"),false);
 		goToAddNewContent();
-		pause(1000);
+		// Create new Article
+		waitForElementPresent(By.linkText("Article"));
+		mouseOver(By.linkText("Article"),false);
 		createNewArticle(DATA_ARTICLE_NAME, DATA_ARTICLE_NAME, "", "");
 		waitForElementPresent(ELEMENT_ARTICLE);
 		assert isElementPresent(ELEMENT_ARTICLE):"Create new article unsuccessfully";
 		info("\n=== Create new article successfully");
-		pause(1000);
 		
 		info("\n=== Click Publication ====");
+		waitForElementPresent(By.xpath("//a[contains(text(),'Publications')]"));
+		mouseOver(By.xpath("//a[contains(text(),'Publications')]"),false);
 		click(By.xpath("//a[contains(text(),'Publications')]"));
 		pause(500);
+		waitForElementPresent(ELEMENT_SAVE_BUTTON);
+		mouseOver(ELEMENT_SAVE_BUTTON,false);
 		click(ELEMENT_SAVE_BUTTON);
 		pause(500);
 		waitForElementPresent(ELEMENT_ARTICLE);
@@ -86,7 +97,7 @@ public class REG_PLF305_ECMS_008 extends EcmsBase {
 		
 		info("\n=== Delete new article ===");
 		deleteDocument(ELEMENT_ARTICLE);
-		pause(3000);
+		info("\n=== New article is deleted ! ===");
 	} // End test08_PublishDocumentInLockedFolder
 
 }
