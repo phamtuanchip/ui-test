@@ -135,8 +135,6 @@ public class REG_PLF307_ECMS_006 extends EcmsBase{
 		pause(1000);
 		info("Change to WCM View");
 		click(ELEMENT_WCM_VIEW);
-		info("Open the created article");
-		doubleClickOnElement(ELEMENT_CREATED);
 		info("Publish document");
 		SiteExplorer.publishDocument();
 		info("Go to ACME Home Page");
