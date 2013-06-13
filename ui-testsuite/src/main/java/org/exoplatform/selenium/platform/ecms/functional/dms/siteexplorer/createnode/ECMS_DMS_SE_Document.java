@@ -24,7 +24,7 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	public static String ARTICLE_NAME_TITLE="Article_Document";
 	public static String ARTICLE_SUM="Summary of article";
 	public static String ARTICLE_CONTENT="Content of article";
-	public static By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" "+"']");
+	public static By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 	public static final By ELEMENT_CHANGE_CONTENT_TYPE = By.linkText("(Change Content Type)");
 	public static final String MESSAGE_CLOSE_ARTICLE="The changes you made will be lost if you close this form.";
 
@@ -51,7 +51,9 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test01_AddContentWhenClickSaveAndClose()
-	{ 
+	{ 	String ARTICLE_NAME_TITLE = "se_document_article_01";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
+		
 		info("Go to CE");
 		goToSiteExplorer();
 
@@ -82,7 +84,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test02_AddContentWhenClickSave()
-	{ 
+	{ 	String ARTICLE_NAME_TITLE = "se_document_article_02";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 		info("Go to CE");
 		goToSiteExplorer();
 
@@ -128,7 +131,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test03_AddContentWhenClickClose()
-	{ 
+	{ 	String ARTICLE_NAME_TITLE = "se_document_article_03";
+		
 		info("Go to CE");
 		goToSiteExplorer();
 
@@ -169,7 +173,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test04_AddContentWhenClickSaveThenClose()
-	{ 
+	{ 	String ARTICLE_NAME_TITLE = "se_document_article_04";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 		info("Go to CE");
 		goToSiteExplorer();
 
@@ -197,9 +202,6 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 		waitForElementNotPresent(ELEMENT_ARTICLE_SUMMARY_FRAME);
 		waitForElementNotPresent(ELEMENT_ARTICLE_CONTENT_FRAME);
 
-		info("Verify article is created");
-		assert isElementPresent(ARTICLE_PATH);
-
 		info("Delete Article");
 		deleteDocument(ARTICLE_PATH);
 
@@ -213,7 +215,7 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test05_AddContentWhenClickChangeContentType()
-	{ 
+	{ 	String ARTICLE_NAME_TITLE = "se_document_article_05";
 		String MESSAGE_CONFIRMATION="The changes you made will be lost if you change the content type.";
 		By ELEMENT_TEMPLATE_LIST=By.xpath("//div[@class='SelectTemplateThumbnailView']");
 
@@ -254,7 +256,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test06_AddContentWhenClickMaximizeIcon()
-	{
+	{	String ARTICLE_NAME_TITLE = "se_document_article_06";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 		By ELEMENT_MAXIMIZE=By.xpath("//a[@class='MaximizeScreen20x20Icon']");
 
 		By ELEMENT_MINIMIZE=By.xpath("//a[@class='MinimizeScreen20x20Icon']");
@@ -345,7 +348,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test08_AddContentInRootPath()
-	{
+	{	String ARTICLE_NAME_TITLE = "se_document_article_08";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 		By VERIFY_AT_ROOT_PATH=By.xpath("//a[@title='acme ']/following::a[@title='"+ARTICLE_NAME_TITLE+" "+"']");
 
 		info("Go to CE");
@@ -415,7 +419,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test11_AddContentInCheckinNode()
-	{
+	{	String ARTICLE_NAME_TITLE = "se_document_article_11";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 		info("Go to CE");
 		goToSiteExplorer();
 
@@ -457,7 +462,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test12_AddContentInNodeWhoseParentsInCheckinStatus()
-	{
+	{	String ARTICLE_NAME_TITLE = "se_document_article_12";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 		String KOFAX_NAME="Kofax_Document_Name";
 
 		String SHOW_DMS_STRUCTURE="enableStructure";
@@ -506,9 +512,6 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 		info("Checkout article");
 		checkOutNode(ARTICLE_PATH);
 		
-		info("Delete Kofax");
-		deleteDocument(KOFAX_PATH);
-		
 		info("Delete Article including Kofax");
 		deleteDocument(ARTICLE_PATH);
 
@@ -523,7 +526,8 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 	 */
 	@Test
 	public void test13_AddContentWhenUserDoesNotHaveAddNodeRight()
-	{
+	{	String ARTICLE_NAME_TITLE = "se_document_article_13";
+		By ARTICLE_PATH = By.xpath("//a[@title='"+ARTICLE_NAME_TITLE+" ']");
 		By ELEMENT_SYSTEM_TAB = By.linkText("System");
 
 		By ELEMENT_PERMISSION_LINK = By.linkText("Permissions");
@@ -541,7 +545,7 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 		By SELECT_JAMES=By.xpath("//div[@title='james']/following::div/img[@class='SelectPageIcon']");
 
 		By SELECT_READ_RIGHT=By.id("read");
-		By SELECT_SET_PROPERTY_RIGHT=By.id("set_property");
+		//By SELECT_SET_PROPERTY_RIGHT=By.id("set_property");
 		By SELECT_REMOVE_RIGHT=By.id("remove");
 
 		String MSS_NO_RIGHT_TO_ADD_NODE="You do not have permission to add a new node.";
@@ -582,7 +586,7 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 
 		info("Choose all rights accept Add Node");
 		check(SELECT_READ_RIGHT);
-		check(SELECT_SET_PROPERTY_RIGHT);
+		//check(SELECT_SET_PROPERTY_RIGHT);
 		check(SELECT_REMOVE_RIGHT);
 
 		info("Save then close");
@@ -662,6 +666,6 @@ public class ECMS_DMS_SE_Document extends EcmsBase {
 		//delete date with user John
 		loginEcms("john", "gtn");
 		goToSiteExplorer();
-		deleteData(ELEMENT_ARTICLE);
+		deleteData(By.xpath("//a[@title='" + DATA_ARTICLE_TITLE + " (Locked by john)']"));
 	} 
 }

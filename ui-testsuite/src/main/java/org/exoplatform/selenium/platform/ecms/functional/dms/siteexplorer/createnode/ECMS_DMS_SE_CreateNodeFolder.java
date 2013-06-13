@@ -100,7 +100,7 @@ public class ECMS_DMS_SE_CreateNodeFolder extends EcmsBase {
 
 		//Create new content folder with name contains special characters
 		info("Create new folder with name " + DATA_SPECIAL_CHARACTER_STRING);
-		createNewContentFolder(DATA_CONTENT_FOLDER_TITLE,DATA_SPECIAL_CHARACTER_STRING);
+		createNewContentFolder(DATA_CONTENT_FOLDER_TITLE, DATA_SPECIAL_CHARACTER_STRING);
 		waitForElementPresent(ELEMENT_CONTENT_FOLDER);
 
 		//delete content folder
@@ -316,7 +316,7 @@ public class ECMS_DMS_SE_CreateNodeFolder extends EcmsBase {
 	/*
 	 * case 9:Add folder with special characters in 'Title' field like !,@,#
 	 */
-	@Test
+	@Test (groups = "pending")
 	public void test09_AddFolderWithSpecialCharsTitle() {
 		String DATA_CONTENT_FOLDER_NAME = "ECMS_DMS_SE_CreateNodeFolder_contentfolder_09";
 		By ELEMENT_CONTENT_FOLDER = By.linkText(DATA_SPECIAL_CHARACTER_STRING);

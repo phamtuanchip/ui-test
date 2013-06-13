@@ -1,6 +1,6 @@
 package org.exoplatform.selenium.platform.ecms.functional.wcm.categories;
 
-import static org.exoplatform.selenium.TestLogger.info;
+import static org.exoplatform.selenium.TestLogger.*;
 import static org.exoplatform.selenium.platform.NavigationToolbar.*;
 import static org.exoplatform.selenium.platform.PageEditor.*;
 import static org.exoplatform.selenium.platform.ecms.SiteExplorer.*;
@@ -69,11 +69,11 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 		info("Add new document in acme drive");
 		goToAddNewContent();
 		createNewArticle(title, title, "", "");
-		while (getElement(ELEMENT_ARTICLE) == null){
+		/*while (getElement(ELEMENT_ARTICLE) == null){
 			click(ELEMENT_DEFENCE);
-		}
-		waitForElementPresent(ELEMENT_ARTICLE);
-		assert isElementPresent(ELEMENT_ARTICLE):"Can not create new article";
+		}*/
+		waitForTextPresent(title);
+		assert isTextPresent(title):"Can not create new article";
 		info("Create new document (Article) successfully");
 	}
 
@@ -104,6 +104,7 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 		}else{
 			info("Content By URL portlet has already exited");
 		}	
+		assert checkError();
 		mouseOver(ELEMENT_URL_PORTLET, true);
 		click(ELEMENT_EDIT_URL_PORTLET);
 		info("Select show in page = news");
@@ -141,7 +142,7 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 		createNewArticleInAcme(DATA_ARTICLE);
 
 		//---public this document---
-		click(ELEMENT_ARTICLE);
+//		click(ELEMENT_ARTICLE);
 		click(ELEMENT_PUBLICATION_TAB);
 		publishDocument();
 
@@ -168,10 +169,11 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 		assert isElementPresent(By.xpath("//div[text()='Content :']")):"Document content is not displayed";
 
 		goToSiteExplorer();
-		//		chooseDrive(ELEMENT_ACME_DRIVER);
-		//		while (getElement(ELEMENT_ARTICLE_DEFENSE) == null){
-		//			click(ELEMENT_DEFENCE);
-		//		}
+		
+				chooseDrive(ELEMENT_ACME_DRIVE);
+				while (getElement(ELEMENT_ARTICLE_DEFENSE) == null){
+					click(ELEMENT_DEFENCE);
+				}
 		deleteData(ELEMENT_ARTICLE_DEFENSE);
 	}
 
@@ -189,7 +191,7 @@ public class ECMS_WCM_Categories_PCLV extends EcmsBase {
 		createNewArticleInAcme(DATA_ARTICLE);
 
 		info("Set for user mary does not have view permission this document");
-		click(ELEMENT_ARTICLE);
+		//click(ELEMENT_ARTICLE);
 		waitForElementPresent(ELEMENT_COLLABORATION_TAB);
 		click(ELEMENT_COLLABORATION_TAB);
 		if (waitForAndGetElement(ELEMENT_PERMISSION_LINK,5000,0) == null){

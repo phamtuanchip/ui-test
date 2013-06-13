@@ -71,7 +71,7 @@ public class ECMS_DMS_SE_Category extends EcmsBase{
 		click(ELEMENT_ICON_EDIT_CATE);
 		pause(500);
 		click(ELEMENT_LINK_SYSTEM);
-		waitForElementPresent(By.linkText(DATA_CATE_NAME_08_TITLE));
+		waitForTextPresent(DATA_CATE_NAME_08_TITLE);
 		click(ELEMENT_CLOSE_BUTTON);
 
 		//go to Site explorer and delete data

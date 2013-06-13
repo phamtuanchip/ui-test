@@ -444,10 +444,7 @@ public class ECMS_DMS_SE_Article extends EcmsBase{
 		debug("add new article with title: "+DATA_ARTICLE_TITLE);
 		createNewArticle(DATA_ARTICLE_TITLE, DATA_ARTICLE_TITLE, DATA_ARTICLE_TITLE, DATA_ARTICLE_TITLE);
 		waitForElementPresent(ELEMENT_ARTICLE);
-		info("Add new article into koafax document successfully");
-
-		//delete article
-		deleteDocument(ELEMENT_ARTICLE);
+		info("Add new article into kofax document successfully");
 
 		//delete kofax document
 		goToNode(ELEMENT_KOFAX);

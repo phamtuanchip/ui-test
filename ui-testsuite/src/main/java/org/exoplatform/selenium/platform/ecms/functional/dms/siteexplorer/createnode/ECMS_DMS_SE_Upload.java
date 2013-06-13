@@ -43,8 +43,8 @@ public class ECMS_DMS_SE_Upload extends EcmsBase {
 
 	  @AfterMethod
 	  public void afterMethods(){
-		info("Logout ECMS");
-		logoutEcms();
+//		info("Logout ECMS");
+//		logoutEcms();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	    actions = null;

@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 import static org.exoplatform.selenium.platform.ecms.ActionBar.*;
 import static org.exoplatform.selenium.platform.ecms.ContentTemplate.*;
 import static org.exoplatform.selenium.platform.ecms.ContextMenu.*;
-import static org.exoplatform.selenium.platform.ecms.SiteExplorer.*;
 import static org.exoplatform.selenium.platform.ecms.WcmAdmin.*;
 
 /*
@@ -58,7 +57,7 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  info("Add symlink for acme node");
 		  goToSiteExplorer();
 		  goToNode(ELEMENT_SIDEBAR_ACME);
-		  click(ELEMENT_COLLABORATION);
+		  mouseOverAndClick(ELEMENT_COLLABORATION);
 		  click(ELEMENT_ADD_SYMLINK);
 		  
 		  //check Add symlink form
@@ -253,14 +252,10 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  assert isElementPresent(ELEMENT_ARTICLE):"Create new article unsuccessfully";
 		  info("Create new article successfully");
 		  
-		  //add symlink
+		  info("Check not having Add Symlink in action bar for article");
 		  goToNode(ELEMENT_ARTICLE);
 		  goToNode(ELEMENT_COLLABORATION);
-		  info("Check cannot add symlink for article document");
-		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,"Documents.lnk");
-		  checkAlertWarning("An error occurred while creating the symlink.");
-		  cancel();
-//		  click(ELEMENT_CANCEL_BUTTON);
+		  waitForElementNotPresent(ELEMENT_ADD_SYMLINK);
 		  
 		  //delete data
 		  deleteData(ELEMENT_ARTICLE);
@@ -270,13 +265,14 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 	   * create new file document
 	   * add symlink to file document
 	   * check add successfully
+	   * --> update follow issue ECMS-3541 -> can not add symlink into file document
 	   */
 	  @Test
 	  public void test08_AddSymlinkForFileDocument(){
 		  String DATA_FILE_DOCUMENT = "ECMS_DMS_SE_Addsymlink_filedocument_08";
 		  By ELEMENT_FILE_DOCUMENT = By.linkText(DATA_FILE_DOCUMENT);
-		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_08";
-		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
+		  //String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_08";
+		  //By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
 		  
 		  //create new file document
 		  goToSiteExplorer();
@@ -290,13 +286,14 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  //add symlink
 		  goToNode(ELEMENT_FILE_DOCUMENT);
 		  goToNode(ELEMENT_COLLABORATION);
-		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
-		  goToNode(ELEMENT_FILE_DOCUMENT);
-		  info("Add symlink for file document");
-		  checkPreferenceOption("enableStructure");
-		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
-		  assert isElementPresent(ELEMENT_DOCUMENT_SYMLINK):"Add symlink for file document unsuccessfully";
-		  
+		  waitForElementNotPresent(ELEMENT_ADD_SYMLINK);
+//		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
+//		  goToNode(ELEMENT_FILE_DOCUMENT);
+//		  info("Add symlink for file document");
+//		  checkPreferenceOption("enableStructure");
+//		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
+//		  assert isElementPresent(ELEMENT_DOCUMENT_SYMLINK):"Add symlink for file document unsuccessfully";
+//		  
 		  //delete data
 		  deleteData(ELEMENT_FILE_DOCUMENT);
 	  }
@@ -310,8 +307,8 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 	  public void test09_AddSymlinkForPodcastDocument(){
 		  String DATA_PODCAST_DOCUMENT = "ECMS_DMS_SE_Addsymlink_podcast_09";
 		  By ELEMENT_PODCAST_DOCUMENT = By.linkText(DATA_PODCAST_DOCUMENT);
-		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_09";
-		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
+//		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_09";
+//		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
 		  
 		  //create new podcast document
 		  goToSiteExplorer();
@@ -325,13 +322,14 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  //add symlink
 		  goToNode(ELEMENT_PODCAST_DOCUMENT);
 		  goToNode(ELEMENT_COLLABORATION);
-		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
-		  goToNode(ELEMENT_PODCAST_DOCUMENT);
-		  info("Add symlink for podcast document");
-		  checkPreferenceOption("enableStructure");
-		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
-		  assert isElementPresent(ELEMENT_DOCUMENT_SYMLINK):"Add symlink for podcast document unsuccessfully";
-		  
+		  waitForElementNotPresent(ELEMENT_ADD_SYMLINK);
+//		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
+//		  goToNode(ELEMENT_PODCAST_DOCUMENT);
+//		  info("Add symlink for podcast document");
+//		  checkPreferenceOption("enableStructure");
+//		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
+//		  assert isElementPresent(ELEMENT_DOCUMENT_SYMLINK):"Add symlink for podcast document unsuccessfully";
+//		  
 		  //delete data
 		  deleteData(ELEMENT_PODCAST_DOCUMENT);
 	  }
@@ -359,9 +357,10 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  goToNode(ELEMENT_SAMPLE);
 		  goToNode(ELEMENT_COLLABORATION);
 		  info("Check cannot add symlink for sample node");
-		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,"Documents.lnk");
-		  checkAlertWarning("An error occurred while creating the symlink.");
-		  click(ELEMENT_CANCEL_BUTTON);
+		  waitForElementNotPresent(ELEMENT_ADD_SYMLINK);
+//		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,"Documents.lnk");
+//		  checkAlertWarning("An error occurred while creating the symlink.");
+//		  click(ELEMENT_CANCEL_BUTTON);
 		  
 		  //delete data
 		  deleteData(ELEMENT_SAMPLE);
@@ -446,8 +445,8 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  String DATA_UPLOAD = "ECMS_DMS_SE_Addsymlink_upload_13";
 		  String DATA_UPLOAD_FILE_LINK = "TestData/ECMS_DMS_SE_Addsymlink.jpg";
 		  By ELEMENT_UPLOAD_FILE = By.xpath("//a[@title='"+DATA_UPLOAD+".jpg "+"']");
-		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_13";
-		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
+//		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_13";
+//		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
 		  
 		  //create new kofax document
 		  goToSiteExplorer();
@@ -460,13 +459,14 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  //add symlink
 		  goToNode(ELEMENT_UPLOAD_FILE);
 		  goToNode(ELEMENT_COLLABORATION);
-		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
-		  goToNode(ELEMENT_UPLOAD_FILE);
-		  info("Add symlink for uploaded file");
-		  checkPreferenceOption("enableStructure");
-		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
-		  assert isElementPresent(ELEMENT_DOCUMENT_SYMLINK):"Add symlink for kofax unsuccessfully";
-		  info("Add symlink for kofax document successfully");
+		  waitForElementNotPresent(ELEMENT_ADD_SYMLINK);
+//		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
+//		  goToNode(ELEMENT_UPLOAD_FILE);
+//		  info("Add symlink for uploaded file");
+//		  checkPreferenceOption("enableStructure");
+//		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
+//		  assert isElementPresent(ELEMENT_DOCUMENT_SYMLINK):"Add symlink for kofax unsuccessfully";
+//		  info("Add symlink for kofax document successfully");
 		  
 		  //delete data
 		  deleteData(ELEMENT_UPLOAD_FILE);
@@ -704,12 +704,12 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  goToNode(ELEMENT_SIDEBAR_ACME);
 		  goToNode(ELEMENT_SIDEBAR_ACME_DOCUMENTS);
 		  info("Add symlink for document");
-		  waitForElementPresent(ELEMENT_COLLABORATION, 10000, 1);
+		  waitForElementPresent(ELEMENT_COLLABORATION, 10000);
 		  goToNode(ELEMENT_COLLABORATION);
 		  goToTargetNodeInRoot();
 		  
 		  //check user does not see that content node
-		  usePaginator(ELEMENT_CONTENT_DIV,"cannot found content folder node");
+//		  usePaginator(ELEMENT_CONTENT_DIV,"cannot found content folder node");
 		  waitForElementNotPresent(ELEMENT_CONTENT_DIV);
 		  info("cannot see node when user does not have view permission");
 		  click(ELEMENT_CLOSE_WINDOW);
@@ -799,28 +799,27 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 	   */
 	  @Test
 	  public void test23_Add2SymlinksHaveSameNameInDocument(){
-		  String DATA_FILE = "ECMS_DMS_SE_Addsymlink_filedocument_23";
-		  By ELEMENT_FILE = By.linkText(DATA_FILE);
+		  String DATA_FILE_PLAN = "ECMS_DMS_SE_Addsymlink_fileplan_23";
+		  By ELEMENT_FILE_PLAN = By.linkText(DATA_FILE_PLAN);
 		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_23";
 		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
 
 		  //create new file document
 		  goToSiteExplorer();
 		  goToAddNewContent();
-		  info("Create new file document with user john");
-		  createNewFile(DATA_FILE, DATA_FILE, "");
-		  waitForElementPresent(ELEMENT_FILE);
-		  assert isElementPresent(ELEMENT_FILE):"Create new file document unsuccessfully";
+		  info("Create new file plan");
+		  createNewFilePlan(DATA_FILE_PLAN, DATA_FILE_PLAN, DATA_FILE_PLAN, DATA_FILE_PLAN, DATA_FILE_PLAN);
+		  waitForElementPresent(ELEMENT_FILE_PLAN);
 		  info("Create new file document successfully");
 		  
 		  //add 2 symlink have same name for file document
 		  info("Add 2 symlinks have same name in file document");
-		  goToNode(ELEMENT_FILE);
+		  goToNode(ELEMENT_FILE_PLAN);
 		  goToNode(ELEMENT_COLLABORATION);
 		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
-		  info("enable DMS");
-		  pause(100);
-		  checkPreferenceOption("enableStructure");
+//		  info("enable DMS");
+//		  pause(100);
+//		  checkPreferenceOption("enableStructure");
 		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
 		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
 		  
@@ -829,46 +828,47 @@ public class ECMS_DMS_SE_BasicAction_AddSymlink extends EcmsBase{
 		  info("cannot add 2 symlink same name in file document");
 		  
 		  //delete data
-		  deleteData(ELEMENT_FILE);
+		  deleteData(ELEMENT_FILE_PLAN);
 	  }
 	  
 	  /*case24: Add new Symlink has the same name with existing Symlink in uploaded file
 	   * upload new file
 	   * check cannot add 2 symlinks have same name in uploaded file
+	   * --> Update follow issue ECMS-3541 -> can not add symlink for upload file
 	   */
-	  @Test
-	  public void test24_Add2SymlinksHaveSameNameInUploadFile(){
-		  String DATA_UPLOAD = "ECMS_DMS_SE_Addsymlink_uploadfile_24";
-		  String DATA_UPLOAD_FILE_LINK = "TestData/ECMS_DMS_SE_Addsymlink.jpg"; 
-		  By ELEMENT_UPLOAD_FILE = By.xpath("//a[@title='"+DATA_UPLOAD+".jpg "+"']");
-		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_24";
-		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
-
-		  //upload new file
-		  goToSiteExplorer();
-		  info("Upload new file");
-		  uploadFile(DATA_UPLOAD, DATA_UPLOAD_FILE_LINK);
-		  waitForElementPresent(ELEMENT_UPLOAD_FILE);
-		  goToNode(ELEMENT_UPLOAD_FILE);
-		  assert isElementPresent(ELEMENT_UPLOAD_FILE):"Upload file unsuccessfully";
-		  info("Upload file successfully");
-		  
-		  //add 2 symlink have same name for uploaded file
-		  info("Add 2 symlinks have same name in upload file");
-		  goToNode(ELEMENT_COLLABORATION);
-		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
-		  pause(100);
-		  checkPreferenceOption("enableStructure");
-		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
-		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
-		  
-		  //check alert
-		  checkAlertWarning("The node name already exists.");
-		  info("cannot add 2 symlink same name in uploaded file");
-		  
-		  //delete data
-		  deleteData(ELEMENT_UPLOAD_FILE);
-	  }
+//	  @Test
+//	  public void test24_Add2SymlinksHaveSameNameInUploadFile(){
+//		  String DATA_UPLOAD = "ECMS_DMS_SE_Addsymlink_uploadfile_24";
+//		  String DATA_UPLOAD_FILE_LINK = "TestData/ECMS_DMS_SE_Addsymlink.jpg"; 
+//		  By ELEMENT_UPLOAD_FILE = By.xpath("//a[@title='"+DATA_UPLOAD+".jpg "+"']");
+//		  String DATA_SYMLINK = "ECMS_DMS_SE_Addsymlink_symlink_24";
+//		  By ELEMENT_DOCUMENT_SYMLINK = By.linkText(DATA_SYMLINK);
+//
+//		  //upload new file
+//		  goToSiteExplorer();
+//		  info("Upload new file");
+//		  uploadFile(DATA_UPLOAD, DATA_UPLOAD_FILE_LINK);
+//		  waitForElementPresent(ELEMENT_UPLOAD_FILE);
+//		  goToNode(ELEMENT_UPLOAD_FILE);
+//		  assert isElementPresent(ELEMENT_UPLOAD_FILE):"Upload file unsuccessfully";
+//		  info("Upload file successfully");
+//		  
+//		  //add 2 symlink have same name for uploaded file
+//		  info("Add 2 symlinks have same name in upload file");
+//		  goToNode(ELEMENT_COLLABORATION);
+//		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
+//		  pause(100);
+//		  checkPreferenceOption("enableStructure");
+//		  waitForElementPresent(ELEMENT_DOCUMENT_SYMLINK);
+//		  addSymlink(ELEMENT_SELECT_PATH_DOCUMENTS,DATA_SYMLINK);
+//		  
+//		  //check alert
+//		  checkAlertWarning("The node name already exists.");
+//		  info("cannot add 2 symlink same name in uploaded file");
+//		  
+//		  //delete data
+//		  deleteData(ELEMENT_UPLOAD_FILE);
+//	  }
 	  
 	  /*case25: Add Symlink for node when user does not have permission to add in this node
 	   * create new node - content folder

@@ -33,8 +33,8 @@ public class ECMS_DMS_SE_SampleNode extends EcmsBase{
 
 	@AfterMethod
 	public void afterTest(){
-		info("Log out");
-		logoutEcms ();
+//		info("Log out");
+//		logoutEcms ();
 
 		info("Close Window");
 		driver.quit();
@@ -304,7 +304,7 @@ public class ECMS_DMS_SE_SampleNode extends EcmsBase{
 	@Test
 	public void test09_SampleNodeInUploadedFile()
 	{
-		By NEW_CONTENT_PATH=By.xpath("//a[@title='New Content']");
+//		By NEW_CONTENT_PATH=By.xpath("//a[@title='New Content']");
 		String DATA_UPLOADED_FILE_NAME = "FNC_ECMS_FEX_CREATE_07_009";
 		By UPLOADED_FILE = By.xpath("//a[@title='"+DATA_UPLOADED_FILE_NAME+".jpg "+"']");
 
@@ -324,18 +324,11 @@ public class ECMS_DMS_SE_SampleNode extends EcmsBase{
 
 		info("Verify no 'New Content' on action bar");
 		pause(1000);
-		assert isElementNotPresent(NEW_CONTENT_PATH):"Failed: New content is displayed";
-
-		info("Open File");
-		pause(500);
-		goToNode(UPLOADED_FILE);
+		waitForElementNotPresent(ELEMENT_NEW_CONTENT_LINK);
 
 		info("Delete data");
 		pause(1000);
 		deleteDocument(UPLOADED_FILE);
-
-		info("Verify uploaded file is deleted");
-		pause(1000);
 	}
 
 	/* Case 10: Create Sample Node Without Title
@@ -411,11 +404,7 @@ public class ECMS_DMS_SE_SampleNode extends EcmsBase{
 		createNewSampleNode(SAMPLE_NODE_TITLE, SAMPLE_NODE_TITLE,UPLOADED_FILE_PATH);
 
 		info("Verify content of Sample Node");
-		pause(1000);
-		assert isTextPresent(SAMPLE_NODE_TITLE):"This is not content of sample node";
-
-		info("Go to content folder");
-		goToNode(By.xpath(CONTENT_FOLDER_LOCK));
+		waitForTextPresent(SAMPLE_NODE_TITLE);
 
 		info("Delete Content Folder including sample node");
 		pause(500);
@@ -522,8 +511,7 @@ public class ECMS_DMS_SE_SampleNode extends EcmsBase{
 		createNewSampleNode(SAMPLE_NODE_TITLE, SAMPLE_NODE_TITLE, UPLOADED_FILE_PATH);
 
 		info("Verify content of Sample Node");
-		pause(1000);
-		assert isTextPresent(SAMPLE_NODE_TITLE):"Text not found";
+		waitForTextPresent(SAMPLE_NODE_TITLE);
 		info("you can add a Sample Node in a locked Kofax document");		
 
 		info("Click Kofax Document");
@@ -532,7 +520,6 @@ public class ECMS_DMS_SE_SampleNode extends EcmsBase{
 		info("Delete Kofax Document including Sample Node");
 		pause(1000);
 		deleteDocument(By.xpath(KOFAX_LOCK));
-		pause(1000);
 	}
 	/* Case 14_01: Create Sample Node In Locked Article By Locker
 	 * Create Article

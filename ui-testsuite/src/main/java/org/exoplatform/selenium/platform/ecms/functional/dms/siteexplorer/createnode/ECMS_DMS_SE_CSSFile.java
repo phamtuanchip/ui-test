@@ -75,7 +75,8 @@ public class ECMS_DMS_SE_CSSFile extends EcmsBase{
 		click(ELEMENT_MYSITE_ACME);
 		clearCache();
 		WebElement body = waitForAndGetElement(ELEMENT_BODY);
-		assert body.getCssValue("color").contains("rgba(255,0,0,1)"):"Setting up for page is not right";	  
+		info("Color of body is " + body.getCssValue("color"));
+		assert body.getCssValue("color").contains("rgba(255, 0, 0, 1)"):"Setting up for page is not right";	  
 		//delete css file
 		goToSiteExplorer();
 		goToNode(ELEMENT_SIDEBAR_ACME);
@@ -111,7 +112,7 @@ public class ECMS_DMS_SE_CSSFile extends EcmsBase{
 		//create new css file with name = CssFiletest_02_2, priority = 21
 		goToNode(ELEMENT_CSS_LINK);
 		goToAddNewContent();
-		debug("Create new css file with name: "+DATA_CSS_NAME_2+" and Priority: 21");
+		debug("Create new css file with name: "+DATA_CSS_NAME_2+" and Priority: 30");
 		createNewCssFile(DATA_CSS_NAME_2, "30", "body {color:red;}");
 		waitForElementPresent(ELEMENT_CSS_2);
 
@@ -121,7 +122,7 @@ public class ECMS_DMS_SE_CSSFile extends EcmsBase{
 		click(ELEMENT_MYSITE_ACME);
 		clearCache();
 		WebElement body = waitForAndGetElement(ELEMENT_BODY);
-		assert body.getCssValue("color").contains("rgba(0,0,255,1)"):"Setting up for page is not right";
+		assert body.getCssValue("color").contains("rgba(255, 0, 0, 1)"):"Setting up for page is not right";
 		//delete css file
 		goToSiteExplorer();
 		goToNode(ELEMENT_CSS);
@@ -159,8 +160,8 @@ public class ECMS_DMS_SE_CSSFile extends EcmsBase{
 		//create new css file with name = CssFiletest_03_2, content = 21
 		goToNode(ELEMENT_CSS_LINK);
 		goToAddNewContent();
-		debug("Create new css file with name: "+DATA_CSS_NAME_2+" and Priority: 21");
-		createNewCssFile(DATA_CSS_NAME_2, "30", "background{color:gray;}");
+		debug("Create new css file with name: "+DATA_CSS_NAME_2+" and Priority: 30");
+		createNewCssFile(DATA_CSS_NAME_2, "30", "body {background: green;}");
 		waitForElementPresent(ELEMENT_CSS_2);
 		info("Create new css file 2 successfully");
 		//check the interface of acme site will be defined follow the file which has the highest value in Priority
@@ -168,7 +169,7 @@ public class ECMS_DMS_SE_CSSFile extends EcmsBase{
 		click(ELEMENT_MYSITE_ACME);
 		clearCache();
 		WebElement body = waitForAndGetElement(ELEMENT_BODY);
-		assert body.getCssValue("color").contains("rgba(0,0,255,1)"):"Set up for page is not right";
+		assert body.getCssValue("color").contains("rgba(0, 0, 255, 1)"):"Set up for page is not right";
 
 		//delete css file
 		goToSiteExplorer();
