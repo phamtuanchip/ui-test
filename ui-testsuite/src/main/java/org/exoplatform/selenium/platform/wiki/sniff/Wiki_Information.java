@@ -4,6 +4,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.social.ManageMember;
 import org.exoplatform.selenium.platform.wiki.Version;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
@@ -20,6 +21,7 @@ public class Wiki_Information extends Version {
 	
 	ManageAccount magAc;
 	Button but;
+	ManageMember magMem;
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
@@ -27,6 +29,8 @@ public class Wiki_Information extends Version {
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
 		but = new Button(driver);
+		magMem = new ManageMember(driver);
+		
 		magAc.signIn("john", "gtn"); 
 		goToWiki();
 	}
@@ -88,17 +92,86 @@ public class Wiki_Information extends Version {
 	/**CaseId: 70337 -> Add Relation between 2 pages different space
 	 * 
 	 */
+	@Test
 	public void test03_AddRelationDifferentSpace(){
+		String spaceName1 = "RelationSpace031";
+		String title1 = "Wiki_sniff_relation_title_03_1";
+		String content1 = "Wiki_sniff_relation_content_03_1";
 		
+		String spaceName2 = "RelationSpace032";
+		String title2 = "Wiki_sniff_relation_title_03_2";
+		String content2 = "Wiki_sniff_relation_content_03_2";
+		
+		magMem.goToAllSpaces();
+		magMem.addNewSpace(spaceName1, "", "Visible", "Validation", "", "");
+		goToWikiFromSpace(spaceName1);
+		addBlankWikiPage(title1, content1, 0);
+		
+		magMem.goToAllSpaces();
+		magMem.addNewSpace(spaceName2, "", "Visible", "Validation", "", "");
+		goToWikiFromSpace(spaceName2);
+		addBlankWikiPage(title2, content2, 0);
+		
+		info("Add relation for page2 of space2 to page1 of space1");
+		addRelatedPage("Wiki Home/" + title2, title1, spaceName1);
+		
+		magMem.goToAllSpaces();
+		magMem.deleteSpace(spaceName1, 180000);
+		magMem.deleteSpace(spaceName2, 180000);
 	}
 	
-	/**CaseId: 70340 -> Add Relation with intranet
+	/**CaseId: 70340 -> Add Relation with intranet portal
 	 * 
 	 */
+	@Test
+	public void test04_AddRelationWithIntranetPortal(){
+		String title1 = "Wiki_relation_title_04_1";
+		String content1 = "Wiki_relation_content_04_1";
+		
+		String spaceName = "relationSpace04";
+		String title2 = "Wiki_relation_title_04_2";
+		String content2 = "Wiki_relation_content_04_2";
+		
+		addBlankWikiPage(title1, content1, 0);
+		
+		magMem.goToAllSpaces();
+		magMem.addNewSpace(spaceName, "", "Visible", "Validation", "", "");
+		goToWikiFromSpace(spaceName);
+		addBlankWikiPage(title2, content2, 0);
+		
+		info("Add relation for page2 of space2 to page1 of space1");
+		addRelatedPage("Wiki Home/" + title2, title1, "Intranet");
+		
+		magMem.goToAllSpaces();
+		magMem.deleteSpace(spaceName, 180000);
+		goToWikiPage("Wiki Home/" + title1);
+		deleteCurrentWikiPage();
+	}
 	
 	/**CaseId: 70341 -> Add Relation same space
 	 * 
 	 */
+	@Test
+	public void test05_AddRelationSameSpace(){
+		String spaceName = "RelationSpace05";
+		String title1 = "Wiki_relation_title_05_1";
+		String content1 = "Wiki_relation_content_05_1";		
+		String title2 = "Wiki_relation_title_05_2";
+		String content2 = "Wiki_relation_content_05_2";
+		
+		magMem.goToAllSpaces();
+		magMem.addNewSpace(spaceName, "", "Visible", "Validation", "", "");
+		goToWikiFromSpace(spaceName);
+		addBlankWikiPage(title1, content1, 0);
+		goToWikiHome();
+		addBlankWikiPage(title2, content2, 0);
+		
+		info("Move page2 to page1 in same space");
+		addRelatedPage("Wiki Home/" + title2, title1);
+		
+		magMem.goToAllSpaces();
+		magMem.deleteSpace(spaceName, 180000);
+	}
 	
 	/**CaseId: 70342 -> Add relation in the case there is no space
 	 * 
@@ -108,6 +181,9 @@ public class Wiki_Information extends Version {
 		String title = "Wiki_sniff_infor_page_title_06";
 		String content = "Wiki_sniff_infor_page_content_06";
 		
+		magAc.signOut();
+		magAc.signIn("demo", "gtn");
+		goToWiki();
 		addBlankWikiPage(title, content, 0);
 		goToAddRelation();
 		click(ELEMENT_SELECT_SPACE);

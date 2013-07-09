@@ -104,17 +104,20 @@ public class SocialBase extends PlatformBase {
 		info("--Go to My Space Page--");
 		//waitForElementPresent(ELEMENT_MY_SPACES_LINK);
 		//click(ELEMENT_MY_SPACES_LINK);
-		Utils.pause(500);
-		click(ELEMENT_JOIN_SPACE_LINK);
-		waitForTextPresent("Add New Space");
+//		Utils.pause(500);
+//		click(ELEMENT_JOIN_SPACE_LINK);
+//		waitForTextPresent("Add New Space");
+//		goToMySpacePage();
+		goToAllSpaces();
+		waitForAndGetElement(ELEMENT_MY_SPACES_LINK);
+		click(ELEMENT_MY_SPACES_LINK);
 	}
 
 	// Go to All Spaces
 	public void goToAllSpaces(){
 		info("Go to All Spaces");
-		goToMySpacePage();
-		waitForAndGetElement(ELEMENT_ALL_SPACE_LINK);
-		click(ELEMENT_ALL_SPACE_LINK);
+		click(ELEMENT_JOIN_SPACE_LINK);
+		waitForTextPresent("Add New Space");
 	}
 
 	// Go to Invitation Receives

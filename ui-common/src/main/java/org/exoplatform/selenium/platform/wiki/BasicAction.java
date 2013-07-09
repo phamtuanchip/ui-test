@@ -268,15 +268,28 @@ public class BasicAction extends Permission{
 	 * @param wikiPath: an element path indicates how to access wiki page (eg, "Wiki home/WikiTest")
 	 * @param pageName: name of related page (String)
 	 */
-	public void addRelatedPage(String wikiPath, String pageName){
+	public void addRelatedPage(String wikiPath, String pageName, Object...opts){
+		String space = (String) (opts.length > 0 ? opts[0] : "");
+		Boolean verify = (Boolean) (opts.length > 1 ? opts[1] : true);
+		
 		button = new Button(driver);
 		//goToWikiPage(wikiPath);
 		goToPageInfo(null, wikiPath);
 		click(ELEMENT_ADD_MORE_RELATION_BUTTON);
+		if (space != ""){
+			click(ELEMENT_SELECT_SPACE);
+			if (space == "Intranet"){
+				click(ELEMENT_PORTAL_NAME_SELECTED);
+			}else {
+				click(ELEMENT_SPACE_NAME_SELECTED.replace("${space}", space.toLowerCase()));
+			}
+		}
 		click(By.xpath(ELEMENT_SELECTED_PAGE.replace("${relatedPage}", pageName)));
 		Utils.pause(500);
 		click(button.ELEMENT_SELECT_BUTTON);
-		waitForAndGetElement(ELEMENT_RELATED_PAGE.replace("${relatedPage}", pageName));
+		if (verify){
+			waitForAndGetElement(ELEMENT_RELATED_PAGE.replace("${relatedPage}", pageName));
+		}
 		Utils.pause(500);
 	}
 

@@ -114,11 +114,22 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_SIGN_OUT_LINK = By.className("uiIconPLFLogout");
 	public final By ELEMENT_CHANGE_LANGUAGE_LINK = By.xpath("//a[text()='Change Language']");
 	public final By ELEMENT_CHANGE_LANGUAGE_LINK_OTHER = By.xpath("//a[text()='Changer de Langue']");
+	public final By ELEMENT_MY_PROFILE_LINK = By.className("uiIconPLFProfile");
+	
 	//Change language form
 	public final By ELEMENT_CHANGE_LANGUAGE_POPUP = By.xpath("//*[@id='UIMaskWorkspace']//*[text()='Interface Language Setting']");
 	public final By ELEMENT_CHANGE_LANGUAGE_POPUP_OTHER = By.xpath("//*[@id='UIMaskWorkspace']//*[text()='Langues Disponibles']");
 
-
+	//Change user info
+	public final By ELEMENT_EDIT_POSITION = By.xpath("//*[@id='UIHeaderSection']//*[@class='uiIconEdit']");
+	public final By ELEMENT_POSITION_TEXTBOX_EDIT = By.id("position");
+	public final By ELEMENT_EDIT_POSITION_SAVE_BUTTON = By.id("savePosition");
+	public final By ELEMENT_EDIT_BASIC_INFORMATION = By.xpath("//*[@id='UIBasicInfoSection']//*[@class='uiIconEdit']");
+	public final By ELEMENT_FIRST_NAME_TEXTBOX_EDIT = By.id("firstName");
+	public final By ELEMENT_LAST_NAME_TEXTBOX_EDIT = By.id("lastName");
+	public final By ELEMENT_EMAIL_TEXTBOX_EDIT = By.id("email");
+	public final By ELEMENT_EDIT_BASIC_INFO_SAVE_BUTTON = By.xpath("//*[@id='UIBasicInfoSection']//button[contains(text(), 'Save')]");
+	
 	/* Username link -BEGIN */
 	//My Account form [Username] -> My Account
 	public final String ELEMENT_CHANGE_PASSWORD_TAB = "//a[text()='Change Password' and @class='Icon ChangePass']";
@@ -388,6 +399,22 @@ public class PlatformBase extends TestBase {
 	//Space > Wiki link
 	public final By ELEMENT_WIKI_LINK_IN_SPACE = By.xpath("//*[@id='spaceMenuTab']/li[3]/a/span[text()='Wiki']");
 
+	//----------------------Gmail form ---------------------------------------------------
+	public final String GMAIL_URL = "https://mail.google.com";
+	public final String EMAIL_ADDRESS1 = "exomailtest01@gmail.com";
+	public final String EMAIL_ADDRESS2 = "exoservice@gmail.com";
+	public final String EMAIL_PASS = "exoadmin";
+	public final By ELEMENT_DELETE = By.xpath("//*[@id=':ro']/div[2]//*[@class='ar9 T-I-J3 J-J5-Ji']");
+	public final By ELEMENT_GMAIL_INBOX = By.xpath("//a[contains(@title, 'Inbox')]");
+	public final By ELEMENT_MAIL_CONTENT = By.xpath(".//*[@class='ii gt adP adO']/div");
+	public final String ELEMENT_GMAIL_CHECKBOX = "//td/div/div/div/span/b[contains(text(),'{$title}')]/ancestor::tr//td[@id=':oy']/div/div";
+	public final String ELEMENT_GMAIL_DELETE= "//div[@class='iH']/div/div[2]/div[3]/div[1]/div";
+	public final By ELEMENT_GMAIL_USERNAME = By.id("Email");
+	public final By ELEMENT_GMAIL_PASS = By.id("Passwd");
+	public final By ELEMENT_GMAIL_SIGN_IN = By.id("signIn");
+	public final String ELEMENT_GMAIL_TITLE = "//span/b[contains(text(),'{$title}')]";
+	public final By ELEMENT_GMAIL_COMPOSE = By.xpath("//div[contains(text(),'COMPOSE')]");
+	
 	///////////////////
 	//Set view permissions for portal
 	public void setViewPermissions(String groupId, String membership) {
@@ -870,5 +897,38 @@ public class PlatformBase extends TestBase {
 		}
 		switchToParentWindow();
 		Utils.pause(1000);
+	}
+	
+	//function open and go to mail
+	public void goToMail(){	
+		((JavascriptExecutor) driver).executeScript("window.open()");
+		for(String winHandle : driver.getWindowHandles()){
+			driver.switchTo().window(winHandle);
+		}
+		info("Go to gmail");
+		driver.navigate().to(GMAIL_URL);
+		driver.manage().window().maximize();
+		waitForAndGetElement(ELEMENT_GMAIL_USERNAME);
+		
+		//login to mail
+		type(ELEMENT_GMAIL_USERNAME, EMAIL_ADDRESS1, true);
+		type(ELEMENT_GMAIL_PASS, EMAIL_PASS, true);
+		click(ELEMENT_GMAIL_SIGN_IN);
+		click(ELEMENT_GMAIL_INBOX);
+	}
+	
+	/**
+	 * function: check content of mail then delete mail
+	 * @param mail: element title of mail
+	 * @param content: mail content
+	*/
+	public void checkAndDeleteMail(By mail, String content){
+		waitForAndGetElement(mail,150000);
+		click(mail);	
+		waitForTextPresent(content);
+		info("Found notify mail");
+		
+		info("delete mail");
+		click(ELEMENT_DELETE);
 	}
 }

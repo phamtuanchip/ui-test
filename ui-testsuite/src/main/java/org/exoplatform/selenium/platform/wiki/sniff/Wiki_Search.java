@@ -5,8 +5,8 @@ import static org.exoplatform.selenium.TestLogger.info;
 import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
+import org.exoplatform.selenium.platform.social.ManageMember;
 import org.exoplatform.selenium.platform.wiki.Template;
-import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -20,6 +20,7 @@ public class Wiki_Search extends Template {
 	ManageAccount magAc;
 	NavigationToolbar naTool;
 	HomePageActivity activity;
+	ManageMember magMem;
 
 	@BeforeMethod
 	public void setUpBeforeTest(){
@@ -28,6 +29,8 @@ public class Wiki_Search extends Template {
 		magAc = new ManageAccount(driver);
 		naTool = new NavigationToolbar(driver);
 		activity = new HomePageActivity(driver);
+		magMem = new ManageMember(driver);
+		
 		magAc.signIn("john", "gtn");
 		goToWiki();
 	}
@@ -62,24 +65,24 @@ public class Wiki_Search extends Template {
 	 * Advanced search -> wait to merge SOC common functions (need create page in space)
 	 * 
 	 */
-	@Test (groups = "pending")
+	@Test
 	public void test02_AdvancedSearch(){
 		String title = "Wiki_search_title_02";
 		String content = "line1/line2/line3/line4/line5";
-		String space = "";
+		String spaceName = "SearchSpace021";
 		
-		//create space
-		info("Add new wiki page");		
-		addBlankWikiPage(title, content, 0);
+		magMem.goToAllSpaces();
+		magMem.addNewSpace(spaceName, "", "Visible", "Validation", "", "");
+		goToWikiFromSpace(spaceName);
+		addWikiPageWithContentMultiLine(title, content);
 		
 		goToWiki();
-		advancedSearch("line5", "/spaces/" + space);
+		advancedSearch("line5", "/spaces/" + spaceName.toLowerCase());
 		assert getText(ELEMENT_SEARCH_RESULT) != "0";
 		waitForAndGetElement(ELEMENT_PAGE_RESULT.replace("${title}", title));
 		
-		goToWikiHome();
-		click(By.linkText(title));
-		deleteCurrentWikiPage();
+		magMem.goToAllSpaces();
+		magMem.deleteSpace(spaceName, 180000);
 	}
 	
 	/**CaseId: 70263

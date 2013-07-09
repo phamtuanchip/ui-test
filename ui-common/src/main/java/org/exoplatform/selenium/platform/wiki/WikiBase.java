@@ -34,6 +34,7 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_INTRANET_HOME_PAGE = By.xpath("//ul[@class='uiCompanyNavigations']//li/a[text()='Home']");
 	public final By ELEMENT_PAGE_TITLE_INFO = By.id("titleInfo");
 	public final By ELEMENT_PAGE_TITLE_EDIT_TEXTBOX = By.id("EdiableInput");
+	public final String ELEMENT_DISPLAY_MODE = "//*[@id='DisplayModesDropDown']//span[text()='${space}']";
 	
 	//Company/Left panel > Wiki Link
 	public final By ELEMENT_WIKI_LINK=By.xpath("//ul[@class='uiCompanyNavigations']//li/a[text()='Wiki']");
@@ -44,8 +45,7 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_FROM_TEMPLATE_LINK = By.linkText("From Template...");
 
 	//Edit menu
-	public final By ELEMENT_EDIT_PAGE_LINK= By.xpath("//*[@id='UIWikiPageControlArea_PageToolBar']//li/div[contains(text(), 'Edit')]");
-	public final By ELEMENT_MINOR_EDIT_BUTTON = By.xpath(".//*[@id='UISubmitToolBarUpper']/a[2]");
+	public final By ELEMENT_EDIT_PAGE_LINK= By.xpath("//*[@id='UIWikiPageControlArea_PageToolBar']//li/div[contains(text(), 'Edit')]");;
 
 	//More menu
 	public final By ELEMENT_MORE_LINK = By.xpath("//*[@id='UIWikiPageControlArea_PageToolBar']//div[contains(text(), 'More')]");
@@ -55,6 +55,8 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_PAGE_INFO_LINK = By.linkText("Page Info");
 	public final By ELEMENT_PAGE_PERMISSION_LINK = By.linkText("Page Permissions");
 	public final By ELEMENT_MOVE_PAGE_LINK = By.linkText("Move Page");
+	public final By ELEMENT_EXPORT_AS_PDF_LINK = By.linkText("Export as PDF");
+	public final By ELEMENT_PERMALINK_LINK = By.linkText("Permalink");
 
 	//BreadCrumb
 	public final By ELEMENT_WIKI_HOME = By.linkText("Wiki Home");
@@ -69,17 +71,27 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_SEARCH_RESULT = By.className("resultNumber");
 	public final String ELEMENT_PAGE_RESULT = "//*[@id='UIWikiAdvanceSearchResult']//*[contains(text(), '${title}')]";
 
+	//Wiki Home
+	public final By ELEMENT_WIKI_HOME_LINK=By.xpath("//a[text()='Wiki Home']");
+	public final By ELEMENT_WIKI_HOME_PAGE=By.xpath("//*[@id='titleInfo' and text()='Wiki Home']");
+	public final By ELEMENT_TITLE_WIKI_HOME_LINK = By.xpath("//*[@class='titleWikiBox']/a[contains(text(), 'Wiki Home')]");
+	
 	/*------------------add/edit wiki page---------------------*/
 	//Source Editor mode
 	public final By ELEMENT_TITLE_WIKI_INPUT = By.id("titleInput");
 	public final By ELEMENT_CONTENT_WIKI_INPUT = By.id("Markup");
 	public final By ELEMENT_RICHTEXT_BUTTON = By.xpath("//*[@id='UIEditorTabs']/button[1]");
-	//("//a[@title='Rich Text']");
 	public final By ELEMENT_PREVIEW_BUTTON = By.xpath("//*[@id='UIEditorTabs']/button[2]");
-	//("//a[@title='Preview']");
 	public final By ELEMENT_PREVIEW_SCREEN = By.xpath("//div[@class='popupTitle' and text()='Preview']");
 	public final By ELEMENT_PUBLIC_ACTIVITY_CHECKBOX = By.id("PublishActivityUpper");
 	public final By ELEMENT_COMMENT_TEXTBOX = By.id("Comment");
+	public final By ELEMENT_SAVE_BUTTON_ADD_PAGE = By.id("UISubmitToolBarBottom_SavePage_");
+	public final By ELEMENT_CANCEL_BUTTON_ADD_PAGE = By.id("UISubmitToolBarBottom_Cancel_");
+	public final By ELEMENT_CONFIRM_BUTTON_ADD_PAGE = By.xpath("//button[text()='Confirm']");
+	public final By ELEMENT_CANCEL_BUTTON_ADD_PAGE_NULL_TITLE = By.xpath("//button[text()='Cancel']");
+	public final String MESSAGE_PAGE_ALREADY_EXISTS = "The page title already exists. Please select another one.";
+	public final String MESSAGE_CANCEL_CREATE_PAGE = "Are you sure to leave this page?";
+	public final By ELEMENT_OK_BUTTON_WIKI_PAGE = By.xpath("//div[contains(@class, 'uiAction')]/a[text()='OK']");
 	
 	//Richtext mode
 	public final By ELEMENT_SOURCE_EDITOR_BUTTON= By.xpath("//*[contains(text(),'Source Editor')]");
@@ -87,11 +99,8 @@ public class WikiBase extends PlatformBase{
 
 	//Upload file area
 	public By ELEMENT_UPLOAD_FILE = By.xpath("//div[@class='uiUploadInput']//*[@type='file']"); 
-	//By.id("WikiUploadFile");
 	public final By ELEMENT_FRAME_UPLOAD=By.xpath("//div[@class='uiUploadInput']/iframe");
-	//("//div[@title='Upload New File']/iframe");
 	public final String ELEMENT_REMOVE_ATTACHMENT = "//a[text()='{$file}']/../../td/a/i[@class='uiIconDelete']";
-	//"//a[contains(text(),'{$file}')]/../../td/img[@title='Remove Attachment']";
 
 	//Add page from template
 	public final String ELEMENT_SELECT_TEMPLATE_LINK = "//input[@value = '{$template}']";
@@ -108,25 +117,31 @@ public class WikiBase extends PlatformBase{
 	
 	/*-------------------------Move page--------------------*/
 	public final By CLICK_MOVE_ACTION = By.xpath("//*[@id='UIWikiMovePageForm']//*[text()='Move']");
+	public final By ELEMENT_CANCEL_BUTTON_MOVE_PAGE = By.xpath("//*[contains(@class, 'uiWikiMovePageForm')]//button[contains(text(), 'Cancel')]");
+	public final By ELEMENT_MOVE_PAGE_POPUP = By.xpath("//*[contains(@class, 'popupTitle') and text()='Move Page']");
+	public final By ELEMENT_SELECT_SPACE_DESTINATION = By.xpath("//*[contains(text(), 'Select the destination:')]/..//*[@class='btn dropdown-toggle']");
+	public final String ELEMENT_SPACE_NAME_SELECTED = "//*[@id='UISpaceSwitcher_/spaces/${space}']/a";
+	public final By ELEMENT_PORTAL_NAME_SELECTED = By.id("UISpaceSwitcher_/portal/intranet");
+	public final String MESSAGE_MOVE_PAGE_DUPLICATE_TITLE = "Another page with the same title already exists in the selected space.";
+	public final By ELEMENT_RENAME_LINK_WHEN_MOVE_PAGE = By.linkText("Rename");
+	public final String MESSAGE_NO_PERMISSION_MOVE_PAGE = "You have no edit permission at the destination page";
 
-	/*-------------------------More/page permission page--------------------*/
+	/*-------------------------Permission page--------------------*/
 	public final By ELEMENT_SELECT_USER = By.xpath("//a[contains(@onclick, 'OpenSelectUserForm')]");
-	//("//img[@title='Select User']");
 	public final String ELEMENT_USERNAME_CHECK = "//input[@id='${user}' and @type='checkbox']";
 	public final By ELEMENT_SELECTOR_TEXT = By.xpath("//span[@class='PopupTitle' and contains(text(),'User Selector')]");
 	public final By ELEMENT_SELECT_INPUT = By.id("PermissionOwner");
 	public final By ELEMENT_SELECT_GROUP = By.className("uiIconGroup");
-	//("//a[@title='Select Group']");
 	public final By ELEMENT_SELECT_MEMBERSHIP = By.className("uiIconMembership");
-	//("//a[@title='Select Membership']");
-	
-	// Go to Wiki page > More > Page Permissions
 	public final String ELEMENT_EDIT_PAGE_PERMISSIONS = "//*[contains(text(), '${user}')]/../..//input[contains(@id, 'EDITPAGE')]";
 	public final String ELEMENT_VIEW_PAGE_PERMISSIONS = "//*[contains(text(), '${user}')]/../..//input[contains(@id, 'VIEWPAGE')]";
 	public final String ELEMENT_DELETE_PERMISSIONS = "//*[contains(text(), '${user}')]/../..//*[contains(@class, 'uiIconDelete')]";
 	public final By ELEMENT_PAGE_PERMISSION_POPUP = By.xpath("//span[contains(@class, 'popupTitle') and text()='Page Permissions']");
-
-	/*----------------------Browse/Space setting/ add, edit, delete template-----------------*/
+	public final By ELEMENT_SELECT_THIS_GROUP = By.linkText("Select this Group");
+	public final By ELEMENT_SELECT_ROLE_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Select a role']");
+	public final By ELEMENT_SELECT_GROUP_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Select a group']");
+	
+	/*----------------------Manage Template----------------------*/
 	public final By ELEMENT_TEMPLATE_LINK = By.linkText("Template");
 	public final By ELEMENT_ADD_TEMPLATE_LINK = By.xpath("//*[text()='Add More Templates']");
 	public final String ELEMENT_EDIT_TEMPLATE_ICON = "//*[text()='{$template}']/../..//*[@class='uiIconEdit']";
@@ -170,25 +185,22 @@ public class WikiBase extends PlatformBase{
 	// Verify Page content
 	public final String ELEMENT_VERIFY_PAGE_CONTENT="//*[@class='uiWikiContentDisplay']//p[text()='${TEMPLATE_CONTENT}']";
 	
-	/*------------------------Browser/Space setting/ Permission space------------------------*/
+	/*------------------------Permission space--------------------------------*/
 	public final By ELEMENT_PERMISSION_LINK=By.linkText("Permission");
 	public final String MSG_PERMISSION_SAVE = "The permission setting has been saved successfully.";
 	public final String ELEMENT_EDIT_PAGE_CHECK = "//*[contains(text(), '{$user}')]/../..//*[@title='Edit Pages']";
 	public final String ELEMENT_VIEW_PAGE_CHECK = "//*[contains(text(), '{$user}')]/../..//*[@title='View Pages']";
 	public final String ELEMENT_ADMIN_PAGE_CHECK = "//*[contains(text(), '{$user}')]/../..//input[contains(@id, 'ADMINPAGE')]";
 	public final String ELEMENT_ADMIN_SPACE_CHECK = "//*[contains(text(), '{$user}')]/../..//input[contains(@id, 'ADMINSPACE')]"; 
-	//public final String ELEMENT_VIEW_SPACE_CHECK = "//tr/td/div[@title='{$user}']/../../td/input[@title='View Pages']";
 	public final String ELEMENT_DELETE_PERMISSION = "//tr/td/div[contains(text(),'{$user}')]/../../td/a/i[@class='uiIconDelete']";
 
 	//set permission screen
 	public String ELEMENT_USER_CHECKBOX = "//*[text()='${user}']/../..//*[@type='checkbox']"; 
 	public By ELEMENT_SEARCH_USER_INPUT = By.id("Quick Search");
 	public By ELEMENT_QUICK_SEARCH_BUTTON = By.xpath("//*[contains(@class, 'uiIconSearch')]");
-			//("//a[@title='Quick Search']");
 	public By ELEMENT_SELECT_SEARCH = By.name("filter");
-	//By.id("filter");
 
-	/*-------------------------Page information area---------------------------*/
+	/*-------------------------Page information management------------------------------*/
 	public final By ELEMENT_COMPARE_TEXT = By.xpath("//div[contains(text(),'Compared With')]");
 	public final By ELEMENT_REVISION_LINK = By.xpath("//*[@id='UIWikiPageInfoArea']//a[contains(text(), 'V')]");
 	public final String ELEMENT_VERSION_LINK= "//a[contains(text(),'v. {$version}')]";
@@ -207,17 +219,12 @@ public class WikiBase extends PlatformBase{
 	public String ELEMENT_LINE_REMOVE = "//*[@class='diffremoveword' and text()='${lineRemove}']";
 	public String ELEMENT_LINE_ADD = "//*[@class='diffaddword' and text()='${lineAdd}']";
 	
-	//By.linkText("Add More Relations");
-	//public final By ELEMENT_SELECT_BUTTON = By.linkText("Select");
-	//public final By ELEMENT_SELECT_BUTTON = By.xpath(".//*[@id='UIWikiSelectPageForm']/div[3]/a[text()='Select']");
-	//public final By ELEMENT_REMOVE_RELATION_BUTTON = 
-
 	// Go to Wiki page > More > Page info > Add more relations
 	public final String ELEMENT_SELECTED_PAGE = "//div[contains(@class,'popupContent')]//*[@id='iconTreeExplorer' and contains(@onclick, 'event')]//a[contains(text(), '${relatedPage}')]"; 
 	public final String ELEMENT_RELATED_PAGE = "//*[text()='Related Pages']/..//a[contains(text(),'${relatedPage}')]";
 	public By ELEMENT_SELECT_SPACE = By.xpath("//*[contains(text(), 'Select the Wiki:')]/..//*[@class='btn dropdown-toggle']");
-	public By ELEMENT_NO_SPACE_OPTION = By.xpath("//*[contains(text(), 'Select the Space:')]/..//*[@id='UISpaceSwitcher_nospace']");
 	public final String ELEMENT_REMOVE_RELATED_PAGE_LINK = "//*[contains(text(),'${relatedPage}')]/ancestor::table//*[@class='uiIconDelete']";
+	public By ELEMENT_NO_SPACE_OPTION = By.id("UISpaceSwitcher_nospace");
 
 	//Wiki page > Revisions page
 	public final String ELEMENT_CURRENT_VERSION = "//a[@title='View Revision' and text()='Current (v. ${version})']";
@@ -228,34 +235,11 @@ public class WikiBase extends PlatformBase{
 	public final String ELEMENT_SPACE_WIKI = "//a[text()='${spaceName}']/..//a[text()='Wiki']";
 	public final By ELEMENT_TITLE_WIKI_HOME = By.xpath("//*[@id='titleInfo' and text()='Wiki Home']");
 	public final By ELEMENT_WIKI_TAB = By.xpath("//a[@class='ApplicationAdd' and text()='Wiki']");
-
-	/*-------------------------Go to wiki home---------------------------*/
-	public final By ELEMENT_WIKI_HOME_LINK = By.xpath("//a[text()='Wiki Home']");
-	public final By ELEMENT_WIKI_HOME_PAGE = By.xpath("//*[@id='titleInfo' and text()='Wiki Home']");
-	public final By ELEMENT_TITLE_WIKI_HOME_LINK = By.xpath("//*[@class='titleWikiBox']/a[contains(text(), 'Wiki Home')]");
 	
-	public final By ELEMENT_SELECT_THIS_GROUP = By.linkText("Select this Group");
-	public final By ELEMENT_SELECT_ROLE_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Select a role']");
-	public final By ELEMENT_SELECT_GROUP_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Select a group']");
+	/*-----------------------Watch/UnWatch page-------------------------------*/
+	public final String MESSAGE_WATCH_PAGE = "You have started watching this page now.";
+	public final String MESSAGE_UNWATCH_PAGE = "You have stopped watching this page now.";
 
-	//Wiki page > Add page
-	public final By ELEMENT_SAVE_BUTTON_ADD_PAGE = By.id("UISubmitToolBarBottom_SavePage_");
-	public final By ELEMENT_CANCEL_BUTTON_ADD_PAGE = By.id("UISubmitToolBarBottom_Cancel_");
-	public final By ELEMENT_CONFIRM_BUTTON_ADD_PAGE = By.xpath("//button[text()='Confirm']");
-	public final By ELEMENT_CANCEL_BUTTON_ADD_PAGE_NULL_TITLE = By.xpath("//button[text()='Cancel']");
-	public final String MESSAGE_PAGE_ALREADY_EXISTS = "The page title already exists. Please select another one.";
-	
-	//Wiki page > Move page
-	//public final By ELEMENT_MOVE_BUTTON_MOVE_PAGE = By.xpath("//*[@id='UIWikiMovePageForm']//button[contains(text(), 'Move')]");
-	public final By ELEMENT_CANCEL_BUTTON_MOVE_PAGE = By.xpath("//*[contains(@class, 'uiWikiMovePageForm')]//button[contains(text(), 'Cancel')]");
-	public final By ELEMENT_MOVE_PAGE_POPUP = By.xpath("//*[contains(@class, 'popupTitle') and text()='Move Page']");
-	
-	//Create page 
-	public final String MESSAGE_CANCEL_CREATE_PAGE = "Are you sure you want to leave this page?"; 
-			//"Are you sure to leave this page?";
-
-	//Edit page
-	public final By ELEMENT_OK_BUTTON_WIKI_PAGE = By.xpath("//div[contains(@class, 'uiAction')]/a[text()='OK']");
 
 	//================== PLF4/Common function for Wiki ==================//
 	//////
@@ -396,7 +380,10 @@ public class WikiBase extends PlatformBase{
 	 * @param pageName1
 	 * @param pageName2
 	 */
-	public void movePage(String pageName1, String pageName2){
+	public void movePage(String pageName1, String pageName2, Object...opts){
+		String space = (String) (opts.length > 0 ? opts[0] : "");
+		Boolean verify = (Boolean) (opts.length > 1 ? opts[1] : true);
+		
 		button = new Button(driver);
 		//By ELEMENT_VERIFY_CURRENT_LOCATION = By.xpath("//label[text()='Current Location :']/../..//*[contains(text(), '"+ pageName1 +"')]");
 		//By ELEMENT_VERIFY_NEW_LOCATION = By.xpath("//label[text()='New Location :']/../..//*[contains(text(), '"+ pageName2 +"')]");
@@ -410,7 +397,15 @@ public class WikiBase extends PlatformBase{
 		info("Move a page");
 		goToMovePage();
 		waitForAndGetElement(ELEMENT_MOVE_PAGE_POPUP);
-
+		
+		if (space != ""){
+			click(ELEMENT_SELECT_SPACE_DESTINATION);
+			if (space == "Intranet"){
+				click(ELEMENT_PORTAL_NAME_SELECTED);
+			}else {
+				click(ELEMENT_SPACE_NAME_SELECTED.replace("${space}", space.toLowerCase()));
+			}
+		}
 		info("CURRENT_LOCATION");
 		waitForAndGetElement(ELEMENT_VERIFY_CURRENT_LOCATION);
 		click(ELEMENT_NEW_LOCATION);
@@ -418,7 +413,9 @@ public class WikiBase extends PlatformBase{
 		
 		//click(CLICK_MOVE_ACTION);
 		click(button.ELEMENT_MOVE_BUTTON);
-		waitForAndGetElement(ELEMENT_VERIFY_AFTER_MOVE_PAGE);
+		if (verify){
+			waitForAndGetElement(ELEMENT_VERIFY_AFTER_MOVE_PAGE);
+		}
 		Utils.pause(1000);
 	}
 
@@ -757,5 +754,43 @@ public class WikiBase extends PlatformBase{
 		goToPageInfoFromCurrentPage();
 		click(ELEMENT_ADD_MORE_RELATION_BUTTON);
 		waitForAndGetElement(ELEMENT_SELECT_SPACE);
+	}
+	
+	public void goToExportPageAsPDF(){
+		info("Export wiki page as pdf");
+		mouseOverAndClick(ELEMENT_MORE_LINK);
+		mouseOverAndClick(ELEMENT_EXPORT_AS_PDF_LINK);
+		Utils.pause(1000);
+	}
+	
+	public void goToPermalink(){
+		info("Go to permalink");
+		mouseOverAndClick(ELEMENT_MORE_LINK);
+		mouseOverAndClick(ELEMENT_PERMALINK_LINK);
+		Utils.pause(1000);
+	}
+	
+	public void watchWikiPage(){
+		button = new Button(driver);
+		
+		info("Watch this wiki page");
+		mouseOverAndClick(ELEMENT_MORE_LINK);
+		mouseOverAndClick(ELEMENT_WATCH_LINK);
+		waitForTextPresent(MESSAGE_WATCH_PAGE);
+		button.ok();
+		mouseOverAndClick(ELEMENT_MORE_LINK);
+		waitForAndGetElement(ELEMENT_UNWATCH_LINK);
+	}
+	
+	public void unwatchWikiPage(){
+		button = new Button(driver);
+		
+		info("Watch this wiki page");
+		mouseOverAndClick(ELEMENT_MORE_LINK);
+		mouseOverAndClick(ELEMENT_UNWATCH_LINK);
+		waitForTextPresent(MESSAGE_UNWATCH_PAGE);
+		button.ok();
+		mouseOverAndClick(ELEMENT_MORE_LINK);
+		waitForAndGetElement(ELEMENT_WATCH_LINK);
 	}
 }

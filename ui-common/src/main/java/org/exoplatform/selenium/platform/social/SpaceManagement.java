@@ -41,7 +41,7 @@ public class SpaceManagement extends SocialBase {
 	//Go to My Spaces	> 
 	//Add space Form
 	protected  int DEFAULT_TIMEOUT = 60000;
-	public final By     ELEMENT_ADDNEWSPACE_BUTTON      = By.xpath("//button[@data-original-title='Add New Space']");
+	public final By     ELEMENT_ADDNEWSPACE_BUTTON      = By.xpath("//button[text()='Add New Space']");
 			//("//a[@class='AddSpaceIcon']");
 
 	public final By     ELEMENT_ADDNEWSPACE_FORM        = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Add New Space']");
@@ -198,9 +198,8 @@ public class SpaceManagement extends SocialBase {
 			}
 		}
 
-		switchTabs(ELEMENT_USER_GROUP_TAB);
-
 		if (groupPath != "" && childGroupName != "") {
+			switchTabs(ELEMENT_USER_GROUP_TAB);
 			addUserGroupToInvite(groupPath, childGroupName);
 		}
 

@@ -576,7 +576,10 @@ public class TestBase {
 		fp.setPreference("browser.download.folderList", 2);
 		info("Save file to " + pathFile);
 		fp.setPreference("browser.download.dir", pathFile);
-		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall;application/x-zip;application/x-zip-compressed;application/octet-stream;application/zip;application/pdf;application/msword;text/plain;application/octet;application/xml");
+		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", 
+				"application/x-xpinstall;application/x-zip;application/x-zip-compressed;" +
+				"application/octet-stream;application/zip;application/pdf;application/msword;" +
+				"text/plain;application/octet;application/xml");
 		driver = new FirefoxDriver(fp);
 		baseUrl = System.getProperty("baseUrl");
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
