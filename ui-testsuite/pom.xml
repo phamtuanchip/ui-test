@@ -65,9 +65,15 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>wiki-sniff</id>
+			<id>wiki-sniff-part1</id>
 			<properties>
-				<testSuite>wiki-sniff.xml</testSuite>
+				<testSuite>wiki-sniff-part1.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>wiki-sniff-part2</id>
+			<properties>
+				<testSuite>wiki-sniff-part2.xml</testSuite>
 			</properties>
 		</profile>
 		<profile>

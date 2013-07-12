@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Platform Sniff Test" verbose="1" preserve-order="true">
+	<test name="wiki-sniff" enabled="true">
+		<groups>
+			<run>
+				<exclude name="pending" />
+			</run>
+		</groups>
+		<classes>
+			<class name="org.exoplatform.selenium.platform.wiki.sniff.Wiki_Attachment" />
+			<class name="org.exoplatform.selenium.platform.wiki.sniff.Wiki_BasicAction_ManagePage" />
+			<class name="org.exoplatform.selenium.platform.wiki.sniff.Wiki_PublicActivity" />
+			<class name="org.exoplatform.selenium.platform.wiki.sniff.Wiki_WikiSetting_ManagePermission" />
+			<class name="org.exoplatform.selenium.platform.wiki.sniff.Wiki_WikiSetting_ManageTemplate" />
+			<class name="org.exoplatform.selenium.platform.wiki.sniff.Wiki_Search" />
+		</classes>
+	</test>
+	<listeners>
+		<listener class-name="org.exoplatform.selenium.TestReportListener" />
+	</listeners>
+</suite>

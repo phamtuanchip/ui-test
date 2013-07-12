@@ -85,7 +85,7 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_PREVIEW_SCREEN = By.xpath("//div[@class='popupTitle' and text()='Preview']");
 	public final By ELEMENT_PUBLIC_ACTIVITY_CHECKBOX = By.id("PublishActivityUpper");
 	public final By ELEMENT_COMMENT_TEXTBOX = By.id("Comment");
-	public final By ELEMENT_SAVE_BUTTON_ADD_PAGE = By.id("UISubmitToolBarBottom_SavePage_");
+	public final By ELEMENT_SAVE_BUTTON_ADD_PAGE = By.id("UISubmitToolBarUpper_SavePage_");
 	public final By ELEMENT_CANCEL_BUTTON_ADD_PAGE = By.id("UISubmitToolBarBottom_Cancel_");
 	public final By ELEMENT_CONFIRM_BUTTON_ADD_PAGE = By.xpath("//button[text()='Confirm']");
 	public final By ELEMENT_CANCEL_BUTTON_ADD_PAGE_NULL_TITLE = By.xpath("//button[text()='Cancel']");
@@ -203,7 +203,7 @@ public class WikiBase extends PlatformBase{
 	/*-------------------------Page information management------------------------------*/
 	public final By ELEMENT_COMPARE_TEXT = By.xpath("//div[contains(text(),'Compared With')]");
 	public final By ELEMENT_REVISION_LINK = By.xpath("//*[@id='UIWikiPageInfoArea']//a[contains(text(), 'V')]");
-	public final String ELEMENT_VERSION_LINK= "//a[contains(text(),'v. {$version}')]";
+	public final String ELEMENT_VERSION_LINK= "//a[contains(text(),'V{$version}')]";
 	public final String ELEMENT_RESTORE_LINK = "//td/label/a[contains(text(), 'v. {$version}')]/../../..//*[@class='uiIconRestore']";
 	public final By ELEMENT_COMPARE_BUTTON = By.xpath("//*[text()='Compare the selected versions']");	
 	public final By ELEMENT_VIEW_CHANGE = By.linkText("(View Change)");

@@ -30,6 +30,7 @@ public class Wiki_WikiSetting_ManageTemplate extends Template {
 
 	@AfterMethod
 	public void afterTest(){
+		magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}

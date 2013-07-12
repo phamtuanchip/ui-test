@@ -37,6 +37,7 @@ public class Wiki_Information extends Version {
 
 	@AfterMethod
 	public void afterTest(){
+		magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
@@ -182,7 +183,7 @@ public class Wiki_Information extends Version {
 		String content = "Wiki_sniff_infor_page_content_06";
 		
 		magAc.signOut();
-		magAc.signIn("demo", "gtn");
+		magAc.signIn("fqa", "gtngtn");
 		goToWiki();
 		addBlankWikiPage(title, content, 0);
 		goToAddRelation();

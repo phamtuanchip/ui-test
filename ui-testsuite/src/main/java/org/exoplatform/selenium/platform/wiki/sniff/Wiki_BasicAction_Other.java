@@ -32,6 +32,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 		magAc = new ManageAccount(driver);
 		dialog = new Dialog(driver);
 		button = new Button(driver);
+		magMem = new ManageMember(driver);
 		
 		magAc.signIn("john", "gtn"); 
 		goToWiki();
@@ -72,10 +73,10 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test02_MovePage(){
-		String title1 = "Wiki_move_title_08_1";
-		String content1 = "Wiki_move_content_08_1";
-		String title2 = "Wiki_move_title_08_2";
-		String content2 = "Wiki_move_content_08_2";
+		String title1 = "Wiki_move_title_02_1";
+		String content1 = "Wiki_move_content_02_1";
+		String title2 = "Wiki_move_title_02_2";
+		String content2 = "Wiki_move_content_02_2";
 		
 		info("Add new 2 wiki pages at Wiki Home");		
 		addBlankWikiPage(title1, content1, 0);
@@ -94,13 +95,13 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test03_MovePageDifferentSpace(){
-		String spaceName1 = "Space091";
-		String title1 = "Wiki_move_title_09_1";
-		String content1 = "Wiki_move_content_09_1";
+		String spaceName1 = "Space031";
+		String title1 = "Wiki_move_title_03_1";
+		String content1 = "Wiki_move_content_03_1";
 		
-		String spaceName2 = "Space092";
-		String title2 = "Wiki_move_title_09_2";
-		String content2 = "Wiki_move_content_09_2";
+		String spaceName2 = "Space032";
+		String title2 = "Wiki_move_title_03_2";
+		String content2 = "Wiki_move_content_03_2";
 		
 		addWikiForSpace(spaceName1, title1, content1);
 		addWikiForSpace(spaceName2, title2, content2);
@@ -123,12 +124,12 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test04_MovePageFromSpaceToPortal(){
-		String title1 = "Wiki_move_title_10_1";
-		String content1 = "Wiki_move_content_10_1";
+		String title1 = "Wiki_move_title_04_1";
+		String content1 = "Wiki_move_content_04_1";
 		
-		String spaceName = "Space10";
-		String title2 = "Wiki_move_title_10_2";
-		String content2 = "Wiki_move_content_10_2";
+		String spaceName = "Space04";
+		String title2 = "Wiki_move_title_04_2";
+		String content2 = "Wiki_move_content_04_2";
 		
 		addBlankWikiPage(title1, content1, 0);
 		addWikiForSpace(spaceName, title2, content2);
@@ -152,11 +153,11 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test05_MovePageInSameSpace(){
-		String spaceName = "Space11";
-		String title1 = "Wiki_move_title_11_1";
-		String content1 = "Wiki_move_content_11_1";		
-		String title2 = "Wiki_move_title_11_2";
-		String content2 = "Wiki_move_content_11_2";
+		String spaceName = "Space05";
+		String title1 = "Wiki_move_title_05_1";
+		String content1 = "Wiki_move_content_05_1";		
+		String title2 = "Wiki_move_title_05_2";
+		String content2 = "Wiki_move_content_05_2";
 		
 		addWikiForSpace(spaceName, title1, content1);
 		goToWikiHome();
@@ -174,11 +175,11 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test06_MovePageFromPortalToSpace(){		
-		String spaceName = "Space12";
-		String title1 = "Wiki_move_title_12_1";
-		String content1 = "Wiki_move_content_12_1";
-		String title2 = "Wiki_move_title_12_2";
-		String content2 = "Wiki_move_content_12_2";
+		String spaceName = "Space06";
+		String title1 = "Wiki_move_title_06_1";
+		String content1 = "Wiki_move_content_06_1";
+		String title2 = "Wiki_move_title_06_2";
+		String content2 = "Wiki_move_content_06_2";
 		
 		addWikiForSpace(spaceName, title1, content1);
 		goToWiki();
@@ -201,13 +202,13 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test07_MovePageDuplicateName(){
-		String spaceName1 = "Space131";
-		String title1 = "Wiki_move_title_13_1";
-		String content1 = "Wiki_move_content_13_1";
+		String spaceName1 = "Space071";
+		String title1 = "Wiki_move_title_07_1";
+		String content1 = "Wiki_move_content_07_1";
 		
-		String spaceName2 = "Space132";
-		String title2 = "Wiki_move_title_13_2";
-		String content2 = "Wiki_move_content_13_2";
+		String spaceName2 = "Space072";
+		String title2 = "Wiki_move_title_07_2";
+		String content2 = "Wiki_move_content_07_2";
 		
 		addWikiForSpace(spaceName1, title1, content1);
 		addWikiForSpace(spaceName2, title1, content2);
@@ -234,11 +235,11 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test08_MovePageWhenNotHaveEditPermissionAtDestPage(){
-		String spaceName = "Space14";
-		String title1 = "Wiki_move_title_14_1";
-		String content1 = "Wiki_move_content_14_1";
-		String title2 = "Wiki_move_title_14_2";
-		String content2 = "Wiki_move_content_14_2";
+		String spaceName = "Space08";
+		String title1 = "Wiki_move_title_08_1";
+		String content1 = "Wiki_move_content_08_1";
+		String title2 = "Wiki_move_title_08_2";
+		String content2 = "Wiki_move_content_08_2";
 		
 		goToWiki();
 		addBlankWikiPage(title1, content1, 0);		
@@ -265,8 +266,8 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test09_CheckPermalinkWithMemberOfPage(){
-		String title = "Wiki_sniff_permalink_title_02";
-		String content = "Wiki_sniff_permalink_content_02";
+		String title = "Wiki_sniff_permalink_title_09";
+		String content = "Wiki_sniff_permalink_content_09";
 		
 		addBlankWikiPage(title, content, 0);
 		goToPermalink();
@@ -285,8 +286,8 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test10_CheckPermalinkWithNotMemberOfPage(){
-		String title = "Wiki_sniff_permalink_title_03";
-		String content = "Wiki_sniff_permalink_content_03";
+		String title = "Wiki_sniff_permalink_title_10";
+		String content = "Wiki_sniff_permalink_content_10";
 		
 		addBlankWikiPage(title, content, 0);
 		deletePagePermission("any");
@@ -306,9 +307,9 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test11_CheckPermalinkWithUserMemberOfSpace(){
-		String spaceName = "Space04";
-		String title = "Wiki_sniff_permalink_title_04";
-		String content = "Wiki_sniff_permalink_content_04";
+		String spaceName = "Space11";
+		String title = "Wiki_sniff_permalink_title_11";
+		String content = "Wiki_sniff_permalink_content_11";
 		
 		magMem.goToAllSpaces();
 		magMem.addNewSpace(spaceName, "", "Visible", "Open", "", "");
@@ -341,9 +342,9 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test12_CheckPermanlinkWithUserNotMemberOfSpace(){
-		String spaceName = "Space05";
-		String title = "Wiki_sniff_permalink_title_05";
-		String content = "Wiki_sniff_permalink_content_05";
+		String spaceName = "Space12";
+		String title = "Wiki_sniff_permalink_title_12";
+		String content = "Wiki_sniff_permalink_content_12";
 		
 		addWikiForSpace(spaceName, title, content);
 		goToPermalink();
@@ -363,8 +364,8 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test13_CheckWhenChangePermalinkStatus(){
-		String title = "Wiki_sniff_permalink_title_06";
-		String content = "Wiki_sniff_permalink_content_06";
+		String title = "Wiki_sniff_permalink_title_13";
+		String content = "Wiki_sniff_permalink_content_13";
 		String user = "demo";
 		
 		info("Create new page at restricted status");
@@ -399,8 +400,8 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test14_ChangePermissionOfPageInPermalink_SelectUser(){
-		String title = "Wiki_sniff_permalink_title_07";
-		String content = "Wiki_sniff_permalink_content_07";
+		String title = "Wiki_sniff_permalink_title_14_1";
+		String content = "Wiki_sniff_permalink_content_14_1";
 		String[] userGroup1 = {"mary"};
 		
 		addBlankWikiPage(title, content, 0);
@@ -424,8 +425,8 @@ public class Wiki_BasicAction_Other extends Permalink {
 	
 	@Test
 	public void test14_ChangePermissionOfPageInPermalink_SelectGroup(){
-		String title = "Wiki_sniff_permalink_title_07";
-		String content = "Wiki_sniff_permalink_content_07";
+		String title = "Wiki_sniff_permalink_title_14_2";
+		String content = "Wiki_sniff_permalink_content_14_2";
 		String[] userGroup2 = {"Development"};
 		
 		addBlankWikiPage(title, content, 0);
@@ -449,8 +450,8 @@ public class Wiki_BasicAction_Other extends Permalink {
 	
 	@Test
 	public void test14_ChangePermissionOfPageInPermalink_SelectMembership(){
-		String title = "Wiki_sniff_permalink_title_07";
-		String content = "Wiki_sniff_permalink_content_07";
+		String title = "Wiki_sniff_permalink_title_14_3";
+		String content = "Wiki_sniff_permalink_content_14_3";
 		String[] userGroup3 = {"Platform/Content Management", "author"}; 
 		
 		addBlankWikiPage(title, content, 0);

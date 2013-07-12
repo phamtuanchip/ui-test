@@ -31,6 +31,7 @@ public class Wiki_WikiSetting_ManagePermission extends BasicAction {
 
 	@AfterMethod
 	public void afterTest(){
+		magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}

@@ -37,6 +37,7 @@ public class Wiki_Search extends Template {
 	
 	@AfterMethod
 	public void afterTest(){
+		magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
