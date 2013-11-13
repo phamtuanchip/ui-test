@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="eXo Cloud Test" verbose="1" preserve-order="true">
+	<test name="cloud-start" enabled="true">
+		<groups>
+			<run>
+				<exclude name="pending" />
+			</run>
+		</groups>
+		<classes>
+			<class name="org.exoplatform.selenium.cloud.signup.Cloud_Start"/>
+		</classes>
+	</test>
+	<listeners>
+		<listener class-name="org.exoplatform.selenium.TestReportListener" />
+	</listeners>
+</suite>
