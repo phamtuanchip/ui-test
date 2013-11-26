@@ -444,3 +444,4 @@ public class ForumManageCategory extends ForumBase {
 	}
 
 }
+
