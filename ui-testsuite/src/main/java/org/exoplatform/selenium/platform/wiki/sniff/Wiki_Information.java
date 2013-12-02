@@ -31,7 +31,7 @@ public class Wiki_Information extends Version {
 		but = new Button(driver);
 		magMem = new ManageMember(driver);
 		
-		magAc.signIn("john", "gtn"); 
+		magAc.signIn("john", DATA_PASS); 
 		goToWiki();
 	}
 

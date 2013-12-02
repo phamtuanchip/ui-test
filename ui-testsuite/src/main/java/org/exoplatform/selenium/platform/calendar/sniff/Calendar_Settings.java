@@ -31,7 +31,7 @@ public class Calendar_Settings extends CalendarBase{
 		evt = new Event(driver);
 		tsk = new Task(driver);
 		btn = new Button(driver);
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		goToCalendarPage();
 	}
 
@@ -167,7 +167,7 @@ public class Calendar_Settings extends CalendarBase{
 		click(ELEMENT_SETTINGS_FORM_SAVE_BUTTON);
 		
 		acc.signOut();
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		goToCalendarPage();
 		waitForAndGetElement(ELEMENT_MONTH_TAB_ACTIVE);
 		goToCalendarSettings();

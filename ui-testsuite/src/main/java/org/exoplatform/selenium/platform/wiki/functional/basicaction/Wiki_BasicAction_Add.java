@@ -49,7 +49,7 @@ public class Wiki_BasicAction_Add extends Template{
 		magAcc = new ManageAccount(driver);
 		dialog = new Dialog(driver);
 		button = new Button(driver);
-		magAcc.signIn("john", "gtn");
+		magAcc.signIn("john", DATA_PASS);
 	}
 
 	@AfterMethod
@@ -202,13 +202,13 @@ public class Wiki_BasicAction_Add extends Template{
 
 		//Verify that James can't add new page
 		magAcc.signOut();
-		magAcc.signIn("james","gtn");
+		magAcc.signIn("james",DATA_PASS);
 		goToWiki();
 		waitForElementNotPresent(ELEMENT_ADD_PAGE_LINK);
 
 		//Reset data
 		magAcc.signOut();
-		magAcc.signIn("john","gtn");
+		magAcc.signIn("john",DATA_PASS);
 		goToWiki();
 		deleteSpacePermission(userGroup[0]);
 		addSpacePermission(0, userGroupR);

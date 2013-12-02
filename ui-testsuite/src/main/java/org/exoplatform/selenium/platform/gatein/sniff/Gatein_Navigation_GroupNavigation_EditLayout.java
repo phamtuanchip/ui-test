@@ -39,7 +39,7 @@ public class Gatein_Navigation_GroupNavigation_EditLayout extends GroupNavigatio
 		pageE = new PageEditor(driver);
 		but = new Button(driver);
 		
-		magAc.signIn("john", "gtn");
+		magAc.signIn("john", DATA_PASS);
 	}
 
 	@AfterMethod

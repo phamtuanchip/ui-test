@@ -38,7 +38,7 @@ public class PLF_HomePageGadget_InvitationGadget extends Activity{
 		tsk = new Task(driver);
 		btn = new Button(driver);
 		homeGad = new HomePageGadget(driver);
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		magMember = new ManageMember(driver);
 		peoConn = new PeopleConnection(driver);
 		navToolBar = new NavigationToolbar(driver);		
@@ -101,7 +101,7 @@ public class PLF_HomePageGadget_InvitationGadget extends Activity{
 		navToolBar.goToConnectionPage();
 		peoConn.connectPeople(user5);
 		acc.signOut();
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		waitForAndGetElement(homeGad.ELEMENT_INVITATION_GADGET);
 		waitForAndGetElement(By.xpath(homeGad.ELEMENT_SHOW_CONNECTIONS_REQUEST_USER.replace("${nameinvitation}",user3)));
 		waitForAndGetElement(By.xpath(homeGad.ELEMENT_SHOW_CONNECTIONS_REQUEST_USER.replace("${nameinvitation}",user2)));

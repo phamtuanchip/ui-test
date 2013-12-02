@@ -31,7 +31,7 @@ public class Calendar_PublishActivities_Event extends CalendarBase{
 		initSeleniumTest();
 		acc = new ManageAccount(driver);
 		evt = new Event(driver);
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		sp = new SpaceManagement(driver);
 		toolBar = new NavigationToolbar(driver);
 		homeAct = new HomePageActivity(driver);

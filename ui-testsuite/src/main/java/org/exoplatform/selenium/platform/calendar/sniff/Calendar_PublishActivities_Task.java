@@ -30,7 +30,7 @@ public class Calendar_PublishActivities_Task extends CalendarBase{
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		acc = new ManageAccount(driver);
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		sp = new SpaceManagement(driver);
 		toolBar = new NavigationToolbar(driver);
 		homeAct = new HomePageActivity(driver);

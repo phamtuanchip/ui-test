@@ -329,19 +329,19 @@ public class ManageAccount extends PlatformBase {
 		}
 		switch (user) {
 		case ROOT:
-			signIn("root", "gtngtn");
+			signIn("root", "12345");
 			break;
 		case ADMIN:
-			signIn("john", "gtn");
+			signIn("john", "gtngtn");
 			break;	
 		case AUTHOR:
-			signIn("james", "gtn");
+			signIn("james", "gtngtn");
 			break;
 		case DEVELOPER:
-			signIn("demo", "gtn");
+			signIn("demo", "gtngtn");
 			break;
 		case PUBLISHER:
-			signIn("mary", "gtn");
+			signIn("mary", "gtngtn");
 			break;
 		default:
 			break;

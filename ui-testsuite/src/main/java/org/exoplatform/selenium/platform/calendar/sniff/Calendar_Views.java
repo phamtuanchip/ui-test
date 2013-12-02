@@ -31,7 +31,7 @@ public class Calendar_Views extends CalendarBase{
 		evt = new Event(driver);
 		tsk = new Task(driver);
 
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		goToCalendarPage();
 	}
 

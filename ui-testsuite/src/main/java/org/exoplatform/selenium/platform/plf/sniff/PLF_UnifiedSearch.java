@@ -78,7 +78,7 @@ public class PLF_UnifiedSearch extends Template {
 	public void beforeMethods() {
 		initSeleniumTest();
 		driver.get(baseUrl);
-		info("Login with " + DATA_USER1);
+		info("Login with " + DATA_USER_JOHN);
 		magAcc = new ManageAccount(driver);
 		naviToolbar = new NavigationToolbar(driver);
 		searchAdmin = new SearchAdministration(driver);
@@ -103,7 +103,7 @@ public class PLF_UnifiedSearch extends Template {
 		magQuest = new AnswerManageQuestion(driver);
 		navMag = new NavigationManagement(driver);
 		ecms = new EcmsBase(driver);
-		magAcc.signIn(DATA_USER1, DATA_PASS);
+		magAcc.signIn(DATA_USER_JOHN, DATA_PASS);
 	}
 
 	@AfterMethod

@@ -29,7 +29,7 @@ public class Calendar_Calendar extends CalendarBase{
 		acc = new ManageAccount(driver);
 		evt = new Event(driver);
 		tsk = new Task(driver);
-		acc.signIn(DATA_USER1, DATA_PASS);
+		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		goToCalendarPage();
 	}
 
@@ -123,12 +123,12 @@ public class Calendar_Calendar extends CalendarBase{
 		addCalendar(calendar,calendar,"red");
 		shareCalendar(calendar,user,canEdit);
 		acc.signOut();
-		acc.signIn(DATA_USER2,DATA_PASS);
+		acc.signIn(DATA_USER_MARY,DATA_PASS);
 		goToCalendarPage();
 
 		deleteSharedCalendar(calendar);
 		acc.signOut();
-		acc.signIn(DATA_USER1,DATA_PASS);
+		acc.signIn(DATA_USER_JOHN,DATA_PASS);
 		goToCalendarPage();
 		deleteCalendar(calendar);
 	}
@@ -146,7 +146,7 @@ public class Calendar_Calendar extends CalendarBase{
 		addCalendar(calendar,calendar,"red");
 		shareCalendar(calendar,user,canEdit);
 		acc.signOut();
-		acc.signIn(DATA_USER2,DATA_PASS);
+		acc.signIn(DATA_USER_MARY,DATA_PASS);
 		goToCalendarPage();
 
 		openMenuOfCalendar(calendar);
@@ -159,7 +159,7 @@ public class Calendar_Calendar extends CalendarBase{
 		waitForAndGetElement(ELEMENT_CAL_ADD_TASK_MENU,DEFAULT_TIMEOUT,0,2);
 
 		acc.signOut();
-		acc.signIn(DATA_USER1,DATA_PASS);
+		acc.signIn(DATA_USER_JOHN,DATA_PASS);
 		goToCalendarPage();
 		deleteCalendar(calendar);
 	}

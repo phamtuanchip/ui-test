@@ -31,12 +31,12 @@ public class Social_Space_SpaceManagement_WikiPageAccess extends Permalink{
 	public void beforeMethods() {
 		initSeleniumTest();
 		driver.get(baseUrl);
-		info("Login with " + DATA_USER1);
+		info("Login with " + DATA_USER_JOHN);
 		magAcc = new ManageAccount(driver);
 		magMember = new ManageMember(driver);
 		spaceMag = new SpaceManagement(driver);
 		dialog = new Dialog(driver);
-		magAcc.signIn(DATA_USER1, DATA_PASS);
+		magAcc.signIn(DATA_USER_JOHN, DATA_PASS);
 	}
 
 	@AfterMethod
