@@ -88,6 +88,7 @@ public class PlatformPermission extends PlatformBase {
 			}
 		}
 		click(ELEMENT_ADD_USERS_BUTTON);
+		Utils.pause(2000);
 	}
 
 	/**function: select a group when set permission
@@ -98,8 +99,10 @@ public class PlatformPermission extends PlatformBase {
 	public void selectGroupPermission(String grouppath){
 		userGroup = new UserGroupManagement(driver);
 		userGroup.selectGroup(grouppath,true);
-		if(waitForAndGetElement(ELEMENT_SELECT_THIS_GROUP, DEFAULT_TIMEOUT,0) != null)
+		if(waitForAndGetElement(ELEMENT_SELECT_THIS_GROUP, DEFAULT_TIMEOUT,0) != null){
 			click(ELEMENT_SELECT_THIS_GROUP);
+		}	
+		Utils.pause(2000);
 	}
 
 	/**function: select group and membership when set permission
@@ -111,15 +114,22 @@ public class PlatformPermission extends PlatformBase {
 	public void selectGroupMembership(String groupPath, String membership){
 		userGroup = new UserGroupManagement(driver);
 		userGroup.selectGroup(groupPath);	
-		WebElement elementMembership = waitForAndGetElement("//*[contains(text(), '" + membership + "')]", 5000, 0);
-		WebElement elementMembership_1 = waitForAndGetElement(By.linkText(membership), 5000, 0);
-		//WebElement elementMembership_2 = waitForAndGetElement("//*[@title='" + membership + "']", 5000, 0);
-		if (elementMembership_1 != null){
-			//click(elementMembership_1);
-			((JavascriptExecutor)driver).executeScript("arguments[0].click();", elementMembership_1);
-		}else {
-			click(elementMembership);
+
+		WebElement elementMembership = waitForAndGetElement("//*[@class='uiContentBox']//*[contains(text(), '" + membership + "')]",15000,0);
+		WebElement elementMembership_1 = waitForAndGetElement("//*[contains(text(), '" + membership + "')]",5000,0);
+		WebElement elementMembership_2 = waitForAndGetElement("//*[@class='uiContentBox']//*[@title='" + membership + "']",5000,0);
+
+		if (elementMembership_2 != null){
+			((JavascriptExecutor)driver).executeScript("arguments[0].click();", elementMembership_2);
 		}
-		Utils.pause(1000);
+		else if (elementMembership != null){
+			((JavascriptExecutor)driver).executeScript("arguments[0].click();", elementMembership);
+		}else {
+			if(elementMembership_1 != null){
+				click(elementMembership_1);
+			}	
+			else assert false : "Cannot find membership";
+		}
+		Utils.pause(2000);
 	}
 }

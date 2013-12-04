@@ -57,6 +57,7 @@ public class Permission extends WikiBase{
 			}		
 			Utils.pause(1000);
 			click(button.ELEMENT_ADD_BUTTON);
+			Utils.pause(1000);
 			button.save();
 		}
 	}
@@ -124,6 +125,7 @@ public class Permission extends WikiBase{
 			click(Delete);
 		}
 		waitForElementNotPresent(Delete);
+		Utils.pause(2000);
 		button.save();
 
 		Utils.pause(2000);
@@ -205,6 +207,7 @@ public class Permission extends WikiBase{
 		break;
 		}
 		click(button.ELEMENT_ADD_BUTTON);
+		Utils.pause(2000);
 		button.save();
 		waitForMessage(MSG_PERMISSION_SAVE);
 

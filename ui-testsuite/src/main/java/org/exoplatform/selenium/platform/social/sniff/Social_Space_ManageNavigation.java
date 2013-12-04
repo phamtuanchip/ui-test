@@ -50,17 +50,18 @@ public class Social_Space_ManageNavigation extends SocialBase {
 	public void test01_AddNewNode(){
 		//Declare variable
 		String spaceName = "space67673";
-		String nodeName = "nodeName67673";
-		String nodeLabel = "nodeLabel67673";
-		String pageName = "pageName67673";
-		String pageTitle = "pageTitle67673";
+		String nodeName = "nodeName676731";
+		String nodeLabel = "nodeLabel676731";
+		String pageName = "pageName676731";
+		String pageTitle = "pageTitle676731";
 
 		//Create data
 		//Add new space
 		info("Create data");
 		magMember.goToMySpacePage();
 		magMember.addNewSpace(spaceName, "");
-
+		accessSpace(spaceName);
+		
 		/*Step 1: Add new node*/ 
 		//- Access Space, select Setting tab/ Navigation tab
 		goToNavigation(spaceName);

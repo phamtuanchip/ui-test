@@ -43,6 +43,7 @@ public class DashBoard extends PlatformBase {
 	/*------------- Data for Dashboard tab --------------------------------*/
 	public final String ELEMENT_DASHBOARD_NEW_ICON = "//*[@id='UITabPaneDashboard']//*[@class='uiIconSimplePlusMini uiIconLightGray']";
 	public final String ELEMENT_DASHBOARD_NEW_INPUT = "//div[@id='UITabPaneDashboard']//input";
+	public final String ELEMENT_DASHBOARD_NEW_INPUT_AUX = "//div[@id='UITabPaneDashboard']//*[contains(text(), '${tabName}')]";
 	public final String ELEMENT_DASHBOARD_SELECTED_PAGE_WITH_SPECIFIED_NAME = "//div[@id='UITabPaneDashboard']//span[text()='${dashboardName}']";
 	public final String ELEMENT_DASHBOARD_SELECTED = "//div[contains(@class, 'SelectedTab')]//span";
 	public final String ELEMENT_DASHBOARD_SELECTED_DELETE = "//*[@id='UITabPaneDashboard']//*[@class='uiIconClose uiIconLightGray']";
@@ -58,10 +59,13 @@ public class DashBoard extends PlatformBase {
 		waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT).clear();
 		waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT).sendKeys(displayName);
 		for(int repeat=0;;repeat++){
-			click(ELEMENT_DASHBOARD_NEW_INPUT);
+			//click(ELEMENT_DASHBOARD_NEW_INPUT);
+			Utils.pause(200);
 			Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
-			if (waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT).getText().equals(displayName))
-				break;
+			if (waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT_AUX.replace("${tabName}", displayName), 5000, 0) == null){
+				if (waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT).getText().equals(displayName))
+					break;	
+			}
 			if(repeat > 5) break;
 		}
 
@@ -112,6 +116,7 @@ public class DashBoard extends PlatformBase {
 		Utils.pause(1000);
 		waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT).clear();
 		waitForAndGetElement(ELEMENT_DASHBOARD_NEW_INPUT).sendKeys(newName);
+		Utils.pause(1000);
 		Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
 
 		waitForAndGetElement(ELEMENT_TAB_LINK.replace("${tabName}", newName));

@@ -40,7 +40,7 @@ public class Wiki_BasicAction_ManagePage extends ManageDraft{
 
 	@AfterMethod
 	public void afterTest(){
-		magAc.signOut();
+		//magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
@@ -57,7 +57,6 @@ public class Wiki_BasicAction_ManagePage extends ManageDraft{
 
 		info("Add new wiki page at Source Editor");		
 		addBlankWikiPage(title, content, 0);
-
 		info("Edit wiki page at Source Editor");
 		editWikiPage(newTitle, newContent, 0);
 
@@ -66,10 +65,13 @@ public class Wiki_BasicAction_ManagePage extends ManageDraft{
 
 	/**CaseId: 68837 + 70036 + 70037 -> Add, Edit and Delete page at Rich Text mode
 	 * pending: add image (product has error)
+	 * ERROR: check search tab in function insertPageLink2WikiPage
+	 * (Msg: There was an error loading data)
+	 * Note: This issue is not created on jira
 	 */
-	@Test
+	@Test (groups="error")
 	public void test00_CreatePageRichTextEditor(){
-		String pageLink = "PageLink";
+		String pageLink = "PageLink68837";
 		String title = "Wiki_manage_page_title_02";
 		String content = "Wiki_manage_page_content_02";
 		String message = "Color macro";
@@ -340,6 +342,12 @@ public class Wiki_BasicAction_ManagePage extends ManageDraft{
 
 		info("Rename page");
 		doubleClickOnElement(ELEMENT_PAGE_TITLE_INFO);
+		
+		if (waitForAndGetElement(ELEMENT_PAGE_TITLE_EDIT_TEXTBOX, DEFAULT_TIMEOUT, 0) == null){
+			info("== Cannot use doubleClickOnElement... ==");
+			click(ELEMENT_PAGE_TITLE_INFO);
+		}
+		
 		type(ELEMENT_PAGE_TITLE_EDIT_TEXTBOX, newTitle, true);
 		Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
 

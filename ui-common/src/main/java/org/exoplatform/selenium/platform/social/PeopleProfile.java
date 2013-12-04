@@ -66,6 +66,7 @@ public class PeopleProfile extends PlatformBase {
 	public final By	ELEMENT_CHANGE_AVATAR_LINK = By.className("changeAvatar");
 	public final By ELEMENT_CHOOSE_AVATAR_IMAGE = By.className("fileNameLabel");
 	public final By ELEMENT_UPLOAD_NAME = By.name("file");
+	public final String ELEMENT_AVATAR_FILE_DELETE = "//div[@class='fileNameLabel' and contains(text(),'${file}')]/..//a[@data-original-title='Delete']"; 
 
 	//Confirm
 	public final By ELEMENT_CONFIRM = By.xpath("//*[text()='Confirm']");
@@ -90,12 +91,16 @@ public class PeopleProfile extends PlatformBase {
 		String lastName = (String) (params.length > 1 ? params[1]: "");
 		String email = (String) (params.length > 2 ? params[2]: "");
 		click(ELEMENT_EDIT_INFORMATION_BUTTON);
-		if(firstName!="")
+		if(firstName!=""){
 			type(ELEMENT_INPUT_FIRSTNAME, firstName, true);
-		if(lastName!="")
+		}	
+		if(lastName!=""){
 			type(ELEMENT_INPUT_LASTNAME, lastName, true);
-		if(email!="")
+		}
+		if(email!=""){
 			type(ELEMENT_INPUT_EMAIL, email, true);
+		}
+		Utils.pause(1000);
 		click(ELEMENT_SAVE_UPDATE_INFO);
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
 		Utils.pause(1000);
@@ -224,6 +229,8 @@ public class PeopleProfile extends PlatformBase {
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", upload);
 		upload.sendKeys(Utils.getAbsoluteFilePath(linkfile));
 		Utils.pause(3000);
+		String[] files = linkfile.split("/");
+		waitForAndGetElement(ELEMENT_AVATAR_FILE_DELETE.replace("${file}", files[files.length -1 ]));
 		info("Upload file " + Utils.getAbsoluteFilePath(linkfile));
 		switchToParentWindow();
 		click(ELEMENT_CONFIRM);

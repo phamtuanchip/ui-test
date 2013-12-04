@@ -369,7 +369,8 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE = By.id("switchmode");
 	public final String ELEMENT_LINK_EDITOR_PAGE_LAYOUT="//a[@class='ItemIcon EditPageIcon' and text()='Layout']";
 
-	public final By ELEMENT_UP_LEVEL=By.xpath("//a[@title='Up Level']");
+	//public final By ELEMENT_UP_LEVEL = By.xpath("//a[@title='Up Level']");
+	public final By ELEMENT_UP_LEVEL = By.xpath("//a[@data-original-title='Up Level']");
 	public final String ELEMENT_SELECT_LANGUAGE = "//select[@name='languages']";
 	public final String ELEMENT_INPUT_PAGE_DISPLAY_NAME = "//input[@id='pageDisplayName']";
 	public final String ELEMENT_PAGE_EDITOR_NEXT_STEP = "//button[text()='Next']";
@@ -386,8 +387,8 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_TITLE_NAVIGATION_MANAGEMENT = By.xpath("//*[contains(@class, 'popupTitle') and text() = 'Navigation Management']");
 	public final By ELEMENT_ADD_NODE_LINK = By.linkText("Add Node");
 	public final By ELEMENT_PAGE_SELECTOR_TAB = By.linkText("Page Selector");
-	public final By ELEMENT_INPUT_PAGE_NAME = By.name("pageName");
-	public final By ELEMENT_INPUT_PAGE_TITLE = By.name("pageTitle");
+	public final By ELEMENT_INPUT_PAGE_NAME = By.xpath("//*[@id='pageName']");
+	public final By ELEMENT_INPUT_PAGE_TITLE = By.xpath("//*[@id='pageTitle']");
 	public final By ELEMENT_CREATE_PAGE_LINK = By.xpath("//*[contains(@class, 'uiIconAddPage')]");
 	public final By ELEMENT_SEARCH_SELECTOR_PAGE_LINK = By.className("uiIconSelectPage");
 	public final By ELEMENT_CLEAR_SELECTOR_PAGE = By.className("uiIconDelete");
@@ -447,6 +448,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_CONTENT_DETAIL_DELETE_ICON =  By.xpath("//*[text()='Content Detail']/..//a[@data-original-title='Delete Portlet']");
 	public final By ELEMENT_SELECT_CONTENT_PATH_LINK = By.xpath("//a[@data-original-title='Add Path']");
 	public final By ELEMENT_SELECT_CONTENT_PATH_LINK_AUX = By.xpath("//*[contains(@class, 'uiIconAddPath')]");
+	public final By ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1 = By.xpath("//a[@data-original-title='AddPath']");
 	public final String ELEMENT_CONTENT_IN_CONTENT_DETAIL_PORTLET = "//*[contains(@id, 'UISingleContentViewerPortlet')]//*[@class='Title' and text()='${contentName}']";
 	public final String ELEMENT_GADGET_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList0']//div[contains(text(),'${gadget}')]";
 	public final String ELEMENT_PORTLET_TITLE = "//*[@class='portletLayoutDecorator' and contains(text(), '${portletTitle}')]";
@@ -656,7 +658,8 @@ public class PlatformBase extends TestBase {
 
 	//Search porlet
 	public final By ELEMENT_SEARCH_APPLICATION = By.xpath("//a[@title='Search']");
-	public final String ELEMENT_GADGET_SEARCH_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList17']//div[contains(text(),'${gadget}')]";
+	//public final String ELEMENT_GADGET_SEARCH_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList17']//div[contains(text(),'${gadget}')]";
+	public final String ELEMENT_GADGET_SEARCH_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList18']//div[contains(text(),'${gadget}')]";
 
 	//Administration Menu for admin acc
 
@@ -682,6 +685,9 @@ public class PlatformBase extends TestBase {
 	public By PRODUCTS_LABEL_FRENCH = By.xpath("//*[text()='Produits']");
 	public By PRODUCTS_LABEL_GERMAN = By.xpath("//*[text()='Produkte']");
 
+	//CloudBase
+	public final By ELEMENT_SKIP_TO_HOMEPAGE = By.xpath("//*[contains(text(), 'Step 1')]/..//a[contains(text(), 'Skip to homepage')]");
+	
 	///////////////////
 	//Set view permissions for portal
 	public void setViewPermissions(String groupId, String membership) {
@@ -721,6 +727,7 @@ public class PlatformBase extends TestBase {
 			String groupToSelect = ELEMENT_SELECT_EDIT_GROUP_ITEM.replace("${group}", group);
 			click(groupToSelect);
 		}
+		Utils.pause(1000);
 		click(membershipToSelect);
 		waitForTextNotPresent("Permission Selector");
 		//waitForAndGetElement(selectedGroup);
@@ -734,6 +741,7 @@ public class PlatformBase extends TestBase {
 
 	//Link to Edit a navigation
 	public void editNavigation(String currentNavigation) {
+		Utils.pause(2000);
 		String navigation = ELEMENT_EDIT_NAVIGATION.replace("${navigation}", currentNavigation);
 		click(navigation);
 		//waitForTextPresent("Navigation Management");
@@ -943,7 +951,7 @@ public class PlatformBase extends TestBase {
 				click(ELEMENT_NAVIGATION_CUT_NODE);
 				return;
 			}
-			Utils.pause(WAIT_INTERVAL);
+			Utils.pause(3000);
 		}
 	}
 
@@ -960,11 +968,12 @@ public class PlatformBase extends TestBase {
 				click(ELEMENT_NAVIGATION_COPY_NODE);
 				return;
 			}
-			Utils.pause(WAIT_INTERVAL);
+			Utils.pause(3000);
 		}
 	}
 
 	public void pasteNode(Object locator) {
+		Utils.pause(1000);
 		for (int i =0;; i++){
 			if (i > DEFAULT_TIMEOUT/WAIT_INTERVAL){
 				Assert.fail("Timeout");
@@ -1295,7 +1304,8 @@ public class PlatformBase extends TestBase {
 	 */
 	public void loginWithAnotherAccOnThesameBrowser(String User2, String Pass2){
 		newDriver = new FirefoxDriver();
-		newDriver.get(baseUrl);
+		//newDriver.get(baseUrl);
+		newDriver.get(DEFAULT_BASEURL);
 		ManageAccount  acc = new ManageAccount(newDriver);
 		acc.signIn(User2, Pass2);
 		Utils.pause(2000);

@@ -152,6 +152,7 @@ public class UserGroupManagement extends PlatformBase {
 		Utils.pause(500);
 		click(ELEMENT_GROUP_ADD_NEW_ICON);
 		inputDataGroup(groupName, groupLabel, groupDesc);
+		Utils.pause(1000);
 		button.save();
 		if (verify && groupLabel != null && groupLabel != "") {
 			waitForAndGetElement("//a[@title='" + (groupLabel.length() > 0 ? groupLabel : groupName) + "']");
@@ -191,12 +192,14 @@ public class UserGroupManagement extends PlatformBase {
 			}
 			//click(ELEMENT_GROUP_SEARCH_POPUP_ADD_ICON);
 			click(button.ELEMENT_ADD_BUTTON);
-			Utils.pause(500);
+			Utils.pause(1000);
 			Assert.assertEquals(getValue(ELEMENT_INPUT_USERNAME), userNames);
 		} else {
+			Utils.pause(500);
 			type(ELEMENT_INPUT_USERNAME, userNames, true);
 		}
 		select(ELEMENT_SELECT_MEMBERSHIP, memberShip);
+		Utils.pause(1000);
 		button.save();
 		if (verify) {
 			for (String user : users) {
@@ -267,15 +270,20 @@ public class UserGroupManagement extends PlatformBase {
 		for(int i =0; i < temp.length ; i++){
 			info("Go to " + temp[i]);
 			if (isInPermissionTab){
-				if (isElementPresent(By.xpath(groupName_5.replace("${groupName}", temp[i])))){
-					click(By.xpath(groupName_5.replace("${groupName}", temp[i])));
-				}else if (isElementPresent(By.xpath(groupName.replace("${groupName}", temp[i])))){
-					click(By.xpath(groupName.replace("${groupName}", temp[i])));
-				}else if (isElementPresent(By.xpath(groupName_2.replace("${groupName}", temp[i])))){
-					click(By.xpath(groupName_2.replace("${groupName}", temp[i])));
-				}else if (isElementPresent(By.xpath(groupName_3.replace("${groupName}", temp[i])))){
-					click(By.xpath(groupName_3.replace("${groupName}", temp[i])));
-				}
+				if (!temp[i].matches("Administration")){
+					click(By.linkText(temp[i]));
+				}else{
+					if (isElementPresent(By.xpath(groupName_5.replace("${groupName}", temp[i])))){
+						click(By.xpath(groupName_5.replace("${groupName}", temp[i])));
+					}
+					else if (isElementPresent(By.xpath(groupName.replace("${groupName}", temp[i])))){
+						click(By.xpath(groupName.replace("${groupName}", temp[i])));
+					}else if (isElementPresent(By.xpath(groupName_2.replace("${groupName}", temp[i])))){
+						click(By.xpath(groupName_2.replace("${groupName}", temp[i])));
+					}else if (isElementPresent(By.xpath(groupName_3.replace("${groupName}", temp[i])))){
+						click(By.xpath(groupName_3.replace("${groupName}", temp[i])));
+					}
+				}	
 			}else{
 				if (!temp[i].matches("Administration")){
 					click(By.linkText(temp[i]));

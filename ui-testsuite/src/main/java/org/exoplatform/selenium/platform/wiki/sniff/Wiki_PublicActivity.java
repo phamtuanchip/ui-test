@@ -33,7 +33,7 @@ public class Wiki_PublicActivity extends BasicAction {
 	
 	@AfterMethod
 	public void afterTest(){
-		magAc.signOut();
+		//magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}

@@ -156,15 +156,8 @@ public class Calendar_Settings extends CalendarBase{
 		waitForAndGetElement(ELEMENT_FEEDS);
 		
 		info("-- Check Displayed Calendar tab --");
-		click(ELEMENT_SETTINGS_TAB);
-		select(ELEMENT_VIEW_TYPE, "Month");
-		select(ELEMENT_DATE_FORMAT, "dd/mm/yyyy");
-		select(ELEMENT_TIME_FORMAT, "24 Hours");
-		select(ELEMENT_TIME_ZONE, "(GMT +07:00) Asia/Ho_Chi_Minh");
-		select(ELEMENT_WEEK_START_ON, "Tuesday");
-		showWorkingTimes("08:30", "17:30");
-		check(ELEMENT_SEND_EVENT_INVITATION.replace("${option}", "Ask"), 2);
-		click(ELEMENT_SETTINGS_FORM_SAVE_BUTTON);
+		goToCalendarSettings();
+		settingCalendar("Month", "dd/mm/yyyy", "24 Hours", "(GMT +07:00) Asia/Ho_Chi_Minh", "Tuesday", "08:30", "17:30", 2);
 		
 		acc.signOut();
 		acc.signIn(DATA_USER_JOHN, DATA_PASS);
@@ -198,9 +191,7 @@ public class Calendar_Settings extends CalendarBase{
 		WebElement sendInvitation = waitForAndGetElement(ELEMENT_SEND_EVENT_INVITATION.replace("${option}", "Ask"), 5000, 1, 2);
 		assert sendInvitation.isSelected(): "Calendar Settings was failed...";
 		
-		select(ELEMENT_VIEW_TYPE, "Week");
-		select(ELEMENT_DATE_FORMAT, "mm/dd/yyyy");
-		select(ELEMENT_WEEK_START_ON, "Monday");
-		click(ELEMENT_SETTINGS_FORM_SAVE_BUTTON);
+		settingCalendar("Week", "mm/dd/yyyy", null, null, "Monday", null, null);
+		
 	}
 }

@@ -91,7 +91,6 @@ public class Forum_Administration extends ForumBase {
 		magAc.signOut();
 		
 		info("Check banIp with user demo");
-		driver.get("http://" + ip + ":8080/portal");
 		magAc.signIn("demo", DATA_PASS);
 		goToForums();
 		click(By.linkText(forumName));

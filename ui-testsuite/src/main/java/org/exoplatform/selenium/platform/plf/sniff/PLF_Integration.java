@@ -11,7 +11,6 @@ import org.exoplatform.selenium.platform.PageManagement;
 import org.exoplatform.selenium.platform.PlatformBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 /**
  * 
@@ -54,7 +53,7 @@ public class PLF_Integration extends PlatformBase {
 	 * Test case ID: 70863
 	 * Step 1: Show Intranet Home page
 	 */
-	@Test
+	//@Test
 	public void test01_CheckHomePage(){
 		/*Step 1: Show Intranet Home page*/ 
 		//- Login intranet site by root
@@ -71,7 +70,7 @@ public class PLF_Integration extends PlatformBase {
 	 * Step 1: Check IDE page
 	 * Step 2: Check showing IDE page
 	 */
-	@Test
+	//@Test
 	public void test02_CheckIDE(){
 		/*Step 1: Check IDE page*/ 
 		//- Login and go to intranet home page
@@ -99,7 +98,7 @@ public class PLF_Integration extends PlatformBase {
 	 * Step 5: Add page with CMIS
 	 * Error: Refer: https://jira.exoplatform.org/browse/EXOGTN-991
 	 */
-	@Test (groups="error")
+	//@Test (groups="error")
 	public void test03_InstallCMISExpertGadget(){
 		/*Declare variables*/
 		String url = "http://www.xcmis.org/CmisExpert4Platform/org.exoplatform.cmis.CmisExpertGadget/org.exoplatform.cmis.client.CmisExpertGadget.gadget.xml";

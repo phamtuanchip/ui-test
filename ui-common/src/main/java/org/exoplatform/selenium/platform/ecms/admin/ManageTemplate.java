@@ -210,8 +210,8 @@ public class ManageTemplate extends EcmsBase{
 		//Dialog tab
 		if (dialog){
 			click(ELEMENT_DIALOG_TAB);
-			String content = Utils.getFileContent(dialogContent);
 			Utils.pause(500);
+			String content = Utils.getFileContent(dialogContent);
 			type(ELEMENT_DIALOG_CONTENT, content, true);
 			type(ELEMENT_DIALOG_NAME, dialogName, true);
 			click(ELEMENT_DIALOG_PERMISSION_ICON);
@@ -224,8 +224,8 @@ public class ManageTemplate extends EcmsBase{
 		//View tab
 		if (view){
 			click(ELEMENT_VIEW_TAB);
-			String content = Utils.getFileContent(viewContent);
 			Utils.pause(500);
+			String content = Utils.getFileContent(viewContent);
 			type(ELEMENT_VIEW_CONTENT, content, true);
 			type(ELEMENT_VIEW_NAME, viewName, true);
 			click(ELEMENT_VIEW_PERMISSION_ICON);
@@ -238,8 +238,8 @@ public class ManageTemplate extends EcmsBase{
 		//Css tab
 		if (css){
 			click(ELEMENT_CSS_TAB);
-			String content = Utils.getFileContent(cssContent);
 			Utils.pause(500);
+			String content = Utils.getFileContent(cssContent);
 			type(ELEMENT_CSS_CONTENT, content, true);
 			type(ELEMENT_CSS_NAME, cssName, true);
 			click(ELEMENT_CSS_PERMISSION_ICON);
@@ -250,6 +250,7 @@ public class ManageTemplate extends EcmsBase{
 			Utils.pause(1000);
 		}
 		click(ELEMENT_TEMPLATE_TAB.replace("${popupTitle}", "View & Edit Template"));
+		Utils.pause(1000);
 		if (!templateLabel.isEmpty()){
 			type(ELEMENT_TEMPLATE_LABEL, templateLabel, true);
 			Utils.pause(500);

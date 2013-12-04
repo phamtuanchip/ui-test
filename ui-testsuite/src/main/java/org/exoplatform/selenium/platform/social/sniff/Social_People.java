@@ -38,7 +38,7 @@ public class Social_People extends SocialBase {
 	String user1="Mary Williams";
 	String user2="Jack Miller";
 	String user3="James Davis";
-	String user4="Root Root";
+	String user4="Support Bot";
 	String user_login1 = "mary";
 	String user_login2 = "demo";
 

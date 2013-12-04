@@ -1,5 +1,8 @@
 package org.exoplatform.selenium.platform;
 import static org.exoplatform.selenium.TestLogger.info;
+
+import java.awt.event.KeyEvent;
+
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
@@ -20,7 +23,7 @@ public class SettingSearchPage extends PlatformBase {
 	//Search page
 	public final By ELEMENT_SEARCH_TEXTBOX = By.id("txtQuery");
 	public final By ELEMENT_SEARCH_BUTTON = By.id("btnSearch");
-	
+
 	//Filter sort
 	public final By ELEMENT_SORT_DROPDOWN = By.xpath("//a[@class='btn dropdown-toggle']");
 	public final String ELEMENT_SORT_ITEM_CURRENT = "//*[@class='btn dropdown-toggle']/span[contains(text(),'${sortItem}')]";
@@ -53,6 +56,7 @@ public class SettingSearchPage extends PlatformBase {
 	public final By ELEMENT_SHOW_PORTLET_MODE_CHECKBOX = By.id("showPortletMode");
 	public final By ELEMENT_SHOW_WINDOW_STATE_CHECKBOX = By.id("showPortletMode");
 	public final By ELEMENT_DESCRIPTION_TEXTBOX = By.id("description");
+	public final By ELEMENT_SEARCH_PORTLET = By.id("searchPortlet");
 
 	//Filter Search
 	public final By ELEMENT_FILTER_SEARCH_ALLSITE_CHECKBOX = By.xpath("//input[@class='checkbox' and @value='acme' and @name='site']");
@@ -78,6 +82,8 @@ public class SettingSearchPage extends PlatformBase {
 	public final String ELEMENT_RESULT_ICON = "//div[@id='resultPage']//a[text()='${item}']/*[contains(text(),'${keySearch}')]/../../../../*[@class='avatar pull-left']";
 	public final String ELEMENT_RESULT_INDEX = "//*[@id='result']/div[${index}][contains(@class,'${title}')]";
 	public final By ELEMENT_RESULT_CONTENT_DETAIL = By.xpath("//*[@class='content']/*[@class='detail']");
+	public final By ELEMENT_CALENDAR_DAY = By.xpath("//*[@class='calendarBox']/*[@class='content']");
+	public final By ELEMENT_CALENDAR_MONTH = By.xpath("//*[@class='calendarBox']/*[@class='heading']");
 
 	//Task page result
 	public final String ELEMENT_RESULT_TASK_ICON = "//div[@id='resultPage']//a[text()='${item}']/*[contains(text(),'${keySearch}')]/../../../..//*[@class='uiIconStatus-64-needs-action']";
@@ -130,8 +136,14 @@ public class SettingSearchPage extends PlatformBase {
 		click(ELEMENT_QUICK_SEARCH_ICON);
 		type(ELEMENT_QUICK_SEARCH_TEXTBOX,searchText,true);
 		Utils.pause(3000);
-		click(ELEMENT_SEE_ALL_SEARCH_RESULTS);
-		Utils.pause(1000);
+		//click(ELEMENT_SEE_ALL_SEARCH_RESULTS);
+		//Utils.pause(1000);
+		if(waitForAndGetElement(ELEMENT_SEE_ALL_SEARCH_RESULTS, 5000,0)!=null)
+			click(ELEMENT_SEE_ALL_SEARCH_RESULTS);
+		else{
+			Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
+		}
+		waitForAndGetElement(ELEMENT_SEARCH_PORTLET);
 	}
 
 	/** Go To Edit Search Portlet

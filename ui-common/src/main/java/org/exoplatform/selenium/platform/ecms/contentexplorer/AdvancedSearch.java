@@ -138,6 +138,7 @@ public class AdvancedSearch extends EcmsBase{
 	 */
 	public void searchContent(String content){
 		type(ELEMENT_SEARCH_CONTENT_INPUT,content,true);
+		Utils.pause(2000);
 		click(ELEMENT_SEARCH_BUTTON);
 	}
 	/** Select path
@@ -154,14 +155,15 @@ public class AdvancedSearch extends EcmsBase{
 	 * @param docTypes: is optional, each element is equivalent to one type
 	 */
 	
-	public void selectDocumentType(String...docTypes){
+	public void selectDocumentType(Boolean isSave, String...docTypes){
 		click(ELEMENT_ADD_DOC_TYPE_ICON);
 		
 		for(int i = 0;i < docTypes.length; i++){
 		
 			click(ELEMENT_NODE_TYPE_CHECKBOX.replace("${type}", docTypes[i]),2);
 		}
-		click(ELEMENT_SAVE_BUTTON);
+		if(isSave)
+			click(ELEMENT_SAVE_BUTTON);
 	}
 	/** Open New query form in advanced search
 	 * @author thuntn

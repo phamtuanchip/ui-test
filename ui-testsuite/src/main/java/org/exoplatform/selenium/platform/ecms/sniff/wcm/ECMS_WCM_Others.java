@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
@@ -53,7 +52,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 * Step 1: Show draft/public content from page
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test01_ShowDraftPublicContentFromPage(){
 		String node1 = "ShowDraftPublicContentFromPage65874";
 		String page = "test01_page";
@@ -104,7 +103,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 * ==> Fixed: Utils.javaSimulateKeyPress 
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test02_SearchContentDocumentPage(){
 		String node1 = "test02 SearchContent 1";
         String node2 = "test02 SearchContent 2";
@@ -187,7 +186,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 * Step 1: Add SEO metadata with localization
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test03_AddSEOMetadataWithLocalization() {
 		String seo1 = "test03 AddSEOMetadata 1";
 		
@@ -221,7 +220,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 * Step 1: Update SEO metadatas with localization
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test04_UpdateSEOMetadataWithLocalization() {
 		String seo1 = "test04 UpdateSEOMetadata 1";
 		String seo2 = "test04 UpdateSEOMetadata";
@@ -251,7 +250,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 * Step 1: Manage the title
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test05_ManageTitle() {
 		String seo1 = "test05 ManageTitle 1";
 		info("Manage the title");
@@ -271,7 +270,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 * Step 1: Check SEO Tool tips
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test06_CheckSEOToolTips() {
 		String descTooltip = "Help searchers: let them know that the following page has a link with what they are looking for.";
 		String keyTooltip = "Most important terms in the page must be separated by a comma.";
@@ -297,7 +296,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	 * Show categories and documents
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test07_ShowCategoriesAndDocuments(){
 		String fileName = "test07_Show_Categories_And_Documents";
 		String webContentName = "test07_WebContent_Show_Categories_And_Documents";

@@ -160,6 +160,9 @@ public class ForumBase extends PlatformBase {
 
 	public final String MSG_BBCODE_BLANK_FIELD = "The field ${field} is required.";
 
+	//Forum > Add Category (will be placed to ManageCategory)
+	public final By ELEMENT_ADD_CATEGORY_ICON = By.xpath("//*[contains(@class, 'uiIconAddCategory')]");
+	
 	//Action click code for add BBCode. 
 	public enum ADDBBCODE_ACTION{
 		ADDBBCODE,
@@ -252,6 +255,8 @@ public class ForumBase extends PlatformBase {
 	public final By ELEMENT_USE_AJAX_CHECKBOX = By.id("isUseAjax");
 	public final String ELEMENT_SELECT_DISPLAY_CHECKBOX = "//*[contains(text(), '${name}')]/..//input";
 	public final By ELEMENT_FORUM_PORTLET_CLOSE_BUTTON = By.id("Close");
+	public final By ELEMENT_FORUM_PORTLET_PANEL_ACTIVE = By.xpath("//button[@class='btn active' and contains(text(),'Panels')]");
+	public final By ELEMENT_FORUM_PORTLET_OPTIONS_ACTIVE = By.xpath("//button[@class='btn active' and contains(text(),'Options')]");
 
 	//attach file popup
 	public final By ELEMENT_POPUP_UPLOAD_FILE = By.xpath("//span[@class='PopupTitle' and text()='Attach File']");
@@ -372,7 +377,11 @@ public class ForumBase extends PlatformBase {
 	public void goToForums(){
 		info("--Go to Forums--");
 		click(ELEMENT_FORUM_LINK);
-		waitForAndGetElement(ELEMENT_FORUM_STATE,DEFAULT_TIMEOUT,0);
+		if (waitForAndGetElement(ELEMENT_ADD_CATEGORY_ICON, 5000, 0) == null){
+			driver.navigate().refresh();
+			Utils.pause(3000);
+		}
+		waitForAndGetElement(ELEMENT_FORUM_STATE,DEFAULT_TIMEOUT2,0);
 	}
 
 	public void goToForumHome(){
@@ -1161,6 +1170,7 @@ public class ForumBase extends PlatformBase {
 	public void selectPanel(boolean... show){
 		button = new Button(driver);
 		click(ELEMENT_FORUM_PORTLET_PANEL_TAB);
+		waitForAndGetElement(ELEMENT_FORUM_PORTLET_PANEL_ACTIVE);
 		if (show.length > 0){
 			if (show[0]){
 				check(ELEMENT_SHOW_POLL_CHECKBOX, 2);
@@ -1234,6 +1244,7 @@ public class ForumBase extends PlatformBase {
 	public void selectOptions(boolean ajax){
 		button = new Button(driver);
 		click(ELEMENT_FORUM_PORTLET_OPTIONS_TAB);
+		waitForAndGetElement(ELEMENT_FORUM_PORTLET_OPTIONS_ACTIVE);
 		if (ajax){
 			check(ELEMENT_USE_AJAX_CHECKBOX, 2);
 		}else {
@@ -1358,7 +1369,7 @@ public class ForumBase extends PlatformBase {
 		inputPrivateMessage(receiver, title, message);
 		waitForMessage(MSG_PRIVATE_MESSAGE_COMPOSE);
 		click(ELEMENT_PRIVATE_MESSAGE_COMPOSE_OK);
-		waitForElementNotPresent(ELEMENT_PRIVATE_MESSAGE_COMPOSE_OK);
+		waitForElementNotPresent(ELEMENT_PRIVATE_MESSAGE_COMPOSE_OK,DEFAULT_TIMEOUT2);
 		waitForAndGetElement(ELEMENT_PRIVATE_MESSAGE.replace("${message}", title));
 	}
 

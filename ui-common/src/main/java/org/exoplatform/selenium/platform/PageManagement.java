@@ -59,6 +59,10 @@ public class PageManagement extends PlatformBase {
 	public final By ELEMENT_ADD_USER_PAGES = By.xpath("//div[@class='ChildrenContainer']//a[@class='NodeIcon DefaultPageIcon' and text()='Add User']");
 	public final By ELEMENT_MANAGE_USERS_AND_GROUPS_PAGES = By.xpath("//div[@class='ChildrenContainer']//a[@class='NodeIcon DefaultPageIcon' and text()='Manage Users and Groups']");
 	
+	//Add Page
+	public final By ELEMENT_PAGE_SETTINGS_TAB = By.linkText("Page Settings");
+	public final By ELEMENT_PAGE_SETTINGS_TAB_AUX = By.linkText("Page Setting");
+	
 	/*================== Common Function ===================*/
 	//Add a new page in PageManagement
 	public void addNewPageAtManagePages(PageType type, String pageName, String pageTitle, boolean publicMode, 
@@ -80,14 +84,15 @@ public class PageManagement extends PlatformBase {
 		}
 		if (ownerId.length > 0){
 			if (ownerId[0] != null){
+				Utils.pause(1000);
 				select(ELEMENT_SELECT_OWNER_ID, ownerId[0]);
 			}
 		}
-		type(ELEMENT_PAGE_NAME_INPUT, pageName, true);
-		type(ELEMENT_PAGE_TITLE_INPUT, pageTitle, true);		
+		//type(ELEMENT_PAGE_NAME_INPUT, pageName, true);
+		//type(ELEMENT_PAGE_TITLE_INPUT, pageTitle, true);		
 
 		//showMaxWindow
-		click(ELEMENT_CHECKBOX_MAX_WINDOWS, 2);
+		//click(ELEMENT_CHECKBOX_MAX_WINDOWS, 2);
 		click(ELEMENT_PERMISSION_SETTING_TAB);	
 		WebElement element = waitForAndGetElement(ELEMENT_CHECKBOX_PUBLIC_MODE, DEFAULT_TIMEOUT, 1, 2);		
 		if (publicMode & !element.isSelected()) {
@@ -103,6 +108,18 @@ public class PageManagement extends PlatformBase {
 		}		
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 		setEditPermissions(groupId, membership);
+		
+		//Page Settings
+		if (waitForAndGetElement(ELEMENT_PAGE_SETTINGS_TAB, 5000, 0) != null){
+			click(ELEMENT_PAGE_SETTINGS_TAB);	
+		}else {
+			click(ELEMENT_PAGE_SETTINGS_TAB_AUX);
+		}
+		type(ELEMENT_PAGE_NAME_INPUT, pageName, true);
+		type(ELEMENT_PAGE_TITLE_INPUT, pageTitle, true);		
+		//showMaxWindow
+		click(ELEMENT_CHECKBOX_MAX_WINDOWS, 2);
+		Utils.pause(500);
 		button.save();
 		Utils.pause(1000);
 		searchPageInManagementPage(type, pageTitle);

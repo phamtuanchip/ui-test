@@ -19,8 +19,9 @@ public class Cloud_Signup extends CloudBase{
 	@BeforeMethod
 	public void beforeMethods() {
 		initSeleniumTest();
-		initCloudUrl(0);
-		driver.get(baseCloudUrl);
+		//initCloudUrl(0);
+		//driver.get(baseCloudUrl);
+		driver.get(baseUrl);
 		driver.manage().window().maximize();
 		info("== Starting to sign-up to eXo Cloud ==");
 	}

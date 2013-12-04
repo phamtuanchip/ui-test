@@ -26,10 +26,10 @@ public class PLF_HomepageGadget_WhoIsOnlineGadget extends PlatformBase {
 	NavigationToolbar navToolBar;
 	PeopleConnection peopleC;
 	
-	String User1 = "fqa";
-	String User2 = "root";
+	String User1 = "john";
+	String User2 = "mary";
 	String Pass1 = "gtngtn";
-	String fullNameUser2="Root Root";
+	String fullNameUser2="Mary Williams";
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){

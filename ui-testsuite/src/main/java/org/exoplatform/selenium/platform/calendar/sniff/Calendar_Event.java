@@ -72,7 +72,7 @@ public class Calendar_Event extends CalendarBase {
 		String EVENT_CATEGORY = "All";
 		String EVENT_SHARED_CALENDAR = CAL_02;
 		String[] USER_SHARED = {"root"};
-		String USER_SHARED_PASS = "gtngtn";
+		String USER_SHARED_PASS = "12345";
 		boolean[] EDITABLE = {true};
 
 		info("==Go to Intranet Calendar with User fqa==");
@@ -106,10 +106,10 @@ public class Calendar_Event extends CalendarBase {
 	@Test
 	public void test03_addNewEventinGroupCal() {
 		String EVENT_03 = "EVENT_03";
-		String CAL_03 = "CAL_03";
+		String CAL_03 = "CAL_03"; 
 		String EVENT_CATEGORY = "All";
 		String USER_GROUP = "root";
-		String USER_GROUP_PASS = "gtngtn";
+		String USER_GROUP_PASS = "12345";
 		String CAL_GROUP = "/platform/administrators";
 
 		info("==Go to Intranet Calendar==");
@@ -217,7 +217,7 @@ public class Calendar_Event extends CalendarBase {
 		String DESCRIPTION = "EVENT_07_description_edited";
 		String EVENT_CATEGORY = "All";
 		String USER_GROUP = "root";
-		String USER_GROUP_PASS = "gtngtn";
+		String USER_GROUP_PASS = "12345";
 
 		info("==Go to Intranet Calendar==");
 		goToCalendarPage();
@@ -258,7 +258,7 @@ public class Calendar_Event extends CalendarBase {
 		String CAL_GROUP = "/platform/web-contributors";
 		String EVENT_CATEGORY = "All";
 		String USER_GROUP = "root";
-		String USER_GROUP_PASS = "gtngtn";
+		String USER_GROUP_PASS = "12345";
 
 		info("==Go to Intranet Calendar==");
 		goToCalendarPage();
@@ -297,7 +297,7 @@ public class Calendar_Event extends CalendarBase {
 		String DESCRIPTION = "EVENT_09_description_edited";
 		String EVENT_CATEGORY = "All";
 		String[] USER_SHARED = {"root"};
-		String USER_SHARED_PASS = "gtngtn";
+		String USER_SHARED_PASS = "12345";
 		boolean[] EDITABLE = {true};
 
 		info("==Go to Intranet Calendar==");
@@ -338,7 +338,7 @@ public class Calendar_Event extends CalendarBase {
 		String CAL_10 = "CAL_10";
 		String EVENT_CATEGORY = "All";
 		String[] USER_SHARED = {"root"};
-		String USER_SHARED_PASS = "gtngtn";
+		String USER_SHARED_PASS = "12345";
 		boolean[] EDITABLE = {true};
 
 		info("==Go to Intranet Calendar==");

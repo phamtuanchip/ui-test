@@ -34,6 +34,7 @@ public class NavigationToolbar extends PlatformBase {
 	public void goToPortalBranding() {
 		info("--Go to Portal Branding Management--");
 		String url = DEFAULT_BASEURL + "/g/:platform:administrators/branding";
+		//String url = baseUrl + "/g/:platform:administrators/branding";
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
 				driver.get(url);
@@ -61,6 +62,7 @@ public class NavigationToolbar extends PlatformBase {
 	public void goToPortalSites() {
 		info("--Go to Portal Site Management--");
 		String url = DEFAULT_BASEURL + "/g/:platform:administrators/portalnavigation";
+		//String url = baseUrl + "/g/:platform:administrators/portalnavigation";
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
 				driver.get(url);
@@ -84,6 +86,7 @@ public class NavigationToolbar extends PlatformBase {
 	public void goToManagePages() {
 		info("--Go to Page Management--");
 		String url = DEFAULT_BASEURL + "/g/:platform:administrators/administration/pageManagement";
+//		String url = baseUrl + "/g/:platform:administrators/administration/pageManagement";
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
 				driver.get(url);
@@ -131,19 +134,24 @@ public class NavigationToolbar extends PlatformBase {
 		//goToPage(ELEMENT_SEARCH_ICON_REGISTER, ELEMENT_LINK_SETUP, ELEMENT_LINK_USERS, ELEMENT_LINK_ADD_USERS);
 		//mouseOverAndClick(ELEMENT_LINK_SETUP);
 		//mouseOver(ELEMENT_LINK_SETUP, true);
+		String url = DEFAULT_BASEURL + "/g/:platform:administrators/administration/newStaff";
+		//String url = baseUrl + "/g/:platform:administrators/administration/newStaff";
+		
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
-				mouseOverAndClick(ELEMENT_LINK_SETUP);
+				//mouseOverAndClick(ELEMENT_LINK_SETUP);
+				driver.get(url);
 				break;
 			}
 			mouseOver(ELEMENT_LINK_SETUP, true);
 			if (waitForAndGetElement(ELEMENT_LINK_USERS, 5000, 0) != null){
 				info("Element " + ELEMENT_LINK_USERS + "... is displayed");
+				click(ELEMENT_LINK_USERS);
 				break;
 			}
 			info("Retry...[" + repeat + "]");
 		}
-		click(ELEMENT_LINK_USERS);
+		//click(ELEMENT_LINK_USERS);
 		Utils.pause(1000);
 	}
 
@@ -164,6 +172,7 @@ public class NavigationToolbar extends PlatformBase {
 	public void goToGroupSites(){
 		info("--Go to Group Site Management--");
 		String url = DEFAULT_BASEURL + "/g/:platform:administrators/groupnavigation";
+		//String url = baseUrl + "/g/:platform:administrators/groupnavigation";
 		//driver.get(url);
 		Utils.pause(1000);
 		for(int repeat=0;; repeat ++){
@@ -245,8 +254,10 @@ public class NavigationToolbar extends PlatformBase {
 
 	public void goToEditPageEditor () {
 		info("----Go to Edit page editor----");
+		Utils.pause(2000);
 		String id = waitForAndGetElement(By.xpath("//*[@class='UIPage']")).getAttribute("id").replace("UIPage-", "");
 		((JavascriptExecutor)driver).executeScript("javascript:ajaxGet(eXo.env.server.createPortalURL('" + id + "', 'EditCurrentPage', true));");
+		Utils.pause(2000);
 	}
 
 	//Go to change language for user interface
@@ -270,6 +281,7 @@ public class NavigationToolbar extends PlatformBase {
 	public void goToContentAdministration()
 	{
 		String url = DEFAULT_BASEURL + "/g/:platform:web-contributors/wcmAdmin";
+		//String url = baseUrl + "/g/:platform:web-contributors/wcmAdmin";
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
 				driver.get(url);
@@ -292,22 +304,24 @@ public class NavigationToolbar extends PlatformBase {
 
 	//Enter Sites Management Form 
 	public void goToSiteExplorer(){
-		Utils.pause(500);
+		String url = DEFAULT_BASEURL + "/g/:platform:web-contributors/siteExplorer";
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
-				mouseOverAndClick(ELEMENT_LINK_SETUP);
+				driver.get(url);
 				break;
 			}
 			mouseOver(ELEMENT_LINK_SETUP, true);
-			if (waitForAndGetElement(ELEMENT_MENU_CONTENT_LINK, 5000, 0) != null){
-				info("Element " + ELEMENT_MENU_CONTENT_LINK + "... is displayed");
-				break;
+			if (waitForAndGetElement(ELEMENT_MENU_CONTENT_LINK, 5000, 0)!= null) {	
+				mouseOver(ELEMENT_MENU_CONTENT_LINK, true);
+				if (waitForAndGetElement(ELEMENT_MENU_SITE_EXPLORER, 5000, 0)!= null){
+					click(ELEMENT_MENU_SITE_EXPLORER);
+					break;
+				}
 			}
 			info("Retry...[" + repeat + "]");
 		}
 		//mouseOverAndClick(ELEMENT_LINK_SETUP);
 		//mouseOver(ELEMENT_LINK_SETUP, true);
-		mouseOverAndClick(ELEMENT_MENU_CONTENT_LINK);
 		//click(ELEMENT_MENU_SITE_EXPLORER);
 		Utils.pause(2000);
 	}
@@ -316,6 +330,7 @@ public class NavigationToolbar extends PlatformBase {
 	public void goToSearch()
 	{
 		String url = DEFAULT_BASEURL + "/g/:platform:administrators/search";
+		//String url = baseUrl + "/g/:platform:administrators/search";
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
 				driver.get(url);
@@ -430,11 +445,13 @@ public class NavigationToolbar extends PlatformBase {
 
 	//Function go to Home Page
 	public void goToHomePage(){
+		Utils.pause(1000);
 		info("-- Go to home page --");
 		click(ELEMENT_HOME_PAGE);
 		Utils.pause(1000);
 		driver.navigate().refresh();
-		waitForAndGetElement(ELEMENT_REFRESH);
+		//waitForAndGetElement(ELEMENT_REFRESH);
+		Utils.pause(5000);
 	}
 	
 	/**

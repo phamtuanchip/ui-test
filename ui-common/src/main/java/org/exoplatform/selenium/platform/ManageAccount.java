@@ -60,12 +60,21 @@ public class ManageAccount extends PlatformBase {
 			click(ELEMENT_GO_TO_PORTAL);		
 		}
 		click(ELEMENT_SIGN_IN_LINK);*/
-		Utils.pause(1000);
+		//Utils.pause(1000);
 		type(ELEMENT_INPUT_USERNAME, username, true);
 		type(ELEMENT_INPUT_PASSWORD, password, true);
 		click(ELEMENT_SIGN_IN_BUTTON);
-		if(verify)
+		if(verify){
 			waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON);
+		}
+		if (waitForAndGetElement(ELEMENT_SKIP_TO_HOMEPAGE, 5000, 0) !=null ){
+			click(ELEMENT_SKIP_TO_HOMEPAGE);
+			Utils.pause(5000);
+		}
+		if (waitForAndGetElement(ELEMENT_HOME_PAGE, 5000, 0) == null){
+			driver.navigate().refresh();
+			Utils.pause(5000);
+		}
 	}
 
 	/** Login to acme portal
@@ -332,16 +341,16 @@ public class ManageAccount extends PlatformBase {
 			signIn("root", "12345");
 			break;
 		case ADMIN:
-			signIn("john", "gtngtn");
+			signIn("john", DATA_PASS);
 			break;	
 		case AUTHOR:
-			signIn("james", "gtngtn");
+			signIn("james", DATA_PASS);
 			break;
 		case DEVELOPER:
-			signIn("demo", "gtngtn");
+			signIn("demo", DATA_PASS);
 			break;
 		case PUBLISHER:
-			signIn("mary", "gtngtn");
+			signIn("mary", DATA_PASS);
 			break;
 		default:
 			break;

@@ -17,7 +17,6 @@ import org.exoplatform.selenium.platform.ecms.wcm.ContentListPreference;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 /**
  * 
@@ -77,7 +76,7 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 	 * Edit Single Content Viewer page
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test01_CreateAndEditSingleContentViewerPage(){	
 		String pageName = "Sniff_Ecms_SCV01";
 		String contentPath = "General Drives/Sites Management/acme/documents/offices.jpg";
@@ -110,7 +109,7 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 	 * Edit Content List viewer page with mode [By Folder]
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test02_CreateAndEditContentListViewerPageByFolder(){
 		String cName = "CLV_By_Folder_01";
 		String cContent = "Web content: CLV By folder";
@@ -159,7 +158,7 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 	 * Edit Content List Viewer page with mode [By Contents] 
 	 *  
 	 */
-	@Test
+	//@Test
 	public void test03_CreateAndEditListViewerPageByContent(){
 		String cName = "CLV_By_Content_01";
 		String cContent = "Web content: CLV By Content";
@@ -201,7 +200,7 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 	 * Edit Preference of Content List Viewer (Documents, Last news ...)
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test04_EditPreferenceOfContentListViewer(){
 		String cName = "Edit_Preference_News";
 		String cContent = "Edit Preference of Content List Viewer";

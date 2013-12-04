@@ -90,6 +90,7 @@ public class SocialBase extends PlatformBase {
 
 	// Activity Stream tab	
 	public final By ELEMENT_ACTIVITY_STREAM_TAB = By.xpath("//div[@id='UIProfileNavigationPortlet']//a[text()='Activity Stream']");
+	public final By ELEMENT_BLAST_SPACE = By.className("blastInputSpace");
 	
 	/*------------------- End of parameters ---------------------*/	
 
@@ -112,12 +113,18 @@ public class SocialBase extends PlatformBase {
 		goToAllSpaces();
 		waitForAndGetElement(ELEMENT_MY_SPACES_LINK);
 		click(ELEMENT_MY_SPACES_LINK);
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		Utils.pause(500);
 	}
 
 	// Go to All Spaces
 	public void goToAllSpaces(){
 		info("Go to All Spaces");
+		//Utils.pause(1000);
+		//driver.navigate().refresh();
+		Utils.pause(2000);
 		click(ELEMENT_JOIN_SPACE_LINK);
 		waitForAndGetElement("//*[contains(text(),'Add New Space')]");
 	}
@@ -126,6 +133,9 @@ public class SocialBase extends PlatformBase {
 	public void goToInvitationReceives(){
 		info("Go to Invitation Receives");
 		goToMySpacePage();
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		waitForAndGetElement(ELEMENT_INVATATION_RECEIVES_LINK);
 		click(ELEMENT_INVATATION_RECEIVES_LINK);	
 	}
@@ -209,6 +219,9 @@ public class SocialBase extends PlatformBase {
 	 */
 	public void goToNavigation(String spaceName){
 		goToMySpacePage();
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		doAction("Edit", spaceName);
 		goToNavigation();
 	}
@@ -216,8 +229,11 @@ public class SocialBase extends PlatformBase {
 	// Access a space
 	public void accessSpace(String spaceName) {
 		goToMySpacePage();
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		click(By.xpath("//*[@id='UIManageMySpaces']//*[text()= '"+ spaceName +"']"));
-		waitForElementNotPresent("//*[contains(text(),'Add New Space')]");
+		waitForAndGetElement(ELEMENT_BLAST_SPACE);
 	}
 
 	// Go to Find Connections

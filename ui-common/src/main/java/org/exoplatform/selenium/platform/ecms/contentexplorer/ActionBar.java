@@ -144,6 +144,7 @@ public class ActionBar extends EcmsBase{
 
 	//Show Drives link
 	public final By ELEMENT_SHOW_DRIVES = By.xpath("//*[@data-original-title = 'Show Drives']");
+	public final By ELEMENT_GENERAL_DRIVES = By.xpath("//h5[text()='GeneralDrives']");
 
 	//Action bar 
 	public final By ELEMENT_ADD_ITEM = By.xpath("//*[@data-original-title='Add Item']");	
@@ -231,6 +232,8 @@ public class ActionBar extends EcmsBase{
 		}
 		mouseOverAndClick(ELEMENT_NEW_CONTENT_LINK);
 		waitForElementNotPresent(ELEMENT_NEW_CONTENT_LINK, DEFAULT_TIMEOUT, 1);
+		//driver.navigate().refresh();
+		Utils.pause(2000);
 	}
 
 	//Go to add new folder
@@ -256,6 +259,8 @@ public class ActionBar extends EcmsBase{
 			Utils.pause(WAIT_INTERVAL);
 			info("retry...[" + repeat + "]");
 		}
+		driver.navigate().refresh();
+		Utils.pause(3000);
 	}
 
 	//Collaboration Tab
@@ -508,6 +513,7 @@ public class ActionBar extends EcmsBase{
 		//button.refresh();
 		click(locator);
 		Utils.pause(1000);
+		waitForElementNotPresent(ELEMENT_GENERAL_DRIVES);
 	}
 
 	//function public a document
@@ -718,7 +724,7 @@ public class ActionBar extends EcmsBase{
 			click(cMenu.ELEMENT_MENU_EDIT);
 			break;
 		case DELETE:
-			if (waitForAndGetElement(cMenu.ELEMENT_MENU_DELETE, 3000, 0) != null){
+			if (waitForAndGetElement(cMenu.ELEMENT_MENU_DELETE, 10000, 0) != null){
 				click(cMenu.ELEMENT_MENU_DELETE);
 			}else {
 				click(By.className("uiIconEcmsDelete"));
@@ -1251,6 +1257,7 @@ public class ActionBar extends EcmsBase{
 		Utils.pause(1000);
 		select(ELEMENT_ADD_PROPERTY_INPUT, property);
 		type(ELEMENT_VALUE_INPUT,value,true);
+		Utils.pause(1000);
 		button.save();
 
 		//Check if a property is added successfully.

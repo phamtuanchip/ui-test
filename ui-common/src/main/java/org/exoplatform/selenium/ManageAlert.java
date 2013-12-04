@@ -78,7 +78,7 @@ public class ManageAlert extends TestBase{
 			if (second >= timeOut) {
 				Assert.fail("Timeout at waitForConfirmation: " + confirmationText);
 			}
-			if (message.equals(confirmationText)) {
+			if (message.contains(confirmationText)) {
 				break;
 			}
 			

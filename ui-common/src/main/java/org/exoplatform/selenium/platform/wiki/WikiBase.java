@@ -120,7 +120,9 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_SEARCH_ICON = By.xpath("//div[@class='SearchIcon']");
 	public final By ELEMENT_SEARCH_ADVANCE=By.id("text");
 	public final String ELEMENT_WIKI_SEARCH_ITEM_OPTION = "//*[@id='wikis']//*[@alt='${item}']";
+	public final String ELEMENT_WIKI_SEARCH_ITEM_OPTION_AUX = "//*[@name='wikis']//*[contains(text(), '${item}')]";
 	public final String ELEMENT_WIKI_SEARCH_DROPDOWN = "//*[@id='wikis']//*[@class='btn dropdown-toggle']";
+	public final String ELEMENT_WIKI_SEARCH_DROPDOWN_AUX = "//*[@class='uiSelectbox']/*[@name='wikis']";
 	public final String ELEMENT_RESULT_SEARCH = "//*[@id='UIWikiAdvanceSearchResult']//*[contains(@href, '${pageName}') and contains(text(),'${pageName}')]";
 	public final String ELEMENT_VERIFY_RESULT_SEARCH = "//*[@id='UIWikiAdvanceSearchResult']//span[text()='0']/../strong[text()='${pageName}']";
 	public final String ELEMENT_VERIFY_MESSAGE = "No matching search result.";
@@ -131,8 +133,13 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_MOVE_PAGE_POPUP = By.xpath("//*[contains(@class, 'popupTitle') and text()='Move Page']");
 	public final By ELEMENT_SELECT_SPACE_DESTINATION = By.xpath("//*[contains(text(), 'Select the destination:')]/..//*[@class='btn dropdown-toggle']");
 	public final String ELEMENT_SPACE_NAME_SELECTED = "//*[@id='UISpaceSwitcher_/spaces/${space}']/a";
+	public final String ELEMENT_SPACE_NAME_SELECTED_AUX = "//*[contains(@id, 'uiSpaceSwitcher')]//*[contains(text(), '${space}')]";
+	//public final String ELEMENT_SPACE_NAME_SELECTED = "//*[contains(@id,'UISpaceSwitcher_/spaces/${space}')]/a";
+
 	public final By ELEMENT_PORTAL_NAME_SELECTED = By.id("UISpaceSwitcher_/portal/intranet");
 	public final String MESSAGE_MOVE_PAGE_DUPLICATE_TITLE = "Another page with the same title already exists in the selected space.";
+	//"Another page with the same title already exists in the selected space. Rename"
+	public final String MESSAGE_MOVE_PAGE_DUPLICATE_TITLE_AUX = "the same title already exists in the selected space";
 	public final By ELEMENT_RENAME_LINK_WHEN_MOVE_PAGE = By.linkText("Rename");
 	public final String MESSAGE_NO_PERMISSION_MOVE_PAGE = "You have no edit permission at the destination page";
 
@@ -316,6 +323,7 @@ public class WikiBase extends PlatformBase{
 	{
 		info("Deleting a wiki page...");
 		//mouseOver(ELEMENT_MORE_LINK,true);
+		Utils.pause(1000);
 		mouseOverAndClick(ELEMENT_MORE_LINK);
 		if (waitForAndGetElement(ELEMENT_DELETE_LINK_2, 5000, 0) == null){
 			mouseOverAndClick(ELEMENT_DELETE_LINK);
@@ -425,9 +433,16 @@ public class WikiBase extends PlatformBase{
 			click(ELEMENT_SELECT_SPACE_DESTINATION);
 			if (space == "Intranet"){
 				click(ELEMENT_PORTAL_NAME_SELECTED);
-			}else {
-				click(ELEMENT_SPACE_NAME_SELECTED.replace("${space}", space.toLowerCase()));
+			}else{
+				if (waitForAndGetElement(ELEMENT_SPACE_NAME_SELECTED_AUX.replace("${space}", space.toLowerCase()), 5000, 0) != null){
+					click(ELEMENT_SPACE_NAME_SELECTED_AUX.replace("${space}", space.toLowerCase()));
+				}else{
+					click(ELEMENT_SPACE_NAME_SELECTED.replace("${space}", space.toLowerCase()));
+				}
 			}
+			/*else {
+				click(ELEMENT_SPACE_NAME_SELECTED.replace("${space}", space.toLowerCase()));
+			}*/
 		}
 		info("CURRENT_LOCATION");
 		waitForAndGetElement(ELEMENT_VERIFY_CURRENT_LOCATION);
@@ -647,9 +662,20 @@ public class WikiBase extends PlatformBase{
 		Utils.pause(1000);
 		type(ELEMENT_SEARCH_ADVANCE,keyword,true);
 		if(space.length > 0){
-			click(ELEMENT_WIKI_SEARCH_DROPDOWN,2);
-			click(ELEMENT_WIKI_SEARCH_ITEM_OPTION.replace("${item}", space[0]));
+			if (waitForAndGetElement(ELEMENT_WIKI_SEARCH_DROPDOWN, DEFAULT_TIMEOUT, 0) != null){
+				click(ELEMENT_WIKI_SEARCH_DROPDOWN, 2);
+			}else {
+				click(ELEMENT_WIKI_SEARCH_DROPDOWN_AUX, 2);
+			}
+			if (waitForAndGetElement(ELEMENT_WIKI_SEARCH_ITEM_OPTION.replace("${item}", space[0]), DEFAULT_TIMEOUT, 0) != null){
+				Utils.pause(1000);
+				click(ELEMENT_WIKI_SEARCH_ITEM_OPTION.replace("${item}", space[0]));
+			}else {
+				Utils.pause(1000);
+				click(ELEMENT_WIKI_SEARCH_ITEM_OPTION_AUX.replace("${item}", space[0]));
+			}
 		}
+		Utils.pause(1000);
 		click(ELEMENT_SEARCH_BUTTON);	
 		Utils.pause(1000);
 	}

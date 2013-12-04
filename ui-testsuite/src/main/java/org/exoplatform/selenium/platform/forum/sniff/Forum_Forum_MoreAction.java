@@ -116,7 +116,6 @@ public class Forum_Forum_MoreAction extends ForumBase{
 		//Login as admin to delete data
 		goToCategory(DATA_USER_JOHN, cate);
 		mngCat.deleteCategoryInForum(cate, true);
-
 	}
 	
 	/**
@@ -139,7 +138,6 @@ public class Forum_Forum_MoreAction extends ForumBase{
 		
 		//Check if normal user with banned IP cannot access this forum
 		acc.signOut();
-		driver.get("http://" + localIP + ":8080/portal");
 		acc.signIn(DATA_USER_MARY, DATA_PASS);
 		goToForums();
 		click(By.linkText(forum));

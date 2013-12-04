@@ -55,7 +55,7 @@ public class Social_Space_SpaceManagement_ManageSpace extends SocialBase{
 		/*Step 1: Check All Spaces list*/ 
 		//Create new space
 		magMember.goToMySpacePage();
-		magMember.addNewSpace(spaceName, "");
+		magMember.addNewSpace(spaceName, "", 50000);
 		
 		//Login by other user
 		//Access Space/All spaces

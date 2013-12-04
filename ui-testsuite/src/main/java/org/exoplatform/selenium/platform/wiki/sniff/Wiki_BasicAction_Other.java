@@ -49,7 +49,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 	
 	public void addWikiForSpace(String spaceName, String title, String content){
 		magMem.goToAllSpaces();
-		magMem.addNewSpace(spaceName, "", "Visible", "Validation", "", "");
+		magMem.addNewSpace(spaceName, "", "Visible", "Validation", "", "", 60000);
 		goToWikiFromSpace(spaceName);
 		addBlankWikiPage(title, content, 0);
 	}
@@ -98,11 +98,11 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test03_MovePageDifferentSpace(){
-		String spaceName1 = "Space031";
+		String spaceName1 = "space031";
 		String title1 = "Wiki_move_title_03_1";
 		String content1 = "Wiki_move_content_03_1";
 		
-		String spaceName2 = "Space032";
+		String spaceName2 = "space032";
 		String title2 = "Wiki_move_title_03_2";
 		String content2 = "Wiki_move_content_03_2";
 		
@@ -111,13 +111,13 @@ public class Wiki_BasicAction_Other extends Permalink {
 
 		info("Move page2 of space2 to page1 of space1");
 		movePage(title2, title1, spaceName1);
-		waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", spaceName1));
+		waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", "Space031"));
 		
 		magMem.goToAllSpaces();
 		goToWikiFromSpace(spaceName2);
 		waitForElementNotPresent(By.linkText(title2));
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName1, 180000);
 		magMem.deleteSpace(spaceName2, 180000);
 	}
@@ -130,7 +130,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 		String title1 = "Wiki_move_title_04_1";
 		String content1 = "Wiki_move_content_04_1";
 		
-		String spaceName = "Space04";
+		String spaceName = "space04";
 		String title2 = "Wiki_move_title_04_2";
 		String content2 = "Wiki_move_content_04_2";
 		
@@ -145,7 +145,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 		goToWikiFromSpace(spaceName);
 		waitForElementNotPresent(By.linkText(title2));
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName, 180000);
 		goToWikiPage("Wiki Home/" + title1);
 		deleteCurrentWikiPage();
@@ -156,7 +156,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test05_MovePageInSameSpace(){
-		String spaceName = "Space05";
+		String spaceName = "space05";
 		String title1 = "Wiki_move_title_05_1";
 		String content1 = "Wiki_move_content_05_1";		
 		String title2 = "Wiki_move_title_05_2";
@@ -169,7 +169,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 		info("Move page2 to page1 in same space");
 		movePage(title2, title1);
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName, 180000);
 	}
 	
@@ -178,7 +178,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test06_MovePageFromPortalToSpace(){		
-		String spaceName = "Space06";
+		String spaceName = "space06";
 		String title1 = "Wiki_move_title_06_1";
 		String content1 = "Wiki_move_content_06_1";
 		String title2 = "Wiki_move_title_06_2";
@@ -187,16 +187,16 @@ public class Wiki_BasicAction_Other extends Permalink {
 		addWikiForSpace(spaceName, title1, content1);
 		goToWiki();
 		addBlankWikiPage(title2, content2, 0);
-
-		
+	
 		info("Move page2 of Intranet to page1 of Space");
 		movePage(title2, title1, spaceName);
-		waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", spaceName));
+		//waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", spaceName));
+		waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", "Space06"));
 		
 		goToWiki();
 		waitForElementNotPresent(By.linkText(title2));
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName, 180000);
 	}
 	
@@ -205,11 +205,11 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test00_MovePageDuplicateName(){
-		String spaceName1 = "Space071";
+		String spaceName1 = "space071";
 		String title1 = "Wiki_move_title_07_1";
 		String content1 = "Wiki_move_content_07_1";
 		
-		String spaceName2 = "Space072";
+		String spaceName2 = "space072";
 		String title2 = "Wiki_move_title_07_2";
 		String content2 = "Wiki_move_content_07_2";
 		
@@ -218,17 +218,18 @@ public class Wiki_BasicAction_Other extends Permalink {
 
 		info("Move page2 of space2 to page1 of space1");
 		movePage(title1, title1, spaceName1, false);
-		waitForTextPresent(MESSAGE_MOVE_PAGE_DUPLICATE_TITLE);
+		waitForTextPresent(MESSAGE_MOVE_PAGE_DUPLICATE_TITLE_AUX);
 		
 		info("Rename page2 of space2");
 		click(ELEMENT_RENAME_LINK_WHEN_MOVE_PAGE);
-		waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", spaceName2));
+		//waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", spaceName2));
+		waitForAndGetElement(ELEMENT_DISPLAY_MODE.replace("${space}", "Space072"));
 		assert getValue(ELEMENT_TITLE_WIKI_INPUT).contains(title1);
 		addWikiPageSourceEditor(title2, null);
 		click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName1, 180000);
 		magMem.deleteSpace(spaceName2, 180000);
 	}
@@ -238,7 +239,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test08_MovePageWhenNotHaveEditPermissionAtDestPage(){
-		String spaceName = "Space08";
+		String spaceName = "space08";
 		String title1 = "Wiki_move_title_08_1";
 		String content1 = "Wiki_move_content_08_1";
 		String title2 = "Wiki_move_title_08_2";
@@ -293,6 +294,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 		String content = "Wiki_sniff_permalink_content_10";
 		
 		addBlankWikiPage(title, content, 0);
+		Utils.pause(3000);
 		deletePagePermission("any");
 		goToPermalink();
 		String permalink = getPermalink();
@@ -310,7 +312,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test11_CheckPermalinkWithUserMemberOfSpace(){
-		String spaceName = "Space11";
+		String spaceName = "space11";
 		String title = "Wiki_sniff_permalink_title_11";
 		String content = "Wiki_sniff_permalink_content_11";
 		
@@ -345,7 +347,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 */
 	@Test
 	public void test12_CheckPermanlinkWithUserNotMemberOfSpace(){
-		String spaceName = "Space12";
+		String spaceName = "space12";
 		String title = "Wiki_sniff_permalink_title_12";
 		String content = "Wiki_sniff_permalink_content_12";
 		
@@ -409,12 +411,13 @@ public class Wiki_BasicAction_Other extends Permalink {
 		
 		addBlankWikiPage(title, content, 0);
 		deletePagePermission("any");
-		
+	
 		goToPermissionFromPermalink();
 		info("Select user");
 		click(ELEMENT_SELECT_USER);
 		per.selectUserPermission(userGroup1[0], 1);
 		click(button.ELEMENT_ADD_BUTTON);
+		Utils.pause(2000);
 		button.save();
 		magAc.signOut();
 		
@@ -431,15 +434,16 @@ public class Wiki_BasicAction_Other extends Permalink {
 		String title = "Wiki_sniff_permalink_title_14_2";
 		String content = "Wiki_sniff_permalink_content_14_2";
 		String userGroup2 = "Development/Select this Group";
-		
+
 		addBlankWikiPage(title, content, 0);
 		deletePagePermission("any");
-		
+
 		goToPermissionFromPermalink();
 		info("Select group");
 		click(ELEMENT_SELECT_GROUP);
 		per.selectGroupPermission(userGroup2);
 		click(button.ELEMENT_ADD_BUTTON);
+		Utils.pause(2000);
 		button.save();
 		magAc.signOut();
 		
@@ -465,6 +469,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 		click(ELEMENT_SELECT_MEMBERSHIP);
 		per.selectGroupMembership(userGroup3[0], userGroup3[1]);
 		click(button.ELEMENT_ADD_BUTTON);
+		Utils.pause(2000);
 		button.save();
 		magAc.signOut();
 		

@@ -78,8 +78,8 @@ public class Gatein_Dashboard extends DashBoard {
 	 */
 	@Test
 	public void test03_AddRenameDeleteTab(){
-		String name = "Tab 68884";
-		String newName = "Tab 68884 update";
+		String name = "tab68884";
+		String newName = "tab68884update";
 
 		navTool.goToDashboard();
 		addNewTabOnDashboard(name, true);
@@ -139,7 +139,7 @@ public class Gatein_Dashboard extends DashBoard {
 		click(ELEMENT_SWITCH_VIEW_MODE);
 
 		info("Edit portlet");
-		pageE.selectCLVPath("General Drives/Sites Management/acme", "documents");
+		pageE.selectCLVPath("General Drives/Sites Management/intranet", "documents");
 		click(ELEMENT_SWITCH_VIEW_MODE);
 		waitForTextPresent("offices.jpg");
 		waitForTextPresent("metro.pdf");

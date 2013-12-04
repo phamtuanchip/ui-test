@@ -127,17 +127,22 @@ public class GroupNavigation extends PlatformBase {
 				type(ELEMENT_INPUT_LABEL_1, nodeLabel, true);
 			}
 		}
-
+		Utils.pause(1000);
 		//Selector page
 		if (!pageTitle.isEmpty()){
 			click(ELEMENT_PAGE_SELECTOR_TAB);
 			click(ELEMENT_SEARCH_SELECTOR_PAGE_LINK);
 			type(ELEMENT_INPUT_PAGE_TITLE, pageTitle, true);
+			Utils.pause(1000);
 			select(ELEMENT_SELECT_SEARCH_OPTION, option);
+			Utils.pause(2000);
 			click(pageMag.ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
+			Utils.pause(2000);
 			click(ELEMENT_SELECT_SEARCHED_PAGE);
 		}	
+		Utils.pause(2000);
 		button.save();
+		Utils.pause(1000);
 		if(!nodeLabel.isEmpty()){
 			waitForAndGetElement(ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeLabel));
 		}

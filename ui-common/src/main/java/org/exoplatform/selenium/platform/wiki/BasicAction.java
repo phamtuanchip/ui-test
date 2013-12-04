@@ -346,11 +346,15 @@ public class BasicAction extends Permission{
 			if (space == "Intranet"){
 				click(ELEMENT_PORTAL_NAME_SELECTED);
 			}else {
-				click(ELEMENT_SPACE_NAME_SELECTED.replace("${space}", space.toLowerCase()));
+				if (waitForAndGetElement(ELEMENT_SPACE_NAME_SELECTED_AUX.replace("${space}", space.toLowerCase()), 5000, 0) != null){
+					click(ELEMENT_SPACE_NAME_SELECTED_AUX.replace("${space}", space.toLowerCase()));
+				}else{
+					click(ELEMENT_SPACE_NAME_SELECTED.replace("${space}", space.toLowerCase()));
+				}
 			}
 		}
 		click(By.xpath(ELEMENT_SELECTED_PAGE.replace("${relatedPage}", pageName)));
-		Utils.pause(500);
+		Utils.pause(1000);
 		click(button.ELEMENT_SELECT_BUTTON);
 		if (verify){
 			waitForAndGetElement(ELEMENT_RELATED_PAGE.replace("${relatedPage}", pageName));
@@ -630,6 +634,7 @@ public class BasicAction extends Permission{
 			type(ELEMENT_COMMENT_TEXTBOX, comment[0], true);
 		}
 		check(ELEMENT_PUBLISH_ACTIVITY_CHECKBOX, 2);
+		Utils.pause(1000);
 		click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 	}

@@ -440,7 +440,7 @@ public class EcmsBase extends ManageAccount {
 				}
 			}
 		}	
-		Utils.pause(1000);
+		Utils.pause(3000);
 	}
 
 	//function enable edit mode
@@ -576,6 +576,7 @@ public class EcmsBase extends ManageAccount {
 		type(ELEMENT_UPLOAD_LINK, Utils.getAbsoluteFilePath(link), false);
 		//Utils.pause(2000);
 		info("Upload file " + Utils.getAbsoluteFilePath(link));
+		Utils.pause(2000);
 		switchToParentWindow();
 		if (verify){
 			String links[] = link.split("/");
@@ -583,7 +584,7 @@ public class EcmsBase extends ManageAccount {
 			waitForAndGetElement(By.xpath("//*[contains(text(),'" + links[length-1]+ "')]"));
 		}
 		info("Upload file successfully");
-		Utils.pause(2000);
+		Utils.pause(3000);
 //		driver.navigate().refresh();
 //		Utils.pause(2000);
 	}

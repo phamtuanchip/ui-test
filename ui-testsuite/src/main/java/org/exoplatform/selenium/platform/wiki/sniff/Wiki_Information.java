@@ -37,7 +37,7 @@ public class Wiki_Information extends Version {
 
 	@AfterMethod
 	public void afterTest(){
-		magAc.signOut();
+		//magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
@@ -112,11 +112,11 @@ public class Wiki_Information extends Version {
 		magMem.addNewSpace(spaceName2, "", "Visible", "Validation", "", "");
 		goToWikiFromSpace(spaceName2);
 		addBlankWikiPage(title2, content2, 0);
-		
+
 		info("Add relation for page2 of space2 to page1 of space1");
 		addRelatedPage("Wiki Home/" + title2, title1, spaceName1);
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName1, 180000);
 		magMem.deleteSpace(spaceName2, 180000);
 	}
@@ -143,7 +143,7 @@ public class Wiki_Information extends Version {
 		info("Add relation for page2 of space2 to page1 of space1");
 		addRelatedPage("Wiki Home/" + title2, title1, "Intranet");
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName, 180000);
 		goToWikiPage("Wiki Home/" + title1);
 		deleteCurrentWikiPage();
@@ -170,7 +170,7 @@ public class Wiki_Information extends Version {
 		info("Move page2 to page1 in same space");
 		addRelatedPage("Wiki Home/" + title2, title1);
 		
-		magMem.goToAllSpaces();
+		magMem.goToMySpacePage();
 		magMem.deleteSpace(spaceName, 180000);
 	}
 	
@@ -183,7 +183,7 @@ public class Wiki_Information extends Version {
 		String content = "Wiki_sniff_infor_page_content_06";
 		
 		magAc.signOut();
-		magAc.signIn("fqa", "gtngtn");
+		magAc.signIn("fqa-exo", "gtngtn");
 		goToWiki();
 		addBlankWikiPage(title, content, 0);
 		goToAddRelation();

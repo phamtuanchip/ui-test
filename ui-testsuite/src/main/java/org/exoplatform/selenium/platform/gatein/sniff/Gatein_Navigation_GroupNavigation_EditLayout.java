@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.GroupNavigation;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
@@ -70,7 +71,7 @@ public class Gatein_Navigation_GroupNavigation_EditLayout extends GroupNavigatio
 		
 		info("Edit application when edit layout of page");
 		navTool.goToEditPageEditor();
-		pageE.selectCLVPath("General Drives/Sites Management/acme", "documents");
+		pageE.selectCLVPath("General Drives/Sites Management/intranet", "documents");
 		click(ELEMENT_SWITCH_VIEW_MODE);
 		waitForTextPresent("offices.jpg");
 		waitForTextPresent("metro.pdf");
@@ -142,15 +143,19 @@ public class Gatein_Navigation_GroupNavigation_EditLayout extends GroupNavigatio
 		click(ELEMENT_SWITCH_VIEW_MODE);
 
 		info("Edit title of container");
+		Utils.pause(1000);
 		mouseOver(columnContainer, true);
 		click(ELEMENT_CONTAINER_COLUMN_EDIT_ICON);
 		type(ELEMENT_CONTAINER_TITLE, title, true);
+		Utils.pause(1000);
 		but.save();
+		Utils.pause(1000);
 		mouseOver(columnContainer, true);
 		waitForAndGetElement(columnContainer + "/../../..//span[text()='" + title + "']");
 		
 		info("Move container");
 		mouseOver(columnContainer, true);
+		Utils.pause(1000);
 		dragAndDropToObject(columnContainer + "/../../..//*[@title='Hold this area to drag this table']", rowContainer);
 		click(ELEMENT_SWITCH_VIEW_MODE);
 		waitForAndGetElement("//*[@class='UIRowContainer']//span[text()='" + title + "']/../../../.." + columnContainer);
@@ -191,6 +196,7 @@ public class Gatein_Navigation_GroupNavigation_EditLayout extends GroupNavigatio
 		pageE.finishEditLayout();
 		
 		navTool.goToEditPageEditor();
+		Utils.pause(1000);
 		click(pageE.ELEMENT_VIEW_PAGE_PROPERTIES);
 		waitForAndGetElement("//*[@id='title' and @value = '" + newtitle + "']");
 		click(ELEMENT_PERMISSION_SETTING_TAB);

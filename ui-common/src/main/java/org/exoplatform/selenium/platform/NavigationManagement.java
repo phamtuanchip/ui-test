@@ -103,6 +103,7 @@ public class NavigationManagement extends  PlatformBase{
 			//button.save();
 			//waitForTextNotPresent("Navigation Management");
 		}
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(ELEMENT_TITLE_NAVIGATION_MANAGEMENT);
 	}
@@ -152,11 +153,13 @@ public class NavigationManagement extends  PlatformBase{
 		}else {
 			click(ELEMENT_SEARCH_SELECTOR_PAGE_LINK);
 			type(ELEMENT_INPUT_POPUP_SEARCH_TITLE, pageTitle, true);
+			Utils.pause(2000);
 			click(ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
+			Utils.pause(2000);
 			click(ELEMENT_SELECT_SEARCHED_PAGE);	
 			button.save();
 		}
-		Utils.pause(500);
+		Utils.pause(1000);
 		//button.save();
 		//waitForTextNotPresent("Navigation Management");
 	}
@@ -173,9 +176,11 @@ public class NavigationManagement extends  PlatformBase{
 		if (firstLevel){
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
+			Utils.pause(2000);
 			click(ELEMENT_NAVIGATION_DELETE_NODE);
 			alt.waitForConfirmation("Are you sure you want to delete this node?");
 			waitForElementNotPresent(currentNodeName);
+			Utils.pause(1000);
 			button.save();		
 		}else {
 			if (waitForAndGetElement(currentNodeName, 5000, 0) == null){
@@ -183,12 +188,15 @@ public class NavigationManagement extends  PlatformBase{
 			}
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
+			Utils.pause(2000);
 			click(ELEMENT_NAVIGATION_DELETE_NODE);
 			alt.waitForConfirmation("Are you sure you want to delete this node?");
 			waitForElementNotPresent(currentNodeName);
+			Utils.pause(1000);
 			button.save();		
 		}
 		//waitForTextNotPresent("Navigation Management");
+		Utils.pause(2000);
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 	}
 }

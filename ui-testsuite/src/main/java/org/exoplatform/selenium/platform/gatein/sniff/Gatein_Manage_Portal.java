@@ -36,7 +36,7 @@ public class Gatein_Manage_Portal extends PortalManagement{
 
 	@AfterMethod
 	public void afterTest(){
-		magAc.signOut();
+		//magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
@@ -44,7 +44,6 @@ public class Gatein_Manage_Portal extends PortalManagement{
 	/**CaseId: 68885 + 68887 + 68886 -> Add, switch sites and delete site
 	 * 
 	 */
-	
 	@Test
 	public void test01_AddDeletePortal(){
 		String portalName = "gateinsniffportal01";
@@ -58,7 +57,8 @@ public class Gatein_Manage_Portal extends PortalManagement{
 		waitForAndGetElement("//*[@class='siteName' and text()='" + portalName + "']");
 		
 		info("Switch to new portal");
-		driver.get("http://localhost:8080/portal/" + portalName);
+		//driver.get("http://localhost:8080/portal/" + portalName);
+		driver.get(DEFAULT_BASEURL + "/" + portalName);
 		waitForAndGetElement("//img[contains(@src, 'sites/" + portalName + "')]");
 		
 		info("Delete portal");

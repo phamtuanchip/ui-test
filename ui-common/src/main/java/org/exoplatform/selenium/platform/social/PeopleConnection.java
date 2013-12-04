@@ -52,15 +52,19 @@ public class PeopleConnection extends SocialBase {
 		//By ELEMENT_CANCEL_REQUEST_BUTTON = By.xpath("//div/a[text()='"+peopleName+"']/following::ul/li/a[@title='Cancel Request']");
 		//By ELEMENT_CANCEL_REQUEST_BUTTON = By.xpath(ELEMENT_CONNECTION.replace("${peopleName}", peopleName) + "/../../ul/li[2]/a[@title='Cancel Request']");
 		info("-- Connect the user: " + peopleName);
-		if(waitForAndGetElement(ELEMENT_EVERYONE_TAB,5000,0)==null){
+		if(waitForAndGetElement(ELEMENT_EVERYONE_TAB,5000,0) == null){
 			info("----Go to My connections----");
 			goToMyConnections();
 			info("---Click  every one tab-----");
 			click(ELEMENT_EVERYONE_TAB);
 		}
-		else
+		else{
 			click(ELEMENT_EVERYONE_TAB);
+		}
 		info("-----Click connect to people-----");
+		if (waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName), 5000, 0) != null){
+			click(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
+		}
 		waitForAndGetElement(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		click(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		info("---Verify Connect button is disappeared----");

@@ -41,6 +41,12 @@
 				<testSuite>cloud-start.xml</testSuite>
 			</properties>
 		</profile>
+		<profile>
+			<id>cloud-user</id>
+			<properties>
+				<testSuite>cloud-user.xml</testSuite>
+			</properties>
+		</profile>
 
 		<profile>
 			<id>ecms-se</id>

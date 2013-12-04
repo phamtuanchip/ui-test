@@ -54,7 +54,7 @@ public class Calendar_Calendar extends CalendarBase{
 
 		List <WebElement> highLight = driver.findElements(By.xpath("//td[@class='highLight']"));
 		for(WebElement we:highLight){
-			boolean verify = we.getText().equals(getDate(1,"dd")) || we.getText().equals(getDate(2,"dd"));
+			boolean verify = we.getText().equals(getDate(1,"dd")) & we.getText().equals(getDate(2,"dd"));
 			assert verify;
 		}
 

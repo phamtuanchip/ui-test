@@ -131,8 +131,10 @@ public class Social_HomePage_ActivityStream extends Activity {
 				activity.deleteActivity("activity 0"+String.valueOf(i));
 				driver.navigate().refresh();
 			}
-			else
+			else{
 				activity.deleteActivity("activity "+String.valueOf(i));
+				driver.navigate().refresh();
+			}
 		}
 	}
 
@@ -145,7 +147,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 	@Test
 	public void test03_CheckAllActivitiesFilter(){
 		//Declare variable
-		String spacename = "Space64719";
+		String spacename = "space64719";
 		String spacedesc = "Description Of Space03";
 		String activityOfUser = "activity of ";
 		String activityOfSpace = "activity of space ";
@@ -210,6 +212,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		activity.deleteActivity(activityOfSpace + spacename);
 		navToolBar.goToConnectionPage();
 		peoConn.removeConnection(user1);
+		
 		magMember.goToMySpacePage();
 		magMember.deleteSpace(spacename,300000);
 		magAcc.userSignIn(userType.PUBLISHER);
@@ -227,7 +230,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 	@Test
 	public void test04_CheckMySpacesFilter(){
 		//Declare variable
-		String spacename = "Space64720";
+		String spacename = "space64720";
 		String spacedesc = "Description Of Space04";
 		String activityOfUser = "activity of ";
 		String activityOfSpace = "activity of space ";
@@ -271,12 +274,12 @@ public class Social_HomePage_ActivityStream extends Activity {
 		//Add activity of user
 		addActivity(true, activityOfUser+user, false,"");
 
-		/*Step 1: Goto social homepage*/ 
+//		Step 1: Goto social homepage 
 		//- Goto homepage
 		//- Home page is displayed
 		navToolBar.goToHomePage();
 
-		/*Step 2: Check [My Spaces] filter*/
+//		Step 2: Check [My Spaces] filter
 		//- In the drop-down select box, select [My Space]
 		info("-- Check [My Spaces] --");
 		selectFileter("My Spaces");
@@ -288,7 +291,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		waitForActivityPresent(activityOfSpace + spacename,false);
 		waitForActivityNotPresent(activityOfUser+user2,false);
 
-		/*Clear data*/
+//		Clear data
 		info("clear data");
 		selectFileter("All Activities");
 		activity.deleteActivity(activityOfUser+user);
@@ -314,7 +317,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 	@Test
 	public void test05_CheckConnectionsFilter(){
 		//Declare variable
-		String spacename = "Space64721";
+		String spacename = "space64721";
 		String spacedesc = "Description Of Space64721";
 		String activityOfUser = "activity of ";
 		String activityOfSpace = "activity of space ";
@@ -397,7 +400,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 	@Test
 	public void test06_CheckMyActivitiesFilter(){
 		//Declare variable
-		String spacename = "Space64722";
+		String spacename = "space64722";
 		String spacedesc = "Description Of Space64722";
 		String activityOfUser = "activity of ";
 		String activityOfSpace = "activity of space ";

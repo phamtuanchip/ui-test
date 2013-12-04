@@ -64,10 +64,10 @@ public class Gatein_Manage_ManagePage extends DashBoard {
 		pageMag.searchPageInManagementPage(PageType.GROUP, "Site Map");
 		waitForAndGetElement("//*[contains(text(), 'group::/platform/guests::sitemap')]");
 		
-		info("Search page with Type and Site");
-		pageMag.searchPageInManagementPage(PageType.PORTAL, "", "acme");
-		waitForAndGetElement("//*[contains(text(), 'portal::acme::overview')]");
-		waitForElementNotPresent("//*[contains(text(), 'portal::intranet::')]");
+		//info("Search page with Type and Site");
+		//pageMag.searchPageInManagementPage(PageType.PORTAL, "", "acme");
+		//waitForAndGetElement("//*[contains(text(), 'portal::acme::overview')]");
+		//waitForElementNotPresent("//*[contains(text(), 'portal::intranet::')]");
 		
 		info("Search page with Title, Site name, Type");
 		pageMag.searchPageInManagementPage(PageType.PORTAL, "Register", "intranet");
@@ -150,13 +150,14 @@ public class Gatein_Manage_ManagePage extends DashBoard {
 		String pageName = "SniffManagePageName04";
 		String pageTitle = "SniffManagePageTitle04";
 		String ownerId = "/organization/management/executive-board";
-		String groupPath = "Platform /Content Management ";
+		String groupPath = "Platform/Content Management";
 		String membership = "*";
 		
 		navTool.goToManagePages();
 		
 		info("Add page for portal");
 		pageMag.addNewPageAtManagePages(PageType.GROUP, pageName, pageTitle, true, null, groupPath, membership, ownerId);
+		//pageMag.addNewPageAtManagePages(PageType.GROUP, pageName, pageTitle, true, null, groupPath, membership);
 		
 		info("Edit page");
 		pageMag.editPageAtManagePages(PageType.GROUP, pageTitle);
@@ -252,7 +253,7 @@ public class Gatein_Manage_ManagePage extends DashBoard {
 	}
 	
 	public void editCLVPortletAndSwitchViewMode(){
-		pageE.selectCLVPath("General Drives/Sites Management/acme", "documents");
+		pageE.selectCLVPath("General Drives/Sites Management/intranet", "documents");
 		click(ELEMENT_SWITCH_VIEW_MODE);
 		waitForTextPresent("offices.jpg");
 		waitForTextPresent("metro.pdf");

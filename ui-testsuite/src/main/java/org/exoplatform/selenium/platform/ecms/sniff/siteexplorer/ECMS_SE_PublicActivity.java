@@ -90,7 +90,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		String fileName = "Public_activity_file_document_01";
 		String fileContent = "Public_activity_file_document_content_01";
 		String desc = "Public_activity_file_document_description_01";
-		By elementFile = By.linkText(fileName);
+		By elementFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", fileName));
 				
 		navTool.goToSiteExplorer();
 		
@@ -118,7 +118,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	public void test02_CheckIntranetHomePage_afterAddingWebContent(){
 		String name = "Public_activity_web_content_02";
 		String sum = "line1/line2/line3/line4/line5";
-		By elementWeb = By.linkText(name);
+		By elementWeb = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		
 		navTool.goToSiteExplorer();
 		
@@ -146,7 +146,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	public void test03_CheckIntranetHomePage_AfterAddingProduct(){
 		String name = "Public_activity_product_03";
 		String sum = "line1/line2/line3/line4/line5";
-		By elementProduct = By.linkText(name);
+		By elementProduct = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		
 		navTool.goToSiteExplorer();
 		
@@ -170,15 +170,16 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	}
 	
 	/**CaseId: 74822 -> Check intranet homepage after Editing title of content
-	 * 
+	 * ERROR: No comment is added on homepage after editting title
+	 * Note: this issue is not created on jira
 	 */
-	@Test
+	@Test (groups="error")
 	public void test04_CheckIntranetHomePage_AfterEditingTitleOfContent(){
 		String name = "Public_activity_file_document_name_04";
 		String sum = "Public_activity_file_document_content_04";
 		String title = "Public_activity_file_document_title_04";
 		String newTitle = "Public_activity_file_document_title_04_Edit";
-		By elementFile = By.linkText(name);
+		By elementFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		
 		navTool.goToSiteExplorer();
 		
@@ -202,13 +203,14 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	}
 	
 	/**CaseId: 74824 -> Check intranet homepage after adding tag to a content
-	 * 
+	 * ERROR: No comment added after adding tag to a content
+	 * Note: this issue is not created on jira
 	 */
-	@Test
+	@Test(groups="error")
 	public void test05_CheckIntranetHomePage_AfterAddingTagToContent(){
 		String name = "Public_activity_web_content_05";
 		String sum = "line1/line2/line3";
-		By elementWeb = By.linkText(name);
+		By elementWeb = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		String tag1[] = {"Activity_Tag1"};
 		String tag2[] = {"Activity_Tag2", "Activity_Tag3"};
 		String tag[] = {tag1[0], tag2[0], tag2[1]};
@@ -252,7 +254,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	public void test06_CheckIntranetHomepage_AfterDeletingContent(){
 		String name = "Public_activity_web_content_06";
 		String sum = "line1/line2/line3";
-		By elementWeb = By.linkText(name);
+		By elementWeb = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		
 		createWebContentThenCheckActivity(name, sum);
 		
@@ -264,13 +266,14 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	}
 	
 	/**CaseId: 74826 -> Check intranet homepage after publishing a content
-	 * 
+	 * ERROR: Check intranet homepage after publishing a content (not update version info)
+	 * Note: this issue is not created on jira
 	 */
-	@Test
+	@Test (groups="error")
 	public void test07_CheckIntranetHomePage_AfterPublishingContent(){
 		String name = "Public_activity_web_content_07";
 		String sum = "line1/line2/line3";
-		By elementWeb = By.linkText(name);
+		By elementWeb = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		
 		createWebContentThenCheckActivity(name, sum);
 		
@@ -294,7 +297,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test08_CheckIntranetHomePage_AfterUploadingFile(){
 		String fileUpload = "Sniff_public_activity_08.jpg";
-		By elementUploadFile = By.linkText(fileUpload);
+		By elementUploadFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", fileUpload));
 		
 		uploadFileThenCheckActivity(fileUpload, "103 KB");
 		
@@ -309,7 +312,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test09_CheckIntranetHomePage_AfterAddingCategoryToUploadedFile(){
 		String fileUpload = "Sniff_public_activity_09.jpg";
-		By elementUploadFile = By.linkText(fileUpload);
+		By elementUploadFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", fileUpload));
+		
+		String category = "intranet";
 		String category1 = "Defense";
 		String category2 = "Movement";
 		String category3 = "Natural Elements";
@@ -319,7 +324,10 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		info("Add a category for uploaded file");
 		navToolBar.goToSiteExplorer();
 		ecms.goToNode(elementUploadFile);
-		actBar.addCategoryForNode("powers", false, "", category1);
+		//Check if Category button is shown on action bar
+		actBar.addItem2ActionBar("addCategory", actBar.ELEMENT_CATEGORIES_LINK);
+		ecms.goToNode(elementUploadFile);
+		actBar.addCategoryForNode(category, false, "", category1);
 		
 		info("Check activity after adding a category");
 		navTool.goToHomePage();
@@ -327,8 +335,8 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		
 		info("Add 2 category for uploaded file");
 		navToolBar.goToSiteExplorer();
-		actBar.addCategoryForNode("powers", false, "", category2);
-		actBar.addCategoryForNode("powers", false, "", category3);
+		actBar.addCategoryForNode(category, false, "", category2);
+		actBar.addCategoryForNode(category, false, "", category3);
 		
 		info("Check activity after adding 2 categories");
 		navTool.goToHomePage();
@@ -341,12 +349,13 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	}
 	
 	/**CaseId: 74830 -> Check intranet homepage after editing Title of an uploaded file
-	 * 
+	 * ERROR: don't add comment after editing title of upload file
+	 * Note: this issue is not created on jira
 	 */
-	@Test
+	@Test(groups="error")
 	public void test10_CheckIntranetHomePage_AfterEditingTitleOfUploadedFile(){
 		String fileUpload = "Sniff_public_activity_10.jpg";
-		By elementUploadFile = By.linkText(fileUpload);
+		By elementUploadFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", fileUpload));
 		String title = "Title of uploaded file";
 		
 		uploadFileThenCheckActivity(fileUpload, "103 KB");
@@ -372,12 +381,15 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test11_CheckIntranetHomePage_AfterDeletingUploadFile(){
 		String fileUpload = "Sniff_public_activity_11.jpg";
-		By elementUploadFile = By.linkText(fileUpload);
+		By elementUploadFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", fileUpload));
 		
 		uploadFileThenCheckActivity(fileUpload, "103 KB");
 		
 		info("Delete uploaded file");
 		navToolBar.goToSiteExplorer();
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
+
+		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
 		cMenu.deleteData(elementUploadFile);
 		
 		info("Check remove activity after deleting uploaded file");
@@ -392,7 +404,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	public void test12_EditAContentFromContentActivity(){
 		String name = "Public_activity_web_content_11";
 		String sum = "line1/line2/line3";
-		By elementWeb = By.linkText(name);
+		By elementWeb = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		
 		createWebContentThenCheckActivity(name, sum);
 		
@@ -402,6 +414,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		activity.backToHomePageFromEditContentScreen();
 		
 		navTool.goToSiteExplorer();
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
+
+		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
 		cMenu.deleteData(elementWeb);
 	}
 	
@@ -413,7 +428,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		String name = "Public_activity_web_content_12";
 		String cont = "Public_activity_content_12";
 		String sum = "line1/line2/line3/line4/line5";
-		By elementWeb = By.linkText(name);
+		By elementWeb = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", name));
 		
 		navTool.goToSiteExplorer();
 		
@@ -429,8 +444,10 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		
 		navTool.goToSiteExplorer();
 		actBar.chooseDrive(By.xpath("//*[@data-original-title='Sites Management']"));
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
-		waitForAndGetElement(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
+
+		waitForAndGetElement(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT).click();
 		cMenu.deleteData(elementWeb);		
 	}
 	
@@ -440,7 +457,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test14_ViewFileFromFileActivity(){
 		String fileUpload = "Sniff_public_activity_14.jpg";
-		By elementUploadFile = By.linkText(fileUpload);
+		By elementUploadFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", fileUpload));
 		
 		uploadFileThenCheckActivity(fileUpload, "103 KB");
 		
@@ -448,6 +465,10 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		activity.goToViewFromFileActivity(fileUpload);
 		
 		navToolBar.goToSiteExplorer();
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
+
+		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
+
 		cMenu.deleteData(elementUploadFile);
 	}
 	
@@ -457,7 +478,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test15_EditFileFormFileActivity(){
 		String fileUpload = "Sniff_public_activity_15.jpg";
-		By elementUploadFile = By.linkText(fileUpload);
+		By elementUploadFile = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", fileUpload));
 		
 		uploadFileThenCheckActivity(fileUpload, "103 KB");
 		
@@ -466,13 +487,17 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		activity.backToHomePageFromEditContentScreen();
 		
 		navTool.goToSiteExplorer();
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
+
+		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
 		cMenu.deleteData(elementUploadFile);
 	}
 	
 	/**CaseId: 75298 -> Update the File activity after moving a file
-	 * 
+	 * ERROR: Update the File activity after moving a file (check comment)
+	 * Note: This issue is still created on jira
 	 */
-	@Test
+	@Test(groups="error")
 	public void test16_CheckIntranetHomePage_AfterMovingFile(){
 		String fileUpload = "Sniff_public_activity_16.jpg";
 		By elementUploadFile = By.linkText(fileUpload);
@@ -496,13 +521,15 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		activity.checkContentAfterMovingANode(fileUpload, "/sites/" + folder + "/", false);
 		
 		navTool.goToSiteExplorer();
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		cMenu.deleteData(elementFolder);	
 	}
 	
 	/**CaseId: 75299 -> Update Content activity after moving a content
-	 * 
+	 * ERROR: Update Content activity after move a content (check comment)
+	 * Note: This issue is still created on jira
 	 */
-	@Test
+	@Test (groups="error")
 	public void test17_CheckIntranetHomePage_AfterMovingContent(){
 		String name = "Public_activity_web_content_17";
 		String sum = "line1/line2/line3";
@@ -527,6 +554,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		activity.checkContentAfterMovingANode(name, "/sites/" + folder + "/", true);
 		
 		navTool.goToSiteExplorer();
+		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		cMenu.deleteData(elementFolder);
 	}
 }

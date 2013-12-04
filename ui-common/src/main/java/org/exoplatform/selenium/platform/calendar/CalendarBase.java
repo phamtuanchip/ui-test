@@ -67,7 +67,7 @@ public class CalendarBase extends PlatformBase {
 	public By ELEMENT_END_TIME = By.name("endTime");
 	public By ELEMENT_MONTH_TAB_ACTIVE = By.xpath("//*[text()='Month']/ancestor::li[contains(@class, 'active')]");
 	public By ELEMENT_WEEK_TAB = By.xpath("//*[text()='Week']/ancestor::li[contains(@class, 'btn')]");
-
+	public By ELEMENT_WEEK_TAB_ACTIVE = By.xpath("//*[text()='Week']/ancestor::li[contains(@class, 'active')]");
 
 	//------------Add event category------------------
 	public String ELEMENT_ADD_EVENT_CATEGORY_ICON = "//*[@id='tmpMenuElement']//i[@class='uiIconCalCreateEvent uiIconLightGray']";
@@ -93,7 +93,7 @@ public class CalendarBase extends PlatformBase {
 	public By ELEMENT_CAL_EDIT_MENU = By.xpath("//*[@id='tmpMenuElement']//a[contains(@href,'EditCalendar')]");
 	public By ELEMENT_CAL_SETTING_MENU = By.xpath("//*[@id='UIActionBar']//i[@class='uiIconSetting uiIconLightGray']");
 	public String ELEMENT_CAL_SETTING_TIMEZONE_VALUE = "//*[@id='setting']//select[@name='timeZone']/option[@value='${timezoneOpt}']";
-	
+
 	//------------Export calendar---------------
 	public By ELEMENT_CALENDAR_EXPORT = By.xpath("//div[@id='CalendarPopupMenu']//*[@class='uiIconCalExportCalendar uiIconLightGray']");
 	public By ELEMENT_CALENDAR_EXPORT_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Export Calendar']");
@@ -126,7 +126,11 @@ public class CalendarBase extends PlatformBase {
 	public By ELEMENT_CAL_GROUP_INPUT = By.id("AddGroupInput");
 	public By ELEMENT_CAL_SELECT_GROUP_ICON = By.xpath("//*[@class='uiIconGroup uiIconLightGray']");
 	public String ELEMENT_EDIT_PERMISSION_INPUT = "//*[contains(@id,'${groupName}_permission')]";
+	public By ELEMENT_BLANK_SHOW_IN_GROUP = By.xpath("//th[text()='Groups']");
 
+	public String ELEMENT_ADD_CALENDAR_GROUP_DELETE_ICON = "//a[@title='Delete Permission' and contains(@href,'${group}')]";
+
+	
 	//-----------Event/Task -----------
 	public String ELEMENT_EVENT_TASK_ALL_DAY = "//*[@id='UIWeekViewGridAllDay']//div[contains(text(),'${event}')]";
 	public String ELEMENT_EVENT_TASK_ONE_DAY = "//*[@id='UIWeekViewGrid']//div[contains(text(),'${taskName}')]/parent::div[@class='clearfix']/div[@class='eventContainerBar eventTitle pull-left']";
@@ -369,7 +373,10 @@ public class CalendarBase extends PlatformBase {
 				click(ELEMENT_DATA_ORIGINAL_TITLE.replace("${title}", groups[0]));
 			}else
 				type(ELEMENT_CAL_GROUP_INPUT,groups[0],true);
+			click(ELEMENT_BLANK_SHOW_IN_GROUP);
+			Utils.pause(1000);
 			click(button.ELEMENT_ADD_BUTTON);
+			waitForAndGetElement(ELEMENT_ADD_CALENDAR_GROUP_DELETE_ICON.replace("${group}", groups[0]));
 		}
 		Utils.pause(1000);
 	}
@@ -681,8 +688,10 @@ public class CalendarBase extends PlatformBase {
 		WebElement element = waitForAndGetElement(ELEMENT_SHOW_WORKING_TIME_CHECKBOX, 5000, 1, 2);
 		if (!element.isSelected()){
 			check(ELEMENT_SHOW_WORKING_TIME_CHECKBOX, 2);
-			select(ELEMENT_BEGIN_TIME, beginTime);
-			select(ELEMENT_END_TIME, endTime);	
+			if((beginTime != null) & (beginTime != ""))
+				select(ELEMENT_BEGIN_TIME, beginTime);
+			if((endTime != null) & (endTime != ""))
+				select(ELEMENT_END_TIME, endTime);	
 		}else{
 			info("[Show working times is already checked]");
 		}
@@ -736,7 +745,8 @@ public class CalendarBase extends PlatformBase {
 		click(ELEMENT_BUTTON_SEARCH_ADVANCE_SEARCH);
 		info("----Confirm search result displayed----");
 		Utils.pause(3000);
-		waitForAndGetElement(ELEMENT_BUTTON_CLOSE_QUICK_SEARCH_RESULT);
+		//waitForAndGetElement(ELEMENT_BUTTON_CLOSE_QUICK_SEARCH_RESULT);
+		waitForElementNotPresent(ELEMENT_INPUT_TEXT_ADVANCE_SEARCH);
 	}
 
 	/** Go to Calendar Actions> Add Event Category
@@ -792,6 +802,7 @@ public class CalendarBase extends PlatformBase {
 		waitForAndGetElement(ELEMENT_LIST_EDIT_EVENT_BUTTON.replace("${categoryName}",categoryName));
 		click(ELEMENT_LIST_EDIT_EVENT_BUTTON.replace("${categoryName}",categoryName));
 		type(ELEMENT_ADD_EVENT_CATEGORY_INPUT,editedCategoryName,true);
+		Utils.pause(500);
 		click(ELEMENT_EDIT_EVENT_CATEGORY_BUTTON_UPDATE);
 		waitForAndGetElement(ELEMENT_LIST_EDIT_EVENT_BUTTON.replace("${categoryName}",editedCategoryName));
 		click(ELEMENT_ADD_EVENT_CATEGORY_BUTTON_CLOSE);
@@ -898,5 +909,55 @@ public class CalendarBase extends PlatformBase {
 				}
 			}
 		}
+	}
+
+	/**Check if week view is opened. If not, then open it
+	 * 
+	 */
+	public void checkWeekViewOpen(){
+		info("Check if week view is opened. If not, then open it");
+		if(waitForAndGetElement(ELEMENT_WEEK_TAB_ACTIVE,DEFAULT_TIMEOUT,0) == null){
+			click(ELEMENT_WEEK_TAB);
+			waitForAndGetElement(ELEMENT_WEEK_TAB_ACTIVE);
+		}
+
+	}
+
+	/**
+	 * Set up settings for calendar
+	 * @param view: view
+	 * @param dateFormat: date format
+	 * @param timeFormat: time format
+	 * @param zone: time zone
+	 * @param weekStart: week start
+	 * @param workingTimeFrom: working time from
+	 * @param workingTimeTo: working time to
+	 * @param sendInvitation: = 1: always, = 2: ask; if other, never
+	 */
+	public void settingCalendar(String view, String dateFormat, String timeFormat, String zone, String weekStart, String workingTimeFrom, String workingTimeTo, int...sendInvitation){
+		int invitation = sendInvitation.length > 0 ? sendInvitation[0] : 0;
+		if((view != null) & (view != ""))
+			select(ELEMENT_VIEW_TYPE, view);
+		if((dateFormat != null) & (dateFormat != ""))
+			select(ELEMENT_DATE_FORMAT, dateFormat);
+		if((timeFormat != null)&(timeFormat != ""))
+			select(ELEMENT_TIME_FORMAT, timeFormat);
+		if((zone != null)&(zone != ""))
+			select(ELEMENT_TIME_ZONE, zone);
+		if((weekStart != null) &(weekStart != ""))
+			select(ELEMENT_WEEK_START_ON, weekStart);
+		showWorkingTimes(workingTimeFrom, workingTimeTo);
+
+		switch (invitation){
+		case 1: check(ELEMENT_SEND_EVENT_INVITATION.replace("${option}", "Always"), 2);
+		break;
+		case 2: check(ELEMENT_SEND_EVENT_INVITATION.replace("${option}", "Ask"), 2);
+		break;
+		default: check(ELEMENT_SEND_EVENT_INVITATION.replace("${option}", "Never"), 2);
+		break;
+		}
+
+		click(ELEMENT_SETTINGS_FORM_SAVE_BUTTON);
+		waitForElementNotPresent(ELEMENT_SETTINGS_FORM_SAVE_BUTTON);
 	}
 }

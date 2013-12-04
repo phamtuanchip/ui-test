@@ -252,6 +252,7 @@ public class ContentTemplate extends EcmsBase{
 		}
 		if (sum!="" || img !=""){
 			click(ELEMENT_WEBCONTENT_ILLUSTRATION_TAB);
+			Utils.pause(3000);
 			if (img!=""){
 				//driver.switchTo().frame(waitForAndGetElement(ELEMENT_WEBCONTENT_UPLOAD_FRAME, 3000, 1, 2));
 				//type(ELEMENT_WEBCONTENT_FILE_IMAGE, Utils.getAbsoluteFilePath(img), false);			

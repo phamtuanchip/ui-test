@@ -40,6 +40,7 @@ public class TestBase {
 	public WebDriver newDriver;
 	protected String baseUrl;
 	protected int DEFAULT_TIMEOUT = 30000; //milliseconds = 30 seconds
+	protected int DEFAULT_TIMEOUT2 = 60000; //milliseconds = 60 seconds
 	protected int WAIT_INTERVAL = 1000; //milliseconds  
 	public int loopCount = 0;	
 	protected boolean ieFlag;	 
@@ -52,7 +53,15 @@ public class TestBase {
 	//public final By ELEMENT_MENU_EDIT_LINK = By.xpath("//i[@class='uiIconPLF24x24Edit']");
 	//public final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
 	//public final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
-	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
+
+	public final String DEFAULT_BASEURL = "http://yopmail.netstg.exoplatform.org/";
+	//"http://hushmail.wks-acc.exoplatform.org/portal";
+	//"http://gmail.wks-acc.exoplatform.org/portal";
+	//http://dispostable.wks-acc.exoplatform.org/portal
+	//http://mailcatch.wks-acc.exoplatform.org/portal
+	//http://maildrop.wks-acc.exoplatform.org/portal
+	//http://yopmail.wks-acc.exoplatform.org/portal
+	//"http://localhost:8080/portal";
 
 	/*======= Welcome Screen (Term and Conditions) =====*/
 	By ELEMENT_FIRSTNAME_ACCOUNT = By.name("firstNameAccount");
@@ -93,9 +102,10 @@ public class TestBase {
 
 	public void initSeleniumTest(Object... opParams){
 		initSeleniumTestWithOutTermAndCondition();
-		info("Term and conditions");
-		termsAndConditions(opParams);
-		info("End of term and conditions");
+//		info("Term and conditions");
+//		termsAndConditions(opParams);
+//		info("End of term and conditions");
+		driver.get(baseUrl);
 	}
 
 
@@ -313,12 +323,12 @@ public class TestBase {
 	public void dragAndDropToObject(Object sourceLocator, Object targetLocator) {
 		info("--Drag and drop to object--");
 		Actions action = new Actions(driver);
+		Utils.pause(1000);
 		try {
 			WebElement source = waitForAndGetElement(sourceLocator);
 			WebElement target = waitForAndGetElement(targetLocator);
-
 			action.dragAndDrop(source, target).build().perform();
-
+			Utils.pause(100);
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
 			Utils.pause(WAIT_INTERVAL);
@@ -339,7 +349,7 @@ public class TestBase {
 		finally {
 			loopCount = 0;
 		}
-		Utils.pause(1000);
+		Utils.pause(2000);
 	}
 
 	public void click(Object locator, Object... opParams) {

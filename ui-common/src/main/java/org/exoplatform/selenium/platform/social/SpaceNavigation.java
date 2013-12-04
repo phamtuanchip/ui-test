@@ -160,6 +160,7 @@ public class SpaceNavigation extends SocialBase{
 
 		if (!searchPage) {
 			info("--Create new page");
+			waitForAndGetElement("//*[contains(text(),'Selected Page Info')]");
 			type(ELEMENT_INPUT_PAGE_NAME, pageName, true);
 			type(ELEMENT_INPUT_PAGE_TITLE, pageTitle, true);
 			click(CREATE_PAGE_BUTTON);
@@ -177,9 +178,9 @@ public class SpaceNavigation extends SocialBase{
 		click(SAVE_PAGE_BUTTON);
 		Utils.pause(1000);
 		if(nodeLabel!="")
-			waitForAndGetElement("//a[contains(text(),'"+nodeLabel+"')]");
+			waitForAndGetElement("//a[contains(@title,'"+nodeLabel+"')]");
 		else
-			waitForAndGetElement("//a[contains(text(),'"+nodeName+"')]");
+			waitForAndGetElement("//a[contains(@title,'"+nodeName+"')]");
 		waitForAndGetElement(SAVE_NAVITATION_BUTTON);
 		click(SAVE_NAVITATION_BUTTON);
 	}

@@ -2,10 +2,12 @@ package org.exoplatform.selenium.platform.wiki.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.wiki.BasicAction;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,19 +20,21 @@ import org.testng.annotations.Test;
 public class Wiki_Attachment extends BasicAction {
 	
 	ManageAccount magAc;
+	ManageAlert magAlert;
 	
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		getDriverAutoSave();
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
+		magAlert = new ManageAlert(driver);
 		magAc.signIn("john", DATA_PASS); 
 		goToWiki();
 	}
 
 	@AfterMethod
 	public void afterTest(){
-		magAc.signOut();
+		//magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
@@ -58,6 +62,9 @@ public class Wiki_Attachment extends BasicAction {
 		addWikiPageSourceEditor(newTitle, newContent);
 		attachFileInWiki("TestData/" + newLink, 2);
 		click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
+		if ( ExpectedConditions.alertIsPresent() != null ){
+			magAlert.acceptAlert();
+		}
 		waitForAndGetElement(ELEMENT_ATTACHMENT_NUMBER.replace("${No}", "2"));
 
 		info("Check download attachment successfully");

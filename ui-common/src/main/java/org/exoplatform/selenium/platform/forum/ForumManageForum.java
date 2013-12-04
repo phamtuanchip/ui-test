@@ -64,6 +64,7 @@ public class ForumManageForum extends ForumBase {
 	public By ELEMENT_FORUM_MODERATOR = By.id("Moderator");
 	public By ELEMENT_FORUM_AUTO_FILL = By.name("AutoAddEmailNotify");
 	public By ELEMENT_NOTIFY_ADD_POST = By.id("NotifyWhenAddPost");
+	public By ELEMENT_NOTIFY_ADD_POST_READONLY = By.xpath("//*[@id='NotifyWhenAddPost' and @readonly='']");
 	public By ELEMENT_NOTIFY_ADD_TOPIC = By.id("NotifyWhenAddTopic");
 	public By ELEMENT_MODERATE_THREAD = By.id("ModerateThread");
 
@@ -133,6 +134,7 @@ public class ForumManageForum extends ForumBase {
 			check(ELEMENT_FORUM_AUTO_FILL, 2);
 		} else {
 			uncheck(ELEMENT_FORUM_AUTO_FILL, 2);
+			waitForElementNotPresent(ELEMENT_NOTIFY_ADD_POST_READONLY);
 			if (postEmail != null) {
 				type(ELEMENT_NOTIFY_ADD_POST, postEmail, true);
 			}

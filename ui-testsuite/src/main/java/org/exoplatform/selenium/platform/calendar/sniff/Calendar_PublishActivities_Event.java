@@ -37,7 +37,8 @@ public class Calendar_PublishActivities_Event extends CalendarBase{
 		homeAct = new HomePageActivity(driver);
 		button = new Button(driver);
 		goToCalendarPage();
-		setTimezoneForCalendar("(GMT +07:00) Asia/Ho_Chi_Minh");
+		goToCalendarSettings();
+		settingCalendar("Week", null, null, "(GMT +07:00) Asia/Ho_Chi_Minh", "Monday", null,null);
 	}
 
 	@AfterMethod
@@ -83,8 +84,9 @@ public class Calendar_PublishActivities_Event extends CalendarBase{
 	
 	/**Update activity for event of Space Calendar- event is updated as all day event a space
 	 * CaseID 74735
+	 * https://jira.exoplatform.org/browse/CAL-407
 	 */
-	@Test
+	@Test(groups="error")
 	public void test02_UpdateActivityForEventWhenUpdateToAllDay() {
 		String space = "Space74735";
 		String event = "Event74735";

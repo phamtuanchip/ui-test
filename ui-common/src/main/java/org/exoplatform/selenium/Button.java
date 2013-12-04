@@ -16,6 +16,8 @@ public class Button extends TestBase{
 		driver = dr;
 	}
 
+	public final By ELEMENT_SHOW_MORE_BUTTON = By.xpath("//*[contains(text(), 'Show More')]"); 
+	
 	//public final By ELEMENT_CONFIRM_BUTTON = By.xpath("//*[text()='Confirm']");
 	public final By ELEMENT_SAVE_CLOSE_BUTTON = By.xpath("//*[text()='Save & Close']");
 	public final By ELEMENT_SAVE_CLOSE_BUTTON_2 = By.xpath("//*[text()='Save And Close']");
@@ -55,6 +57,7 @@ public class Button extends TestBase{
 	public final By ELEMENT_REFRESH_BUTTON = By.xpath("//*[text()='refresh']");
 	public final By ELEMENT_RENAME_BUTTON = By.xpath("//*[text()='Rename']");
 	public final By ELEMENT_NEXT_PAGE_BUTTON = By.xpath("//*[@title='Next Page']");
+	
 
 	/*
 	 * General

@@ -174,8 +174,8 @@ public class Calendar_PublishActivities_Task extends CalendarBase{
 	 */
 	@Test
 	public void test05_RedirectToSpaceCalendarApplication() {
-		String space = "Space75291";
-		String task = "Task75291";
+		String space = "space75291";
+		String task = "task75291";
 		info("Redirect to Calendar Application");
 
 		//Add space

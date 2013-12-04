@@ -59,6 +59,7 @@ public class Activity extends SocialBase {
 	public final By ELEMENT_UPLOAD_BUTTON = By.xpath("//*[@data-original-title='Upload file.']");
 	public final By ELEMENT_ATTACH_BUTTON = By.id("AttachButton");
 	public final By ELEMENT_SHARE_BUTTON = By.id("ShareButton");
+	public final String ELEMENT_LINK_ACTIVITY = "//a[@class='linkTitle' and contains(text(),'${link}')]";
 
 	//	public final String ELEMENT_COMMENT_LINK = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'CommentLink')]";
 	public final String ELEMENT_COMMENT = "//div[@class='ContentBox']//*[contains(text(), '${activityText}')]";
@@ -214,10 +215,11 @@ public class Activity extends SocialBase {
 				}
 			}
 			click(ELEMENT_SHARE_BUTTON);
-			if(upload)
-				waitForAndGetElement(By.linkText(uploadFileName));
+			if(upload){
+				waitForAndGetElement(ELEMENT_LINK_ACTIVITY.replace("${link}", uploadFileName));
+			}
 			else
-				waitForAndGetElement(By.linkText(selectFileName));
+				waitForAndGetElement(ELEMENT_LINK_ACTIVITY.replace("${link}", selectFileName));
 		}
 	}
 
@@ -489,9 +491,10 @@ public class Activity extends SocialBase {
 		hpActivity = new HomePageActivity(driver);
 		if(isActivity){
 			info ("-- Adding a mention activity --");			
+			
+			click(ELEMENT_MENTION_USER_BUTTON);
 			WebElement inputText = waitForAndGetElement(hpActivity.ELEMENT_ACTIVITY_TEXTBOX, DEFAULT_TIMEOUT, 1, 2);
 			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", inputText);
-			click(ELEMENT_MENTION_USER_BUTTON);
 			inputText.sendKeys(userName);
 			Utils.pause(1000);
 			click(hpActivity.ELEMENT_ACTIVITY_TEXTBOX);

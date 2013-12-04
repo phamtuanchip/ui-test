@@ -6,6 +6,7 @@ import java.util.Map;
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -56,12 +57,18 @@ public class PortalManagement extends PlatformBase {
 			click(ELEMENT_EDIT_PERMISSION_SETTING);
 			setEditPermissions(editGroupId, editMembership);
 		}
-		if (template.length > 0){
+		Utils.pause(500);
+		if (waitForAndGetElement(ELEMENT_PORTAL_TEMPLATE_TAB, 5000, 0) != null){
 			click(ELEMENT_PORTAL_TEMPLATE_TAB);
+		}
+
+		if (template.length > 0){
+			//click(ELEMENT_PORTAL_TEMPLATE_TAB);
 			WebElement temp = getElementFromTextByJquery(template[0]);
 			temp.click();
-//			click(By.linkText(template[0]));
+			//click(By.linkText(template[0]));
 		}
+		Utils.pause(1000);
 		button.save();
 		if (waitForAndGetElement(ELEMENT_POPUP_ADD_PORTAL,10000,0) == null)
 			waitForElementNotPresent(ELEMENT_EDIT_PERMISSION_SETTING);
@@ -111,14 +118,18 @@ public class PortalManagement extends PlatformBase {
 	//Go to edit layout of a portal
 	public void goToPortalEditLayout(String portalName){
 		info("Go to edit layout of portal" + portalName);
+		Utils.pause(2000);
 		click(ELEMENT_PORTAL_EDIT_LAYOUT.replace("${siteName}", portalName));
 		waitForAndGetElement(ELEMENT_EDIT_INLINE_COMPOSER);
+		Utils.pause(2000);
 	}
 
 	//Go to edit configuration of portal
 	public void goToEditSiteConfiguration(String portalName){
 		info("Go to edit configuration of portal" + portalName);
+		Utils.pause(2000);
 		String editIcon = ELEMENT_PORTAL_EDIT_CONFIGURATION.replace("${siteName}", portalName);		
 		click(editIcon);
+		Utils.pause(2000);
 	}
 }

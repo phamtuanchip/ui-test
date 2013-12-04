@@ -77,6 +77,7 @@ public class SpaceManagement extends SocialBase {
 	public final By 	ELEMENT_ACCESS_DENIED_SPACE_PAGE = By.xpath("//div[@class='spaceAccessBlock denyIcon']/*[text()='Access Denied.']");
 	public final By 	ELEMENT_ACCESS_NOT_FOUND_SPACE_PAGE = By.xpath("//div[@class='spaceAccessBlock warningIcon']/*[text()='Space Not Found']");
 	public final String ELEMENT_SPACE_BREAD = "//div[@class='name' and text()='${space}']";
+	
 	//Documents
 	public final By ELEMENT_DOCUMENTS_TAB = By.id("documents");
 	public final By ELEMENT_SPACE_SETTING_MENU = By.id("settings");
@@ -168,6 +169,7 @@ public class SpaceManagement extends SocialBase {
 		waitForAndGetElement(By.linkText(name), iTimeout);
 		//waitForElementPresent(By.xpath("//div[contains(@class,'UISpaceName')]/a[@title='" + name + "']"),iTimeout);
 		Utils.pause(1000);
+		waitForAndGetElement(ELEMENT_BLAST_SPACE, DEFAULT_TIMEOUT2);
 	}
 
 	/**
@@ -249,6 +251,9 @@ public class SpaceManagement extends SocialBase {
 	public void deleteSpace(String name, int... params){
 		info("-- Deleting Space..." + name);
 		int iTimeout = params.length > 0 ? params[0] : DEFAULT_TIMEOUT;    
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		doAction("Delete", name);    
 		magAlert = new ManageAlert(driver);
 		magAlert.acceptAlert();
@@ -403,6 +408,7 @@ public class SpaceManagement extends SocialBase {
 		info("-- Go to space "+spaceName+" --");
 		click(ELEMENT_SPACE_NAVIGATION_SPACE_ITEM.replace("${spaceName}", spaceName));
 		waitForAndGetElement(ELEMENT_SPACE_ACTIVITY_STREAM_PORTLET,60000,1);
+		Utils.pause(2000);
 	}
 }
 

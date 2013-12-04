@@ -117,7 +117,7 @@ public class Gatein_GlobalSetting extends PlatformBase {
 	/**CaseId: 70613
 	 * Change language for another user
 	 */
-	@Test
+	//@Test
 	public void test03_ChangeLanguageForAnotherUser(){
 		navTool.goToUsersAndGroupsManagement();
 		user.goToEditUserInfo("mary");
@@ -146,7 +146,7 @@ public class Gatein_GlobalSetting extends PlatformBase {
 	/**CaseId: 70628
 	 * Change language with demo account
 	 */
-	@Test
+	//@Test
 	public void test04_ChangeLanguageWithDemoAccount(){
 		By ELEMENT_HOME_TEXT = By.xpath("//*[text()='Home']");
 		

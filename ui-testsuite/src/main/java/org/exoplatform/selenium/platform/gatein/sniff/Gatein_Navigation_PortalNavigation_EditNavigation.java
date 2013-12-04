@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationManagement;
 import org.exoplatform.selenium.platform.NavigationToolbar;
@@ -85,7 +86,9 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 
 		info("Edit node's page: " + nodeName);
 		editNavigation(portalName);
+		Utils.pause(1000);
 		rightClickOnElement(nodeLinkToEdit);
+		Utils.pause(1000);
 		click(ELEMENT_NAVIGATION_EDIT_PAGE_NODE);
 		waitForAndGetElement(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
 		click(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
@@ -97,10 +100,12 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		click(ELEMENT_PERMISSION_SETTING_TAB);
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 		setEditPermissions("Platform/Content Management ", "manager");
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(ELEMENT_EDIT_PERMISSION_SETTING);
 		pageEditor.finishEditLayout();
 		waitForElementNotPresent(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -190,6 +195,7 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 
 		info("Add a new node by right click");
 		navMag.addNodeForPortal(portalName, parentNode, false, nodeName2, true, languages, nodeName2, "", "Profile", true, true);
+		Utils.pause(2000);
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
 		info("View Page before editing...");
@@ -201,6 +207,7 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		info("Edit the current node: " + nodeName2);
 		navToolbar.goToPortalSites();
 		navMag.editNodeInPortalNavigation(portalName, parentNode, nodeName2, true, languages, nodeName2Edit, "", "wiki", true);
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -240,8 +247,11 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		info("Add a new node by right click");
 		navMag.addNodeForPortal(portalName, parentNode, false, nodeName2, true, languages, nodeName2, "", "Profile", true, true);
 		editNavigation(portalName);
+		Utils.pause(1000);
 		rightClickOnElement(nodeLinkToMove);
+		Utils.pause(1000);
 		click(ELEMENT_NAVIGATION_MOVE_UP_NODE);
+		Utils.pause(1000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -294,10 +304,14 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 
 		info("Copy that node and paste to group Wiki");
 		editNavigation(portalName);
+		Utils.pause(1000);
 		copyNode(nodeLinkToCopy);
+		Utils.pause(1000);
 		pasteNode(nodeLinkToPaste);
-		waitForAndGetElement(nodeAfterCopy);	
+		waitForAndGetElement(nodeAfterCopy);
+		Utils.pause(1000);
 		rightClickOnElement(nodeAfterCopy);
+		Utils.pause(1000);
 		click(ELEMENT_NAVIGATION_DELETE_NODE);
 		magAlert.acceptAlert();
 		waitForElementNotPresent(nodeAfterCopy);
@@ -314,6 +328,7 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		click(nodeLinkToPaste);
 		cloneNode(nodeAfterCopy);
 		pasteNode(nodeLinkToClone);
+		Utils.pause(1000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -367,7 +382,9 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 
 		info("Edit node's page: " + nodeName);
 		editNavigation(portalName);
+		Utils.pause(1000);
 		rightClickOnElement(nodeLinkToEdit);
+		Utils.pause(1000);
 		click(ELEMENT_NAVIGATION_EDIT_PAGE_NODE);
 		waitForAndGetElement(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
 
@@ -385,7 +402,9 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		type(ELEMENT_CONTAINER_TITLE, portletTitle, true);
 		type(ELEMENT_WIDTH_TEXTBOX, "600px", true);
 		type(ELEMENT_HEIGHT_TEXTBOX, "600px", true);
+		Utils.pause(1000);
 		button.saveAndClose();
+		Utils.pause(1000);
 		click(ELEMENT_SWITCH_VIEW_MODE);
 		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON);
 		waitForAndGetElement(ELEMENT_NAME_PORTLET.replace("${portletName}", portletTitle));
@@ -420,6 +439,7 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		click(ELEMENT_NAVIGATION_DELETE_NODE);
 		magAlert.acceptAlert();
 		waitForElementNotPresent(nodeLinkToEdit);
+		Utils.pause(1000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		navToolbar.goToManagePages();

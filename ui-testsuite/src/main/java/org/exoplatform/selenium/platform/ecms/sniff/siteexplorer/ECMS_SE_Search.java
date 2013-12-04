@@ -1,6 +1,7 @@
 package org.exoplatform.selenium.platform.ecms.sniff.siteexplorer;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.PlatformBase;
@@ -54,13 +55,14 @@ public class ECMS_SE_Search extends PlatformBase {
 		//Advance search
 		aSearch.goToAdvancedSearch();
 		click(aSearch.ELEMENT_CONSTRAINT_FORM);
-		aSearch.selectDocumentType("nt:file");
+		aSearch.selectDocumentType(false,"nt:file");
 		aSearch.searchContent(node1);
 		waitForAndGetElement(aSearch.ELEMENT_SEARCH_RESULT_TEXT.replace("${result}", node1));
 		btn.closeWindow();
 		
 		//Delete data
 		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
+		waitForAndGetElement(bNode1);
 		cMenu.deleteDocument(bNode1);
 		
 	}
@@ -81,6 +83,7 @@ public class ECMS_SE_Search extends PlatformBase {
 		
 		//Simple search
 		type(siteExp.ELEMENT_SIMPLESEARCH_TEXTBOX,node1,true);
+		Utils.pause(2000);
 		click(siteExp.ELEMENT_QUICKSEARCH_ICON);
 		waitForAndGetElement(aSearch.ELEMENT_SEARCH_RESULT_TEXT.replace("${result}", node1));
 		
@@ -122,6 +125,7 @@ public class ECMS_SE_Search extends PlatformBase {
 		
 		//Delete data
 		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
+		waitForAndGetElement(bNode1);
 		cMenu.deleteDocument(bNode1);
 	}
 	

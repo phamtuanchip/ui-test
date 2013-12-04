@@ -139,6 +139,7 @@ public class ManageDrive extends EcmsBase{
 			else{
 				info("list node of homepath display false");
 			}
+			Utils.pause(5000);
 			assert getValue(ELEMENT_HOME_PATH).equals("/" + path + ""):"select homepath is false";
 		}
 
@@ -172,7 +173,7 @@ public class ManageDrive extends EcmsBase{
 			click(button.ELEMENT_SAVE_BUTTON);
 			select(By.xpath("//select[contains(@id,'maxPageSize')]"),"20");
 			driver.navigate().refresh();
-			Utils.pause(500);
+			Utils.pause(5000);
 			//waitForElementPresent(ELEMENT_DRIVER);
 			//assert isElementPresent(ELEMENT_DRIVER):"Add new driver is unsuccessful";
 			waitForAndGetElement(ELEMENT_DRIVE_EDIT_AUX.replace("${driveName}", driverName));
@@ -183,7 +184,7 @@ public class ManageDrive extends EcmsBase{
 			alt.waitForMessage("Please select a view.");
 			click(button.ELEMENT_OK_BUTTON);
 		}
-		Utils.pause(500);
+		Utils.pause(5000);
 	} 
 
 	//Set a view preference for Drive

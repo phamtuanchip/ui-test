@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.GroupNavigation;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationManagement;
@@ -84,8 +85,10 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 
 		info("Change priority for this group");
 		select(ELEMENT_GROUP_NAVIGATION_PRIORITY, "1");
+		Utils.pause(2000);
 		button.save();
-
+		Utils.pause(2000);
+		
 		info("Verify position of Administration after changing order");
 		waitForAndGetElement(groupAdminNewPosition);
 		magAc.signOut();
@@ -98,7 +101,9 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		info("Reset order of navigation list");
 		click(ELEMENT_EDIT_PROPERTIES_ICON.replace("${groupName}", groupAdminDisplayName));
 		select(ELEMENT_GROUP_NAVIGATION_PRIORITY, "2");
+		Utils.pause(2000);
 		button.save();
+		Utils.pause(2000);
 		waitForAndGetElement(groupAdminOldPosition);
 	}
 
@@ -129,8 +134,8 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		info("Add a new node for group Administration");
 		addNodeForGroup(groupAdminDisplayName, nodePortalAdministration, false, 
 				nodeName, true, languages, nodeName, 
-				pageSelectorName, pageSelectorName, true, false);
-		button.save();	
+				pageSelectorName, pageSelectorName, true, true);
+		//button.save();	
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		click(ELEMENT_GROUP_NAVIGATION_ICON_LEFT_PANEL.replace("${groupName}", "Portal Admin"));
 		waitForTextPresent(nodeName);
@@ -138,6 +143,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 
 		info("Edit node for group");
 		editNodeInGroupNavigation(groupAdminDisplayName, nodeName, nodeNameEdit, "profile", "portal");
+		Utils.pause(1000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		click(ELEMENT_GROUP_NAVIGATION_ICON_LEFT_PANEL.replace("${groupName}", "Portal Admin"));
@@ -170,7 +176,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		String nodeAdmin = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodePortalAdministration);
 		String nodeLinkToCopy = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeName);
 		String nodeLinkToPaste = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Sites Management");
-		String nodeLinkToClone = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Management");
+		String nodeLinkToClone = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Branding");
 		String nodeAfterCopy = ELEMENT_CHILD_NODE_LINK.replace("${nodeLabel}", "Sites Management").replace("${childNode}", nodeName);
 
 		Map<String, String> languages = new HashMap<String, String>();
@@ -185,10 +191,14 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 				pageSelectorName, pageSelectorName, true, false);
 
 		info("Copy that node and paste to group Site Management");
+		Utils.pause(2000);
 		copyNode(nodeLinkToCopy);
+		Utils.pause(2000);
 		pasteNode(nodeLinkToPaste);
 		waitForAndGetElement(nodeAfterCopy);	
+		Utils.pause(2000);
 		rightClickOnElement(nodeAfterCopy);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_DELETE_NODE);
 		magAlert.acceptAlert();
 		waitForElementNotPresent(nodeAfterCopy);
@@ -196,6 +206,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		info("Cut and Paste Node");
 		click(nodeAdmin);
 		cutNode(nodeLinkToCopy);
+		Utils.pause(2000);
 		pasteNode(nodeLinkToPaste);
 		waitForAndGetElement(nodeAfterCopy);
 		click(nodeAdmin);
@@ -205,6 +216,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		click(nodeLinkToPaste);
 		cloneNode(nodeAfterCopy);
 		pasteNode(nodeLinkToClone);
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -222,7 +234,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		pageMag.deletePage(PageType.GROUP, pageSelectorName);
 		navToolbar.goToGroupSites();
 		navMag.deleteNode(groupAdminDisplayName, "Sites Management", nodeName, false);
-		navMag.deleteNode(groupAdminDisplayName, "Management", nodeName, false);
+		navMag.deleteNode(groupAdminDisplayName, "Branding", nodeName, false);
 	}
 
 	/**
@@ -250,6 +262,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		addNodeForGroup(groupAdminDisplayName, nodeSitesManagement, false, 
 				nodeName1, true, languages, nodeName1, 
 				pageSelectorName1, pageSelectorName1, true, false);
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		addNodeForGroup(groupAdminDisplayName, nodeSitesManagement, false, 
@@ -258,7 +271,9 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 
 		info("Select Move Up from the drop-down menu");
 		rightClickOnElement(nodeLinkToMove);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_MOVE_UP_NODE);
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -307,6 +322,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		addNodeForGroup(groupAdminDisplayName, nodeSitesManagement, false, 
 				nodeName, true, languages, nodeName, 
 				pageSelectorName, pageSelectorName, true, false);
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -314,6 +330,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		editNavigation(groupAdminDisplayName);
 		click(nodeLink);
 		rightClickOnElement(nodeLinkToEdit);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_EDIT_PAGE_NODE);
 		waitForAndGetElement(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
 		click(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
@@ -323,10 +340,12 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		click(ELEMENT_PERMISSION_SETTING_TAB);
 		click(ELEMENT_EDIT_PERMISSION_SETTING);
 		setEditPermissions("Platform/Content Management ", "manager");
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(ELEMENT_EDIT_PERMISSION_SETTING);
 		pageEditor.finishEditLayout();
 		waitForElementNotPresent(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
+		Utils.pause(2000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
@@ -365,6 +384,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		info("Edit node's page properties");
 		editNavigation(groupAdminDisplayName);
 		rightClickOnElement(nodeLink);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_EDIT_PAGE_NODE);
 		waitForAndGetElement(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
 
@@ -443,7 +463,9 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		addNodeForGroup(groupAdminDisplayName, nodeSitesManagement, false, 
 				nodeName, true, languages, nodeName, 
 				pageSelectorName, pageSelectorName, true, false);
+		Utils.pause(2000);
 		rightClickOnElement(nodeLink);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_EDIT_PAGE_NODE);
 		waitForAndGetElement(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
 
@@ -493,11 +515,12 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		
 		info("Reset data");
 		rightClickOnElement(nodeLink);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_DELETE_NODE);
 		magAlert.acceptAlert();
 		waitForElementNotPresent(nodeLink);
 		button.save();
-		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON, DEFAULT_TIMEOUT2);
 		navToolbar.goToManagePages();
 		pageMag.deletePage(PageType.GROUP, pageSelectorName);
 	}
@@ -527,7 +550,9 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		addNodeForGroup(groupAdminDisplayName, nodeSitesManagement, false, 
 				nodeName, true, languages, nodeName, 
 				pageSelectorName, pageSelectorName, true, false);
+		Utils.pause(2000);
 		rightClickOnElement(nodeLink);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_EDIT_PAGE_NODE);
 		waitForAndGetElement(pageEditor.ELEMENT_VIEW_PAGE_PROPERTIES);
 		
@@ -540,11 +565,13 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		
 		info("Reset data");
 		rightClickOnElement(nodeLink);
+		Utils.pause(2000);
 		click(ELEMENT_NAVIGATION_DELETE_NODE);
 		magAlert.acceptAlert();
 		waitForElementNotPresent(nodeLink);
+		Utils.pause(1000);
 		button.save();
-		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON, DEFAULT_TIMEOUT2);
 		navToolbar.goToManagePages();
 		pageMag.deletePage(PageType.GROUP, pageSelectorName);
 	}

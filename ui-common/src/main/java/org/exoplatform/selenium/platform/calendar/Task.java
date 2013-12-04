@@ -298,6 +298,7 @@ public class Task extends CalendarBase{
 		inputBasicQuickTask(name, note, opt);
 		inputFromToTask(from, to, allDay);
 		click(ELEMENT_BUTTON_TASK_SAVE);
+		waitForElementNotPresent(ELEMENT_BUTTON_TASK_SAVE);
 
 	}
 	/**Edit a task by right click (just edit some fields, pls write more)
@@ -317,6 +318,7 @@ public class Task extends CalendarBase{
 		inputDataTabDetailTask(name, note, from, to, allDay, path, opt);
 
 		click(ELEMENT_BUTTON_TASK_SAVE_EDIT);
+		waitForElementNotPresent(ELEMENT_BUTTON_TASK_SAVE_EDIT);
 	}
 
 

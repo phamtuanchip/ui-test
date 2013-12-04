@@ -36,11 +36,13 @@ public class CloudBase extends PlatformBase{
 	public final By ELEMENT_CHECK_NEW_MAIL = By.className("slientext");
 	public final By ELEMENT_YOPMAIL_INBOX_TITLE = By.xpath("//iframe[@name='ifinbox']");
 	public final By ELEMENT_YOPMAIL_TITLE = By.xpath("//*[@class ='lms' and text()='Activate Your eXo Account']");
+	public final By ELEMENT_YOPMAIL_TITLE_AUX = By.xpath("//*[@class ='lms' and text()='Validate Your eXo Registration']");
 	public final By ELEMENT_YOPMAIL_TITLE_WELCOME_EXO = By.xpath("//*[@class ='lms' and text()='Welcome to eXo!']");
+	public final By ELEMENT_YOPMAIL_TITLE_WELCOME_EXO_AUX = By.xpath("//*[@class ='lms' and text()='Welcome to the yopmail Social Intranet']");
 	public final By ELEMENT_YOPMAIL_CONTENT = By.xpath("//iframe[@name='ifmail']");
 
 	/*------------- Complete a registration ------------------------*/
-	public final String ELEMENT_LAST_NAME = "exoplatform_sea";
+	public final String ELEMENT_LAST_NAME = "exoplatformsea";
 	public final String ELEMENT_PHONE_WORK = "0123456789";
 	public final String ELEMENT_COMPANY_NAME = "exoplatform";
 	public final String ELEMENT_PASSWORD = "gtngtn";
@@ -48,6 +50,7 @@ public class CloudBase extends PlatformBase{
 	public final By ELEMENT_INPUT_FIRST_NAME = By.name("first_name");
 	public final By ELEMENT_INPUT_LAST_NAME = By.name("last_name");
 	public final By ELEMENT_INPUT_PHONE_WORK = By.name("phone_work");
+	public final By ELEMENT_INPUT_PHONE_WORK_AUX = By.name("phone");
 	public final By ELEMENT_INPUT_COMPANY_NAME = By.name("company");
 	public final By ELEMENT_INPUT_PASSWORD = By.name("password");
 	public final By ELEMENT_INPUT_CONFIRM_PASSWORD = By.name("password2");
@@ -56,19 +59,23 @@ public class CloudBase extends PlatformBase{
 	/*------------ Getting started in 3 steps ----------------------*/
 	//Step 1: Complete your profile
 	public final By ELEMENT_AVATAR_IMAGE = By.id("avatarImage"); 
+	//Move to PlatformBase
+	//public final By ELEMENT_SKIP_TO_HOMEPAGE = By.xpath("//*[contains(text(), 'Step 1')]/..//a[contains(text(), 'Skip to homepage')]");
+	
 	//Step 2: Join Spaces
 	public final By ELEMENT_CHECKBOX_GETTING_STARTED = By.xpath("//*[@class='uiCheckbox']/span[text()='Getting Started']");
 	//Step 3: Invite Coworkers
 	public final By ELEMENT_INPUT_EMAIL_ADDRESS = By.id("email");
-	
+
 	/*------------ Button for eXo Cloud ----------------------------*/
 	public final By ELEMENT_BUTTON_CREATE = By.xpath("//button[text()='Create']");
+	public final By ELEMENT_BUTTON_JOIN = By.xpath("//button[text()='Join']");
 	public final By ELEMENT_BUTTON_NEXT_FIRST_PAGE = By.xpath("//div[1][@class = 'item']//button[text()='Next']");
 	public final By ELEMENT_BUTTON_NEXT_SECOND_PAGE = By.xpath("//div[2][@class = 'item']//button[text()='Next']");
 	public final By ELEMENT_BUTTON_FINISH_THIRD_PAGE = By.xpath("//div[3][@class = 'item']//button[text()='Finish']");
-	
+
 	/*------------ Common methods for eXo Cloud test ---------------*/
-	
+
 	/**
 	 * @author vuna
 	 * @param url
@@ -81,7 +88,7 @@ public class CloudBase extends PlatformBase{
 		switchToNewWindow();
 		registerAccountForYopmail();
 	} 
-		
+
 	/**
 	 * @author vuna
 	 * @param opParams: 
@@ -111,16 +118,23 @@ public class CloudBase extends PlatformBase{
 	public void startExoCloud(){
 		info("== Start to login to eXo Cloud ==");
 		goToYopmail();
-		click(ELEMENT_YOPMAIL_TITLE_WELCOME_EXO);
+		//click(ELEMENT_YOPMAIL_TITLE_WELCOME_EXO);
+		if (waitForAndGetElement(ELEMENT_YOPMAIL_TITLE_WELCOME_EXO, DEFAULT_TIMEOUT, 0) != null){
+			click(ELEMENT_YOPMAIL_TITLE_WELCOME_EXO);
+
+		}else{
+			click(ELEMENT_YOPMAIL_TITLE_WELCOME_EXO_AUX);
+		}
+
 		switchToParentWindow();
-		
+
 		info("== Click on started link ==");
 		driver.switchTo().frame(waitForAndGetElement(ELEMENT_YOPMAIL_CONTENT));
 		WebElement elementUrl = waitForAndGetElement(cloudUrl.replace("${cloudUrl}", tenantAcceptanceUrl));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", elementUrl);
 		Utils.pause(5000);
 	}
-	
+
 	/**
 	 * @author vuna
 	 * @param emailAddress: email to activate your eXo account
@@ -131,32 +145,39 @@ public class CloudBase extends PlatformBase{
 		click(ELEMENT_SIGN_UP_BUTTON);
 		Utils.pause(3000);
 	}
-	
+
 	/**
 	 * @author vuna
 	 * @param url
 	 * <li> 0 to get the acceptance Cloud's url </li>
 	 * <li> 1 to get the pre-prod server Cloud's url </li>
 	 */
-	public void activeAccountForYopmail(int url){
+	public void activeAccountForYopmail(int... url){
 		driver.close();
 		initSeleniumTest();
-		
+
 		info("== Go to Yopmail Account ==");
-		initCloudUrl(url);	
-		info("== Base Cloud Url is... " + baseCloudUrl);
-		
+		//initCloudUrl(url);	
+		//info("== Base Cloud Url is... " + baseCloudUrl);
+
 		goToYopmail();
-		click(ELEMENT_YOPMAIL_TITLE);
+		//click(ELEMENT_YOPMAIL_TITLE);
+		if (waitForAndGetElement(ELEMENT_YOPMAIL_TITLE, DEFAULT_TIMEOUT, 0) != null){
+			click(ELEMENT_YOPMAIL_TITLE);
+		}
+		else{
+			click(ELEMENT_YOPMAIL_TITLE_AUX);
+		}
+
 		switchToParentWindow();
-		
+
 		info("== Click on registration link ==");
 		driver.switchTo().frame(waitForAndGetElement(ELEMENT_YOPMAIL_CONTENT));
-		WebElement elementUrl = waitForAndGetElement(cloudUrl.replace("${cloudUrl}", baseCloudUrl));
+		WebElement elementUrl = waitForAndGetElement(cloudUrl.replace("${cloudUrl}", baseUrl));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", elementUrl);
 		Utils.pause(3000);
 	}
-	
+
 	/**
 	 * @author vuna
 	 * Complete a registration for Yopmail account
@@ -166,14 +187,35 @@ public class CloudBase extends PlatformBase{
 		waitForAndGetElement(ELEMENT_INPUT_FIRST_NAME);
 		driver.manage().window().maximize();
 		type(ELEMENT_INPUT_LAST_NAME, ELEMENT_LAST_NAME, true);
-		type(ELEMENT_INPUT_PHONE_WORK, ELEMENT_PHONE_WORK, true);
-		type(ELEMENT_INPUT_COMPANY_NAME, ELEMENT_COMPANY_NAME, true);
+		//type(ELEMENT_INPUT_PHONE_WORK, ELEMENT_PHONE_WORK, true);
+		//type(ELEMENT_INPUT_COMPANY_NAME, ELEMENT_COMPANY_NAME, true);
+
+		//Phone work
+		if (waitForAndGetElement(ELEMENT_INPUT_PHONE_WORK, DEFAULT_TIMEOUT, 0) != null){
+			type(ELEMENT_INPUT_PHONE_WORK, ELEMENT_PHONE_WORK, true);
+		}
+		else{
+			type(ELEMENT_INPUT_PHONE_WORK_AUX, ELEMENT_PHONE_WORK, true);
+		}
+		//Company
+		if (waitForAndGetElement(ELEMENT_INPUT_COMPANY_NAME, DEFAULT_TIMEOUT, 0) != null){
+
+			type(ELEMENT_INPUT_COMPANY_NAME, ELEMENT_COMPANY_NAME, true);
+
+		}
+
 		type(ELEMENT_INPUT_PASSWORD, ELEMENT_PASSWORD, true);
 		type(ELEMENT_INPUT_CONFIRM_PASSWORD, ELEMENT_CONFIRM_PASSWORD, true);
-		click(ELEMENT_BUTTON_CREATE);
-		Utils.pause(3000);
+		//click(ELEMENT_BUTTON_CREATE);
+		if (waitForAndGetElement(ELEMENT_BUTTON_CREATE, DEFAULT_TIMEOUT, 0) != null){
+			click(ELEMENT_BUTTON_CREATE);
+		}else{
+			click(ELEMENT_BUTTON_JOIN);
+		}
+		Utils.pause(5000);
+		driver.close();
 	}
-	
+
 	/**
 	 * @author vuna
 	 * Go to Yopmail Account

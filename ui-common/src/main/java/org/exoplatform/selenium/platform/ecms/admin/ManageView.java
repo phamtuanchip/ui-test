@@ -306,8 +306,13 @@ public class ManageView extends EcmsBase{
 		click(ELEMENT_ACTION_TAB);
 		click(ELEMENT_EDIT_ACTION_ICON.replace("${tabName}", tab));
 		selectCheckBoxList(viewAction);
+		Utils.pause(1000);
 		click(ELEMENT_SAVE_BUTTON_EDIT_VIEW_TAB);
+		Utils.pause(1000);
+
+		waitForElementNotPresent(ELEMENT_SAVE_BUTTON_EDIT_VIEW_TAB);
 		button.save();
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		Utils.pause(1000);
 	}
 

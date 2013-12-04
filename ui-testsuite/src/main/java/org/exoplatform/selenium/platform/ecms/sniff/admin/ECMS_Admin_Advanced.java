@@ -237,7 +237,7 @@ public class ECMS_Admin_Advanced extends PlatformBase{
 	@Test
 	public void test03_AddEditAndDeleteQuery(){
 		String queryName = "Created Documents"; 
-		String queryType = "SQL";
+		String queryType = "xPath";
 		boolean enableCacheResult = false;
 		String group = "Platform/Users";
 		String membership = "*";
@@ -248,7 +248,7 @@ public class ECMS_Admin_Advanced extends PlatformBase{
 
 		magQuery.addQuery(queryName, queryType, enableCacheResult, group, membership);
 
-		magQuery.editQuery(queryName, "xPath", true, true, statement, true, "Platform/Administration", "*");
+		magQuery.editQuery(queryName, queryType, true, true, statement, true, "Platform/Administration", "*");
 		waitForTextPresent(statement);
 
 		magQuery.deleteQuery(queryName);

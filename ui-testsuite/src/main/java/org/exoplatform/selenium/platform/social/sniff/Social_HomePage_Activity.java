@@ -103,7 +103,7 @@ public class Social_HomePage_Activity extends Activity {
 		info("-- Create activity --");
 		addActivity(true, activity1, false,"");
 
-		/*Step 1: Check layout of activity*/ 
+//		Step 1: Check layout of activity 
 		//- log in and goto intranet hompage
 		//- Select an activity to check its layout
 
@@ -566,7 +566,7 @@ public class Social_HomePage_Activity extends Activity {
 	public void test10_PromoteAMemberAManager(){
 		//Declare variable
 		String spaceName = "space74792";
-		String spaceDesc = "spacedes75792";
+		String spaceDesc = "spacedes74792";
 
 		//Create data
 		info("-- Create space --");
@@ -610,7 +610,7 @@ public class Social_HomePage_Activity extends Activity {
 		//- The Space activity content isn't updated in the activity stream
 		//- Informations displayed in the featured content are :
 		//1. Space's avatar
-		waitForAndGetElement(ELEMENT_AVATAR_SPACE_ACTIVITY.replace("${activityText}", spaceName));
+		waitForAndGetElement(ELEMENT_AVATAR_SPACE_ACTIVITY.replace("${activityText}", spaceName),50000);
 
 		//2. Space's description
 		waitForAndGetElement(ELEMENT_DESCRIPTION_SPACE_ACTIVITY.replace("${activityText}", spaceName).replace("${description}", spaceDesc));

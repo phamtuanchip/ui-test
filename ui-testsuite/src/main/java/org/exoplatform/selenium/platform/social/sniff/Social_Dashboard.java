@@ -62,6 +62,11 @@ public class Social_Dashboard extends DashBoard {
 		//- Dashboard page is displayed  with a default tab
 		navToolBar.goToDashboard();
 
+		//Delete [Social Rss Reader] if it's present
+		if(waitForAndGetElement(ELEMENT_GADGET_CONTENT_FORM, 5000, 0) != null){
+			actionOnGadgetOnDashboard("Social Rss Reader", "Delete Gadget");
+		}
+
 		//- Click on Add Gadgets
 		//- Drag & drop the gadget which you want to add ( calendar, todo, calculator)
 		//- Gadgets pop up is shown
@@ -106,7 +111,7 @@ public class Social_Dashboard extends DashBoard {
 
 		//- Show message to user known links was shared
 		waitForTextPresent("Successfully shared.");
-		
+
 		//- Shared link is displayed on User's activity
 		String linkText = waitForAndGetElement(By.id("link_title_0")).getText();
 		switchToParentWindow();
@@ -138,14 +143,19 @@ public class Social_Dashboard extends DashBoard {
 		//Import all applications (gadget)
 		navToolBar.goToApplicationRegistry();
 		app.importApplication();
-		
+
 		//- Access dashboard
 		navToolBar.goToDashboard();
+
+		//Delete [Social Rss Reader] if it's present
+		if(waitForAndGetElement(ELEMENT_GADGET_CONTENT_FORM, 5000, 0) != null){
+			actionOnGadgetOnDashboard("Social Rss Reader", "Delete Gadget");
+		}
 
 		//- Drag/drop Social Rss Reader
 		dragDropGadget(gadgetName);
 		click(ELEMENT_CLOSE_ADD_GADGET_WINDOW);
-		
+
 		//- Click on icon of maximize view
 		//- Show content of gadget at maximize
 		actionOnGadgetOnDashboard(gadgetName,"Maximize");
@@ -161,7 +171,7 @@ public class Social_Dashboard extends DashBoard {
 		switchToNewWindow();
 		waitForTextPresent("Company News");
 		driver.close();
-		
+
 		/*Clear data*/
 		info("clear data");
 		switchToParentWindow();

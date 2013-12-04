@@ -35,7 +35,7 @@ public class Gatein_Authentication extends PlatformBase {
 
 	@AfterMethod
 	public void afterTest(){
-		magAc.signOut();
+		//magAc.signOut();
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
@@ -56,7 +56,7 @@ public class Gatein_Authentication extends PlatformBase {
 	/**CaseId: 68897
 	 * Remember my login
 	 */
-	@Test (groups = "pending")
+	@Test(groups = "pending")
 	public void test02_RememberMyLogin(){
 		FirefoxProfile firefoxProfile = new ProfilesIni().getProfile("default"); 
 		FirefoxDriver driver = new FirefoxDriver(firefoxProfile); 
@@ -97,7 +97,7 @@ public class Gatein_Authentication extends PlatformBase {
 		
 		magAc.signIn("john", DATA_PASS);
 		navTool.goToUsersAndGroupsManagement();
-		user.deleteUser(username);
+		//user.deleteUser(username);
 	}
 	
 }

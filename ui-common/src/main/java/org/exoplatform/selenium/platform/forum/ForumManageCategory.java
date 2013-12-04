@@ -51,6 +51,7 @@ public class ForumManageCategory extends ForumBase {
 	public final By ELEMENT_IMPORT_FORUM_IN_CATEGORY = By.xpath("//*[contains(@href, 'ImportForum')]");
 	public final String MSG_CATEGORY_NO_EXIST = "This category no longer exists.";
 	public final By ELEMENT_CATEGORY_NO_EXIST_OK_BUTTON = By.xpath("//span[contains(text(),'This category no longer exists.')]/../../..//*[text()='OK']");
+	public final By ELEMENT_CHECKBOX_ALL_CATEGORY = By.name("checkAll");
 
 	//------------add category form------------------------------------------------------------------------
 	public final By ELEMENT_POPUP_ADD_CATEGORY = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Category']");
@@ -69,6 +70,7 @@ public class ForumManageCategory extends ForumBase {
 	public final By ELEMENT_IMPORT_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Import Category']");
 	public final By ELEMENT_IMPORT_FILE = By.name("file");
 	public final String MSG_IMPORT_CATEGORY = "Import successful.";
+	public final By ELEMENT_DELETE_FILE = By.xpath("//*[@class='uiIconDelete uiIconLightGray']");
 
 	//-------------------Export category form-------------------------------------
 	public final By ELEMENT_EXPORT_CATEGORY_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Export Categories']");
@@ -242,8 +244,10 @@ public class ForumManageCategory extends ForumBase {
 		Boolean check = verify.length > 0 ? verify[0] : true;
 
 		click(ELEMENT_MANAGE_CATEGORY);
+		Utils.pause(1000);
 		info("Delete category");
 		click(ELEMENT_DELETE_CATEGORY);
+		Utils.pause(1000);
 		click(ELEMENT_OK_DELETE_CATEGORY);
 		if(check == true){
 			//waitForTextNotPresent(title);
@@ -267,6 +271,7 @@ public class ForumManageCategory extends ForumBase {
 		switchToParentWindow();
 		String[] links = file.split("/");
 		waitForAndGetElement("//*[contains(text(),'" + links[links.length-1] + "')]", DEFAULT_TIMEOUT, 1, 2);
+		waitForAndGetElement(ELEMENT_DELETE_FILE);
 		button.save();
 		waitForMessage(MSG_IMPORT_CATEGORY);
 		info("Import file " + file + "successfully");

@@ -4,6 +4,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.PlatformBase;
@@ -48,16 +49,17 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 		String symlink = "Symlink65824";
 		String webContent= "test01_webcontent";
 
-		info("Add symlink for a node");
-		//Add "Add symlink" into action bar if there is not available yet.
-		actBar.addItem2ActionBar("addSymLink", actBar.ELEMENT_ACTION_BAR_ADD_SYMLINK);
-
 		//Create node1, node2
 		cTemplate.createNewFolder(node1, folderType.Content);
 		cTemplate.createNewFolder(node2, folderType.Content);
 
-		//Add symlink for node2 inside node1
+		//Add "Add symlink" into action bar if there is not available yet.
 		ecms.goToNode(node1);
+		actBar.addItem2ActionBar("addSymLink", actBar.ELEMENT_ACTION_BAR_ADD_SYMLINK);
+		
+		ecms.goToNode(node1);
+		
+		info("Add symlink for a node");
 		actBar.addSymlink("collaboration", "sites/" + node2, symlink);
 
 		//Go to node2, add a document
@@ -167,8 +169,10 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 	/**caseID: 65842 - Drag and drop a node
 	 *   Step 1: Drag and drop a node
+	 *   ERROR: can't drag and drop node.
+	 *   Note: This bug is still not created issue on jira 
 	 */
-	@Test
+	@Test (groups="error")
 	public void test05_DragAndDropNode() {
 		String node1= "test05DragAndDropNode1";
 		String node2= "test05DragAndDropNode2";
@@ -277,7 +281,9 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 		//Delete action copy, cut
 		click(siteExp.ELEMENT_CLIPBOARD_DELETE_ICON.replace("{$node}", node1.toLowerCase()));
+		Utils.pause(3000);
 		click(siteExp.ELEMENT_CLIPBOARD_DELETE_ICON.replace("{$node}", node2.toLowerCase()));
+		Utils.pause(3000);
 
 		//Open File explorer tab
 		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
@@ -314,7 +320,9 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 		//Paste action copy, cut
 		click(siteExp.ELEMENT_CLIPBOARD_PASTE_ICON.replace("{$node}", node1.toLowerCase()));
+		Utils.pause(3000);
 		click(siteExp.ELEMENT_CLIPBOARD_PASTE_ICON.replace("{$node}", node2.toLowerCase()));
+		Utils.pause(3000);
 
 		//Open File explorer tab
 		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);

@@ -10,6 +10,7 @@ import org.exoplatform.selenium.platform.UserGroupManagement;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class PageEditor extends PlatformBase {
 
@@ -174,7 +175,16 @@ public class PageEditor extends PlatformBase {
 	public void addContentPathForContentDetailPortlet(String path){
 		mouseOver(ELEMENT_CONTENT_DETAIL_IN_LAYOUT, true);
 		click(ELEMENT_CONTENT_DETAIL_EDIT_ICON);
-		click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		//click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		
+		if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		}else if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1);
+		}else{
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX);
+		}
+		
 		if (path != ""){
 			String[] paths = path.split("/");
 			for (int i = 0; i < paths.length; i ++){
@@ -204,7 +214,14 @@ public class PageEditor extends PlatformBase {
 		Utils.pause(500);
 		mouseOver(ELEMENT_FRAME_CONTAIN_PORTLET,true);	
 		click(ELEMENT_EDIT_PORTLET_ICON);
-		click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		//click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		}else if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1);
+		}else{
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX);
+		}
 		Utils.pause(500);
 	}
 
@@ -223,6 +240,8 @@ public class PageEditor extends PlatformBase {
 	 */
 	public void selectCLVPath(String path, String clv, String...mode){
 		userGroup = new UserGroupManagement(driver);
+		magAlert = new ManageAlert(driver);
+		
 		By ELEMENT_SELECT_CLV_PATH = By.xpath("//td/a[text()='" + clv + "']");
 		goToEditPortlet(ELEMENT_FRAME_CONTAIN_PORTLET);
 		if (mode.length >0){ 
@@ -232,7 +251,14 @@ public class PageEditor extends PlatformBase {
 				click(ELEMENT_RADIO_MODE_FOLDER);
 		}
 
-		click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		}else if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1);
+		}else{
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX);
+		}
+		
 		String[] node = path.split("/");
 		for (int i = 0; i < node.length; i ++){
 			click(By.xpath("//*[@data-original-title='" + node [i] + "']"));
@@ -240,12 +266,21 @@ public class PageEditor extends PlatformBase {
 		click(ELEMENT_SELECT_CLV_PATH);
 		if (mode.length >0){ 
 			if (mode[0] == "content"){
+				Utils.pause(1000);
 				click(button.ELEMENT_SAVE_BUTTON);
 				waitForElementNotPresent(ELEMENT_SELECT_CLV_PATH);
 			}		
 		}
+		Utils.pause(1000);
 		click(button.ELEMENT_SAVE_BUTTON);
+		if (ExpectedConditions.alertIsPresent() != null ){
+			magAlert.acceptAlert();
+		}
+		Utils.pause(1000);
 		click(button.ELEMENT_CLOSE_BUTTON);
+		if (ExpectedConditions.alertIsPresent() != null ){
+			magAlert.acceptAlert();
+		}
 	}
 
 	/*-- Add common functions for Single Content Viewer/Add SCV
@@ -294,10 +329,17 @@ public class PageEditor extends PlatformBase {
 				//click(ELEMENT_EDIT_PORTLET_ICON);
 				//click(ELEMENT_SELECT_CONTENT_PATH_LINK);
 				click(ELEMENT_EDIT_PORTLET_ICON);  
-				if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX, 3000, 0) != null){
+				/*if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX, 3000, 0) != null){
 					click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX);
 				}else{
 					click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+				}*/
+				if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK, 5000, 0) != null){
+					click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+				}else if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1, 5000, 0) != null){
+					click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1);
+				}else{
+					click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX);
 				}
 			}
 			info("-- Load frame 1 --");
@@ -350,7 +392,15 @@ public class PageEditor extends PlatformBase {
 	public void selectHomePathOnContentList(String groupPath, String node){
 		By ELEMENT_NODE = By.xpath("//td/a[contains(text(),'" + node + "')]");
 
-		click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		//click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK);
+		}else if (waitForAndGetElement(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1, 5000, 0) != null){
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX_1);
+		}else{
+			click(ELEMENT_SELECT_CONTENT_PATH_LINK_AUX);
+		}
+		
 		waitForAndGetElement(ELEMENT_FOLDER_BROWSER);
 		if (getElement(ELEMENT_HOMEPATH_ROOT) != null){
 			click(ELEMENT_HOMEPATH_ROOT);
@@ -441,10 +491,12 @@ public class PageEditor extends PlatformBase {
 			clearCache();
 		}
 		click(By.linkText(group));
-		if(targetPosition.length>0)
+		if(targetPosition.length>0){
 			dragAndDropToObject(By.id(container), targetPosition[0]);
-		else
+		}
+		else{
 			dragAndDropToObject(By.id(container), By.className("UIRowContainer"));
+			}
 		Utils.pause(2000);
 	}
 
@@ -481,7 +533,13 @@ public class PageEditor extends PlatformBase {
 		addNewContainer(containerType, container);
 		click(ELEMENT_APPLICATION_TAB);
 		click(By.linkText(category));
-		dragAndDropToObject(By.id(portletId), ELEMENT_DROP_TARGET_HAS_LAYOUT);
+		Utils.pause(500);
+		if (waitForAndGetElement(ELEMENT_DROP_TARGET_HAS_LAYOUT, 5000, 0) != null){
+			dragAndDropToObject(By.id(portletId), ELEMENT_DROP_TARGET_HAS_LAYOUT);
+		}else {
+			dragAndDropToObject(By.id(portletId), ELEMENT_DROP_TARGET_NO_LAYOUT);
+		}
+		Utils.pause(1000);
 		if (finishEdit){
 			finishEditLayout();
 		}

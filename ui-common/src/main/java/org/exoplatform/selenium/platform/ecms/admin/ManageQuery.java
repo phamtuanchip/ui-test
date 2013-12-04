@@ -75,7 +75,7 @@ public class ManageQuery extends EcmsBase{
 		
 		Utils.pause(500);
 		button.save();
-		waitForTextPresent(queryName);
+		waitForAndGetElement(ELEMENT_DELETE_QUERY_ICON.replace("${queryName}", queryName));
 	}
 	
 	//Edit a Query

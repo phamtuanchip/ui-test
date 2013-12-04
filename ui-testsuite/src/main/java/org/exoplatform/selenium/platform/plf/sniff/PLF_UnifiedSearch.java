@@ -48,7 +48,7 @@ import org.testng.annotations.Test;
 public class PLF_UnifiedSearch extends Template {
 	//General
 	Button button;
-	
+
 	//Platform
 	NavigationToolbar naviToolbar;
 	ManageAccount magAcc;
@@ -142,7 +142,7 @@ public class PLF_UnifiedSearch extends Template {
 		//- This content type will no longer appear in the search results, nor in the search apps settings
 		naviToolbar.goToSearch();
 		searchAdmin.disableContentTypeSearch(contentType);
-		
+
 		//Restore data
 		naviToolbar.goToSearch();
 		searchAdmin.enableContentTypeSearch(contentType);
@@ -208,7 +208,7 @@ public class PLF_UnifiedSearch extends Template {
 		//- Click Save settings, 
 		//- value is save
 		qsPage.editSearchSettingEditMode("10",true,true,true,true,true,true);	
-		
+
 		//Restore value
 		qsPage.goToEditSearchPortlet();
 		qsPage.editSearchSettingEditMode("10",false,false,false,true,true,true);
@@ -530,7 +530,8 @@ public class PLF_UnifiedSearch extends Template {
 		evt.addQuickEvent(eventName2,eventName2,getDate(1,"MM/dd/yyyy"),getDate(1,"MM/dd/yyyy"),true);
 		evt.goToCalendarPage();
 		evt.addQuickEvent(eventName3,eventName3,getDate(1,"MM/dd/yyyy"),getDate(1,"MM/dd/yyyy"),true);
-		String eventDate=getDate(1,"MMMM d, yyyy ")+"0:00 AM";
+		String eventDate=getDate(1,"d");
+		String eventMonth=getDate(1,"MMM");
 		/*Step 1: Search events*/
 		//- Login and connect to intranet home page
 		//- Type some text into search box, Click on Search
@@ -548,9 +549,10 @@ public class PLF_UnifiedSearch extends Template {
 		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_EXCERPT.replace("${keySearch}", searchText).replace("${item}", "Event")).getText().contains(eventName1);
 		info("-- Verify start date and location  --");
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "Event"));
-		String searchTaskDate = waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "Event")).getText();
-		String searchDate = searchTaskDate.substring(searchTaskDate.indexOf(',')+1).trim();
+		String searchDate = waitForAndGetElement(qsPage.ELEMENT_CALENDAR_DAY).getText().trim();
+		String searchMonth = waitForAndGetElement(qsPage.ELEMENT_CALENDAR_MONTH).getText().trim();
 		assert searchDate.contains(eventDate);
+		assert searchMonth.contains(eventMonth);
 
 		//- Item in search result is clickable and open it when user click
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "Event")).click();
@@ -607,7 +609,8 @@ public class PLF_UnifiedSearch extends Template {
 		info("-- Verify file title --");
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "File"));
 		info("-- Verify file location --");
-		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "File")).getText().contains(location);
+		String fileLoc=waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "File")).getText();
+		assert fileLoc.contains(location);
 
 		//- Item in search result is clickable and open it when user click
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "File")).click();
@@ -642,7 +645,7 @@ public class PLF_UnifiedSearch extends Template {
 		String nodeName3 = "node716153";
 		Map<String, String> languages = new HashMap<String, String>();
 		languages.put("English", "");
-		String url = "8080/portal/"+portalName.toLowerCase()+"/"+parentNode.toLowerCase()+"/"+nodeName1.toLowerCase();
+		String url = DEFAULT_BASEURL+"/"+portalName.toLowerCase()+"/"+parentNode.toLowerCase()+"/"+nodeName1.toLowerCase();
 
 		//Create data
 		//Some pages are existed.
@@ -650,7 +653,7 @@ public class PLF_UnifiedSearch extends Template {
 		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName1, pageName1, true, null, groupPath, membership);
 		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName2, pageName2, true, null, groupPath, membership);
 		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName3, pageName3, true, null, groupPath, membership);
-		
+
 		info("Go to Administration/Portal Sites");
 		naviToolbar.goToPortalSites();
 		navMag.addNodeForPortal(portalName, parentNode, true, nodeName1, true, languages, nodeName1, "", pageName1, true, true);
@@ -673,7 +676,8 @@ public class PLF_UnifiedSearch extends Template {
 		info("-- Verify the excerpt --");
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_EXCERPT.replace("${keySearch}", searchText).replace("${item}", "Pa"), DEFAULT_TIMEOUT,1,2);
 		info("-- Verify the site that the page belongs to, and the url --");
-		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "Pa")).getText().contains(url);
+		String fileUrl=waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "Pa")).getText();
+		assert fileUrl.contains(url);
 
 		//-Item in search result is clickable and open it when user click
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "Pa")).click();
@@ -964,7 +968,7 @@ public class PLF_UnifiedSearch extends Template {
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_INDEX.replace("${index}", "1").replace("${title}", "answer"));
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_INDEX.replace("${index}", "2").replace("${title}", "event"));
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_INDEX.replace("${index}", "3").replace("${title}", "task"));
-		
+
 		/*clear data*/
 		info("-- Clear data --");
 		evt.goToCalendarPage();

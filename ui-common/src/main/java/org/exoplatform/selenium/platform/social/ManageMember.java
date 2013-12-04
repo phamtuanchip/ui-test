@@ -357,6 +357,9 @@ public class ManageMember extends SpaceManagement {
 			magAcc.userSignIn(manager);
 		}		
 		goToMySpacePage();
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		gotoEditSpace(spaceName);
 		goToMembers();
 		inviteSingleUser(user);
@@ -371,6 +374,9 @@ public class ManageMember extends SpaceManagement {
 	public void grantManagerForUser (String spaceName, String name){
 		info("Grant manager for user : "+ spaceName);
 		goToMySpacePage();
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		gotoEditSpace(spaceName);
 		goToMembers();
 		grantManager(name);
@@ -385,6 +391,9 @@ public class ManageMember extends SpaceManagement {
 	public void revokeManagerForUser (String spaceName, String name){
 		info("Grant manager for user : "+ spaceName);
 		goToMySpacePage();
+		if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}
 		gotoEditSpace(spaceName);
 		goToMembers();
 		revokeManager(name);
@@ -444,6 +453,9 @@ public class ManageMember extends SpaceManagement {
 		magAcc.signOut();
 		magAcc.userSignIn(userTypeManager);
 		goToMySpacePage();
+		/*if (waitForAndGetElement(button.ELEMENT_SHOW_MORE_BUTTON, 5000, 0) != null){
+			click(button.ELEMENT_SHOW_MORE_BUTTON);
+		}*/
 		gotoEditSpace(spaceName);
 		goToMembers();
 		removeMember(memberName);

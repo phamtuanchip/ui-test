@@ -3,6 +3,7 @@ package org.exoplatform.selenium.platform.ecms.contentexplorer;
 import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,8 +37,9 @@ public class BrowserPreferences extends EcmsBase{
 		if (optionId != null){
 			By option = By.id(optionId);
 			//if (waitForAndGetElement(By.xpath("//*[contains(text(),'Enable DMS Structure')]"),DEFAULT_TIMEOUT,0)==null){
-				if (waitForAndGetElement(ELEMENT_ADVANCED_ICON_ARROW_DOWN, 5000, 0) != null){
+				if (waitForAndGetElement(ELEMENT_ADVANCED_ICON_ARROW_DOWN, DEFAULT_TIMEOUT, 0) != null){
 					click(ELEMENT_ADVANCED_ICON_ARROW_DOWN);
+					Utils.pause(3000);
 			//	}else {
 			//		click(ELEMENT_ADVANCED_OPTION);
 			//	}
