@@ -38,7 +38,7 @@ public class TestBase {
 
 	public WebDriver driver;
 	public WebDriver newDriver;
-	protected String baseUrl;
+	public String baseUrl;
 	protected int DEFAULT_TIMEOUT = 30000; //milliseconds = 30 seconds
 	protected int DEFAULT_TIMEOUT2 = 60000; //milliseconds = 60 seconds
 	protected int WAIT_INTERVAL = 1000; //milliseconds  
@@ -54,8 +54,8 @@ public class TestBase {
 	//public final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
 	//public final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
 
-	public final String DEFAULT_BASEURL = "http://gmail.wks-acc.exoplatform.org/portal";
-//	public final String DEFAULT_BASEURL = "http://dispostable.wks-acc.exoplatform.org/";
+	public final String DEFAULT_BASEURL = "http://yopmail.wks-acc.exoplatform.org/portal";
+
 	//"http://yopmail.netstg.exoplatform.org/portal";
 	//"http://hushmail.wks-acc.exoplatform.org/portal";
 	//"http://gmail.wks-acc.exoplatform.org/portal";

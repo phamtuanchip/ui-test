@@ -70,7 +70,7 @@ public class ManageDrive extends EcmsBase{
 	public final String ELEMENT_ALLOW_CREATE_FOLDER_OPTIONS = "//*[@name='allowCreateFolders']/option[text()='${option}']";
 	public final By ELEMENT_DRIVE_NAME = By.id("name");
 	public final By ELEMENT_MANAGE_DRIVE_LINK = By.linkText("Manage Drives");
-	public final String ELEMENT_VERIFY_DRIVE = "//div[@data-original-title='${driveName}']";
+	public final String ELEMENT_VERIFY_DRIVE = "//div[@data-original-title='${driveName}' or @title ='${driveName}']";
 	public final String ELEMENT_VERIFY_WORKSPACE_NAME = ELEMENT_VERIFY_DRIVE + "/../../td[2]/div"; 
 
 	//------------Manage driver------------------//
@@ -154,7 +154,7 @@ public class ManageDrive extends EcmsBase{
 		userGroup.selectGroup(group, false);
 		Utils.pause(1000);
 		click(By.linkText(member));
-		Utils.pause(1000);
+		Utils.pause(3000);
 		assert getValue(ELEMENT_PERMISSION_TEXTBOX).contains(member):"Set permission is not true";
 
 		setViewPreferenceForDriver(viewOption);
@@ -171,9 +171,10 @@ public class ManageDrive extends EcmsBase{
 			selectCheckBoxList(view);
 			//Complete add new drive
 			click(button.ELEMENT_SAVE_BUTTON);
+			Utils.pause(3000);
 			select(By.xpath("//select[contains(@id,'maxPageSize')]"),"20");
 			driver.navigate().refresh();
-			Utils.pause(5000);
+			Utils.pause(3000);
 			//waitForElementPresent(ELEMENT_DRIVER);
 			//assert isElementPresent(ELEMENT_DRIVER):"Add new driver is unsuccessful";
 			waitForAndGetElement(ELEMENT_DRIVE_EDIT_AUX.replace("${driveName}", driverName));

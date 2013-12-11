@@ -62,7 +62,7 @@ public class PeopleConnection extends SocialBase {
 			click(ELEMENT_EVERYONE_TAB);
 		}
 		info("-----Click connect to people-----");
-		if (waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName), 5000, 0) != null){
+		if (waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName), 10000, 0) != null){
 			click(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
 		}
 		waitForAndGetElement(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));

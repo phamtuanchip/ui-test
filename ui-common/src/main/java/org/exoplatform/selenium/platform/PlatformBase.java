@@ -1050,6 +1050,7 @@ public class PlatformBase extends TestBase {
 	 * Open a new browser by Javascript
 	 */
 	public void openNewBrowser(){
+		baseUrl= (System.getProperty("baseUrl") == null) ? DEFAULT_BASEURL : System.getProperty("baseUrl");
 		//Open new browser by Javascript
 		//String handlesBefore = driver.getWindowHandle();
 		((JavascriptExecutor) driver).executeScript("window.open()");
@@ -1311,9 +1312,10 @@ public class PlatformBase extends TestBase {
 	 * @date 05-Nov-2013
 	 */
 	public void loginWithAnotherAccOnThesameBrowser(String User2, String Pass2){
+		baseUrl= (System.getProperty("baseUrl") == null) ? DEFAULT_BASEURL : System.getProperty("baseUrl");
 		newDriver = new FirefoxDriver();
 		//newDriver.get(baseUrl);
-		newDriver.get(DEFAULT_BASEURL);
+		newDriver.get(baseUrl);
 		ManageAccount  acc = new ManageAccount(newDriver);
 		acc.signIn(User2, Pass2);
 		Utils.pause(2000);

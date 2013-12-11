@@ -305,8 +305,10 @@ public class ActionBar extends EcmsBase{
 	public void goToViewMode(String viewType){
 		info("-- Change to view mode... --" + viewType);
 		Utils.pause(1000);
-		if(isElementPresent(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType))))
+		if(waitForAndGetElement(ELEMENT_VIEW_MODE_ACTIVE_LINK.replace("${viewName}", viewType),20000,0) == null){
 			click(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType)));
+			waitForAndGetElement(ELEMENT_VIEW_MODE_ACTIVE_LINK.replace("${viewName}", viewType));
+		}
 		Utils.pause(1000);
 	}
 
@@ -471,7 +473,7 @@ public class ActionBar extends EcmsBase{
 			checkUnexpectedError();
 			//waitForTextPresent(categoryPath);
 		}
-		if (waitForAndGetElement(button.ELEMENT_CLOSE_BUTTON, 3000, 0) != null ){
+		if (waitForAndGetElement(button.ELEMENT_CLOSE_BUTTON, 10000, 0) != null ){
 			click(button.ELEMENT_CLOSE_BUTTON);
 		}
 		/*waitForElementNotPresent(ELEMENT_SELECT_CATEGORY_TAB);*/

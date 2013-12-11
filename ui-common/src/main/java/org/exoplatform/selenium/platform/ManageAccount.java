@@ -35,6 +35,7 @@ public class ManageAccount extends PlatformBase {
 
 	public ManageAccount(WebDriver dr){
 		driver = dr;
+		baseUrl= (System.getProperty("baseUrl") == null) ? DEFAULT_BASEURL : System.getProperty("baseUrl");
 	}
 
 	Dialog dialog;
@@ -73,7 +74,7 @@ public class ManageAccount extends PlatformBase {
 		}
 		if (waitForAndGetElement(ELEMENT_HOME_PAGE, 5000, 0) == null){
 			//driver.navigate().refresh();
-			driver.get(DEFAULT_BASEURL);
+			driver.get(baseUrl);
 			Utils.pause(5000);
 		}
 	}

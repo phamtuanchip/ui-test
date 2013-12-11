@@ -99,11 +99,11 @@ public class Social_HomePage_Activity extends Activity {
 		actBar.goToAddNewContent();
 		conTemp.createNewFile(nameWebContent, nameWebContent, "");
 		navToolBar.goToHomePage();
-		
+
 		info("-- Create activity --");
 		addActivity(true, activity1, false,"");
 
-//		Step 1: Check layout of activity 
+		//		Step 1: Check layout of activity 
 		//- log in and goto intranet hompage
 		//- Select an activity to check its layout
 
@@ -205,7 +205,7 @@ public class Social_HomePage_Activity extends Activity {
 		addActivity(true, activity1, false,"");
 
 		info("-- 5. Create space --");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 
 		info("-- 6. Create new Webcontent --");
@@ -451,7 +451,7 @@ public class Social_HomePage_Activity extends Activity {
 		//- Click on Like activity in action bar part of an activity
 		//- Like button is highlighted and the number of likers is updated
 		magAcc.userSignIn(userType.ADMIN);
-
+		waitForAndGetElement(By.xpath("//*[contains(text(),'"+activity1+"')]"),60000);
 		activity.likeOrUnlikeActivity(activity1);
 
 		/*Step 2: Check Likes part*/

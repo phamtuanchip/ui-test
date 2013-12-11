@@ -336,6 +336,7 @@ public class Wiki_BasicAction_ManagePage extends ManageDraft{
 		String title = "Wiki_manage_page_title_12";
 		String content = "Wiki_manage_page_content_12";
 		String newTitle = "Wiki_manage_page_title_12_update";
+		Actions actions = new Actions(driver);
 
 		info("Add new wiki page");		
 		addBlankWikiPage(title, content, 0);
@@ -343,14 +344,13 @@ public class Wiki_BasicAction_ManagePage extends ManageDraft{
 		info("Rename page");
 		doubleClickOnElement(ELEMENT_PAGE_TITLE_INFO);
 		
-		if (waitForAndGetElement(ELEMENT_PAGE_TITLE_EDIT_TEXTBOX, DEFAULT_TIMEOUT, 0) == null){
+		if (waitForAndGetElement(ELEMENT_PAGE_TITLE_EDIT_TEXTBOX, 3000, 0) == null){
 			info("== Cannot use doubleClickOnElement... ==");
 			click(ELEMENT_PAGE_TITLE_INFO);
 		}
 		
-		type(ELEMENT_PAGE_TITLE_EDIT_TEXTBOX, newTitle, true);
-		Actions actions = new Actions(driver);
-		actions.sendKeys(Keys.ENTER);
+		type(ELEMENT_PAGE_TITLE_EDIT_TEXTBOX, newTitle, false);
+		actions.sendKeys(Keys.RETURN).build().perform();
 
 		waitForTextPresent(newTitle);
 		deleteCurrentWikiPage();	

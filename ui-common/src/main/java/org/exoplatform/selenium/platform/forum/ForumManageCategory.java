@@ -399,7 +399,7 @@ public class ForumManageCategory extends ForumBase {
 		ManageAccount acc;
 		WebDriver tmpDriver = new FirefoxDriver();
 		String tmpbaseUrl = System.getProperty("baseUrl");
-		if (tmpbaseUrl==null) tmpbaseUrl = DEFAULT_BASEURL;                
+		if (tmpbaseUrl==null) tmpbaseUrl = baseUrl;                
 		tmpDriver.get(tmpbaseUrl);
 
 		acc = new ManageAccount(tmpDriver);

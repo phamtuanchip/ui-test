@@ -462,10 +462,8 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		
 		navTool.goToSiteExplorer();
 		actBar.chooseDrive(By.xpath("//*[@data-original-title='Sites Management']"));
-		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		click(siteExp.ELEMENT_SIDEBAR_FILE_EXPLORER);
 
-		waitForAndGetElement(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT).click();
 		cMenu.deleteData(elementWeb);		
 	}
 	

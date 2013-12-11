@@ -50,6 +50,7 @@ public class EcmsBase extends ManageAccount {
 
 	//UI address bar
 	public final String ELEMENT_VIEW_MODE_LINK = "//*[@class='uiIconEcmsViewDefault uiIconEcmsView${viewName}']";
+	public final String ELEMENT_VIEW_MODE_ACTIVE_LINK = "//a[@class='btn active' and @data-original-title = '${viewName}']/i";
 	//public final String ELEMENT_VIEW_MODE_LINK = "//i[contains(@class,'uiIconEcmsViewDefault')]/../..//*[@data-original-title='${viewName}']";
 	public final By ELEMENT_BACK_PREVIOUS_NODE = By.className("uiIconEcmsGoBack");
 	public final By ELEMENT_ADDRESS_BAR = By.id("address");
@@ -405,12 +406,13 @@ public class EcmsBase extends ManageAccount {
 
 	//Acme sites > Go to Overview page
 	public void goToOverviewPage(){
+		baseUrl= (System.getProperty("baseUrl") == null) ? DEFAULT_BASEURL : System.getProperty("baseUrl");
 		info("-- Go to Overview page--");
 		Utils.pause(500);
 		if (waitForAndGetElement(ELEMENT_OVERVIEW_PAGE, 3000, 0) != null){
 			click(ELEMENT_OVERVIEW_PAGE);
 		}else {
-			driver.get(DEFAULT_BASEURL + "/acme/overview");
+			driver.get(baseUrl + "/acme/overview");
 		}
 		Utils.pause(1000);
 	}

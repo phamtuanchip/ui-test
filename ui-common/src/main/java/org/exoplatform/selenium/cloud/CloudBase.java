@@ -182,6 +182,7 @@ public class CloudBase extends PlatformBase{
 	 * <li> 1 to get the pre-prod server Cloud's url </li>
 	 */
 	public void activeAccountForYopmail(int... url){
+		baseUrl= (System.getProperty("baseUrl") == null) ? DEFAULT_BASEURL : System.getProperty("baseUrl");
 		driver.close();
 		initSeleniumTest();
 

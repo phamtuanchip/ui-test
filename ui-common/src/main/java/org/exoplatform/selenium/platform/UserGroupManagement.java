@@ -261,6 +261,7 @@ public class UserGroupManagement extends PlatformBase {
 		String groupName_2 =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
 		String groupName_3 = "//ul[@class='nodeGroup']//a[contains(text(),'${groupName}')]";
 		String groupName_4 =  "//*[text()='Browse and select a group']/..//*[contains(text(), '${groupName}')]";
+		String groupName_5 =  "//*[text()='Select Child Group']/..//*[contains(text(), '${groupName}')]";
 		String[] temp;			 
 
 		/* Delimiter */
@@ -284,6 +285,8 @@ public class UserGroupManagement extends PlatformBase {
 						click(By.xpath(groupName_2.replace("${groupName}", temp[i])));
 					}else if (waitForAndGetElement(By.xpath(groupName_3.replace("${groupName}", temp[i])),2000,0) != null){
 						click(By.xpath(groupName_3.replace("${groupName}", temp[i])));
+					}else if (waitForAndGetElement(By.xpath(groupName_5.replace("${groupName}", temp[i])),2000,0) != null){
+						click(By.xpath(groupName_5.replace("${groupName}", temp[i])));
 					}else
 						assert false: "Cannot select the item " + temp[i];
 //				}	

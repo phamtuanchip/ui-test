@@ -338,10 +338,11 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 		//Delete data
 		cMenu.contextMenuAction(bNode1, cMenu.ELEMENT_MENU_DELETE);
-		alt.waitForMessage("Are you sure you want to delete the folder '"+node1+"' and all subfolders?");
+		alt.verifyAlertMessage("Are you sure you want to delete the folder '"+node1+"' and all subfolders?");
 		dialog.deleteInDialog();
 		cMenu.deleteDocument(bNode1);
 		cMenu.deleteDocument(bNode2);
+		
 
 	}
 

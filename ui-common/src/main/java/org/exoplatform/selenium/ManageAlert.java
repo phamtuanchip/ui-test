@@ -24,6 +24,7 @@ public class ManageAlert extends TestBase{
 	public final By ELEMENT_ALERT = By.xpath("//*[contains(@class, 'popupTitle') and contains(text(), 'Warning')]");
 	public final By ELEMENT_MESSAGE = By.xpath("//*[contains(@class, 'warningIcon')]");
 	public final By ELEMENT_INFO = By.xpath("//*[contains(@class, 'infoIcon')]");
+	public final By ELEMENT_CONFIRM = By.xpath("//*[contains(@class, 'confirmationIcon')]");
 
 	//Accept an alert
 	public void acceptAlert() {
@@ -98,6 +99,9 @@ public class ManageAlert extends TestBase{
 			assert getText(ELEMENT_MESSAGE).contains(message):"Message is wrong";
 		}else if (isElementPresent(ELEMENT_INFO)){
 			assert getText(ELEMENT_INFO).contains(message):"Message is wrong";	
+		}
+		else if (isElementPresent(ELEMENT_CONFIRM)){
+			assert getText(ELEMENT_CONFIRM).contains(message):"Message is wrong";	
 		}
 		if (waitForAndGetElement(button.ELEMENT_OK_BUTTON, 3000, 0) != null){
 			click(button.ELEMENT_OK_BUTTON);

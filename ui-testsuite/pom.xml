@@ -28,6 +28,7 @@
 	</dependencies>
 
 	<profiles>
+		<!-- Cloud Applications -->
 		<profile>
 			<id>cloud-signup</id>
 			<properties>
@@ -46,6 +47,59 @@
 				<testSuite>cloud-user.xml</testSuite>
 			</properties>
 		</profile>
+		<profile>
+			<id>cloud-sniff-ecms-admin</id>
+			<properties>
+				<testSuite>cloud-sniff-ecms-admin.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>cloud-sniff-ecms-se</id>
+			<properties>
+				<testSuite>cloud-sniff-ecms-se.xml</testSuite>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>cloud-sniff-forum-answer</id>
+			<properties>
+				<testSuite>cloud-sniff-forum-answer.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>cloud-sniff-forum-forum</id>
+			<properties>
+				<testSuite>cloud-sniff-forum-forum.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>cloud-sniff-social-homepage</id>
+			<properties>
+				<testSuite>cloud-sniff-social-homepage.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>cloud-sniff-social-space</id>
+			<properties>
+				<testSuite>cloud-sniff-social-space.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>cloud-sniff-plf-homepage</id>
+			<properties>
+				<testSuite>cloud-sniff-plf-homepage.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>cloud-sniff-plf-navigation</id>
+			<properties>
+				<testSuite>cloud-sniff-plf-navigation.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<!-- End of Cloud Applications -->
 
 		<profile>
 			<id>ecms-se</id>
@@ -53,42 +107,36 @@
 				<testSuite>ecms-se.xml</testSuite>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>ecms-se-activities</id>
 			<properties>
 				<testSuite>ecms-se-activities.xml</testSuite>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>ecms-se-admin</id>
 			<properties>
 				<testSuite>ecms-se-admin.xml</testSuite>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>ecms-se-basicaction</id>
 			<properties>
 				<testSuite>ecms-se-basicaction.xml</testSuite>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>ecms-se-createnode</id>
 			<properties>
 				<testSuite>ecms-se-createnode.xml</testSuite>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>ecms-se-others</id>
 			<properties>
 				<testSuite>ecms-se-others.xml</testSuite>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>ecms-admin</id>
 			<properties>
@@ -189,18 +237,7 @@
 				<testSuite>forum-sniff.xml</testSuite>
 			</properties>
 		</profile>
-		<profile>
-			<id>forum-forum-sniff</id>
-			<properties>
-				<testSuite>forum-forum-sniff.xml</testSuite>
-			</properties>
-		</profile>
-		<profile>
-			<id>forum-answer-sniff</id>
-			<properties>
-				<testSuite>forum-answer-sniff.xml</testSuite>
-			</properties>
-		</profile>
+		
 		<profile>
 			<id>calendar-sniff</id>
 			<properties>
