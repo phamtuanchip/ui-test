@@ -493,10 +493,11 @@ public class Wiki_BasicAction_Other extends Permalink {
 		String content = "Wiki_watch_content_15";
 		String newTitle = "Wiki_watch_title_15_update";
 		String newContent = "Wiki_watch_content_15_update";
-				
+		magAc.updateUserProfile(null, null, null, "exomailtest01@gmail.com");
+		
+		goToWiki();
 		addBlankWikiPage(title, content, 0);	
 		watchWikiPage();
-		magAc.updateUserProfile(null, null, null, "exomailtest01@gmail.com");
 		goToWikiPage("Wiki Home/" + title);
 		editPageWithCheckPublicActivity(newTitle, newContent);
 

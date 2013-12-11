@@ -13,6 +13,7 @@ import org.exoplatform.selenium.platform.NavigationManagement;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.PageManagement;
 import org.exoplatform.selenium.platform.social.SpaceManagement;
+import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -110,9 +111,8 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 		addNodeForGroup(groupAdminDisplayName, nodePortalAdministration, true, 
 				nodeName, true, languages, nodeName, 
 				pageSelectorName, pageSelectorName, true, false);
-		click(button.ELEMENT_SAVE_BUTTON);
-		Utils.pause(3000);
-		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		click(By.linkText("Save"));
+		waitForElementNotPresent(By.linkText("Save"));
 		waitForAndGetElement(ELEMENT_NAVIGATION_NODE.replace("${nodeName}", nodeName));
 		
 		/*Step 2: Add sub-node to the group navigation*/
@@ -121,9 +121,8 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 		addNodeForGroup(groupAdminDisplayName, nodeName, false, 
 				subNodeName, true, languages, subNodeName, 
 				pageSelectorName1, pageSelectorName1, true, false);
-		click(button.ELEMENT_SAVE_BUTTON);
-		Utils.pause(3000);	
-		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		click(By.linkText("Save"));
+		waitForElementNotPresent(By.linkText("Save"));
 		click(ELEMENT_GROUP_NAVIGATION_ICON_LEFT_PANEL.replace("${groupName}", nodeName));
 		waitForAndGetElement(ELEMENT_NAVIGATION_NODE.replace("${nodeName}", subNodeName));
 		
@@ -132,6 +131,7 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 		navToolbar.goToManagePages();
 		pageMag.deletePage(PageType.GROUP, pageSelectorName1);
 		pageMag.deletePage(PageType.GROUP, pageSelectorName);
+		Utils.pause(3000);
 		navToolbar.goToGroupSites();
 		navMag.deleteNode(groupAdminDisplayName, "", nodeName, true);
 	}

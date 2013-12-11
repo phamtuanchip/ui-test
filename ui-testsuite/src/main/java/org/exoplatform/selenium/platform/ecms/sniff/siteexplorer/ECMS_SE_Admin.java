@@ -53,9 +53,12 @@ public class ECMS_SE_Admin extends PlatformBase {
 		cTemplate.goToNode(bNode);
 
 		//Check if Export button is shown on action bar
-		actBar.addItem2ActionBar("exportNode", actBar.ELEMENT_EXPORT_LINK);
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("exportNode", actBar.ELEMENT_EXPORT_LINK, "Web");
 
 		//Export node in zip file
+		actBar.goToViewMode("Web");
+		cTemplate.goToNode(bNode);
 		actBar.exportNode(true, true, false);
 
 		//Delete data
@@ -74,7 +77,11 @@ public class ECMS_SE_Admin extends PlatformBase {
 		String categoryTree = "intranet";
 
 		info("Add Category");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
+		
 		//Create node
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1,node1,node1);
 		cTemplate.goToNode(bNode);
@@ -100,7 +107,10 @@ public class ECMS_SE_Admin extends PlatformBase {
 		Date date = new Date();
 
 		info("Manage Publication");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		//Create node
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1,node1,node1);
 		cTemplate.goToNode(bNode);
@@ -123,7 +133,10 @@ public class ECMS_SE_Admin extends PlatformBase {
 		By bNode2 = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node2));
 
 		info("Show/ Hide Relation");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		//Create node1, node2
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1,node1,node1);
 		click(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
@@ -159,6 +172,9 @@ public class ECMS_SE_Admin extends PlatformBase {
 
 		info("View Node Properties");
 		//Create node1
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1,node1,node1);
 
@@ -185,6 +201,9 @@ public class ECMS_SE_Admin extends PlatformBase {
 		
 		info("Add Category");
 		//Create node
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1,node1,node1);
 		cTemplate.goToNode(bNode);
@@ -212,13 +231,17 @@ public class ECMS_SE_Admin extends PlatformBase {
 		String filePath = "TestData/TestOutput/sysview.xml";
 
 		info("Import a node");
+		
+		//Check if Import button is shown on action bar
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("importNode", actBar.ELEMENT_IMPORT_LINK, "Web");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("exportNode", actBar.ELEMENT_EXPORT_LINK, "Web");
+		actBar.goToViewMode("Web");
 
 		//Create node
 		cTemplate.createNewFolder(node1, folderType.Content);
 		cTemplate.goToNode(bNode);
-
-		//Check if Import button is shown on action bar
-		actBar.addItem2ActionBar("importNode",actBar.ELEMENT_IMPORT_LINK);
 
 		info("Export node in xml file, systemview");
 		actBar.exportNode(true, false, false);
@@ -235,35 +258,10 @@ public class ECMS_SE_Admin extends PlatformBase {
 		//delete file on computer
 		deleteFile("TestOutput/"+"sysview.xml");
 	}
+	
 	/**CaseID 67872 Add Relation
+	 * CaseID 67873 Delete Relation
 	 * Step 1: Add Relation
-	 */
-	@Test
-	public void test08_AddRelation() {
-		String node1 = "test08_AddRelation1";
-		String node2 = "test08_AddRelation2";
-		By bNode1 = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node1));
-		By bNode2 = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node2));
-
-		info("Add Relation");
-		//Create node1, node2
-		actBar.goToAddNewContent();
-		cTemplate.createNewFile(node1,node1,node1);
-		click(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
-		actBar.goToAddNewContent();
-		cTemplate.createNewAnnouncement(node2, node2);
-
-		//Add Relation button to action bar if it is not shown on action bar yet
-		cTemplate.goToNode(bNode1);
-		actBar.addItem2ActionBar("manageRelations", actBar.ELEMENT_ADD_RELATION_LINK);
-		actBar.createRelation(node1, "sites/"+node2);
-
-		//Delete data
-		cMenu.deleteDocument(bNode1);
-		cMenu.deleteDocument(bNode2);
-	}
-
-	/**CaseID 67873 Delete Relation
 	 * Step 1: Delete Relation
 	 */
 	@Test
@@ -275,6 +273,9 @@ public class ECMS_SE_Admin extends PlatformBase {
 
 		info("Add Relation");
 		//Create node1, node2
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1,node1,node1);
 		click(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);

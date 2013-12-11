@@ -305,7 +305,8 @@ public class ActionBar extends EcmsBase{
 	public void goToViewMode(String viewType){
 		info("-- Change to view mode... --" + viewType);
 		Utils.pause(1000);
-		click(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType)));
+		if(isElementPresent(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType))))
+			click(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType)));
 		Utils.pause(1000);
 	}
 
@@ -885,14 +886,18 @@ public class ActionBar extends EcmsBase{
 
 		info("-- Undo deletion --");
 		if (node != ""){
-			waitForTextPresent("\'" + node + "' was deleted succesfully.");
+			String message = "\'" + node + "' was deleted succesfully";
+			assert getText(By.xpath("//*[@id='wcm-notice']")).contains(message):"Message is wrong";
+			//waitForTextPresent("\'" + node + "' was deleted succesfully.");
 		}
 		click(ELEMENT_UNDO_DELETED_ITEM);
 		if (waitForAndGetElement(button.ELEMENT_OK_BUTTON, 3000, 0) != null){
 			click(button.ELEMENT_OK_BUTTON);
 		}
 		if (node != ""){
-			waitForTextPresent("\'" + node + "' was successfully restored.");
+			String message = "\'" + node + "' was successfully restored";
+			assert getText(By.xpath("//*[@id='wcm-notice']")).contains(message):"Message is wrong";
+			//waitForTextPresent("\'" + node + "' was successfully restored.");
 		}
 		Utils.pause(1000);		
 	}

@@ -65,6 +65,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		navTool.goToSiteExplorer();
 		
 		info("Add new web content ");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		temp.createNewWebContent(name, "", "", sum, "", "", true);
 		navTool.goToHomePage();
@@ -95,6 +98,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		navTool.goToSiteExplorer();
 		
 		info("Add new file");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		temp.createNewFullFile(fileName, fileContent, fileName, desc, "", "");
 		
@@ -123,6 +129,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		navTool.goToSiteExplorer();
 		
 		info("Add new web content ");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		temp.createNewWebContent(name, "", "", sum, "", "", true);
 		
@@ -151,6 +160,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		navTool.goToSiteExplorer();
 		
 		info("Add new web content ");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		temp.createFullNewProduct(name, "", sum, "", "", true);
 		click(By.linkText("acme"));
@@ -184,6 +196,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		navTool.goToSiteExplorer();
 		
 		info("Add new web content ");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		temp.createNewFile(name, sum, title);
 		navTool.goToHomePage();
@@ -433,6 +448,9 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		navTool.goToSiteExplorer();
 		
 		info("Add new web content ");
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		temp.createNewWebContent(name, cont, "", sum, "", "", true);
 		

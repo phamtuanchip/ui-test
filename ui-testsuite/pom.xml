@@ -28,7 +28,6 @@
 	</dependencies>
 
 	<profiles>
-
 		<profile>
 			<id>cloud-signup</id>
 			<properties>

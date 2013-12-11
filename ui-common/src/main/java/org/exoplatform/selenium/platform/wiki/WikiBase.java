@@ -311,8 +311,13 @@ public class WikiBase extends PlatformBase{
 		info("--Go to add blank wiki page--");
 		Utils.pause(500);
 		//mouseOver(ELEMENT_ADD_PAGE_LINK, true);
-		mouseOverAndClick(ELEMENT_ADD_PAGE_LINK);
-		mouseOverAndClick(ELEMENT_BLANK_PAGE_LINK);
+		click(ELEMENT_ADD_PAGE_LINK);
+		if(isElementNotPresent(ELEMENT_BLANK_PAGE_LINK)){
+			click(ELEMENT_ADD_PAGE_LINK,2);
+			click(ELEMENT_BLANK_PAGE_LINK);
+		}
+		else
+			click(ELEMENT_BLANK_PAGE_LINK);
 		Utils.pause(1000);
 	}
 

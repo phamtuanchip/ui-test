@@ -78,6 +78,9 @@ public class ECMS_SE_Create extends PlatformBase {
 		String titleEdit = "File_docment_title_edit";
 		
 		navToolBar.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		
 		info("Create new file document");
@@ -108,6 +111,9 @@ public class ECMS_SE_Create extends PlatformBase {
 		String contentEdit = "Web_content_edit";
 		
 		navToolBar.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		
 		info("Create new web content");
@@ -191,6 +197,9 @@ public class ECMS_SE_Create extends PlatformBase {
 		
 		info("Create new content folder");
 		navToolBar.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		template.createNewFolder(folder, folderType.Content);
 		
 		info("Delete content folder");
@@ -221,6 +230,9 @@ public class ECMS_SE_Create extends PlatformBase {
 		//actBar.uploadFile("TestData/" + file1);
 		actBar.uploadFile("TestData/" + file2);
 		
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		click(cTemp.ELEMENT_WEBCONTENT_LINK);
 		type(cTemp.ELEMENT_WEBCONTENT_NAME_TEXTBOX, webContent, true);

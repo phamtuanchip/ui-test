@@ -48,7 +48,12 @@ public class ECMS_SE_Search extends PlatformBase {
 		By bNode1= By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}",node1));
 		
 		info("Advanced search");
+		navToolBar.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		
 		//Create document
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1, node1, node1, des);
 		
@@ -77,7 +82,12 @@ public class ECMS_SE_Search extends PlatformBase {
 		By bNode1= By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}",node1));
 		
 		info("Simple search");
+		navToolBar.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		
 		//Create document
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1, node1, node1, des);
 		
@@ -103,7 +113,12 @@ public class ECMS_SE_Search extends PlatformBase {
 		String edit = "select * from nt:base where jcr:primaryType like 'nt:file' order by exo:dateCreated DESC";
 		By bNode1= By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}",node1));
 		
+		navToolBar.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		
 		info("Create, edit, execute, delete query in Advanced search");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1, node1, node1);
 		
