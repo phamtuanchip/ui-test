@@ -4,6 +4,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Utils;
+import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.social.PeopleConnection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

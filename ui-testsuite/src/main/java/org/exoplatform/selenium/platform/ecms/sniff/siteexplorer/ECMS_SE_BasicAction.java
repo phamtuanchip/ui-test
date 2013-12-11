@@ -64,6 +64,9 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 		//Go to node2, add a document
 		ecms.goToNode(node2);
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewWebContent(webContent, webContent, "", webContent, "", "");
 
@@ -206,6 +209,9 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 		By bNode1= By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}",node1));
 		info("Lock a node");
 		//Create file document
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1, node1, node1);
 
@@ -232,6 +238,9 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 		info("Unlock a node");
 
 		//Create file document
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1, node1, node1);
 

@@ -92,13 +92,15 @@ public class ECMS_Admin_Repository extends PlatformBase{
 		String elementLockedArticleIcon = cMenu.ELEMENT_FILE_LOCKED_BY_ADMIN.replace("${titleOfFile}", fileTitle);
 
 		info("-- Test case: Unlock a node --");
-		
-		//Go to Site Explorer
 		nav.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		
 		//actBar.goToSitesManagement();
 		ecms.goToNode("intranet/documents");
 
 		//Create a new File
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(fileTitle, content, fileTitle);
 
@@ -136,13 +138,15 @@ public class ECMS_Admin_Repository extends PlatformBase{
 		String ELEMENT_GROUP_DISPLAY = "platform/web-contributors";
 
 		info("-- Test case: Manage lock --");
-		
-		//Go to Site Explorer
 		nav.goToSiteExplorer();
+		actBar.goToViewMode("Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		
 		//actBar.goToSitesManagement();
 		ecms.goToNode("intranet/documents");
 
 		//Create a new File
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(fileTitle, content, fileTitle);
 
@@ -220,7 +224,7 @@ public class ECMS_Admin_Repository extends PlatformBase{
 	 */
 	@Test
 	public void test04_AddAndViewNodeType(){
-		String nodeTypeName = "exoplatform";
+		String nodeTypeName = "exoplatformvn";
 		String superTypes = "app:application/app:category";
 
 		info("-- Add a new node type --");

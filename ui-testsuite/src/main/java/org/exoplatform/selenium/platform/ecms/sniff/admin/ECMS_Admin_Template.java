@@ -154,7 +154,7 @@ public class ECMS_Admin_Template extends PlatformBase{
 	 */
 	@Test(priority=1)
 	public void test00_ViewEditAndDeleteMetadata(){
-		String metadata = "Ecms_Sniff_Metadata";
+		String metadata = "ViewEditAndDeleteMetadata";
 		String[] metadataPer = {"Platform/Administration", "*"};
 		String editMetadataLabel = "Edit_Ecms_Sniff_Metadata";
 		String dialogTemplate = "TestData/ECMS_Admin_GetMailScript_Template.txt";

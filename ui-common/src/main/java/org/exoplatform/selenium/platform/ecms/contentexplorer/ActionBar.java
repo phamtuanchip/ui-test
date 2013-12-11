@@ -305,7 +305,8 @@ public class ActionBar extends EcmsBase{
 	public void goToViewMode(String viewType){
 		info("-- Change to view mode... --" + viewType);
 		Utils.pause(1000);
-		click(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType)));
+		if(isElementPresent(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType))))
+			click(By.xpath(ELEMENT_VIEW_MODE_LINK.replace("${viewName}", viewType)));
 		Utils.pause(1000);
 	}
 
