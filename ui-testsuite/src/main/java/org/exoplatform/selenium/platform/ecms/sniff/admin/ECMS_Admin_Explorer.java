@@ -91,7 +91,7 @@ public class ECMS_Admin_Explorer extends PlatformBase{
 		info("-- Edit drive -- " + drive);
 		magDrv.addNewDrive(drive, "system","jcr:system", "Organization/Management/Executive Board","manager",
 				"Non-document Nodes/Sidebar/Hidden Nodes", "Admin/Icons/List", true, true);
-
+		click(magDrv.ELEMENT_DRIVE_TAB);
 		WebElement element = waitForAndGetElement(magDrv.ELEMENT_VERIFY_WORKSPACE_NAME.replace("${driveName}", drive), 3000, 1, 2);
 		String dr = element.getAttribute("data-original-title");	
 		assert dr.equals("system"): "[Workspace] is not updated";

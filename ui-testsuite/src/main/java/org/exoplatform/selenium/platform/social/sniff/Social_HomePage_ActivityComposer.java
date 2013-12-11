@@ -6,6 +6,7 @@ import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
+import org.exoplatform.selenium.platform.ecms.admin.ManageDrive;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ActionBar;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContentTemplate;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu.actionType;
@@ -30,6 +31,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	//ecms
 	EcmsBase ecms;
 	ContentTemplate conTemp;
+	ManageDrive magDrv;
 
 	String user1="Mary Williams";
 
@@ -44,6 +46,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 		actBar = new ActionBar(driver);
 		ecms = new EcmsBase(driver);
 		conTemp = new ContentTemplate(driver);
+		magDrv = new ManageDrive(driver);
 		magAcc.signIn(DATA_USER_JOHN, DATA_PASS);
 	}
 
@@ -116,8 +119,10 @@ public class Social_HomePage_ActivityComposer extends Activity {
 		//Upload a file to the driverName/folderPath
 		info("Go to Persional Documents");
 		navToolBar.goToPersonalDocuments();
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Admin", "Admin");
+		magDrv.addView2Drive("List", "Personal Documents");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "List", "List");
 		actBar.chooseDrive(ecms.ELEMENT_PERSONAL_DRIVE);
+		actBar.goToViewMode("List");
 		actBar.goToAddNewContent();
 		conTemp.createNewFile(file, file, "");
 
@@ -141,6 +146,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 		activity.deleteActivity(file);
 		navToolBar.goToSiteExplorer();
 		actBar.chooseDrive(ecms.ELEMENT_PERSONAL_DRIVE);
+		actBar.goToViewMode("List");
 		actBar.actionsOnElement(file, actionType.DELETE,true,true);
 	}
 

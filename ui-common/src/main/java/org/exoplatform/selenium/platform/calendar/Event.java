@@ -258,7 +258,7 @@ public class Event extends CalendarBase{
 		goToEditEventForm(oldEvent);
 		inputAddEventForm(name,description, location,from,to,allDay,opt);
 		click(ELEMENT_ADD_EVENT_SAVE_BUTTON);
-		waitForElementNotPresent(ELEMENT_ADD_EVENT_POPUP);
+		waitForElementNotPresent(ELEMENT_EDIT_EVENT_POPUP);
 	}
 	
 	/****************End of Add/Edit Event*******************/

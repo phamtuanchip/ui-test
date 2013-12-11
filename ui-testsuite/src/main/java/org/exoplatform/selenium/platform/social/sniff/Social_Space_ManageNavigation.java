@@ -50,8 +50,8 @@ public class Social_Space_ManageNavigation extends SocialBase {
 	public void test01_AddNewNode(){
 		//Declare variable
 		String spaceName = "space67673";
-		String nodeName = "nodeName676731";
-		String nodeLabel = "nodeLabel676731";
+		String nodeName = "node676731";
+		String nodeLabel = "node676731";
 		String pageName = "pageName676731";
 		String pageTitle = "pageTitle676731";
 

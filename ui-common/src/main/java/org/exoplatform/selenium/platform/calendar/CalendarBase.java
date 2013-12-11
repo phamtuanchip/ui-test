@@ -39,6 +39,12 @@ public class CalendarBase extends PlatformBase {
 	public String ELEMENT_CALENDAR_GET_BY_TAG_LI = "//a[@class='calendarName' and contains(text(), '${calendar}')]/../..";
 	public By ELEMENT_CALENDAR_POPUP_WINDOW = By.xpath("//*[@id='UICalendarPopupWindow']/div[2]");
 	public String ELEMENT_VERIFY_CALENDAR_FORM = "//*[@id='defaultCalendarTab'] //div[@class='myCalendar']/*[@class='calendarTitle']/..//li[contains(@class,'calendarItem' )]//*[text()='${UserName}']/../a[@class='${CheckboxColor}']";
+	
+	//--------------Mini calendar-------------------
+	public String ELEMENT_MINI_CALENDAR_DATE_HIGHLIGHT = "//td[contains(@class,'highLight') and contains(text(),'${date}')]";
+	
+	//---------------Working pane---------------------
+	public String ELEMENT_WORKING_PANE_23H = "//td[@class='tdTime center']/div[contains(text(),'23:00')]";
 
 	//-----------Calendar Settings ----------
 	public By ELEMENT_SETTINGS_TAB = By.xpath("//a[@data-toggle='tab' and text()='Settings']");
@@ -566,7 +572,8 @@ public class CalendarBase extends PlatformBase {
 	 */
 	public void deleteEventTask(String event, selectDayOption... options){
 		alert = new ManageAlert(driver);
-		selectDayOption optDay = options.length > 0 ? options[0] : selectDayOption.ALLDAY;
+		waitForAndGetElement(ELEMENT_WORKING_PANE_23H);
+		selectDayOption optDay = (waitForAndGetElement(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", event), 5000,0) == null) ? selectDayOption.ALLDAY : selectDayOption.ONEDAY;
 
 		info("--Delete an Event/Task--");
 		switch (optDay) {
@@ -722,10 +729,10 @@ public class CalendarBase extends PlatformBase {
 	 */
 	public void quickSearchCalendar(String keyword){
 		info("----Type in quick search box----");
-		waitForAndGetElement(ELEMENT_INPUT_QUICK_SEARCH);
 		type(By.xpath(ELEMENT_INPUT_QUICK_SEARCH), keyword, true);
 		info("----Send search request----");
-		Utils.pause(3000);
+		Utils.pause(5000);
+		click(ELEMENT_INPUT_QUICK_SEARCH);
 		Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
 		info("----Confirm search result page displayed----");
 		Utils.pause(3000);

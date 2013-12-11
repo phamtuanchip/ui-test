@@ -123,7 +123,7 @@ public class Calendar_Settings extends CalendarBase{
 		String newfeed = "newtest";
 	
 		info("--Add event--");
-		evt.addQuickEvent(eventName,eventName,getDate(1,"MM/dd/yyyy"),getDate(1,"MM/dd/yyyy"),true);
+		evt.addQuickEvent(eventName,eventName,null,null,true);
 		
 		info("--Add new feeds --");
 		addFeeds(namefeed, userGroup,2);

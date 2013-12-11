@@ -51,8 +51,8 @@ public class ManageDrive extends EcmsBase{
 
 	//Add a Driver form 
 	public final By ELEMENT_ADD_DRIVE_POPUP = By.id("AddDriveManagerPopup");
-	public final By ELEMENT_APPLY_VIEW_TAB = By.xpath("//*[contains(text(),'Apply Views')]");
-	public final By ELEMENT_DRIVE_TAB = By.xpath("//*[contains(text(),'Drive')]");
+	public final By ELEMENT_APPLY_VIEW_TAB = By.xpath("//*[@data-toggle='tab' and contains(text(),'Apply Views')]");
+	public final By ELEMENT_DRIVE_TAB = By.xpath("//*[@data-toggle='tab' and contains(text(),'Drive')]");
 	public final By ELEMENT_WORKSPACE = By.name("workspace");
 	public final By ELEMENT_ADD_PATH = By.xpath("//*[@title='Add Path']");
 	public final By ELEMENT_ADD_PATH_AUX = By.xpath("//*[@data-original-title='Add Path']");

@@ -49,7 +49,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test01_addNewEventinPersonalCal() {
-		String EVENT_01 = "EVENT_01";
+		String EVENT_01 = "EVENT68651";
 
 		info("Go to Intranet Calendar");
 		goToCalendarPage();
@@ -70,7 +70,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test02_addNewEventinSharedCal() {
-		String EVENT_02 = "EVENT_02";
+		String EVENT_02 = "EVENT68656";
 		String CAL_02 = "CAL_02";
 		String EVENT_CATEGORY = "All";
 		String EVENT_SHARED_CALENDAR = CAL_02;
@@ -108,7 +108,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test03_addNewEventinGroupCal() {
-		String EVENT_03 = "EVENT_03";
+		String EVENT_03 = "EVENT68657";
 		String CAL_03 = "CAL_03"; 
 		String EVENT_CATEGORY = "All";
 		String USER_GROUP = "root";
@@ -146,8 +146,8 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test04_editEventinPersonalCal() {
-		String EVENT04 = "EVENT_04";
-		String TITLE = "EVENT_04_edited";
+		String EVENT04 = "EVENT69264";
+		String TITLE = "EVENT69264edited";
 		String DESCRIPTION = "EVENT_04_description_edited";
 
 		info("Go to Intranet Calendar");
@@ -170,7 +170,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test05_deleteEventinPersonalCal() {
-		String EVENT05 = "EVENT_05";
+		String EVENT05 = "EVENT69265";
 
 		info("Go to Intranet Calendar");
 		goToCalendarPage();
@@ -190,7 +190,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test06_DragDropEvent() {
-		String EVENT06 = "EVENT_06";
+		String EVENT06 = "EVENT69287";
 
 		info("Go to Intranet Calendar");
 		goToCalendarPage();
@@ -203,7 +203,7 @@ public class Calendar_Event extends CalendarBase {
 		dragAndDropToObject(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", EVENT06)),ELEMENT_TARGET_DATE);
 
 		info("Restore data");
-		deleteEventTask(EVENT06, selectDayOption.ONEDAY);
+		deleteEventTask(EVENT06);
 	}
 
 
@@ -213,7 +213,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test07_editEventinGroupCal() {
-		String EVENT07 = "EVENT_07";
+		String EVENT07 = "EVENT69288";
 		String CAL_07 = "CAL_07";
 		String CAL_GROUP = "/platform/web-contributors";
 		String TITLE = "EVENT_07_edited";
@@ -256,7 +256,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test08_deleteEventinGroupCal() {
-		String EVENT08 = "EVENT_08";
+		String EVENT08 = "EVENT69289";
 		String CAL_08 = "CAL_08";
 		String CAL_GROUP = "/platform/web-contributors";
 		String EVENT_CATEGORY = "All";
@@ -294,7 +294,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test09_editEventinSharedCal() {
-		String EVENT09 = "EVENT_09";
+		String EVENT09 = "EVENT69292";
 		String CAL_09 = "CAL_09";
 		String TITLE = "EVENT_09_edited";
 		String DESCRIPTION = "EVENT_09_description_edited";
@@ -337,7 +337,7 @@ public class Calendar_Event extends CalendarBase {
 	 */
 	@Test
 	public void test10_deleteEventinSharedCal() {
-		String EVENT10 = "EVENT_10";
+		String EVENT10 = "EVENT69291";
 		String CAL_10 = "CAL_10";
 		String EVENT_CATEGORY = "All";
 		String[] USER_SHARED = {"root"};

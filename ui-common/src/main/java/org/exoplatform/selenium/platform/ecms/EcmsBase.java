@@ -440,7 +440,7 @@ public class EcmsBase extends ManageAccount {
 				}
 			}
 		}	
-		Utils.pause(3000);
+		Utils.pause(5000);
 	}
 
 	//function enable edit mode

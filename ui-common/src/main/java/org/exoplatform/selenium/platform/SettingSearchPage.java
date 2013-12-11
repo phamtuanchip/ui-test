@@ -99,11 +99,11 @@ public class SettingSearchPage extends PlatformBase {
 	public final String ELEMENT_RESULT_FILE_ICON = "//div[@id='resultPage']//a[text()='${item}']/*[contains(text(),'${keySearch}')]/../../../..//*[@class='avatar pull-left']";
 
 	//Forum page result
-	public final By ELEMENT_RESULT_FORUM_ICON = By.xpath("//*[@class='uiIconApp64x64Forum']");
+	public final By ELEMENT_RESULT_FORUM_ICON = By.xpath("//*[@class='uiIconApp64x64Forum' or @class='uiIconAppForumPortlet']");
 	public final By ELEMENT_RESULT_FORUM_VOTE = By.xpath("//*[@class='avgRatingImages clearfix']");
 
 	//Answer page result
-	public final By ELEMENT_RESULT_ANSWER_ICON = By.xpath("//*[@class='uiIconApp64x64Answers']");
+	public final By ELEMENT_RESULT_ANSWER_ICON = By.xpath("//*[@class='uiIconApp64x64Answers' or @class='uiIconAppAnswersPortlet']");
 
 	public SettingSearchPage(WebDriver dr){
 		driver = dr;

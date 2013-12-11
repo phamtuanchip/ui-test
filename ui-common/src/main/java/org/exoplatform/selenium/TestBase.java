@@ -54,8 +54,8 @@ public class TestBase {
 	//public final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
 	//public final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
 
-	public final String DEFAULT_BASEURL = "http://gmail.netstg.exoplatform.org/portal";
-	
+//	public final String DEFAULT_BASEURL = "http://gmail.fqa.exocloud.vn/portal";
+	public final String DEFAULT_BASEURL = "http://yopmail.wks-acc.exoplatform.org/portal";
 	//"http://yopmail.netstg.exoplatform.org/portal";
 	//"http://hushmail.wks-acc.exoplatform.org/portal";
 	//"http://gmail.wks-acc.exoplatform.org/portal";
@@ -492,7 +492,8 @@ public class TestBase {
 		int waitTime = wait.length > 0 ? wait[0] : DEFAULT_TIMEOUT;
 		//info("--Verify message: " + message);
 		Utils.pause(500);
-		waitForTextPresent(message, waitTime);
+//		waitForTextPresent(message, waitTime);
+		waitForAndGetElement("//*[contains(text(),'"+message+"')]",waitTime);
 	}
 
 	public void type(Object locator, String value, boolean validate, Object...opParams) {	

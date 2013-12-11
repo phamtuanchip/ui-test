@@ -49,17 +49,18 @@ public class Gatein_GlobalSetting extends PlatformBase {
 	 */
 	@Test
 	public void test01_ChangeUserProfile(){
-		String username = "userprofile1";
+		String username = getRandomString();
 		String password = "123456";
-		String firstName = "User";
-		String lastName = "Profile";
-		String displayName = "New User";
-		String email = "userprofile1@gmail.com";
+		String firstName = username + " first";
+		String lastName = username + " last";
+		String displayName = username + " display";
+		String email = username +"@gmail.com";
 		
-		String newFirstName = "UserUpdate";
-		String newLastName = "ProfileUpdate";
-		String newDisplayName = "New User Update";
-		String newEmail = "newmail@gmail.com";
+		String newUser = getRandomString();
+		String newFirstName = newUser + "Update";
+		String newLastName = newUser + "Update";
+		String newDisplayName = newUser + "Update";
+		String newEmail = newUser+ "@gmail.com";
 		
 		navTool.goToNewStaff();
 		magAc.addNewUserAccount(username, password, password, firstName, lastName, displayName, email, null, null, true);

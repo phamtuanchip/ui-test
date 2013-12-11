@@ -9,7 +9,8 @@
 		</groups>
 		<packages>
 			<package name="org.exoplatform.selenium.platform.calendar.sniff.*" />
-		</packages>
+		</packages> 
+		
 	</test>
 	<listeners>
 		<listener class-name="org.exoplatform.selenium.TestReportListener" />

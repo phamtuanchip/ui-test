@@ -358,7 +358,7 @@ public class NavigationToolbar extends PlatformBase {
 		info("Go to Intranet/Documents");
 		Utils.pause(500);
 		click(ELEMENT_PERSONAL_DOCUMENTS);
-		waitForAndGetElement(By.id("UIFileViewCheckBox"), 3000, 1, 2);
+		waitForAndGetElement(By.id("address"), 3000, 1, 2);
 		//waitForTextPresent("Personal Documents");
 	}
 

@@ -176,7 +176,7 @@ public class SpaceNavigation extends SocialBase{
 		info("-- Save add node for portal --");
 		Utils.pause(1000);
 		click(SAVE_PAGE_BUTTON);
-		Utils.pause(1000);
+		waitForElementNotPresent(SAVE_PAGE_BUTTON);
 		if(nodeLabel!="")
 			waitForAndGetElement("//a[contains(@title,'"+nodeLabel+"')]");
 		else

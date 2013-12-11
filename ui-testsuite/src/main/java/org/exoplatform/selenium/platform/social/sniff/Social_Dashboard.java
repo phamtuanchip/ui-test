@@ -6,6 +6,7 @@ import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.DashBoard;
 import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.ManageAccount.userType;
 import org.exoplatform.selenium.platform.ManageApplications;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.openqa.selenium.By;
@@ -91,10 +92,12 @@ public class Social_Dashboard extends DashBoard {
 
 		/*Step 1: Share link in RSS fetcher*/ 
 		//Import all applications (gadget)
+		magAcc.userSignIn(userType.ROOT);
 		navToolBar.goToApplicationRegistry();
 		app.importApplication();
 
 		//- Access dashboard
+		magAcc.userSignIn(userType.ADMIN);
 		navToolBar.goToDashboard();
 
 		//- Drag/drop Social Rss Reader

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.GroupNavigation;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationManagement;
@@ -109,7 +110,8 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 		addNodeForGroup(groupAdminDisplayName, nodePortalAdministration, true, 
 				nodeName, true, languages, nodeName, 
 				pageSelectorName, pageSelectorName, true, false);
-		button.save();	
+		click(button.ELEMENT_SAVE_BUTTON);
+		Utils.pause(3000);
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		waitForAndGetElement(ELEMENT_NAVIGATION_NODE.replace("${nodeName}", nodeName));
 		
@@ -119,7 +121,8 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 		addNodeForGroup(groupAdminDisplayName, nodeName, false, 
 				subNodeName, true, languages, subNodeName, 
 				pageSelectorName1, pageSelectorName1, true, false);
-		button.save();	
+		click(button.ELEMENT_SAVE_BUTTON);
+		Utils.pause(3000);	
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 		click(ELEMENT_GROUP_NAVIGATION_ICON_LEFT_PANEL.replace("${groupName}", nodeName));
 		waitForAndGetElement(ELEMENT_NAVIGATION_NODE.replace("${nodeName}", subNodeName));

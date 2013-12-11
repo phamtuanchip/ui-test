@@ -300,6 +300,7 @@ public class PLF_UnifiedSearch extends Template {
 		info("Add new webcontent");
 		naviToolbar.goToSiteExplorer();
 		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
+		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		conTemp.createNewWebContent(contentName, contentName, "", "", "", "");
 
@@ -470,13 +471,13 @@ public class PLF_UnifiedSearch extends Template {
 		naviToolbar.goToSiteExplorer();
 		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
 		actBar.goToAddNewContent();
-		conTemp.createNewProduct(contentName1, contentName1);
+		conTemp.createNewWebContent(contentName1, contentName1, "", contentName1, "", "");
 		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		actBar.goToAddNewContent();
-		conTemp.createNewProduct(contentName2, contentName2);
+		conTemp.createNewWebContent(contentName2, contentName2, "", contentName2, "", "");
 		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 		actBar.goToAddNewContent();
-		conTemp.createNewProduct(contentName3, contentName3);
+		conTemp.createNewWebContent(contentName3, contentName3, "", contentName3, "", "");
 
 		/*Step 1: Search documents*/
 		//- Login and connect to intranet home page
