@@ -295,8 +295,10 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 	 * Test case ID: 74718
 	 * Step 1: Check Left navigation
 	 * Step 2: Check Left navigation on other portal
+	 * PENDING: in cloud, don't have acme application
 	 */
-	@Test
+
+	//@Test (groups="pending")
 	public void test06_DisplayLeftNavigationForSocialIntranet(){
 		/*Step 1: Check Left navigation*/ 
 		//- Login as a user
@@ -313,7 +315,7 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 		
 		/*Step 2: Check Left navigation on other portal*/
 		//- Connect to other sites. Go to via url: host:port/portal/acme/.
-		String url = "http://localhost:8080/portal/acme/";
+		String url = DEFAULT_BASEURL+"/acme/";
 		driver.get(url);
 		
 		//- The Left Navigation isn't displayed

@@ -58,12 +58,13 @@ public class PLF_HomePageGadget_SuggestionsGadget extends Activity{
 	 * 
 	 * CaseID 70729
 	 * Cancel a people connection
-	 * 
+	 * ERROR: Don't display user in suggestion gadget
+	 * Note: This issue is not created on jira
 	 */
-	@Test
+	@Test (groups="error")
 	public void test01_GettingStartedGadget() { 
 		/*Declare variables*/
-		String user1="FQA VN";
+		String user1="Support Bot";
 		String user2="Jack Miller";
 		String user3= "James Davis";
 		String user4="Mary Williams";

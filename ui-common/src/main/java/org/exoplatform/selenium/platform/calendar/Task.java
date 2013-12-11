@@ -80,7 +80,9 @@ public class Task extends CalendarBase{
 	 */
 	public void goToAddTask(){
 		info("Go to Add Task page"); 
+		Utils.pause(500);
 		click(ELEMENT_BUTTON_TASK);
+		Utils.pause(500);
 	}
 
 	/**

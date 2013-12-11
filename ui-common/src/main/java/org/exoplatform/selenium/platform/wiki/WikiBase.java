@@ -642,6 +642,7 @@ public class WikiBase extends PlatformBase{
 	public void quickSearch(String keyword){
 		info("--Using quick search option ...--");
 		type(ELEMENT_QUICK_SEARCH, keyword, true);
+		Utils.pause(1000);
 		((JavascriptExecutor) driver).executeScript("javascript:eXo.wiki.UIWikiSearchBox.doAdvanceSearch();");
 		//waitForTextPresent("Search Results");
 		info("Return " + getText(ELEMENT_SEARCH_RESULT) + " results");

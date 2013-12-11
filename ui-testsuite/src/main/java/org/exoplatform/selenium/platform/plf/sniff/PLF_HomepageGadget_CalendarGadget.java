@@ -247,9 +247,9 @@ public class PLF_HomepageGadget_CalendarGadget extends CalendarBase{
 		click(By.xpath(Delete_Calendar_2_Path));
 
 		info("Fill in search box and check");
-		type(ELEMENT_SEARCH_IN_CALENDAR_GADGET_SETTING,Calendar_Information_1, false);
+		type(ELEMENT_SEARCH_IN_CALENDAR_GADGET_SETTING,Calendar_Information_1, true);
 		waitForAndGetElement(By.xpath(Calendar_1_Link_In_Setting));
-		waitForElementNotPresent(By.xpath(Calendar_2_Link_In_Setting));
+		waitForElementNotPresent(By.xpath(Calendar_2_Link_In_Setting),60000);
 
 		goToCalendarPage();
 		deleteCalendar(Calendar_Information_1, true);

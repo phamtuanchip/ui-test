@@ -142,7 +142,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	/** CaseId: 74821 -> Check intranet homepage after adding Product content
 	 * ERROR: Refer ECMS-5342: Content summary in content activity display wrong
 	 */
-	@Test (groups="error")
+	//@Test (groups="error")
 	public void test03_CheckIntranetHomePage_AfterAddingProduct(){
 		String name = "Public_activity_product_03";
 		String sum = "line1/line2/line3/line4/line5";

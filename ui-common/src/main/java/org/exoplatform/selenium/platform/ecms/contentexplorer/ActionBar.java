@@ -259,7 +259,7 @@ public class ActionBar extends EcmsBase{
 			Utils.pause(WAIT_INTERVAL);
 			info("retry...[" + repeat + "]");
 		}
-		driver.navigate().refresh();
+		//driver.navigate().refresh();
 		Utils.pause(3000);
 	}
 
@@ -512,7 +512,7 @@ public class ActionBar extends EcmsBase{
 		//button = new Button(driver);
 		//button.refresh();
 		click(locator);
-		Utils.pause(1000);
+		Utils.pause(3000);
 		waitForElementNotPresent(ELEMENT_GENERAL_DRIVES);
 	}
 

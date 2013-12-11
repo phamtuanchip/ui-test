@@ -36,6 +36,9 @@ public class Calendar_PublishActivities_Task extends CalendarBase{
 		homeAct = new HomePageActivity(driver);
 		tsk = new Task(driver);
 		button = new Button(driver);
+		goToCalendarPage();
+		goToCalendarSettings();
+		settingCalendar("Week", "mm/dd/yyyy", null, "(GMT +07:00) Asia/Ho_Chi_Minh", "Monday", null, null);
 	}
 
 	@AfterMethod

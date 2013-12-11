@@ -31,6 +31,8 @@ public class Calendar_Calendar extends CalendarBase{
 		tsk = new Task(driver);
 		acc.signIn(DATA_USER_JOHN, DATA_PASS);
 		goToCalendarPage();
+		goToCalendarSettings();
+		settingCalendar("Week", "mm/dd/yyyy", null, null, "Monday", null, null);
 	}
 
 	@AfterMethod

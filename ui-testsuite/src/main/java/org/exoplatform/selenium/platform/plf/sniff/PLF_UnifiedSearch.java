@@ -210,6 +210,7 @@ public class PLF_UnifiedSearch extends Template {
 		qsPage.editSearchSettingEditMode("10",true,true,true,true,true,true);	
 
 		//Restore value
+		qsPage.quickSearch(searchText);
 		qsPage.goToEditSearchPortlet();
 		qsPage.editSearchSettingEditMode("10",false,false,false,true,true,true);
 	}

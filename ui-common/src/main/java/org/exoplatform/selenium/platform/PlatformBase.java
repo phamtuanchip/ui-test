@@ -659,7 +659,7 @@ public class PlatformBase extends TestBase {
 	//Search porlet
 	public final By ELEMENT_SEARCH_APPLICATION = By.xpath("//a[@title='Search']");
 	//public final String ELEMENT_GADGET_SEARCH_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList17']//div[contains(text(),'${gadget}')]";
-	public final String ELEMENT_GADGET_SEARCH_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList18']//div[contains(text(),'${gadget}')]";
+	public final String ELEMENT_GADGET_SEARCH_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList18' or @id='UIApplicationList19' or @id='UIApplicationList17']//div[contains(text(),'${gadget}')]";
 
 	//Administration Menu for admin acc
 

@@ -216,6 +216,8 @@ public class CalendarBase extends PlatformBase {
 		click(ELEMENT_CALENDAR_LINK);
 		waitForAndGetElement(ELEMENT_CALENDAR_PANEL);
 		ID_CALENDAR_PAGE = waitForAndGetElement(ELEMENT_GET_ID_PAGE).getAttribute("id");
+		Utils.pause(3000);
+		driver.navigate().refresh();
 	}
 
 	/** Get Property of a calendar
@@ -585,7 +587,7 @@ public class CalendarBase extends PlatformBase {
 		click(ELEMENT_EVENT_TASK_DELETE_MENU);
 		alert.waitForConfirmation(MSG_EVENT_TASK_DELETE);
 		driver.navigate().refresh();
-		Utils.pause(1000);
+		Utils.pause(3000);
 		if (optDay.equals(selectDayOption.ALLDAY)){
 			waitForElementNotPresent(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}", event));
 			waitForElementNotPresent(ELEMENT_EVENT_TASK_WORKING_PANE.replace("${event}", event));
@@ -879,7 +881,12 @@ public class CalendarBase extends PlatformBase {
 		}
 		if (opt.length > 0 && opt[0] != null){
 			select(ELEMENT_TOOLBAR_SELECT_CALENDAR,opt[0]);
-			button.save();
+			if(waitForAndGetElement(button.ELEMENT_NEXT_BUTTON, 10000, 0)!=null)
+				button.next();
+			else{
+				info("Error: need to click save button insteading of clicking next button");
+				button.save();
+			}
 			if(verify){
 				if(isEvent){
 					waitForAndGetElement(ELEMENT_CREATE_EVENT_MESSAGE.replace("${userName}", opt[0]));
@@ -894,7 +901,12 @@ public class CalendarBase extends PlatformBase {
 			}
 		}
 		else{
-			button.save();
+			if(waitForAndGetElement(button.ELEMENT_NEXT_BUTTON, 10000, 0)!=null)
+				button.next();
+			else{
+				info("Error: need to click save button insteading of clicking next button");
+				button.save();
+			}
 			if(verify){
 				if(isEvent){
 					waitForAndGetElement(ELEMENT_CREATE_EVENT_MESSAGE.replace("${userName}", waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK).getText()));
@@ -944,10 +956,17 @@ public class CalendarBase extends PlatformBase {
 			select(ELEMENT_TIME_FORMAT, timeFormat);
 		if((zone != null)&(zone != ""))
 			select(ELEMENT_TIME_ZONE, zone);
-		if((weekStart != null) &(weekStart != ""))
+		if((weekStart != null) &(weekStart != "")){
 			select(ELEMENT_WEEK_START_ON, weekStart);
-		showWorkingTimes(workingTimeFrom, workingTimeTo);
-
+		}
+		WebElement element = waitForAndGetElement(ELEMENT_SHOW_WORKING_TIME_CHECKBOX, 5000, 1, 2);
+		if (element.isSelected()){
+			check(ELEMENT_SHOW_WORKING_TIME_CHECKBOX, 2);
+		}	
+		if ((workingTimeFrom != null) & (workingTimeFrom != "")){
+			showWorkingTimes(workingTimeFrom, workingTimeTo);
+		}
+		
 		switch (invitation){
 		case 1: check(ELEMENT_SEND_EVENT_INVITATION.replace("${option}", "Always"), 2);
 		break;

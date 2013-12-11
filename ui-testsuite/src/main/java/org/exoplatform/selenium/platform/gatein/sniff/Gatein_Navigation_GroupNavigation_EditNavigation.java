@@ -146,6 +146,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 		Utils.pause(1000);
 		button.save();
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		Utils.pause(1000);
 		click(ELEMENT_GROUP_NAVIGATION_ICON_LEFT_PANEL.replace("${groupName}", "Portal Admin"));
 		click(ELEMENT_NODE_NAVIGATION_LEFT_PANEL.replace("${groupName}", nodeNameEdit));
 		waitForTextPresent("Basic information");
@@ -372,7 +373,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 	 * Delete container when edit page properties of node
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test06_AddEditMoveAndDeleteContainerWhenEditPagePropertiesOfNode(){
 		String groupAdminDisplayName = "Administration";
 		String nodeLink = ELEMENT_NODE_LINK.replace("${nodeLabel}", "Add User");
@@ -444,7 +445,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 	 * Delete application when edit page properties of node
 	 * 
 	 */
-	@Test
+	//@Test
 	public void test07_AddEditMoveAndDeleteApplicationWhenEditPagePropertiesOfNode(){
 		String nodeSitesManagement = "Sites Management";
 		String groupAdminDisplayName = "Administration";	

@@ -65,7 +65,7 @@ public class Wiki_Attachment extends BasicAction {
 		if ( ExpectedConditions.alertIsPresent() != null ){
 			magAlert.acceptAlert();
 		}
-		waitForAndGetElement(ELEMENT_ATTACHMENT_NUMBER.replace("${No}", "2"));
+		//waitForAndGetElement(ELEMENT_ATTACHMENT_NUMBER.replace("${No}", "2"));
 
 		info("Check download attachment successfully");
 		click(ELEMENT_ATTACHMENT_ICON);

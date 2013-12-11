@@ -72,7 +72,8 @@ public class ManageAccount extends PlatformBase {
 			Utils.pause(5000);
 		}
 		if (waitForAndGetElement(ELEMENT_HOME_PAGE, 5000, 0) == null){
-			driver.navigate().refresh();
+			//driver.navigate().refresh();
+			driver.get(DEFAULT_BASEURL);
 			Utils.pause(5000);
 		}
 	}

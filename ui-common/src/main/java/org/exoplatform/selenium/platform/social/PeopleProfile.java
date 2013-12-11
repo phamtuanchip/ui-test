@@ -90,7 +90,9 @@ public class PeopleProfile extends PlatformBase {
 		String firstName = (String) (params.length > 0 ? params[0]: "");
 		String lastName = (String) (params.length > 1 ? params[1]: "");
 		String email = (String) (params.length > 2 ? params[2]: "");
+		Utils.pause(1000);
 		click(ELEMENT_EDIT_INFORMATION_BUTTON);
+		Utils.pause(1000);
 		if(firstName!=""){
 			type(ELEMENT_INPUT_FIRSTNAME, firstName, true);
 		}	

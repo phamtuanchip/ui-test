@@ -13,7 +13,7 @@ import org.openqa.selenium.By;
 public class SocialBase extends PlatformBase {
 
 	//SpaceManagement spaceMag = new SpaceManagement();
-
+	public final By ELEMENT_MY_SPACES_LINK_AT_HOMEPAGE = By.xpath("//*[@id='UISpaceNavigationPortlet']//*[text()='My Spaces']");
 	public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/div/a/i[contains(@class, 'uiIconPLFMan')]");
 	//public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/..//div/a[contains(text(),'Join a space')]");
 
@@ -125,7 +125,12 @@ public class SocialBase extends PlatformBase {
 		//Utils.pause(1000);
 		//driver.navigate().refresh();
 		Utils.pause(2000);
-		click(ELEMENT_JOIN_SPACE_LINK);
+		if(waitForAndGetElement(ELEMENT_JOIN_SPACE_LINK,DEFAULT_TIMEOUT,0)!=null)
+			click(ELEMENT_JOIN_SPACE_LINK);
+		else{
+			click(ELEMENT_MY_SPACES_LINK_AT_HOMEPAGE);
+			click(ELEMENT_ALL_SPACE_LINK);
+		}
 		waitForAndGetElement("//*[contains(text(),'Add New Space')]");
 	}
 
