@@ -1,0 +1,152 @@
+=================== Kill Java/Platform processes =====================
+#!/bin/sh
+PLF_NAME=platform-4.0.x-SNAPSHOT
+SRV_NAME=selenium-server-standalone
+pid_selenium=`ps aux | grep -ie $SRV_NAME | grep -v grep | awk '{print $2}'`
+echo killing $pid_selenium
+kill -9 $pid_selenium
+echo "Remove Selenium server standalone...Done"
+for i in `ps aux | grep -ie $PLF_NAME | grep -v grep | awk '{print $2}'`  
+do
+echo killing $i
+kill -9 $i
+done
+echo "Remove PLF process...DONE"
+
+
+=================== Create a MySQL Database ==========================
+export JAVA_HOME=/home/fqa/java/
+DB_PASSWORD=exo 
+DB_NAME=plf
+
+cd $JAVA_HOME
+pwd
+echo "Create A Database"
+#mysql -uroot -pexo 
+./mysql.sh 
+echo "Creating A Database Successful"
+
+
+==================== Download a binary =================================
+export PLF_HOME=/home/selenium/platform-server/
+export PLF_VERSION=plf-enterprise-tomcat-standalone-4.0.x-20131221.092456-422.zip
+
+rm -rf /home/selenium/platform-server/platform-4.0.x-SNAPSHOT
+sleep 15
+echo "Removing old package...done"
+
+cd $PLF_HOME
+if [ -f "$PLF_VERSION" ]
+then
+   echo "Package already exists"
+else
+   echo "-------download latest build -----------"
+   wget --user fqavn --password 8jdhksKDK42 http://repository.exoplatform.org/private/com/exoplatform/platform/distributions/plf-enterprise-tomcat-standalone/4.0.x-SNAPSHOT/$PLF_VERSION
+fi
+
+unzip $PLF_VERSION
+
+/home/selenium/platform-server/platform-4.0.x-SNAPSHOT/extension.sh --install all
+echo "Installing Extension...done"
+
+==================== Email Configuration ===============================
+export JAVA_HOME=/home/fqa/java/
+cd $JAVA_HOME
+pwd
+echo "configure sendmail mail server  "
+./email.sh 
+echo "Configuration successful..."
+
+
+==================== Add MySQL Driver to Platform ======================
+export PLF_HOME=/home/selenium/platform-server
+export JDBC_DRIVER=mysql-connector-java-5.1.26-bin.jar
+ 
+echo "Install JDBC driver into /lib"
+cd $PLF_HOME/platform-4.0.x-SNAPSHOT/lib
+
+if [ -f "$JDBC_DRIVER" ]
+then
+   echo "JDBC driver already exists"
+else
+  for file in $PLF_HOME 
+  do
+     cp $PLF_HOME/$JDBC_DRIVER $PLF_HOME/platform-4.0.x-SNAPSHOT/lib/
+  done  
+fi
+
+echo "Install JDBC driver ... done"
+
+
+=================== Server Configuration =================================
+export PLF_HOME=/home/selenium/platform-server
+export FILE_SERVER=server.xml
+export FILE_SERVER_MYSQL=tomcat_server_mysql.xml
+
+cd $PLF_HOME/platform-4.0.x-SNAPSHOT/conf
+cp $PLF_HOME/$FILE_SERVER_MYSQL $PLF_HOME/platform-4.0.x-SNAPSHOT/conf
+
+if [ -f "$FILE_SERVER" ]
+then
+   echo "FILE_SERVER already exists"
+   mv -v $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/$FILE_SERVER $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/server-old.xml
+   #mv -v $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/$FILE_SERVER_MYSQL $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/server.xml
+   mv -v $FILE_SERVER_MYSQL $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/server.xml
+else
+   #mv -v $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/$FILE_SERVER_MYSQL $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/server.xml
+   mv -v $FILE_SERVER_MYSQL $PLF_HOME/platform-4.0.x-SNAPSHOT/conf/server.xml
+fi
+
+
+========================= Start server =====================================
+#!/bin/bash -eu  
+export BUILD_ID="DontKillMe"
+
+do_start(){
+   export DEPLOYMENT_DIR="/home/selenium/platform-server/platform-4.0.x-SNAPSHOT"
+   export DEPLOYMENT_SERVER_SCRIPT="bin/catalina.sh"
+   export DEPLOYMENT_EXT_HOST=localhost
+   export DEPLOYMENT_SERVER_LOGS_FILE=platform.log
+   echo "[INFO] Starting server..."
+   chmod 755 ${DEPLOYMENT_DIR}/bin/*.sh
+   mkdir -p ${DEPLOYMENT_DIR}/logs
+   export CATALINA_HOME=${DEPLOYMENT_DIR}
+
+  cd `dirname ${DEPLOYMENT_DIR}/${DEPLOYMENT_SERVER_SCRIPT}`
+
+  # Startup the server
+  ${DEPLOYMENT_DIR}/${DEPLOYMENT_SERVER_SCRIPT} start
+
+  # Wait for logs availability
+  while [ true ];
+  do
+    if [ -e "${DEPLOYMENT_DIR}/logs/${DEPLOYMENT_SERVER_LOGS_FILE}" ]; then
+      break
+    fi
+  done
+  # Display logs
+  tail -f ${DEPLOYMENT_DIR}/logs/${DEPLOYMENT_SERVER_LOGS_FILE} &
+  local _tailPID=$!
+  # Check for the end of startup
+  set +e
+  while [ true ];
+  do
+    if grep -q "Server startup in" ${DEPLOYMENT_DIR}/logs/${DEPLOYMENT_SERVER_LOGS_FILE}; then
+      kill ${_tailPID}
+      wait ${_tailPID} 2> /dev/null
+      break
+    fi
+  done
+  set -e
+  cd -
+  echo "[INFO] Server started"
+}
+do_start
+
+########
+########
+
+
+
+
+

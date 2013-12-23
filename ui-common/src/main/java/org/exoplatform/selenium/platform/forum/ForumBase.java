@@ -124,6 +124,7 @@ public class ForumBase extends PlatformBase {
 
 	//----------------Set Censor keywords form----------------------------------
 	public final By ELEMENT_CENSOR_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Censor Keyword']");
+	public final By ELEMENT_CENSOR_POPUP_PLF4_1 = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Censor Keywords']");
 	public final By ELEMENT_CENSORED_KEYWORDS =  By.id("censorKeyword");
 	
 	//----------------Set Ban IP form--------------------------------------------
@@ -226,7 +227,10 @@ public class ForumBase extends PlatformBase {
 	public final By ELEMENT_SETTING_EMAIL_UPDATE = By.xpath("//button[text()='Update']");
 	public final String ELEMENT_DELETE_WATCH = "//label/a[contains(text(),'${item}')]/following::div[@class='DeleteIcon']";
 	public final String ELEMENT_FEED_URL = "//a[@title='{$item}']/ancestor::tr/following::input[contains(@id,'RSS')]";
-
+	public final By ELEMENT_RSS_PAGE = By.id("feedSubscribeLine");
+	public final By ELEMENT_FEED_TITLE_TEXT = By.id("feedTitleText");
+	public final By ELEMENT_FEED_SUBTITLE_TEXT = By.id("feedSubtitleText");
+	public final By ELEMENT_FEED_CONTENT = By.id("feedContent");
 	//---------------------Notifications------------------
 	public final By ELEMENT_NOTIFICATION_LINK = By.xpath("//*[@id='Administrations']//*[@class='uiIconNotification']"); 
 	public final By ELEMENT_NOTIFY_FRAME=By.xpath("//*[@id='xEditingArea']/iframe");
@@ -572,7 +576,10 @@ public class ForumBase extends PlatformBase {
 		click(ELEMENT_ADMINISTRATION);
 		waitForAndGetElement(ELEMENT_CENSOR_KEYWORDS);
 		click(ELEMENT_CENSOR_KEYWORDS);
-		waitForAndGetElement(ELEMENT_CENSOR_POPUP);
+		if(this.plfVersion.equalsIgnoreCase("4.0"))
+			waitForAndGetElement(ELEMENT_CENSOR_POPUP);
+		else if(this.plfVersion.equalsIgnoreCase("4.1"))
+			waitForAndGetElement(ELEMENT_CENSOR_POPUP_PLF4_1);
 		if (key != null){
 			type(ELEMENT_CENSORED_KEYWORDS, key, true);
 		}

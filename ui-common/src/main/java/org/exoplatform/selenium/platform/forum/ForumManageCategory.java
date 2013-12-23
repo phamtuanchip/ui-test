@@ -25,13 +25,14 @@ public class ForumManageCategory extends ForumBase {
 	ForumPermission frumPer;
 	ManageAccount account;
 
-	public ForumManageCategory(WebDriver dr){
+	public ForumManageCategory(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
-		frumPer = new ForumPermission(driver);
-		button = new Button(driver);
-		alert = new ManageAlert(driver);
-		per = new PlatformPermission(driver);
-		account = new ManageAccount(driver);
+		frumPer = new ForumPermission(driver,this.plfVersion);
+		button = new Button(driver,this.plfVersion);
+		alert = new ManageAlert(driver,this.plfVersion);
+		per = new PlatformPermission(driver,this.plfVersion);
+		account = new ManageAccount(driver,this.plfVersion);
 	}
 
 	//------------category home screen----------------------------------------------------------------------

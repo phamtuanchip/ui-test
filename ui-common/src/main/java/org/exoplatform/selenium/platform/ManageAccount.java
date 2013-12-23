@@ -33,7 +33,8 @@ public class ManageAccount extends PlatformBase {
 	public final String ELEMENT_REMEMBER_MY_LOGIN_YES = "//label[@class='iPhoneCheckLabelOn']//span[text()='Yes']";
 
 
-	public ManageAccount(WebDriver dr){
+	public ManageAccount(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
 	}
 

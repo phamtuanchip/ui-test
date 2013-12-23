@@ -16,7 +16,8 @@ import org.openqa.selenium.WebDriver;
  */
 public class ForumPermission extends ForumBase {
 
-	public ForumPermission(WebDriver dr){
+	public ForumPermission(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
 		button = new Button(driver);
 		alert = new ManageAlert(driver);

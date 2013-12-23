@@ -25,16 +25,16 @@ public class ForumManageTopic extends ForumBase {
 	UserGroupManagement userGroup;
 	ForumManagePost mngPost;
 
-	public ForumManageTopic(WebDriver dr){
+	public ForumManageTopic(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
-
-		userGroup = new UserGroupManagement(driver);
-		per = new ForumPermission(driver);
-		magCat = new ForumManageCategory(driver);
-		magFor = new ForumManageForum(driver);
-		button = new Button(driver);
-		alert = new ManageAlert(driver);
-		navTool = new NavigationToolbar(driver);
+		userGroup = new UserGroupManagement(driver,this.plfVersion);
+		per = new ForumPermission(driver,this.plfVersion);
+		magCat = new ForumManageCategory(driver,this.plfVersion);
+		magFor = new ForumManageForum(driver,this.plfVersion);
+		button = new Button(driver,this.plfVersion);
+		alert = new ManageAlert(driver,this.plfVersion);
+		navTool = new NavigationToolbar(driver,this.plfVersion);
 	}
 
 	//----------------topic home screen---------------------------------------------------
@@ -193,11 +193,10 @@ public class ForumManageTopic extends ForumBase {
 		if (title != null){
 			type(ELEMENT_TOPIC_TITLE, title, true);
 		}
-
 		if (message != "" && message != null){
-			if(isElementPresent(ELEMENT_TOPIC_MESSAGE_CKEDITOR))
+			if(this.plfVersion.equalsIgnoreCase("4.1"))
 				inputDataToFrame(ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR, message, true,false);
-			else
+			else if(this.plfVersion.equalsIgnoreCase("4.0"))
 				inputDataToFrameInFrame(ELEMENT_TOPIC_MESSAGE_FRAME_1, ELEMENT_TOPIC_MESSAGE_FRAME_2, message,true,false);
 			switchToParentWindow();	
 		}

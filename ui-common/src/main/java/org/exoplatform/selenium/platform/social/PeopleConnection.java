@@ -17,7 +17,9 @@ import org.openqa.selenium.WebDriver;
  */
 public class PeopleConnection extends SocialBase {
 	PeopleSearch peoSearch;
-	public PeopleConnection(WebDriver dr){
+
+	public PeopleConnection(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
 		peoSearch = new PeopleSearch(driver);
 	}

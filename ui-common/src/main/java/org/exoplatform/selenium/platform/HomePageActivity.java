@@ -45,6 +45,7 @@ public class HomePageActivity extends PlatformBase{
 	public final String ELEMENT_GET_COMMENT_CONTENT = "//*[contains(text(),'${title}')]/../../../..//*[@class='commentItem commentItemLast']/..//p";
 	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT_1 = "//*[text()='${title}']/ancestor::div[@class='boxContainer']//*[@class='contentComment']";
 	public final String ELEMENT_COMMENTBOX="//*[text()='${title}']/../../../..//div[@class='exo-mentions']/div[contains(@id,'DisplayCommentTextarea')]";
+	public final String ELEMENT_COMMENTBOX_PLF4_1="//*[text()='${title}']/../../../../..//div[@class='exo-mentions']/div[contains(@id,'DisplayCommentTextarea')]";
 	public final String ELEMENT_ICON_COMMENT = "//*[contains(text(),'${title}')]/../../../..//i[@class='uiIconComment uiIconLightGray']";
 	public final String ELEMENT_COMMENT_BLOCK = "//a[contains(text(),'${title}')]/../../../..//div[contains(@class,'commentItem commentItemLast')]";
 	public final String ELEMENT_COMMENT_LAST = "//*[contains(text(),'${title}')]/../../../..//div[contains(@class,'commentItem commentItemLast')]//*[contains(text(), '${comment}')]";
@@ -163,7 +164,8 @@ public class HomePageActivity extends PlatformBase{
 	public final String MSG_TASK_COMMENT_UPDATE_STATUS = "Task has been completed.";
 
 
-	public HomePageActivity(WebDriver dr){
+	public HomePageActivity(WebDriver dr, String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
 		post = new ForumManagePost(driver);
 		button = new Button(driver);

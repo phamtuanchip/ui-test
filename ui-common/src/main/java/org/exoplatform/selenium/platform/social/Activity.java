@@ -39,6 +39,7 @@ public class Activity extends SocialBase {
 	//=====Element on space home page=======stash@{1}
 	// Go to My Spaces > Select a space
 	//Or Go to My Activity Stream
+	public final By ELEMENT_ACTIVITY_STREAM = By.id("UIUserActivitiesDisplay");
 	public final String ELEMENT_COMMENT_BOX_SPACE_ACTIVITY = "//div[@class='author']/a[contains(text(),'${activityText}')]//ancestor::div[contains(@id,'ContextBox')]/div[contains(@id,'CommentBlockBound')]//p[@class='contentComment']";
 	public final String ELEMENT_AVATAR_SPACE_ACTIVITY = "//div[@class='author']/a[contains(text(),'${activityText}')]//ancestor::div[contains(@id,'ContextBox')]//*[@class='avatarXMedium']";
 	public final String ELEMENT_DESCRIPTION_SPACE_ACTIVITY = "//div[@class='author']/a[contains(text(),'${activityText}')]//ancestor::div[contains(@id,'ContextBox')]//p[@class='spaceDescription' and contains(text(),'${description}')]"; 
@@ -88,6 +89,7 @@ public class Activity extends SocialBase {
 
 	//	public final String ELEMENT_LIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'LikeLink')]";
 	//	public final String ELEMENT_UNLIKE_ICON = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'UnLikeLink')]";
+	public final String ELEMENT_USER_MENTION_BY_OTHER_USER = "//div[@class='author']/a[contains(text(),'${author}')]/../../..//a[contains(text(),'${userName}')]";
 	public final String ELEMENT_ACTIVITY_NAME_CONSECUTIVE = "//*[contains(@id,'UIActivitiesContainer')]/div[1]//*[@class='description' and text()='${activityText1}']/../../../../../../div[2]//*[@class='description' and text()='${activityText2}']";
 	public final String ELEMENT_COMMENT_LINK_MENTION = "//*[@class='contentComment']/a[contains(text(),'${userName}')]";
 	public final String ELEMENT_USER_NAME_LINK_ACTIVITY = "//div[@class='description']/a[contains(text(),'${userName}')]";
@@ -115,7 +117,8 @@ public class Activity extends SocialBase {
 	 */
 	public void selectFileter(String filterOption){
 		info("-- Select filter activity --");
-		if(waitForAndGetElement(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption), DEFAULT_TIMEOUT, 0)==null){
+		//if(waitForAndGetElement(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption), DEFAULT_TIMEOUT, 0)==null){
+		if(isElementNotPresent(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption))){
 			click(ELEMENT_ACTIVITY_DROPDOWN,2);
 			click(ELEMENT_ACTIVITY_FILTER_OPTION.replace("${filterOption}", filterOption));
 			waitForAndGetElement(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption));
@@ -518,7 +521,12 @@ public class Activity extends SocialBase {
 			info("-- Adding a mention comment --");
 			//Add a new comment following an activity 
 			click(hpActivity.ELEMENT_ICON_COMMENT.replace("${title}", activityText));
-			type(hpActivity.ELEMENT_COMMENTBOX.replace("${title}", activityText), "@"+userName, false);
+			if(this.plfVersion.equalsIgnoreCase("4.0")){
+				type(hpActivity.ELEMENT_COMMENTBOX.replace("${title}", activityText), "@"+userName, false);
+			}
+			else if(this.plfVersion.equalsIgnoreCase("4.1")){
+				type(hpActivity.ELEMENT_COMMENTBOX_PLF4_1.replace("${title}", activityText), "@"+userName, false);
+			}
 			Utils.pause(1000);
 			click(hpActivity.ELEMENT_COMMENTBOX.replace("${title}", activityText));
 			Utils.pause(1000);

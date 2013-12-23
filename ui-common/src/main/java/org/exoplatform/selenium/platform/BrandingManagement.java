@@ -35,7 +35,8 @@ public class BrandingManagement extends PlatformBase {
 	public final String INCORRECT_LOGO_MSG = "The file must be in photo format png";
 
 	
-	public BrandingManagement(WebDriver dr) {
+	public BrandingManagement(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
 		button = new Button(driver);
 	}

@@ -20,7 +20,8 @@ public class PlatformPermission extends PlatformBase {
 	public Map<String, String> group ;
 	UserGroupManagement userGroup;
 
-	public PlatformPermission(WebDriver dr){
+	public PlatformPermission(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
 		userGroup = new UserGroupManagement(driver);
 		group = new HashMap<String, String>();

@@ -20,12 +20,13 @@ public class ForumManagePost extends ForumBase {
 	ForumPermission per;
 	ForumManageTopic magTopic;
 	
-	public ForumManagePost(WebDriver dr){
+	public ForumManagePost(WebDriver dr,String...plfVersion){
 		driver = dr;
-		per = new ForumPermission(driver);
-		button = new Button(driver);
-		alert = new ManageAlert(driver);
-		magTopic = new ForumManageTopic(driver);
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
+		per = new ForumPermission(driver,this.plfVersion);
+		button = new Button(driver,this.plfVersion);
+		alert = new ManageAlert(driver,this.plfVersion);
+		magTopic = new ForumManageTopic(driver,this.plfVersion);
 	}
 	
 	//--------------post home screen--------------------------------------------------------
@@ -59,6 +60,7 @@ public class ForumManagePost extends ForumBase {
 	//--------------post reply screen-----------------------------------------------------------
 	public By ELEMENT_POST_TITLE = By.id("PostTitle");
 	public By ELEMENT_POST_MESSAGE_FRAME_1 = By.id("MessageContent___Frame");
+	public By ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR = By.xpath("//iframe[@class='cke_wysiwyg_frame cke_reset']");
 	public By ELEMENT_POST_POPUP_NEW = By.xpath("//span[@class='PopupTitle popupTitle' and text()='New Post']");
 	public By ELEMENT_POST_ICONS_TAB = By.xpath("//a[contains(text(), 'Icons and Smileys')]");
 	public By ELEMENT_POST_PRIVATE_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Private Post']");
@@ -134,11 +136,22 @@ public class ForumManagePost extends ForumBase {
 	public void putDataPost(String title, String message, String groupName, String iconClass, String... file){
 		//magTopic = new ForumManageTopic(driver);
 		
+		
 		if (title != null) {
 			type(ELEMENT_POST_TITLE, title, true);
 		}
+		if (message != "" && message != null){
+			if(this.plfVersion.equalsIgnoreCase("4.1"))
+				inputDataToFrame(ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR, message, true,false);
+			else if(this.plfVersion.equalsIgnoreCase("4.0"))
+				inputDataToFrameInFrame(ELEMENT_POST_MESSAGE_FRAME_1, ELEMENT_POST_MESSAGE_FRAME_2, message,true,false);
+			switchToParentWindow();	
+		}
 		if (message != null) {
-			inputDataToFrameInFrame(ELEMENT_POST_MESSAGE_FRAME_1, ELEMENT_POST_MESSAGE_FRAME_2, message, true);
+			if(this.plfVersion.equalsIgnoreCase("4.1"))
+				inputDataToFrame(ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR, message, true);
+			else if(this.plfVersion.equalsIgnoreCase("4.0"))
+				inputDataToFrameInFrame(ELEMENT_POST_MESSAGE_FRAME_1, ELEMENT_POST_MESSAGE_FRAME_2, message,true);
 			switchToParentWindow();	
 		}
 		if(file.length > 0 && file[0] != "" && file[0] != null){

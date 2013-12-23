@@ -21,13 +21,14 @@ public class ForumManageForum extends ForumBase {
 	ForumManageTopic topic;
 	ManageAccount account;
 
-	public ForumManageForum(WebDriver dr){
+	public ForumManageForum(WebDriver dr,String...plfVersion){
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
-		per = new ForumPermission(driver);
-		cat = new ForumManageCategory(driver);
-		button = new Button(driver);
-		alert = new ManageAlert(driver);
-		account = new ManageAccount(driver);
+		per = new ForumPermission(driver,this.plfVersion);
+		cat = new ForumManageCategory(driver,this.plfVersion);
+		button = new Button(driver,this.plfVersion);
+		alert = new ManageAlert(driver,this.plfVersion);
+		account = new ManageAccount(driver,this.plfVersion);
 	}
 
 	//--------------------forum home screen-------------------------------------------------

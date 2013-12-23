@@ -44,6 +44,13 @@ public class TestBase {
 	public int loopCount = 0;	
 	protected boolean ieFlag;	 
 	protected boolean chromeFlag;
+	/**
+	 * 4.0 : Version 4.0.x.
+	 * 4.1 : Version 4.1.x.
+	 * 4.2 : Version 4.2.x.
+	 * ect...
+	 */
+	protected String plfVersion = "";
 	public final int ACTION_REPEAT = 5;
 	public static boolean firstTimeLogin = false;
 	public Actions action;
@@ -68,6 +75,7 @@ public class TestBase {
 	By ELEMENT_SUBMIT_BUTTON = By.xpath("//*[text()='Submit']");
 	By ELEMENT_INPUT_PASSWORD = By.name("password");
 	By ELEMENT_ACCOUNT_NAME_LINK = By.xpath("//*[@id='UIUserPlatformToolBarPortlet']/a");
+	By ELEMENT_PLF_INFORMATION = By.id("platformInfoDiv");
 
 	public final String ELEMENT_TERM_CONDITION_BOX = "//div[@class='header' and text()='Terms and Conditions Agreement']/..";
 	public final By ELEMENT_CONTINUE_BUTTON_DISABLE = By.xpath("//button[text()='Continue' and @class='btn inactive']");
@@ -96,6 +104,8 @@ public class TestBase {
 		info("Term and conditions");
 		termsAndConditions(opParams);
 		info("End of term and conditions");
+		
+		checkPLFVersion();
 	}
 
 
@@ -153,6 +163,28 @@ public class TestBase {
 		Utils.pause(1000);     
 	}
 
+	/**
+	 * Verify plf version
+	 */
+	public void checkPLFVersion(){
+		try{
+			info("Verify platform version");
+			String des = waitForAndGetElement(ELEMENT_PLF_INFORMATION).getText();
+			if(des.contains("v4.0")){
+				this.plfVersion = "4.0";
+				info("Platform version 4.0.x");
+			}
+			else if(des.contains("v4.1")){
+				this.plfVersion="4.1";
+				info("Platform version 4.1.x");
+			}
+		}catch(Exception e){
+			info("Unknown platform version. Set to default version 4.0.x.");
+			this.plfVersion="4.0";
+		}
+		
+	}
+	
 	public void accountSetupWithoutGreeting(){
 		type(ELEMENT_INPUT_USERNAME, "fqa", true);
 		type(ELEMENT_FIRSTNAME_ACCOUNT, "FQA", true);

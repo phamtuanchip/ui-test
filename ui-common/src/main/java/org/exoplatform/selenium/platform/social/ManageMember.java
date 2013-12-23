@@ -30,8 +30,9 @@ import org.openqa.selenium.WebDriver;
  */
 public class ManageMember extends SpaceManagement {
 
-	public ManageMember(WebDriver dr){
+	public ManageMember(WebDriver dr, String...plfVersion){
 		super(dr);
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		magAcc = new ManageAccount(driver);
 		nav = new NavigationToolbar(driver);
 	}
@@ -50,6 +51,8 @@ public class ManageMember extends SpaceManagement {
 	public final String ELEMENT_PENDING_TABLE = "//th[contains(text(),'Pending')]/ancestor::table";
 	public final String ELEMENT_INVITED_TABLE = "//th[contains(text(),'Invited')]/ancestor::table";
 	public final String ELEMENT_SELECTED_USER_BOX = "//span[@data-original-title='${username}']/../..//input[@class='checkbox']";
+	//Adapt to plf4.1.0
+	public final String ELEMENT_SELECTED_USER_BOX_PLF4_1 = "//span[@class='text' and contains(text(),'${username}')]/../..//input[@class='checkbox']";	
 	public final String ELEMENT_GRAND_MANAGER_BUTTON = ELEMENT_MEMBERS_TABLE + "/..//td[contains(text(),'${username}')]/..//*[@class='iPhoneCheckHandle']";
 	public final String ELEMENT_IS_MANAGER_ICON = ELEMENT_MEMBERS_TABLE + "/..//td[contains(text(),'${username}')]/..//*[@class='iPhoneCheckHandle' and @style='left: 41px;']";
 	public final String ELEMENT_IS_NOT_MANAGER_ICON = ELEMENT_MEMBERS_TABLE + "/..//td[contains(text(),'${username}')]/..//*[@class='iPhoneCheckHandle' and @style='left: 1px;']";
@@ -67,6 +70,8 @@ public class ManageMember extends SpaceManagement {
 	public final String MESSAGE_USER_EXISTED_IN_SPACE = "Some users have already existed in the space, including:" + " ${username}";
 	public final String MESSAGE_USER_EXISTED_IN_INVITING_LIST = "Some users have already existed in the inviting list, including:" + " ${username}";
 	public final String ELEMENT_LEFT_PANEL_SPACE_ITEM = "//li[contains(@class,'spaceItem')]/a[@title='${spaceName}']";
+	//Adapt to PLF 4.1
+	public final String ELEMENT_LEFT_PANEL_SPACE_ITEM_PLF4_1 = "//li[contains(@class,'spaceItem')]/a/span[@data-original-title='${spaceName}']";
 
 	/*-------------------------------- Common functions for SOCIAL -----------------------------------*/
 
@@ -145,7 +150,11 @@ public class ManageMember extends SpaceManagement {
 	public void acceptInvitation(String spaceName) {
 		goToInvitationReceives();
 		doAction("Accept", spaceName);
-		waitForAndGetElement(By.xpath(ELEMENT_LEFT_PANEL_SPACE_ITEM.replace("${spaceName}", spaceName)));
+		if(this.plfVersion.equalsIgnoreCase("4.0"))
+			waitForAndGetElement(By.xpath(ELEMENT_LEFT_PANEL_SPACE_ITEM.replace("${spaceName}", spaceName)));
+		else if(this.plfVersion.equalsIgnoreCase("4.1")){
+			waitForAndGetElement(By.xpath(ELEMENT_LEFT_PANEL_SPACE_ITEM_PLF4_1.replace("${spaceName}", spaceName)));
+		}
 	}
 
 	/**
@@ -303,12 +312,18 @@ public class ManageMember extends SpaceManagement {
 	public void addUserToSpace(boolean userRoot, String userName){
 		info("-- Action: adding the user: " + userName);
 		if (userRoot){
-			check(By.xpath(ELEMENT_SELECTED_USER_BOX.replace("${username}", userName)),2);
+			if(this.plfVersion.equals("4.0"))
+				check(By.xpath(ELEMENT_SELECTED_USER_BOX.replace("${username}", userName)),2);
+			else if(this.plfVersion.equals("4.1"))
+				check(By.xpath(ELEMENT_SELECTED_USER_BOX_PLF4_1.replace("${username}", userName)),2);
 			button.add();
 			click(ELEMENT_INVITE_MEMBER_BUTTON);
 			waitForAndGetElement(By.xpath(ELEMENT_MEMBERS_TABLE + "//td[contains(text(),'"+ userName +"')]"));
 		}else{
-			check(By.xpath(ELEMENT_SELECTED_USER_BOX.replace("${username}", userName)), 2);
+			if(this.plfVersion.equals("4.0"))
+				check(By.xpath(ELEMENT_SELECTED_USER_BOX.replace("${username}", userName)),2);
+			else if(this.plfVersion.equals("4.1"))
+				check(By.xpath(ELEMENT_SELECTED_USER_BOX_PLF4_1.replace("${username}", userName)),2);
 			button.add();
 			click(ELEMENT_INVITE_MEMBER_BUTTON);
 			//click(ELEMENT_INVITE_MEMBER_BUTTON_AUX);
