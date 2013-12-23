@@ -345,7 +345,7 @@ public class Gatein_PortalNavigation_Edit_EditNavigation_OtherNodeActions extend
 			
 			info("Check page list");
 			navToolbar.goToManagePages();
-			pageMag.searchPageInManagementPage(PageType.PORTAL,pageName);
+			pageMag.searchPageInManagementPage(PageType.PORTAL,pageName,true);
 			waitForAndGetElement(PageID1);
 			waitForAndGetElement(PageID2);
 			
@@ -402,7 +402,7 @@ public class Gatein_PortalNavigation_Edit_EditNavigation_OtherNodeActions extend
 			
 			info("Check page list");
 			navToolbar.goToManagePages();
-			pageMag.searchPageInManagementPage(PageType.PORTAL,pageName);
+			pageMag.searchPageInManagementPage(PageType.PORTAL,pageName,true);
 			waitForAndGetElement(PageID1);
 			waitForAndGetElement(PageID2);
 			

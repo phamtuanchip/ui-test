@@ -319,7 +319,7 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 
 		info("Verify that a new node is created in Pages Management");
 		navToolbar.goToManagePages();
-		pageMag.searchPageInManagementPage(PageType.PORTAL, pageSelectorName);
+		pageMag.searchPageInManagementPage(PageType.PORTAL, pageSelectorName, true);
 		waitForAndGetElement(pageMag.ELEMENT_LIST_PAGE.replace("${number}", "1").replace("${titlePage}", pageSelectorName));
 		waitForAndGetElement(pageMag.ELEMENT_LIST_PAGE.replace("${number}", "2").replace("${titlePage}", pageSelectorName));
 

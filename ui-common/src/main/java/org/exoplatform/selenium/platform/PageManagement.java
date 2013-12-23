@@ -64,7 +64,7 @@ public class PageManagement extends PlatformBase {
 	/*================== Common Function ===================*/
 	//Add a new page in PageManagement
 	public void addNewPageAtManagePages(PageType type, String pageName, String pageTitle, boolean publicMode, 
-			Map<String, String> permissions, String groupId, String membership, String...ownerId ){
+			Map<String, String> permissions, String groupId, String membership, String pageConfig, Object pageLayout, boolean validate, String...ownerId ){
 
 		button = new Button(driver);
 		
@@ -90,6 +90,12 @@ public class PageManagement extends PlatformBase {
 
 		//showMaxWindow
 		click(ELEMENT_CHECKBOX_MAX_WINDOWS, 2);
+		//choose Edit layout tab
+		click(ELEMENT_PAGE_LAYOUT_TAB);
+		click(ELEMENT_PAGE_LAYOUT_SETTING_COMBOBOX);
+		click(ELEMENT_PAGE_LAYOUT_SETTING_COMBOBOX_OPTION.replace("${PageConfigOpt}", pageConfig));
+		click(pageLayout);		
+		//choose permission settings tab
 		click(ELEMENT_PERMISSION_SETTING_TAB);	
 		WebElement element = waitForAndGetElement(ELEMENT_CHECKBOX_PUBLIC_MODE, DEFAULT_TIMEOUT, 1, 2);		
 		if (publicMode & !element.isSelected()) {
@@ -107,13 +113,15 @@ public class PageManagement extends PlatformBase {
 		setEditPermissions(groupId, membership);
 		button.save();
 		Utils.pause(1000);
-		searchPageInManagementPage(type, pageTitle);
+		if (validate) {
+		searchPageInManagementPage(type, pageTitle, true);
+		}
 	}
 
 	//Edit a page at Manage Pages
 	public void editPageAtManagePages(PageType type, String pageTitle){
 		String pageEditIcon = ELEMENT_PAGE_EDIT_ICON.replace("${page}", pageTitle);
-		searchPageInManagementPage(type, pageTitle);
+		searchPageInManagementPage(type, pageTitle, true);
 		click(pageEditIcon);
 		Utils.pause(1000);
 	}
@@ -124,7 +132,7 @@ public class PageManagement extends PlatformBase {
 		dialog = new Dialog(driver);
 		//int waitTime = wait.length > 0 ? wait[0] : DEFAULT_TIMEOUT;
 		String pageDeleteIcon = ELEMENT_PAGE_DELETE_ICON.replace("${page}", pageTitle);
-		searchPageInManagementPage(type, pageTitle);
+		searchPageInManagementPage(type, pageTitle, true);
 		click(pageDeleteIcon);
 		Utils.pause(1000);
 		alt.waitForConfirmation(MESSAGE_DELETE_PAGE);
@@ -135,7 +143,7 @@ public class PageManagement extends PlatformBase {
 	}
 
 	// Search a page in Manage Pages
-	public void searchPageInManagementPage(PageType type, String pageTitle, String...siteName){
+	public void searchPageInManagementPage(PageType type, String pageTitle, boolean validate, String...siteName){
 		if (pageTitle != null){
 			type(ELEMENT_INPUT_SEARCH_TITLE, pageTitle, true);
 		}
@@ -154,8 +162,11 @@ public class PageManagement extends PlatformBase {
 		}
 		click(ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON);
 		Utils.pause(1000);
-		if (pageTitle != null){
-			waitForTextPresent(pageTitle);
+		if (validate)
+		{
+			if (pageTitle != null){
+				waitForTextPresent(pageTitle);
+			}
 		}
 	}
 

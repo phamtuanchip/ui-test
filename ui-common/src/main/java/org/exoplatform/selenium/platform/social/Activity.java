@@ -128,6 +128,7 @@ public class Activity extends SocialBase {
 				click(ELEMENT_ACTIVITY_FILTER_OPTION.replace("${filterOption}", filterOption));
 				waitForAndGetElement(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption));
 
+
 			}
 		}
 	}

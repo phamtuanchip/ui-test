@@ -274,7 +274,7 @@ public class Gatein_PortalNavigation_Edit_EditNavigation_ManageNode extends Plat
 		info("=====Add new page=======");
 		navToolbar.goToManagePages();
 		info("Add page for portal");
-		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName, pageTitle, true, null, groupPath, pagemembership);
+		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName, pageTitle, true, null, groupPath, pagemembership, "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true);
 
 		info("Login by added-to-admin-group user");
 		magAc.signOut();
@@ -346,7 +346,7 @@ public class Gatein_PortalNavigation_Edit_EditNavigation_ManageNode extends Plat
 		info("=====Add new page=======");
 		navToolbar.goToManagePages();
 		info("Add page for portal");
-		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName, pageTitle, true, null, groupPath, pagemembership);
+		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName, pageTitle, true, null, groupPath, pagemembership, "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true);
 		
 		info("=======Add new node=======");
 		info("Go to Administration/Portal Sites");

@@ -56,21 +56,21 @@ public class Gatein_Manage_ManagePage extends DashBoard {
 		navTool.goToManagePages();
 		
 		info("Search page with Type");
-		pageMag.searchPageInManagementPage(PageType.PORTAL, null);
+		pageMag.searchPageInManagementPage(PageType.PORTAL, null, true);
 		//waitForAndGetElement("//*[contains(text(), 'portal::intranet::Register')]");
 		waitForElementNotPresent("//*[contains(text(), 'group::/')]");
 		
 		info("Search page with Type and Title");
-		pageMag.searchPageInManagementPage(PageType.GROUP, "Site Map");
+		pageMag.searchPageInManagementPage(PageType.GROUP, "Site Map", true);
 		waitForAndGetElement("//*[contains(text(), 'group::/platform/guests::sitemap')]");
 		
 		info("Search page with Type and Site");
-		pageMag.searchPageInManagementPage(PageType.PORTAL, "", "acme");
+		pageMag.searchPageInManagementPage(PageType.PORTAL, "", true, "acme");
 		waitForAndGetElement("//*[contains(text(), 'portal::acme::overview')]");
 		waitForElementNotPresent("//*[contains(text(), 'portal::intranet::')]");
 		
 		info("Search page with Title, Site name, Type");
-		pageMag.searchPageInManagementPage(PageType.PORTAL, "Register", "intranet");
+		pageMag.searchPageInManagementPage(PageType.PORTAL, "Register", true, "intranet");
 		waitForAndGetElement("//*[contains(text(), 'portal::intranet::Register')]");
 	}
 	
@@ -87,7 +87,7 @@ public class Gatein_Manage_ManagePage extends DashBoard {
 		navTool.goToManagePages();
 		
 		info("Add page for portal");
-		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName, pageTitle, true, null, groupPath, membership);
+		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName, pageTitle, true, null, groupPath, membership, "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true);
 		
 		info("Edit page");
 		pageMag.editPageAtManagePages(PageType.PORTAL, pageTitle);
@@ -156,7 +156,7 @@ public class Gatein_Manage_ManagePage extends DashBoard {
 		navTool.goToManagePages();
 		
 		info("Add page for portal");
-		pageMag.addNewPageAtManagePages(PageType.GROUP, pageName, pageTitle, true, null, groupPath, membership, ownerId);
+		pageMag.addNewPageAtManagePages(PageType.GROUP, pageName, pageTitle, true, null, groupPath, membership, "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true, ownerId);
 		
 		info("Edit page");
 		pageMag.editPageAtManagePages(PageType.GROUP, pageTitle);

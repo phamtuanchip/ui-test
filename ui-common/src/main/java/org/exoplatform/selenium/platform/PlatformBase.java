@@ -333,10 +333,17 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_SELECT_SESSION_ALIVE= "//select[@name='sessionAlive']"; 
 	public final By ELEMENT_PROPERTIES_TAB = By.linkText("Properties");
 
+	//Page layout TAB
+	public final By ELEMENT_PAGE_LAYOUT_TAB = By.linkText("Page Layout");
+	public final String ELEMENT_PAGE_LAYOUT_SETTING_COMBOBOX = "//*[@id='UIDropDownPageTemp']/div[@class='btn dropdown-toggle']";
+	public final String ELEMENT_PAGE_LAYOUT_SETTING_COMBOBOX_OPTION = "//*[@id='UIDropDownPageTemp']/ul[@class='dropdown-menu']/li/a[text()='${PageConfigOpt}']";
+	public final By ELEMENT_PAGE_LAYOUT_OPTION_EMPTY = By.xpath("//*[@id='UIPageTemplateOptions']//a[contains(text(),'Empty Layout')]");
+	public final By ELEMENT_PAGE_LAYOUT_OPTION_DASHBOARD = By.xpath("//*[@id='UIPageTemplateOptions']//a[contains(text(),'Dashboard Layout')]");
+	
 	//Permission Setting TAB
 	public final By ELEMENT_PERMISSION_SETTING_TAB= By.linkText("Permission Settings");
 	public final By ELEMENT_CHECKBOX_PUBLIC_MODE = By.id("publicMode");
-	public final By ELEMENT_EDIT_PERMISSION_SETTING = By.linkText("Edit Permission Settings");
+	public final By ELEMENT_EDIT_PERMISSION_SETTING = By.xpath("//*[@id='PermissionSetting']//a[contains(text(),'Edit Permission Settings')]");
 	public final String ELEMENT_SELECT_ACCESS_MEMBERSHIP_ITEM = "//a[text()='${membership}']";
 	public final String ELEMENT_SELECTED_ACCESS_PERMISSION_GROUP = "//div[@id='PermissionGrid']/table/tbody//div[text()='/${groupId}']";
 	public final String ELEMENT_SELECTED_ACCESS_PERMISSION_MEMBERSHIP = "//*[@id='PermissionGrid']//*[text()='${membership}']";
@@ -384,8 +391,12 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_PORTLET_LABEL = "//div[@class='CPortletLayoutDecorator' and contains(text(), '${portletName}')]";	
 	public final String ELEMENT_PAGE_FINISH_BUTTON = "//*[@data-original-title='Finish']";
 	public final By ELEMENT_PAGE_CLOSE = By.xpath("//a[@title='Abort']");
+	
 	public final By ELEMENT_SWITCH_VIEW_MODE = By.linkText("Switch View mode");
 	public final String ELEMENT_PAGE_COLUMN = "//tr[@class='TRContainer']//td['${index}']";
+	public final By ELEMENT_VIEW_PAGE_PROPERTIES = By.linkText("View Page properties");
+	
+	public final By ELEMENT_PAGE_EXIST_WARNING_MSG = By.xpath("//*[contains(text(),'This page name already exists')]");
 	
 	//PortalNavigation - http://localhost:8080/portal/g/:platform:administrators/portalnavigation
 	public final String ELEMENT_NODE_LINK = "//*[@class='node']//*[@title='${nodeLabel}']";
@@ -394,7 +405,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_ADD_NODE_LINK = By.linkText("Add Node");
 	public final By ELEMENT_PAGE_SELECTOR_TAB = By.linkText("Page Selector");
 	public final By ELEMENT_INPUT_PAGE_NAME = By.name("pageName");
-	public final By ELEMENT_INPUT_PAGE_TITLE = By.name("pageTitle");
+	public final By ELEMENT_INPUT_PAGE_TITLE = By.id("title");
 	public final By ELEMENT_CREATE_PAGE_LINK = By.xpath("//*[contains(@class, 'uiIconAddPage')]");
 	public final By ELEMENT_SEARCH_SELECTOR_PAGE_LINK = By.className("uiIconSelectPage");
 	public final By ELEMENT_CLEAR_SELECTOR_PAGE = By.className("uiIconDelete");
@@ -402,6 +413,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_PAGE_MANAGEMENT_SEARCH_BUTTON = By.xpath("//*[contains(@class, 'uiIconSearch')]");
 	public final By ELEMENT_SELECT_PAGE_SEARCH = By.xpath("//a[@data-original-title='Quick Search']");
 	public final By ELEMENT_SELECT_PAGE_BUTTON = By.xpath("//a[@data-original-title='Select Page']");
+	public final By ELEMENT_NO_RESULT_FOUND_MSG = By.xpath("//span[contains(text(),'No result found')]");
 
 	public final String ELEMENT_LIST_NODE_LINK = ELEMENT_NODE_LINK.replace("${nodeLabel}", "${nodeLabel}") + "/..//li[${number}]//*[@title='${childNode}']";
 	public final String ELEMENT_CHILD_NODE_LINK = ELEMENT_NODE_LINK.replace("${nodeLabel}", "${nodeLabel}") + "/../*[contains(@class, 'childrenContainer')]//*[@title='${childNode}']";
@@ -513,13 +525,15 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_NAME_CURRENT_CONTAINER = "//*[text()='${nameContainer}']/ancestor::div[contains(@class, 'EdittingContainer')]";
 	public final String ELEMENT_DRAG_CURRENT_CONTAINER = "//*[text()='${nameContainer}']/../*[@title='Hold this area to drag this container']";
 	public final String ELEMENT_LIST_CONTAINER = "//*[@class='UIRowContainer']/div[${number}]//*[contains(text(), '${nameContainer}')]";
-
+	
 	//Porlet setting
 	public final By ELEMENT_PORLET_SETTING_TAB = By.xpath("//*[text()='Portlet Setting']");
 	public final By ELEMENT_EDIT_MODE_TAB = By.xpath("//*[text()='Edit Mode']");
 	public final By ELEMENT_SELECT_ICON_TAB = By.xpath("//*[text()='Select Icon']");
 	public final By ELEMENT_DECORATION_THEMES_TAB = By.xpath("//*[text()='Decoration Themes']");
 	public final By ELEMENT_ACCESS_PERMISSION_TAB = By.xpath("//*[text()='Access Permission']");
+	
+	public final By ELEMENT_ACCESS_PERMISSION_MAKEITPUBLIC = By.id("publicMode");
 
 	/*
 	 * END Page Management

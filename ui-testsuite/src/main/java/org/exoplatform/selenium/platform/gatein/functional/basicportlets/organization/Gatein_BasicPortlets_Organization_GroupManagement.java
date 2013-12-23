@@ -317,7 +317,7 @@ public class Gatein_BasicPortlets_Organization_GroupManagement extends PlatformB
 		
 		info("Add new page in Page Management");
 		navTool.goToManagePages();
-		pageMag.addNewPageAtManagePages(PageType.GROUP, pageName, pageTitle, true, null, groupPath, membership);
+		pageMag.addNewPageAtManagePages(PageType.GROUP, pageName, pageTitle, true, null, groupPath, membership, "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true);
 		
 		info("Add new page by wizard");
 		navTool.goToPageCreationWizard();
@@ -335,12 +335,12 @@ public class Gatein_BasicPortlets_Organization_GroupManagement extends PlatformB
 		
 		info("Check the existence of pages after group is deleted");
 		navTool.goToManagePages();
-		pageMag.searchPageInManagementPage(PageType.GROUP, nodeName);
-		pageMag.searchPageInManagementPage(PageType.GROUP, pageTitle);
+		pageMag.searchPageInManagementPage(PageType.GROUP, nodeName, true);
+		pageMag.searchPageInManagementPage(PageType.GROUP, pageTitle, true);
 		
 		info("Restore data");
 		pageMag.deletePage(PageType.GROUP, pageTitle);
-		pageMag.searchPageInManagementPage(PageType.GROUP, nodeName);
+		pageMag.searchPageInManagementPage(PageType.GROUP, nodeName, true);
 		pageMag.deletePage(PageType.GROUP, nodeName);
 	}
 

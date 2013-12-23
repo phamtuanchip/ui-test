@@ -651,9 +651,9 @@ public class PLF_UnifiedSearch extends Template {
 		//Create data
 		//Some pages are existed.
 		naviToolbar.goToManagePages();
-		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName1, pageName1, true, null, groupPath, membership);
-		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName2, pageName2, true, null, groupPath, membership);
-		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName3, pageName3, true, null, groupPath, membership);
+		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName1, pageName1, true, null, groupPath, membership,  "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true);
+		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName2, pageName2, true, null, groupPath, membership,  "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true);
+		pageMag.addNewPageAtManagePages(PageType.PORTAL, pageName3, pageName3, true, null, groupPath, membership,  "Page Configs", ELEMENT_PAGE_LAYOUT_OPTION_EMPTY, true);
 		
 		info("Go to Administration/Portal Sites");
 		naviToolbar.goToPortalSites();

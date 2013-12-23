@@ -490,6 +490,7 @@ import org.testng.annotations.*;
 		selectFileter("My Activities");
 		waitForAndGetElement(home.ELEMENT_ACTIVITY_COMMENT_CONTENT.replace("${title}", text).replace("${comment}", comment));
 	
+
 		//remove data
 		acc.signOut();		
 		acc.userSignIn(userType.ADMIN);

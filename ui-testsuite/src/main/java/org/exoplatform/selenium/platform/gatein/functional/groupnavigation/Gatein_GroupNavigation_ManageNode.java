@@ -108,7 +108,7 @@ public class Gatein_GroupNavigation_ManageNode extends GroupNavigation {
 		//Go to Page Management, check existing of page that deleted node linked to
 		//Page still exists
 		navToolbar.goToManagePages();
-		pageMag.searchPageInManagementPage(PageType.GROUP, pageSelectorName);
+		pageMag.searchPageInManagementPage(PageType.GROUP, pageSelectorName, true);
 		waitForAndGetElement(pageMag.ELEMENT_LIST_PAGE.replace("${number}", "1").replace("${titlePage}", pageSelectorName));
 
 		/*Clear data*/

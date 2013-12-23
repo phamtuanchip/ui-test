@@ -550,4 +550,25 @@ public class PageEditor extends PlatformBase {
 			clearCache();
 		}
 	}
+	
+	/**
+	 * Edit container access permission
+	 * 
+	 * @param container 
+	 * 				container name
+	 * @param groupdId
+	 * 				group that will be selected to grant access right
+	 * @param membership
+	 * 				membership that will be selected to grant access right
+	 * @param publicMode
+	 * 				choose whether make the container public to everyone or not 
+	 */
+	public void editContainerPermission(String container, String groupId, String membership, Boolean publicMode){
+		if (publicMode) { click(ELEMENT_ACCESS_PERMISSION_MAKEITPUBLIC); }
+		else {
+	    click(ELEMENT_ADD_PERMISSION_BUTTON);
+	    setEditPermissions(groupId, membership);
+	    button.save();
+		}
+	}
 }

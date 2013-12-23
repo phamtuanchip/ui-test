@@ -210,7 +210,7 @@ public class Gatein_Navigation_GroupNavigation_EditNavigation extends GroupNavig
 
 		info("Verify that a new node is created in Pages Management");
 		navToolbar.goToManagePages();
-		pageMag.searchPageInManagementPage(PageType.GROUP, pageSelectorName);
+		pageMag.searchPageInManagementPage(PageType.GROUP, pageSelectorName, true);
 		waitForAndGetElement(pageMag.ELEMENT_LIST_PAGE.replace("${number}", "1").replace("${titlePage}", pageSelectorName));
 		waitForAndGetElement(pageMag.ELEMENT_LIST_PAGE.replace("${number}", "2").replace("${titlePage}", pageSelectorName));
 
