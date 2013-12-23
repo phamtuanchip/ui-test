@@ -6,6 +6,7 @@ import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
+import org.exoplatform.selenium.platform.PageEditor;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.admin.ECMainFunction;
 import org.exoplatform.selenium.platform.ecms.admin.ManageView;
@@ -42,7 +43,7 @@ public class ActionBar extends EcmsBase{
 	ContextMenu cMenu = new ContextMenu(driver);
 	ManageAlert alert = new ManageAlert(driver);
 	ECMainFunction ecMain = new ECMainFunction(driver);
-
+	PageEditor ePage = new PageEditor(driver, this.plfVersion);
 	/*
 	 * Added by PhuongDT
 	 * Date: 04/09/2013
@@ -197,7 +198,27 @@ public class ActionBar extends EcmsBase{
 	public final String ELEMENT_SORT_BY_TYPE = "//*[@class='dropdown-menu']//*[contains(text(), '${type}')]";
 	public final By ELEMENT_SORT_DOWN_ARROW = By.className("uiIconSortDown");
 	public final By ELEMENT_SORT_UP_ARROW = By.className("uiIconSortUp");
-
+	
+	// Add site path
+	public final String ELEMENT_SITE_PATH = "//span[@class='nodeName' and text()='${title}']";
+	public final String ELEMENT_ACTIONS = "//*[contains(text(), '${action}')]";
+	public By ELEMENT_ADD_ACTION_LINK = By.linkText("Add Action");
+	public By ELEMENT_UPLOAD_FILE = By.linkText("Upload");
+	public By ELEMENT_PUBLISH_FILE = By.linkText("Publish");
+	public String ELEMENT_STATUS_FILE = "//span[@class='nodeName' and text()='${title}']/../../../..//div[@data-original-title= 'status' and text() = '${status}']";
+	public final By ELEMENT_MORE_LINK = By.linkText("More");
+	public final By ELEMENT_NAVIGATION_LINK = By.linkText("Content Navigation");
+	public final By ELEMENT_MANAGE_ACTION_LINK = By.linkText("Actions");
+	public final By ELEMENT_VISIBLE_CHECKBOX = By.id("Visible");
+	public final By ELEMENT_NAVIGATION_NODE = By.id("NavigationNode");
+	public final By ELEMENT_CLICKABLE_CHECKBOX = By.id("Clickable");
+	public final By ELEMENT_NAVIGATION_SELECT_NODE = By.xpath("//i[@class= 'uiIconSelectNavigationNode uiIconLightGray']");
+	public final String ELEMENT_NAVIGATION_PATH = "//td[contains(text(),'${path}')]/..//i[@class='uiIconSelectPage']";
+	public final By ELEMENT_NAVIGATION_SELECT_LIST = By.xpath("//i[@class='uiIconSelectListTargetPage uiIconLightGray']");
+	public final By ELEMENT_NAVIGATION_SELECT_DETAIL = By.xpath("//i[@class='uiIconSelectDetailTargetPage uiIconLightGray']");
+	public final String ELEMENT_NAVIGATION_LIST_PATH = "//div[contains(text(),'${path}')]/../..//div[@class='Select16x16Icon']";
+	public final By ELEMENT_NAVIGATION_DISPLAY_ORDER = By.id("Index");
+	public final By ELEMENT_REFRESH_BUTTON = By.xpath("//*[@class = 'uiIconRefresh']");
 	/*==================================================================================*/
 	//Go to Sites Management
 	public void showDrives(){
@@ -230,7 +251,8 @@ public class ActionBar extends EcmsBase{
 			Utils.pause(WAIT_INTERVAL);
 			info("retry...[" + repeat + "]");
 		}
-		mouseOverAndClick(ELEMENT_NEW_CONTENT_LINK);
+		//mouseOverAndClick(ELEMENT_NEW_CONTENT_LINK);
+		click(ELEMENT_NEW_CONTENT_LINK);
 		waitForElementNotPresent(ELEMENT_NEW_CONTENT_LINK, DEFAULT_TIMEOUT, 1);
 	}
 
@@ -1496,10 +1518,11 @@ public class ActionBar extends EcmsBase{
 		select(ELEMENT_ACTION_LIFE_CYCLE, lifeCycle);
 		if (isElementPresent(ELEMENT_ACTION_NODE_TYPE_SEARCH)){
 			click(ELEMENT_ACTION_NODE_TYPE_SEARCH);
-			check(ELEMENT_ACTION_SELECT_ALL_DOC,2);
-			button.save();
+			check(ELEMENT_ACTION_SELECT_ALL_DOC,2);	
 		}
-		Utils.pause(1000);
+		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON);
+		button.save();
+		Utils.pause(2000);
 		button.close();
 	}
 
@@ -1640,5 +1663,38 @@ public class ActionBar extends EcmsBase{
 		else{
 			return true;
 		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void addContentNavigation(boolean visible, String path, String displayOrder, boolean clickable, String forList, String forDetail, boolean verify){
+		info("Add Content Navigation");
+		if (!visible) check(ELEMENT_VISIBLE_CHECKBOX, 2);
+		else uncheck(ELEMENT_VISIBLE_CHECKBOX, 2);
+		if(path!=null){
+			click(ELEMENT_NAVIGATION_SELECT_NODE);
+			check(By.xpath(ELEMENT_NAVIGATION_PATH.replace("${path}", path)),2);			
+		}
+		if(displayOrder!=null){
+			WebElement order = waitForAndGetElement(ELEMENT_NAVIGATION_DISPLAY_ORDER);
+			order.sendKeys(displayOrder);
+		}
+		if (clickable) check(ELEMENT_CLICKABLE_CHECKBOX, 2);
+		else uncheck(ELEMENT_CLICKABLE_CHECKBOX, 2);
+		if(forList!=null){
+			click(ELEMENT_NAVIGATION_SELECT_LIST);
+			check(By.xpath(ELEMENT_NAVIGATION_LIST_PATH.replace("${path}", forList)),2);	
+		}
+		if(forDetail!=null){
+			click(ELEMENT_NAVIGATION_SELECT_DETAIL);
+			check(By.xpath(ELEMENT_NAVIGATION_LIST_PATH.replace("${path}", forDetail)),2);	
+		}
+		if(verify){
+		Utils.pause(500);
+		button.save();	
+		}
+		else button.cancel();
+			
 	}
 }

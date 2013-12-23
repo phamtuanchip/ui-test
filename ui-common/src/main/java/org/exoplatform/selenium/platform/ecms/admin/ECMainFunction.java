@@ -16,9 +16,10 @@ import org.openqa.selenium.WebDriver;
  */
 public class ECMainFunction extends EcmsBase{
 
-	public ECMainFunction(WebDriver dr) {
+	public ECMainFunction(WebDriver dr,String...plfVersion) {
 		super(dr);
 		// TODO Auto-generated constructor stub
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 	}
 
 	NavigationToolbar navToolbar = new NavigationToolbar(driver);

@@ -413,6 +413,7 @@ import org.testng.annotations.*;
 		
 		mMember.goToMySpacePage();
 		mMember.addNewSpace(spaceName,"");
+
 		spaceMan.goToSpaceMenu("Activity Stream");
 		addActivity(true, text1, false, "");
 		addActivity(true, text2, false, "");

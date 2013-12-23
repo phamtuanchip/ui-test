@@ -572,8 +572,12 @@ public class EcmsBase extends ManageAccount {
 		if (waitForAndGetElement(By.xpath("//a[@class='actionIcon' and contains(text(),'Upload')]"),DEFAULT_TIMEOUT,0)==null){
 			click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 		}
+		//click(By.xpath("//a[@class='actionIcon' and contains(text(),'Upload')]"));
+		
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.visibility = 'visible'; arguments[0].style.height = '1px'; " +
 				"arguments[0].style.width = '1px'; arguments[0].style.opacity = 1", waitForAndGetElement(ELEMENT_UPLOAD_LINK, DEFAULT_TIMEOUT, 1, 2));
+		
+		Utils.pause(10000);
 		type(ELEMENT_UPLOAD_LINK, Utils.getAbsoluteFilePath(link), false);
 		//Utils.pause(2000);
 		info("Upload file " + Utils.getAbsoluteFilePath(link));
@@ -581,6 +585,7 @@ public class EcmsBase extends ManageAccount {
 		if (verify){
 			String links[] = link.split("/");
 			int length = links.length;
+			Utils.pause(2000);
 			waitForAndGetElement(By.xpath("//*[contains(text(),'" + links[length-1]+ "')]"));
 		}
 		info("Upload file successfully");

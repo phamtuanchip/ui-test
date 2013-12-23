@@ -97,6 +97,9 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_MENU_SEO_LINK = By.linkText("SEO");
 	public final By ELEMENT_MENU_ADD_PAGE_LINK = By.linkText("Add Page");
 	
+	//Add page
+	public final By ELEMENT_PAGE_NAME = By.id("pageName");
+	
 	
 	//site
 	public final By ELEMENT_MENU_EDIT_SITES = By.xpath("//*[@id='UIAdminToolbarContainer']//a[contains(text(),'Site')]");
@@ -382,6 +385,7 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_PAGE_FINISH_BUTTON = "//*[@data-original-title='Finish']";
 	public final By ELEMENT_PAGE_CLOSE = By.xpath("//a[@title='Abort']");
 	public final By ELEMENT_SWITCH_VIEW_MODE = By.linkText("Switch View mode");
+	public final String ELEMENT_PAGE_COLUMN = "//tr[@class='TRContainer']//td['${index}']";
 	
 	//PortalNavigation - http://localhost:8080/portal/g/:platform:administrators/portalnavigation
 	public final String ELEMENT_NODE_LINK = "//*[@class='node']//*[@title='${nodeLabel}']";

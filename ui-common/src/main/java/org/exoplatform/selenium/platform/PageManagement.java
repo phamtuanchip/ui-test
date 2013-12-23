@@ -8,6 +8,7 @@ import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
 import  org.exoplatform.selenium.platform.NavigationToolbar;
 import  org.exoplatform.selenium.platform.NavigationManagement;
+
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -17,8 +18,9 @@ import org.testng.Assert;
 
 public class PageManagement extends PlatformBase {
 	
-	public PageManagement(WebDriver dr){
+	public PageManagement(WebDriver dr, String...plfVersion){
 		driver = dr;
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 	}
 
 	NavigationToolbar nav = new NavigationToolbar(driver);
@@ -26,7 +28,7 @@ public class PageManagement extends PlatformBase {
 	Dialog dialog = new Dialog(driver);
 	ManageAlert alt = new ManageAlert(driver);
 	Button button ;
-	
+
 	/*
 	 * Page Management
 	 * */
@@ -195,6 +197,62 @@ public class PageManagement extends PlatformBase {
 			waitForTextNotPresent("Page Editor");
 		}
 	}
+	
+	// Input data for page choose Column Page Configs 
+		public void addNewPageEditorWithColum(String nodeName, String displayName, String language, String categoryTitle, 
+				Map<String, String> portletIds, String containers, Map<String, String>containerIds,  boolean extendedLabelMode, boolean verify){
+
+			type(ELEMENT_INPUT_NODE_NAME, nodeName, true);
+			WebElement element = waitForAndGetElement(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE, DEFAULT_TIMEOUT, 1, 2);
+			if (extendedLabelMode){
+				Assert.assertTrue(element.isSelected());
+				select(ELEMENT_SELECT_LANGUAGE, language);
+
+			}else {
+				uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE, 2);
+				type(ELEMENT_INPUT_PAGE_DISPLAY_NAME, displayName, true);
+			}
+
+			click(ELEMENT_PAGE_EDITOR_NEXT_STEP);
+			waitForTextPresent("Empty Layout");
+			click(ELEMENT_PAGE_EDITOR_NEXT_STEP);
+			if (containers != null){
+				click(ELEMENT_CONTAINER_TAB);
+				String containersID= ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", containers);
+				click(containersID);
+				for (String containerId : containerIds.keySet()) {					
+					String elementEditPagePage = ELEMENT_EDIT_PAGE_PAGE;					
+					dragAndDropToObject("//div[@id='" + containerId + "']/div", elementEditPagePage);
+					if(containerIds.get(containerId) != ""){
+						dragAndDropToObject("//div[@id='" + containerIds.get(containerId) + "']/div", elementEditPagePage);
+					}
+				}
+			}
+			Utils.pause(500);
+			if (categoryTitle != null){
+				click(ELEMENT_APPLICATIONS_LINK);
+				String category = ELEMENT_EDIT_PAGE_CATEGORY_MENU.replace("${categoryLabel}", categoryTitle);
+				click(category);
+			}			
+			for (String portletId : portletIds.keySet()) {
+				String elementEditPagePage1 = ELEMENT_PAGE_COLUMN.replace("${index}", "1");
+				dragAndDropToObject("//div[@id='" + portletId + "']/div", elementEditPagePage1);
+				if(portletIds.get(portletId) != ""){
+					dragAndDropToObject("//div[@id='" + portletIds.get(portletId) + "']/div", elementEditPagePage1);
+				}
+				String elementEditPagePage2 = ELEMENT_PAGE_COLUMN.replace("${index}", "2");
+				dragAndDropToObject("//div[@id='" + portletId + "']/div", elementEditPagePage1);
+				if(portletIds.get(portletId) != ""){
+					dragAndDropToObject("//div[@id='" + portletIds.get(portletId) + "']/div", elementEditPagePage2);
+				}
+			}
+			
+			if (!verify) { 
+				Utils.pause(500);
+				click(ELEMENT_PAGE_FINISH_BUTTON);
+				waitForTextNotPresent("Page Editor");
+			}
+		}
 
 	public void deletePageAtManagePageAndPortalNavigation(String pageName, boolean PageTypePortal, String portalName, 
 			boolean PageTypeGroup, String groupName, String... nodeName){
