@@ -28,6 +28,7 @@ public class RichTextMode extends Template {
 	public By ELEMENT_SEARCH_TEXTBOX = By.xpath("//input[@title='Type a keyword to search for a wiki page']");
 	public By ELEMENT_SEARCH_BUTTON = By.xpath("//button[text()='Search']");
 	public String ELEMENT_PAGE_SELECTED = "//*[@class='xPagePreview' and @title='${page}']";
+	public String ELEMENT_PAGE_SELECTED_PLF41 = "//*[@class='xPagesSelector xPagesSearch' and @aria-hidden='false']//*[@class='xPagePreview' and @title='${page}']";
 	public By ELEMENT_LABEL_LINK_TEXTBOX = By.xpath("//input[@title='Type the label of the created link.']");
 	public By ELEMENT_TOOLTIP_LINK_TEXTBOX = By.xpath("//input[@title='Type the tooltip of the created link, which appears when mouse is over the link.']");
 	
@@ -73,7 +74,10 @@ public class RichTextMode extends Template {
 			type(ELEMENT_SEARCH_TEXTBOX, page, true);
 			click(ELEMENT_SEARCH_BUTTON);
 		}
-		click(ELEMENT_PAGE_SELECTED.replace("${page}", page));
+		if(waitForAndGetElement(ELEMENT_PAGE_SELECTED.replace("${page}", page), 5000,0)!=null)
+			click(ELEMENT_PAGE_SELECTED.replace("${page}", page));
+		else
+			click(ELEMENT_PAGE_SELECTED_PLF41.replace("${page}", page));
 		click(but.ELEMENT_SELECT_BUTTON);
 		type(ELEMENT_LABEL_LINK_TEXTBOX, label, true);
 		type(ELEMENT_TOOLTIP_LINK_TEXTBOX, tooltip, true);

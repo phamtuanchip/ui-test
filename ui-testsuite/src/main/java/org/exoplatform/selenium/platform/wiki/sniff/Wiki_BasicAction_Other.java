@@ -203,7 +203,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 	/**CaseId: 70361
 	 * Move page has the same name with page in target space
 	 */
-	@Test
+	@Test(priority = 0)
 	public void test00_MovePageDuplicateName(){
 		String spaceName1 = "Space071";
 		String title1 = "Wiki_move_title_07_1";
@@ -426,7 +426,7 @@ public class Wiki_BasicAction_Other extends Permalink {
 		deleteCurrentWikiPage();	
 	}
 	
-	@Test
+	@Test(priority = 0)
 	public void test14_ChangePermissionOfPageInPermalink_SelectGroup(){
 		String title = "Wiki_sniff_permalink_title_14_2";
 		String content = "Wiki_sniff_permalink_content_14_2";
@@ -480,18 +480,19 @@ public class Wiki_BasicAction_Other extends Permalink {
 	 * Watch Page
 	 * NB: For this test case, we have to configure Email in File
 	 * == gatein/config/configuration.properties == 
-	 * ERROR: Refer https://jira.exoplatform.org/browse/WIKI-766
 	 */
-	@Test (groups="error")
+	@Test
 	public void test15_WatchUnwatchPage(){
 		String title = "Wiki_watch_title_15";
 		String content = "Wiki_watch_content_15";
 		String newTitle = "Wiki_watch_title_15_update";
 		String newContent = "Wiki_watch_content_15_update";
-				
+			
+		magAc.updateUserProfile(null, null, null, "exomailtest01@gmail.com");
+		
+		goToWiki();
 		addBlankWikiPage(title, content, 0);	
 		watchWikiPage();
-		magAc.updateUserProfile(null, null, null, "exomailtest01@gmail.com");
 		goToWikiPage("Wiki Home/" + title);
 		editPageWithCheckPublicActivity(newTitle, newContent);
 

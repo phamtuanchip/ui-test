@@ -36,6 +36,7 @@ public class WikiBase extends PlatformBase{
 
 	//Company/Left panel > Wiki Link
 	public final By ELEMENT_WIKI_LINK=By.xpath("//ul[@class='uiCompanyNavigations']//li/a[text()='Wiki']");
+	public final By ELEMENT_WIKI_LINK_PLF41=By.xpath("//*[@data-original-title='Wiki']");
 
 	//Add page menu
 	public final By ELEMENT_ADD_PAGE_LINK = By.xpath("//*[@id='UIWikiPageControlArea_PageToolBar']//div[contains(text(),'Add Page')]");
@@ -272,7 +273,10 @@ public class WikiBase extends PlatformBase{
 	public void goToWiki(){
 		info("--Go to Wiki--");
 		Utils.pause(1000);
-		click(ELEMENT_WIKI_LINK);
+		if(waitForAndGetElement(ELEMENT_WIKI_LINK, 5000,0)!=null)
+			click(ELEMENT_WIKI_LINK);
+		else
+			click(ELEMENT_WIKI_LINK_PLF41);
 		waitForAndGetElement(ELEMENT_TITLE_WIKI_HOME_LINK);	
 	}
 
@@ -569,13 +573,13 @@ public class WikiBase extends PlatformBase{
 		info("Attach a file: " + path);
 		//driver.switchTo().frame(waitForAndGetElement(ELEMENT_FRAME_UPLOAD));
 		//ELEMENT_UPLOAD_FILE = By.xpath("//input[@id='WikiUploadFile']");
-
 		try{
 			for(int i =0; i<=4; i++){
 				if(waitForAndGetElement(ELEMENT_UPLOAD_NAME, 5000, 0, notDisplay)!=null)
 					break;
 				else{
-					((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", waitForAndGetElement(ELEMENT_BODY_CONTAINER));
+					((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", 
+							waitForAndGetElement(ELEMENT_BODY_CONTAINER));
 				}
 			}
 			WebElement upload = waitForAndGetElement(ELEMENT_UPLOAD_NAME, 5000, 1, notDisplay);

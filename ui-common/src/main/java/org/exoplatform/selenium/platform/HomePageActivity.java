@@ -28,7 +28,7 @@ public class HomePageActivity extends PlatformBase{
 	public final By ELEMENT_MESSAGE_CONFIRM_DELETE_ACTIVITY = By.xpath("//*[text()='Are you sure you want to delete this activity?']");
 	public final String ELEMENT_ACTIVITY_AUTHOR_ACTIVITY = "//*[contains(text(), '${activityText}')]/../../../../..//*[@class='author']";
 	public final String ELEMENT_ACTIVITY_DELETE = "//*[contains(text(),'${activityText}')]/../../../../..//a[contains(@id, 'DeleteActivityButton')]";
-
+	public final By ELEMENT_LOADMORE = By.xpath("//div[@class='boxLoadMore']");
 	//like and unlike icon
 	public final String ELEMENT_LIKE_ICON = "//*[contains(text(),'${activityText}')]/../../../..//*[starts-with(@id, 'LikeLink')]";
 	public final String ELEMENT_UNLIKE_ICON = "//*[contains(text(),'${activityText}')]/../../../..//*[starts-with(@id, 'UnLikeLink')]";
@@ -39,7 +39,8 @@ public class HomePageActivity extends PlatformBase{
 	public final By ELEMENT_ACTIVITY_TEXTBOX = By.id("DisplaycomposerInput");
 	public final String ELEMENT_ACTIVITY = "//*[contains(text(),'${activityText}')]";
 	public final String ELEMENT_DOWNLOAD_ICON = "//*[contains(text(),'${activityText}')]/../../../..//i[@class='uiIconDownload uiIconLightGray']"; 
-		
+	public final String ELEMENT_ACTIVITY_ORDER = "//div[contains(@id,'activityContainer')][${index}]//*[contains(text(),'${activityText}')]";
+	
 	//Comment box
 	public final String ELEMENT_COMMENT_LINK = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'CommentLink')]";
 	public final String ELEMENT_ACTIVITY_COMMENT_CONTENT = "//*[contains(text(),'${title}')]/../../../..//*[@class='contentComment']/../*[contains(text(), '${comment}')]";

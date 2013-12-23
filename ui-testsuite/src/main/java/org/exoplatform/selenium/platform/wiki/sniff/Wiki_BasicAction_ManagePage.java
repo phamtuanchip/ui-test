@@ -67,7 +67,7 @@ public class Wiki_BasicAction_ManagePage extends ManageDraft{
 	/**CaseId: 68837 + 70036 + 70037 -> Add, Edit and Delete page at Rich Text mode
 	 * pending: add image (product has error)
 	 */
-	@Test
+	@Test(priority = 0)
 	public void test00_CreatePageRichTextEditor(){
 		String pageLink = "PageLink";
 		String title = "Wiki_manage_page_title_02";

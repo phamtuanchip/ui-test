@@ -70,7 +70,7 @@ public class ManageMember extends SpaceManagement {
 	public final String MESSAGE_USER_EXISTED_IN_SPACE = "Some users have already existed in the space, including:" + " ${username}";
 	public final String MESSAGE_USER_EXISTED_IN_INVITING_LIST = "Some users have already existed in the inviting list, including:" + " ${username}";
 	public final String ELEMENT_LEFT_PANEL_SPACE_ITEM = "//li[contains(@class,'spaceItem')]/a[@title='${spaceName}']";
-
+	
 	//Adapt to PLF 4.1
 	public final String ELEMENT_LEFT_PANEL_SPACE_ITEM_PLF4_1 = "//li[contains(@class,'spaceItem')]/a/span[@data-original-title='${spaceName}']";
 

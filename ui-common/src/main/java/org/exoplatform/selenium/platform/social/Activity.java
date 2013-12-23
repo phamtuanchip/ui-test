@@ -40,6 +40,7 @@ public class Activity extends SocialBase {
 	// Go to My Spaces > Select a space
 	//Or Go to My Activity Stream
 	public final By ELEMENT_ACTIVITY_STREAM = By.id("UIUserActivitiesDisplay");
+	public final By ELEMENT_SPACE_ACTIVITY_STREAM = By.id("UISpaceActivitiesDisplay");
 	public final String ELEMENT_COMMENT_BOX_SPACE_ACTIVITY = "//div[@class='author']/a[contains(text(),'${activityText}')]//ancestor::div[contains(@id,'ContextBox')]/div[contains(@id,'CommentBlockBound')]//p[@class='contentComment']";
 	public final String ELEMENT_AVATAR_SPACE_ACTIVITY = "//div[@class='author']/a[contains(text(),'${activityText}')]//ancestor::div[contains(@id,'ContextBox')]//*[@class='avatarXMedium']";
 	public final String ELEMENT_DESCRIPTION_SPACE_ACTIVITY = "//div[@class='author']/a[contains(text(),'${activityText}')]//ancestor::div[contains(@id,'ContextBox')]//p[@class='spaceDescription' and contains(text(),'${description}')]"; 

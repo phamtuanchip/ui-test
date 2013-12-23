@@ -26,11 +26,11 @@ public class BasicAction extends Permission{
 	Dialog dialog = new Dialog(driver);
 	Button button = new Button(driver);
 	ManageAlert magAlert = new ManageAlert(driver);
-	
+
 	public String ELEMENT_RESTRICTED_WIKI = "//*[@id='UIWikiPageInfoArea']//a[@data-original-title='This page is restricted. Click to share.']";
 	public String ELEMENT_MAKE_PUBLIC_BUTTON = "//*[@id='UIWikiPermalinkForm']//button[contains(text(),'Make Public')]";
 	public String ELEMENT_PERMISSION_WINDOW_CLOSE_BUTTON = "//*[@id='UIWikiPopupWindowL1']//a[@title='Close Window']";
-	
+
 	// Wiki page
 	/*===================== Add Page ====================*/	
 
@@ -59,7 +59,7 @@ public class BasicAction extends Permission{
 		Utils.pause(500);
 		driver.navigate().refresh();
 		Utils.pause(2000);
-		
+
 		info("-- Add a wiki page from blank page --");
 		if (mode == 1){ 
 			addWikiPageRichText(title, content);
@@ -112,10 +112,16 @@ public class BasicAction extends Permission{
 	 */
 	public void addWikiPageSourceEditor(String title, String content){
 		info("Modify data with source editor");
+		if(isElementPresent(ELEMENT_SOURCE_EDITOR_BUTTON))
+			click(ELEMENT_SOURCE_EDITOR_BUTTON);
 		Utils.pause(1000);
 		if(title != null){
 			type(ELEMENT_TITLE_WIKI_INPUT, title, true);
 		}	
+		if(waitForAndGetElement(ELEMENT_SOURCE_EDITOR_BUTTON,5000,0)!=null){
+			click(ELEMENT_SOURCE_EDITOR_BUTTON);
+			waitForAndGetElement(ELEMENT_RICHTEXT_BUTTON);
+		}
 		if(content != null){
 			type(ELEMENT_CONTENT_WIKI_INPUT,content,true);
 		}	
@@ -136,8 +142,10 @@ public class BasicAction extends Permission{
 	public void addWikiPageRichText(String title, String content){
 		if(title != null)
 			type(ELEMENT_TITLE_WIKI_INPUT, title, true);
-		click(ELEMENT_RICHTEXT_BUTTON);
-		waitForAndGetElement(ELEMENT_SOURCE_EDITOR_BUTTON);
+		if(waitForAndGetElement(ELEMENT_RICHTEXT_BUTTON,5000,0)!=null){
+			click(ELEMENT_RICHTEXT_BUTTON);
+			waitForAndGetElement(ELEMENT_SOURCE_EDITOR_BUTTON);
+		}
 		if (content != null){
 			inputDataToFrame(ELEMENT_CONTENT_WIKI_FRAME, content,true);
 			Utils.pause(1000);
@@ -332,7 +340,7 @@ public class BasicAction extends Permission{
 	public void addRelatedPage(String wikiPath, String pageName, Object...opts){
 		String space = (String) (opts.length > 0 ? opts[0] : "");
 		Boolean verify = (Boolean) (opts.length > 1 ? opts[1] : true);
-		
+
 		button = new Button(driver);
 		//goToWikiPage(wikiPath);
 		goToPageInfo(null, wikiPath);
@@ -588,7 +596,7 @@ public class BasicAction extends Permission{
 		click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 	}
-	
+
 	/**
 	 * Add blank wiki page with an attachment
 	 * 
@@ -615,7 +623,7 @@ public class BasicAction extends Permission{
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		waitForAndGetElement(By.xpath(ELEMENT_ATTACHMENT_NUMBER.replace("${No}", "" + upload.length)));
 	}
-	
+
 	/** Edit wiki page that check public activity
 	 * 
 	 * 
@@ -636,7 +644,7 @@ public class BasicAction extends Permission{
 		click(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 		waitForElementNotPresent(ELEMENT_SAVE_BUTTON_ADD_PAGE);
 	}
-	
+
 	/**
 	 * Add new blank wiki page at source editor mode with content including many line
 	 * 
@@ -654,6 +662,8 @@ public class BasicAction extends Permission{
 		info("Modify data with source editor");
 		if(title != null)
 			type(ELEMENT_TITLE_WIKI_INPUT, title, true);
+		if(this.plfVersion.equalsIgnoreCase("4.1"))
+			click(ELEMENT_SOURCE_EDITOR_BUTTON);
 		if(content != null){
 			String[] line = content.split("/");
 			for (int i = 0; i < line.length; i ++){

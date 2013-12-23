@@ -342,11 +342,12 @@ import org.testng.annotations.*;
 		- The dropdown list of stream isn't displayed		*/ 
 		mMember.goToMySpacePage();
 		mMember.addNewSpace(spaceName,"");
-		goToMembers(spaceName);
 		
-		waitForAndGetElement(ELEMENT_ACTIVITY_STREAM);
+		waitForAndGetElement(ELEMENT_SPACE_ACTIVITY_STREAM);
 		waitForElementNotPresent(ELEMENT_ACTIVITY_DROPDOWN);
 		
+		mMember.goToAllSpaces();
+		mMember.deleteSpace(spaceName);
  	}
 
 
@@ -373,7 +374,7 @@ import org.testng.annotations.*;
 		- The space's activity is displayed in the "My activities stream"		*/ 
 		mMember.goToMySpacePage();
 		mMember.addNewSpace(spaceName,"");
-		goToMembers(spaceName);
+
 		spaceMan.goToSpaceMenu("Activity Stream");
 		addActivity(true, text, false, "");
 		
@@ -409,9 +410,9 @@ import org.testng.annotations.*;
 		*Input Data: 
 		*Expected Outcome: 
 		- All of the space's activities are displayed in the "My activities stream"		*/
+		
 		mMember.goToMySpacePage();
 		mMember.addNewSpace(spaceName,"");
-		goToMembers(spaceName);
 		spaceMan.goToSpaceMenu("Activity Stream");
 		addActivity(true, text1, false, "");
 		addActivity(true, text2, false, "");
