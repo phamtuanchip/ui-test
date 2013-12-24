@@ -34,8 +34,8 @@ public class ManageAccount extends PlatformBase {
 
 
 	public ManageAccount(WebDriver dr,String...plfVersion){
-		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 	}
 
 	Dialog dialog;

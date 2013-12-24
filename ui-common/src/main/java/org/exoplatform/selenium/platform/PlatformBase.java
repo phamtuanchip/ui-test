@@ -643,11 +643,13 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_FILE_LINK = By.xpath("//i[@class='uiIconSocUIDocActivityComposer uiIconSocLightGray']");
 	public final By ELEMENT_SELECT_FILE_POPUP = By.xpath("//span[text()='Select File']");
 	public final By ELEMENT_CREATE_FOLDER_BUTTON = By.xpath("//i[@class='uiIconPlus uiIconLightGray']");
+	public final By ELEMENT_CREATE_FOLDER_BUTTON_PLF41 = By.xpath("//i[@class='uiIconEcmsAddFolder uiIconEcmsLightGrey']");
 	public final String ELEMENT_DRIVER_CURRENT = "//div[@class='btn dropdown-toggle']/span[contains(text(),'${driveName}')]";
 	public final By ELEMENT_DRIVER_BOX = By.xpath("//div[@class='btn dropdown-toggle']");
 	public final String ELEMENT_DRIVER_OPTION = "//a[@class='OptionItem' and contains(text(),'${driveName}')]";
 	public final By ELEMENT_UPLOAD_FILE_FRAME_XPATH = By.xpath("//iframe[contains(@id,'uploadFrame')]");
 	public final By ELEMENT_FILE_INPUT_DOC = By.xpath("//*[@class='inputDoc']");
+	public final By ELEMENT_FILE_INPUT_DOC_PLF41 = By.xpath("//*[class='uiIcon16x16FileWord uiIcon16x16nt_file']");
 
 	//Search icon
 	public final By ELEMENT_QUICK_SEARCH_ICON = By.xpath("//i[@class='uiIconPLF24x24Search']");

@@ -23,12 +23,12 @@ public class NavigationToolbar extends PlatformBase {
 	public final By ELEMENT_SEO_MENU = By.xpath("//span[text()='SEO']");
 	public final By ELEMENT_PAGE_ID = By.xpath("//*[contains(@id, 'UIPage-')]");
 
-	public NavigationToolbar(WebDriver dr,String...plfVersion){
-		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
+	public NavigationToolbar(WebDriver dr, String...plfVersion){
 		driver = dr;
-		brandMag = new BrandingManagement(driver,this.plfVersion);
-		button = new Button(driver,this.plfVersion);
-		peoCon = new PeopleConnection(driver,this.plfVersion);
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
+		brandMag = new BrandingManagement(driver);
+		button = new Button(driver);
+		peoCon = new PeopleConnection(driver);
 	} 
 
 	//Go to portal sites

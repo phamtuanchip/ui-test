@@ -18,8 +18,9 @@ import static org.exoplatform.selenium.TestLogger.info;
  */
 public class EcmsBase extends ManageAccount {
 
-	public EcmsBase(WebDriver dr) {
+	public EcmsBase(WebDriver dr, String...plfVersion) {
 		super(dr);
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 	}
 
 	protected UserGroupManagement userGroup = new UserGroupManagement(driver);

@@ -100,8 +100,8 @@ public class SpaceManagement extends SocialBase {
 	public final By ELEMENT_SPACE_MEMBER_PORTLET = By.id("UIMembersPortlet");
 	
 	public SpaceManagement(WebDriver dr, String...plfVersion){
-		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		driver = dr;
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		userGroup = new UserGroupManagement(driver);
 		dialog = new Dialog(driver);
 		button = new Button(driver);

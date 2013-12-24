@@ -69,6 +69,8 @@ public class Activity extends SocialBase {
 	public final By ELEMENT_PICTURE_SHARE = By.xpath("//div[@id='UIThumbnailLeftBox']"); 
 	public final By ELEMENT_TITLE_SHARE = By.xpath("//div[@id='UIRightBox']/h5[@id='LinkTitle']"); 
 	public final By ELEMENT_URL_SHARE = By.xpath("//div[@id='LinkUrl']");
+	public final By ELEMENT_NAME_SPACE_ACTIVITY = By.xpath("//a[@class='spaceName']");
+	public final By ELEMENT_ICON_SPACE_ACTIVITY = By.xpath("//i[@class='uiIconSocGroup uiIconSocLightGray']");
 
 	//	public final String ELEMENT_COMMENT_LINK = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//*[starts-with(@id, 'CommentLink')]";
 	public final String ELEMENT_COMMENT = "//div[@class='ContentBox']//*[contains(text(), '${activityText}')]";
@@ -105,6 +107,7 @@ public class Activity extends SocialBase {
 	public final String ELEMENT_YOU_LIKE_THIS_ACTIVITY = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/../*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//div[@class='listPeopleContent']/*[contains(text(),'You liked this')]";
 	public final String ELEMENT_USER_NAME_LIKE_THIS_ACTIVITY = "//div[@class='text' or @class = 'description'or @class='linkSource' or contains(@id, 'ContextBox')]/../*[contains(text(), '${activityText}')]//ancestor::div[contains(@id,'ActivityContextBox')]//div[@class='listPeopleContent']/*[contains(text(),'${userName} liked this')]";
 	public final String ELEMENT_USER_PROFILE_POPUP = "//table[@id='tipName']//a[contains(text(),'${userName}')]";
+	public final String ELEMENT_USER_PROFILE_AVATAR = "//table[@id='tipName']//a[@target='parent']/img"; 
 
 	/*public Activity(WebDriver dr){
 		driver = dr;
@@ -193,9 +196,16 @@ public class Activity extends SocialBase {
 		for (String path : paths)
 			click(By.linkText(path));
 		if(newFolder!=""){
-			click(ELEMENT_CREATE_FOLDER_BUTTON);
-			alert.inputAlertText(newFolder);
-			click(By.linkText(newFolder));
+			if(plfVersion.equalsIgnoreCase("4.0")){
+				click(ELEMENT_CREATE_FOLDER_BUTTON);
+				alert.inputAlertText(newFolder);
+				click(By.linkText(newFolder));
+			}
+			if(plfVersion.equalsIgnoreCase("4.1")){
+				click(ELEMENT_CREATE_FOLDER_BUTTON_PLF41);
+				alert.inputAlertText(newFolder);
+				click(By.linkText(newFolder));
+			}
 		}
 
 		if (upload && uploadFileName!="")
@@ -223,7 +233,8 @@ public class Activity extends SocialBase {
 			click(ELEMENT_SELECT_BUTTON);
 			Utils.pause(1000);
 			if(upload && uploadFileName!="")
-				assert waitForAndGetElement(ELEMENT_FILE_INPUT_DOC).getText().contains(uploadFileName);
+				if (plfVersion.equalsIgnoreCase("4.0")) assert waitForAndGetElement(ELEMENT_FILE_INPUT_DOC).getText().contains(uploadFileName);
+				if(plfVersion.equalsIgnoreCase("4.1")) waitForAndGetElement(ELEMENT_FILE_INPUT_DOC);
 			else{
 				if(selectFileName!=""){
 					assert waitForAndGetElement(ELEMENT_FILE_INPUT_DOC).getText().contains(selectFileName);
