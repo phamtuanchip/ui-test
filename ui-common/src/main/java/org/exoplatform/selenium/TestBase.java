@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.exoplatform.selenium.platform.ManageAccount;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -105,7 +106,18 @@ public class TestBase {
 		termsAndConditions(opParams);
 		info("End of term and conditions");
 		
-		checkPLFVersion();
+		if(!firstTimeLogin)
+			checkPLFVersion();
+		else{
+			driver.manage().window().maximize();
+			driver.navigate().refresh();
+			Utils.pause(2000);
+			
+			ManageAccount acc = new ManageAccount(driver);
+			acc.signOut();
+			firstTimeLogin=false;
+			checkPLFVersion();
+		}
 	}
 
 
@@ -160,16 +172,17 @@ public class TestBase {
 			firstTimeLogin = true;
 			info("-- Administrator account (FQA) has been created successfully... --");
 		} 
-		Utils.pause(1000);     
+		Utils.pause(5000);     
 	}
 
 	/**
 	 * Verify plf version
 	 */
 	public void checkPLFVersion(){
+		waitForTextNotPresent("terms and conditions agreement");
 		try{
 			info("Verify platform version");
-			String des = waitForAndGetElement(ELEMENT_PLF_INFORMATION).getText();
+			String des = driver.findElement(ELEMENT_PLF_INFORMATION).getText();
 			if(des.contains("v4.0")){
 				this.plfVersion = "4.0";
 				info("Platform version 4.0.x");
