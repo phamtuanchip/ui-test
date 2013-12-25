@@ -166,8 +166,9 @@ public class NavigationManagement extends  PlatformBase{
 		info("--Delete a node from navigation--");
 		alt = new ManageAlert(driver);
 		button = new Button(driver);
-		String currentNodeHome = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeNameHome);	
+		String currentNodeHome = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeNameHome);
 		String currentNodeName = ELEMENT_NODE_LINK.replace("${nodeLabel}", nodeName);
+		String currentChildNodeName = ELEMENT_CHILD_NODE_LINK.replace("${nodeLabel}", nodeNameHome).replace("${childNode}", nodeName);
 		editNavigation(currentNavigation);
 		//currentNodeHome.equals(ELEMENT_NAVIGATION_NODE_AREA)
 		if (firstLevel){
@@ -178,7 +179,7 @@ public class NavigationManagement extends  PlatformBase{
 			waitForElementNotPresent(currentNodeName);
 			button.save();		
 		}else {
-			if (waitForAndGetElement(currentNodeName, 5000, 0) == null){
+			if (waitForAndGetElement(currentChildNodeName, 5000, 0) == null){
 				click(currentNodeHome);
 			}
 			click(currentNodeName);

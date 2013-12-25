@@ -1,6 +1,7 @@
 package org.exoplatform.selenium.platform;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.TestBase;
 import org.exoplatform.selenium.Utils;
@@ -25,6 +26,7 @@ public class PlatformBase extends TestBase {
 	public final String DATA_USER2 = "mary";
 	public ManageAlert alert = new ManageAlert(driver);
 	public Button button = new Button(driver);
+	public Dialog dialog = new Dialog(driver);
 
 	/****************Common Elements*******************/
 	public final String ELEMENT_CONTAINS_TEXT = "//*[contains(text(),'${text}')]"; 
@@ -220,11 +222,14 @@ public class PlatformBase extends TestBase {
 	/*
 	 * Context menu
 	 * */
-	public final By ELEMENT_CUT_NODE = By.className("uiIconEcmsCut");
+//	public final By ELEMENT_CUT_NODE = By.className("uiIconEcmsCut");
+	public final By ELEMENT_CUT_NODE = By.className("uiIconCutNode");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsCut']"); 
-	public final By ELEMENT_PASTE_NODE = By.className("uiIconEcmsPaste");
+//	public final By ELEMENT_PASTE_NODE = By.className("uiIconEcmsPaste");
+	public final By ELEMENT_PASTE_NODE = By.className("uiIconPasteNode");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsPaste']"); 
-	public final By ELEMENT_COPY_NODE = By.className("uiIconEcmsCopy");
+//	public final By ELEMENT_COPY_NODE = By.className("uiIconEcmsCopy");
+	public final By ELEMENT_COPY_NODE = By.className("uiIconCopyNode");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsCopy']"); 
 	public final By ELEMENT_CLONE_NODE = By.xpath("//a[contains(text(),'Clone')]");
 	public final By ELEMENT_EDIT_NODE_PAGE = By.className("uiIconEcmsEditDocument");
