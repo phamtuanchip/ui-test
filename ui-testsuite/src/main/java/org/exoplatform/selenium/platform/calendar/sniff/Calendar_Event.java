@@ -200,7 +200,7 @@ public class Calendar_Event extends CalendarBase {
 		dragAndDropToObject(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", EVENT06)),ELEMENT_TARGET_DATE);
 
 		info("Restore data");
-		deleteEventTask(EVENT06, selectDayOption.ONEDAY);
+		deleteEventTask(EVENT06);
 	}
 
 

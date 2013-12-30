@@ -45,7 +45,7 @@ public class Calendar_Views extends CalendarBase{
 	/** Check displaying added task/event in all views
 	 * CaseID 68658
 	 */
-	@Test(groups="fail")
+	@Test
 	public void test01_checkEventAllViews() {
 		String EVENT_NAME_01 = "VIEWS_EVENT_01";
 

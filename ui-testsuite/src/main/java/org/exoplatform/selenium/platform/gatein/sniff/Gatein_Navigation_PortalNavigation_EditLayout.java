@@ -13,6 +13,8 @@ import org.exoplatform.selenium.platform.PageEditor;
 import org.exoplatform.selenium.platform.PageManagement;
 import org.exoplatform.selenium.platform.PortalManagement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -125,7 +127,10 @@ public class Gatein_Navigation_PortalNavigation_EditLayout extends PortalManagem
 		
 		goToPortalEditLayout(portalName);
 		click(ELEMENT_CATEGORY_COLLABORATION);
+		WebElement e = waitForAndGetElement("//div[@class='popupContent']");
+		((JavascriptExecutor) (driver)).executeScript("arguments[0].scrollTop(0);",e);
 		dragAndDropToObject(ELEMENT_ANWSER_PORTLET, By.xpath("//*[text() = 'Portal Page']/.."));
+		waitForAndGetElement("//div[@class='CONTROL-PORTLET CONTROL-BLOCK uiInfoBar']/span[text()='Answers Portlet']");
 		click(ELEMENT_SWITCH_VIEW_MODE_PORTAL);
 		waitForAndGetElement(ELEMENT_ANWSER_PORTLET_IN_VIEW_PAGE);
 		click(ELEMENT_SWITCH_VIEW_MODE_PORTAL);

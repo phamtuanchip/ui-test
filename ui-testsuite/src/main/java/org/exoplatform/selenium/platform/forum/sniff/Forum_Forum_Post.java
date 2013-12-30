@@ -87,9 +87,6 @@ public class Forum_Forum_Post extends ForumBase{
 		//Add private post
 		goToTopic(DATA_USER2, category, topic);
 		mngPost.privatePost(topic, post, post, "", "");
-		waitForAndGetElement(mngPost.ELEMENT_PRIVATE_POST_MESSAGE.replace("${post}", post));
-		click(mngPost.ELEMENT_PRIVATE_POST_CLOSE_NOTIFICATION);
-		waitForElementNotPresent(mngPost.ELEMENT_PRIVATE_POST_MESSAGE.replace("${post}", post));
 		
 		//Check if other user can see private post
 		goToTopic("demo", category, topic);

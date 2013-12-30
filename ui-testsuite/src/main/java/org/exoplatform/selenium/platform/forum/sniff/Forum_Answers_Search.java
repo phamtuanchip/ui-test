@@ -48,7 +48,7 @@ public class Forum_Answers_Search extends AnswerBase {
 		String description = "Add new category for answer";
 		String[] userGroup = {"demo"};
 		
-		magCat.addNewCategoryInAnswer(categoryName, null, description, 1, userGroup, true, false);
+		magCat.addNewCategoryInAnswer(categoryName, null, description, 2, userGroup, true, false);
 
 		quickSearchInAnswer(categoryName);
 		waitForAndGetElement(By.linkText(categoryName));
