@@ -122,11 +122,13 @@ public class Activity extends SocialBase {
 	public void selectFileter(String filterOption){
 		info("-- Select filter activity --");
 		//if(waitForAndGetElement(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption), DEFAULT_TIMEOUT, 0)==null){
-		if(isElementNotPresent(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption))){
-			click(ELEMENT_ACTIVITY_DROPDOWN,2);
-			click(ELEMENT_ACTIVITY_FILTER_OPTION.replace("${filterOption}", filterOption));
-			waitForAndGetElement(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption));
+		if(isElementPresent(ELEMENT_ACTIVITY_DROPDOWN)){
+			if(isElementNotPresent(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption))){
+				click(ELEMENT_ACTIVITY_DROPDOWN,2);
+				click(ELEMENT_ACTIVITY_FILTER_OPTION.replace("${filterOption}", filterOption));
+				waitForAndGetElement(ELEMENT_ACTIVITY_FILTER_CURRENT.replace("${filterOption}", filterOption));
 
+			}
 		}
 	}
 
@@ -235,7 +237,7 @@ public class Activity extends SocialBase {
 			Utils.pause(1000);
 			if(upload && uploadFileName!="")
 				if (plfVersion.equalsIgnoreCase("4.0")) assert waitForAndGetElement(ELEMENT_FILE_INPUT_DOC).getText().contains(uploadFileName);
-				if(plfVersion.equalsIgnoreCase("4.1")) waitForAndGetElement(ELEMENT_FILE_INPUT_DOC);
+			if(plfVersion.equalsIgnoreCase("4.1")) waitForAndGetElement(ELEMENT_FILE_INPUT_DOC);
 			else{
 				if(selectFileName!=""){
 					assert waitForAndGetElement(ELEMENT_FILE_INPUT_DOC).getText().contains(selectFileName);
@@ -296,7 +298,7 @@ public class Activity extends SocialBase {
 			waitForAndGetElement(By.linkText(link));
 		}
 	}
-	
+
 	//	/**
 	//	 * Delete activity 
 	//	 * @param activityText: input a String 
@@ -320,7 +322,6 @@ public class Activity extends SocialBase {
 	//
 	//		Utils.pause(1000);
 	//	}
-
 
 	/**
 	 * Add a new comment on activity stream

@@ -36,6 +36,7 @@ public class HomePageActivity extends PlatformBase{
 	//activity layout
 	public final String ELEMENT_ACTIVITY_AUTHOR_NAME = "//div[contains(@id,'activityContainer')][${index}]//div[@class='author']//a[text()='${author}']";
 	public final String ELEMENT_ACTIVITY_AUTHOR_AVATAR = "//div[contains(@id,'activityContainer')][${index}]//div[@class='activityAvatar avatarCircle']//img[@alt='${author}']";
+
 	public final By ELEMENT_ACTIVITY_TEXTBOX = By.id("DisplaycomposerInput");
 	public final String ELEMENT_ACTIVITY = "//*[contains(text(),'${activityText}')]";
 	public final String ELEMENT_DOWNLOAD_ICON = "//*[contains(text(),'${activityText}')]/../../../..//i[@class='uiIconDownload uiIconLightGray']"; 
