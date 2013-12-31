@@ -49,6 +49,7 @@ public class Wiki_Attachment extends BasicAction {
 		String newTitle = "Wiki_sniff_attachment_page_title_01_update";
 		String newContent = "Wiki_sniff_attachment_page_content_01_update";
 		String newLink = "Wiki_Sniff_Attachment_01.jpg";
+		By imgElement = By.xpath("//img[contains(@src,"+newLink+")]");
 		
 		info("Add new wiki page having attachment");
 		addBlankWikiPageHasAttachment(title, content, link);
@@ -62,12 +63,20 @@ public class Wiki_Attachment extends BasicAction {
 
 		info("Check download attachment successfully");
 		click(ELEMENT_ATTACHMENT_ICON);
+		click(By.linkText(newLink));
+		switchToNewWindow();
+		waitForAndGetElement(imgElement);
+		switchToParentWindow();
+		assert checkFileExisted(newLink);
+		
 		click(By.linkText(link));
 		Utils.pause(3000);
 		assert checkFileExisted(link);
 		
+		
 		info("Delete attachment");
 		deleteAnAttachment(link);
+		deleteAnAttachment(newLink);
 		//waitForAndGetElement(ELEMENT_ATTACHMENT_NUMBER.replace("${No}", "1"));
 		
 		deleteCurrentWikiPage();		

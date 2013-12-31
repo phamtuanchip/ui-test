@@ -261,8 +261,11 @@ public class Wiki_Version_View extends Version{
 
 		goToRevisionsPage();
 
-		Utils.captureScreen("FNC_KS_WIKI_VERSION_VIEW_LINK_01");
-
+		
+		goToWiki();
+		
+		click(By.linkText(dataInfo[2]));
+		
 		deleteCurrentWikiPage();
 	}
 

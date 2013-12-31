@@ -327,7 +327,8 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 		resetDataWikiSpacePermission(ELEMENT_PAGE1, "*:/platform/users");
 	}
 
-	/* case09: Add permission for user by selecting directly
+	/**Test Case ID: 69672
+	 *  case09: Add permission for user by selecting directly
 	 * add page
 	 * Check permission for user have add/edit page by selecting directly
 	 * check user can view/edit page
@@ -337,13 +338,13 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		String PAGE_NAME1 = "Add permission for group by selecting directly";
 
-		String[] user3={"Platform/Users","*"};
+		String[] user3={"Development/Select this Group"};
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
-		prepareDataWikiSpacePermissionV1(PAGE_NAME1, 2, user3, "*:/platform/users");
+		prepareDataWikiSpacePermissionV1(PAGE_NAME1, 2, user3, "*:/developers");
 
-		magAcc.userSignIn(ManageAccount.userType.AUTHOR);
+		magAcc.userSignIn(ManageAccount.userType.DEVELOPER);
 		
 		goToWiki();
 
@@ -370,11 +371,11 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 
 		String PAGE_NAME1 = "Add permission for group by putting group membership name";
 
-		String[] user4={"*:/platform/web-contributors"};
+		String[] user4={"Platform/Content Management", "author"};
 
 		By ELEMENT_PAGE1 = By.linkText(PAGE_NAME1);
 
-		prepareDataWikiSpacePermissionV1(PAGE_NAME1, 0, user4, "*:/platform/web-contributors");
+		prepareDataWikiSpacePermissionV1(PAGE_NAME1, 3, user4, "author:/platform/web-contributors");
 
 		magAcc.userSignIn(ManageAccount.userType.AUTHOR);
 		
@@ -390,7 +391,7 @@ public class Wiki_SpacePermission_Add extends BasicAction {
 		
 		goToWiki();
 
-		resetDataWikiSpacePermission(ELEMENT_PAGE1, "*:/platform/web-contributors");
+		resetDataWikiSpacePermission(ELEMENT_PAGE1, "author:/platform/web-contributors");
 	}
 
 	/* case11: Add permission for group by selecting
