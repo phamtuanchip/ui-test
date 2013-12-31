@@ -56,6 +56,7 @@ public class TestBase {
 
 //	public final String DEFAULT_BASEURL = "http://gmail.fqa.exocloud.vn/portal";
 	public final String DEFAULT_BASEURL = "http://yopmail.wks-acc.exoplatform.org/portal";
+
 	//"http://yopmail.netstg.exoplatform.org/portal";
 	//"http://hushmail.wks-acc.exoplatform.org/portal";
 	//"http://gmail.wks-acc.exoplatform.org/portal";

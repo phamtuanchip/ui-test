@@ -29,6 +29,7 @@ public class CloudBase extends PlatformBase{
 	/*-------------- End of Sign up to eXo -------------------------*/
 
 	/*-------------- Yopmail informations --------------------------*/
+	public final String GMAIL_ADDRESS = "fqaexovn@gmail.com";
 	public final String YOPMAIL_ADDRESS = "fqa-exo@yopmail.com";
 	public final String YOPMAIL_URL = "http://www.yopmail.com/en/";
 	public final By ELEMENT_YOPMAIL_LOGIN = By.name("login");
@@ -58,14 +59,41 @@ public class CloudBase extends PlatformBase{
 
 	/*------------ Getting started in 3 steps ----------------------*/
 	//Step 1: Complete your profile
+	public final By ELEMENT_START_STEP_WIZARD = By.xpath("//*[@id='StepProfile']//*[@class='startedBarBG']");
 	public final By ELEMENT_AVATAR_IMAGE = By.id("avatarImage"); 
+	public final By ELEMENT_POSITION_STEP1 = By.id("posProfile");
+	public final By ELEMENT_FIRST_NAME_STEP1 = By.id("firstNameProfile");
+	public final By ELEMENT_LAST_NAME_STEP1 = By.id("lastNameProfile");
+	public final By ELEMENT_PROFILE_PICTURE = By.id("fileDropZone");
+	public final By ELEMENT_PROFILE_PICTURE_TEXT = By.xpath("//div[@class='control-label' and text()='Add a profile picture:']");
+	public final By ELEMENT_POSITION_STEP1_TEXT = By.xpath("//div[@class='control-label' and text()='Your current position:']");
+	public final By ELEMENT_FIRST_LAST_NAME_TEXT = By.xpath("//div[@class='control-label' and text()='First and Last name:']");
+	public final By ELEMENT_SKIP_STEP1 = By.xpath("//h6[text()='Step 1: Complete your profile']/../..//a[@onclick='CloudLogin.exit();']");
+	public final By ELEMENT_TIP_STEP1 = By.xpath("//h6[text()='Step 1: Complete your profile']/../..//*[@class='rightStartTip']");
+	public final By ELEMENT_TIP_TITLE_STEP1 = By.xpath("//h6[text()='Step 1: Complete your profile']/../..//*[@class='rightStartTip']/strong[text()='Tip:']");
+	public final By ELEMENT_UPLOAD_PROFILE_PICTURE_SRC = By.id("avatarImage");
+	public final By ELEMENT_BROWSE_UPLOAD_PROFILE_PICTURE = By.xpath("//*[@class='btBrowse']");
+	public final By ELEMENT_UPLOAD_PROFILE_INPUT = By.xpath("//input[@type='file']");
+	public final By ELEMENT_COMPLETE_YOUR_PROFILE_STEP1_LABEL = By.xpath("//h6[text()='Step 1: Complete your profile']");
 	//Move to PlatformBase
 	//public final By ELEMENT_SKIP_TO_HOMEPAGE = By.xpath("//*[contains(text(), 'Step 1')]/..//a[contains(text(), 'Skip to homepage')]");
-	
+
 	//Step 2: Join Spaces
 	public final By ELEMENT_CHECKBOX_GETTING_STARTED = By.xpath("//*[@class='uiCheckbox']/span[text()='Getting Started']");
+	public final By ELEMENT_JOIN_SPACE_STEP2_LABEL = By.xpath("//h6[text()='Step 2: Join Spaces']");
+	public final By ELEMENT_BOX_DEFAULT_SPACE_STEP2 = By.xpath("//h6[text()='Step 2: Join Spaces']/../p");
+	public final By ELEMENT_SKIP_STEP2 = By.xpath("//h6[text()='Step 2: Join Spaces']/../..//a[@onclick='CloudLogin.exit();']");
+	public final By ELEMENT_TIP_STEP2 = By.xpath("//h6[text()='Step 2: Join Spaces']/../..//*[@class='rightStartTip']");
+	public final String ELEMENT_SPACE_CHECKBOX = "//*[text()='${spaceName}']/../*[@type='checkbox']";
+	public final String ELEMENT_JOIN_SPACE_BUTTON = "//*[@id='t_submit_space' and contains(text(), 'Join ${number} space')]";
+	
 	//Step 3: Invite Coworkers
 	public final By ELEMENT_INPUT_EMAIL_ADDRESS = By.id("email");
+	public final By ELEMENT_JOIN_SPACE_STEP3_LABEL = By.xpath("//h6[text()='Step 3: Invite Coworkers']");
+	public final By ELEMENT_BOX_DEFAULT_SPACE_STEP3 = By.xpath("//h6[text()='Step 3: Invite Coworkers']/../p");
+	public final By ELEMENT_TIP_STEP3 = By.xpath("//h6[text()='Step 3: Invite Coworkers']/../..//*[@class='rightStartTip']");
+	public final By ELEMENT_SKIP_STEP3 = By.xpath("//h6[text()='Step 3: Invite Coworkers']/../..//a[@onclick='CloudLogin.exit();']");
+	public final String ELEMENT_EMAIL_REMOVE = "//*[@class='text-button']/*[@class='text-label' and contains(text(),'${name}')]/../*[@class='text-remove']";
 
 	/*------------ Button for eXo Cloud ----------------------------*/
 	public final By ELEMENT_BUTTON_CREATE = By.xpath("//button[text()='Create']");
@@ -73,6 +101,7 @@ public class CloudBase extends PlatformBase{
 	public final By ELEMENT_BUTTON_NEXT_FIRST_PAGE = By.xpath("//div[1][@class = 'item']//button[text()='Next']");
 	public final By ELEMENT_BUTTON_NEXT_SECOND_PAGE = By.xpath("//div[2][@class = 'item']//button[text()='Next']");
 	public final By ELEMENT_BUTTON_FINISH_THIRD_PAGE = By.xpath("//div[3][@class = 'item']//button[text()='Finish']");
+	public final String ELEMENT_SEND_INVITE_BUTTON = "//*[@id='t_submit_email' and contains(text(),'Send (${number})')]";
 
 	/*------------ Common methods for eXo Cloud test ---------------*/
 
@@ -229,6 +258,31 @@ public class CloudBase extends PlatformBase{
 		waitForAndGetElement(ELEMENT_YOPMAIL_INBOX_TITLE);
 		click(ELEMENT_CHECK_NEW_MAIL);	
 		driver.switchTo().frame(waitForAndGetElement(ELEMENT_YOPMAIL_INBOX_TITLE));
+	}
+	
+	/**
+	 * Upload profile picture at step 1
+	 * @param urlFile
+	 */
+	public void uploadProfilePicture(String urlFile){
+		//By phuongdt
+		info("-- Upload profile picture at step 1 --");
+		WebElement preElement = waitForAndGetElement(ELEMENT_UPLOAD_PROFILE_PICTURE_SRC);
+		String oldsrc = preElement.getAttribute("src"); 
+		WebElement upload = waitForAndGetElement(ELEMENT_UPLOAD_PROFILE_INPUT, DEFAULT_TIMEOUT, 1, 2);
+		((JavascriptExecutor)driver).executeScript("arguments[0].click();", upload);
+		Utils.pause(5000);
+		((JavascriptExecutor)driver).executeScript("arguments[0].style.visibility = 'visible'; arguments[0].style.height = '1px'; " +
+				"arguments[0].style.width = '1px'; arguments[0].style.opacity = 1", upload);
+		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", upload);
+		upload.sendKeys(Utils.getAbsoluteFilePath("TestData/"+urlFile));
+		
+		WebElement element = waitForAndGetElement(ELEMENT_UPLOAD_PROFILE_PICTURE_SRC); 
+		String newsrc = element.getAttribute("src"); 
+		info("-- Verify preview profile picture --");
+		info(oldsrc);
+		info(newsrc);
+		assert (!oldsrc.contentEquals(newsrc));
 	}
 
 }
