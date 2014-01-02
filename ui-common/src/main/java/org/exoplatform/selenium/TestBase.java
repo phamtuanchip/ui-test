@@ -54,8 +54,8 @@ public class TestBase {
 	//public final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
 	//public final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
 
-	public final String DEFAULT_BASEURL = "http://yopmail.wks-acc.exoplatform.org/portal";
-
+	public final String DEFAULT_BASEURL = "http://gmail.wks-acc.exoplatform.org/portal";
+//	public final String DEFAULT_BASEURL = "http://dispostable.wks-acc.exoplatform.org/";
 	//"http://yopmail.netstg.exoplatform.org/portal";
 	//"http://hushmail.wks-acc.exoplatform.org/portal";
 	//"http://gmail.wks-acc.exoplatform.org/portal";

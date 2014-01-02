@@ -36,10 +36,12 @@ public class UserGroupManagement extends PlatformBase {
 	public String ELEMENT_GROUP_MANAGEMENT_TAB_MEMBERSHIP_COMBO_BOX = "//*[@id='UIGroupEditMembershipForm']//select[@name='membership']";
 	public String ELEMENT_GROUP_MANAGEMENT_TAB_MEMBERSHIP_SAVE_BUTTON = "//*[@id='UIGroupEditMembershipForm']//button[text()='Save']";
 	public String ELEMENT_GROUP_MANAGEMENT_TAB_MEMBERSHIP = "//*[@id='UIGridUser']//span[text()='${username}']/parent::td/parent::tr/td[4]/span[text()='${membership}']";
-
+	
 	public final String ELEMENT_MEMBERSHIP_MANAGEMENT_TAB_FAIL_DEL_MSG = "//span[contains(text(),'You cannot delete this membership because it is mandatory.')]";
 	//User Management -> Edit User form
 	public  final By ELEMENT_USER_MEMBERSHIP_TAB = By.xpath("//*[text()='User Membership']");
+	public final By ELEMENT_SELECT_USER_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Select User']");
+	public final String ELEMENT_GROUP_PERMISSION = "//a[@title='${groupName}']";
 
 	/*
 	 *  Choose TAB actions
@@ -186,12 +188,13 @@ public class UserGroupManagement extends PlatformBase {
 			}else if (isElementPresent(By.xpath("//*[contains(@class, 'uiIconSelectUser')]"))){
 				click(By.xpath("//*[contains(@class, 'uiIconSelectUser')]"));
 			}
-			waitForTextPresent("Select User");
+			waitForAndGetElement(ELEMENT_SELECT_USER_POPUP);
 			for (String user : users) {
 				click("//input[@name='" + user + "']", 2);
 			}
 			//click(ELEMENT_GROUP_SEARCH_POPUP_ADD_ICON);
 			click(button.ELEMENT_ADD_BUTTON);
+			waitForElementNotPresent(ELEMENT_SELECT_USER_POPUP);
 			Utils.pause(1000);
 			Assert.assertEquals(getValue(ELEMENT_INPUT_USERNAME), userNames);
 		} else {
@@ -258,7 +261,6 @@ public class UserGroupManagement extends PlatformBase {
 		String groupName_2 =  "//*[text()='selectGroup']/..//*[contains(text(), '${groupName}')]";
 		String groupName_3 = "//ul[@class='nodeGroup']//a[contains(text(),'${groupName}')]";
 		String groupName_4 =  "//*[text()='Browse and select a group']/..//*[contains(text(), '${groupName}')]";
-		String groupName_5 = "//a[@title='${groupName}']";
 		String[] temp;			 
 
 		/* Delimiter */
@@ -270,20 +272,21 @@ public class UserGroupManagement extends PlatformBase {
 		for(int i =0; i < temp.length ; i++){
 			info("Go to " + temp[i]);
 			if (isInPermissionTab){
-				if (!temp[i].matches("Administration")){
+				/*if (!temp[i].matches("Administration")){
 					click(By.linkText(temp[i]));
-				}else{
-					if (isElementPresent(By.xpath(groupName_5.replace("${groupName}", temp[i])))){
-						click(By.xpath(groupName_5.replace("${groupName}", temp[i])));
+				}else{*/
+					if (waitForAndGetElement(By.xpath(ELEMENT_GROUP_PERMISSION.replace("${groupName}", temp[i])),10000,0) != null){
+						click(By.xpath(ELEMENT_GROUP_PERMISSION.replace("${groupName}", temp[i])));
 					}
-					else if (isElementPresent(By.xpath(groupName.replace("${groupName}", temp[i])))){
+					else if (waitForAndGetElement(By.xpath(groupName.replace("${groupName}", temp[i])),2000,0) != null ){
 						click(By.xpath(groupName.replace("${groupName}", temp[i])));
-					}else if (isElementPresent(By.xpath(groupName_2.replace("${groupName}", temp[i])))){
+					}else if (waitForAndGetElement(By.xpath(groupName_2.replace("${groupName}", temp[i])),2000,0) != null){
 						click(By.xpath(groupName_2.replace("${groupName}", temp[i])));
-					}else if (isElementPresent(By.xpath(groupName_3.replace("${groupName}", temp[i])))){
+					}else if (waitForAndGetElement(By.xpath(groupName_3.replace("${groupName}", temp[i])),2000,0) != null){
 						click(By.xpath(groupName_3.replace("${groupName}", temp[i])));
-					}
-				}	
+					}else
+						assert false: "Cannot select the item " + temp[i];
+//				}	
 			}else{
 				if (!temp[i].matches("Administration")){
 					click(By.linkText(temp[i]));

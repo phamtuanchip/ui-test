@@ -58,7 +58,7 @@ public class Gatein_Manage_Portal extends PortalManagement{
 		
 		info("Switch to new portal");
 		//driver.get("http://localhost:8080/portal/" + portalName);
-		driver.get(DEFAULT_BASEURL + "/" + portalName);
+		driver.get(baseUrl + "/" + portalName);
 		waitForAndGetElement("//img[contains(@src, 'sites/" + portalName + "')]");
 		
 		info("Delete portal");

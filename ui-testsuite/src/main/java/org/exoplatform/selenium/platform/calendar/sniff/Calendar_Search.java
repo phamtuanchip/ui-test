@@ -59,7 +59,6 @@ public class Calendar_Search extends CalendarBase{
 		Utils.pause(10000);
 		info("Restore data");
 		click(ELEMENT_BUTTON_CLOSE_QUICK_SEARCH_RESULT);
-		//goToCalendarPage();
 		waitForAndGetElement(ELEMENT_WEEK_TAB_ACTIVE);
 
 		deleteEventTask(EVENT_NAME_01);

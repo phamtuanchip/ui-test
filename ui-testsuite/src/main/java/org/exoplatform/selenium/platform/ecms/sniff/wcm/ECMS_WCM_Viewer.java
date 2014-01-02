@@ -38,7 +38,7 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 	ContextMenu cMenu;
 	ContentListPreference cList;
 
-	String acmeURL = DEFAULT_BASEURL + "/acme";
+	String acmeURL = baseUrl + "/acme";
 
 	@BeforeMethod
 	public void beforeMethod() {

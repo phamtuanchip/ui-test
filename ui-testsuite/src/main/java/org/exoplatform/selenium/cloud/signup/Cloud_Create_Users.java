@@ -60,14 +60,7 @@ public class Cloud_Create_Users extends PlatformBase{
 		userGroup.addUsersToGroup("john", "*", false, false);
 		userGroup.addUsersToGroup("john", "manager", false, false);
 		click(ELEMENT_UP_LEVEL);
-		//Organization/Management/Executive Board
-		userGroup.selectGroup("Organization/Management/Executive Board", true);
-		userGroup.addUsersToGroup("john", "*", false, false);
-		click(ELEMENT_UP_LEVEL);
-		//Organization/Employees
-		userGroup.selectGroup("Organization/Employees", true);
-		userGroup.addUsersToGroup("john", "*", false, false);
-		click(ELEMENT_UP_LEVEL);
+	
 		//platform/users
 		userGroup.selectGroup("Platform/Users", true);
 		userGroup.addUsersToGroup("john", "*", false, false);
@@ -81,31 +74,27 @@ public class Cloud_Create_Users extends PlatformBase{
 		userGroup.addUsersToGroup("james", "author", false, false);
 		userGroup.addUsersToGroup("james", "redactor", false, false);
 
-		//click(ELEMENT_UP_LEVEL);
-		//platform/users
-		//userGroup.selectGroup("Platform/Users", true);
-		//userGroup.addUsersToGroup("john", "*", false, false);
-
 		click(ELEMENT_UP_LEVEL);
 		//Organization/Employees
 		userGroup.selectGroup("Organization/Employees", true);
 		userGroup.addUsersToGroup("john", "*", false, false);
-		userGroup.addUsersToGroup("mary", "member", false, false);
-		userGroup.addUsersToGroup("james", "member", false, false);
-		userGroup.addUsersToGroup("demo", "member", false, false);
+		userGroup.addUsersToGroup("mary", "member", true, true);
+		userGroup.addUsersToGroup("james", "member", true, true);
+		userGroup.addUsersToGroup("demo", "member", true, true);
 
 		click(ELEMENT_UP_LEVEL);
 		//Organization/Management/Executive Board
 		userGroup.selectGroup("Organization/Management/Executive Board", true);
-		userGroup.addUsersToGroup("john", "*", false, false);
+		userGroup.addUsersToGroup("john", "*", true, true);
 
 		click(ELEMENT_UP_LEVEL);
+		waitForAndGetElement(userGroup.ELEMENT_GROUP_PERMISSION.replace("${groupName}", "Management"));
 		click(ELEMENT_UP_LEVEL);
-		click(ELEMENT_UP_LEVEL);
+		waitForAndGetElement(userGroup.ELEMENT_GROUP_PERMISSION.replace("${groupName}", "Development"));
 
 		//Developer
 		userGroup.selectGroup("Development", true);
-		userGroup.addUsersToGroup("demo", "member", false, false);
-		userGroup.addUsersToGroup("john", "member", false, false);
+		userGroup.addUsersToGroup("demo", "member", true, true);
+		userGroup.addUsersToGroup("john", "member", true, true);
 	}
 }

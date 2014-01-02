@@ -261,6 +261,8 @@ public class ForumManageForum extends ForumBase {
 		inputDataForum(null, addForum, autofill, postEmail, topicEmail, moderateTopic, type, userGroup, permission);
 
 		button.save();	
+		waitForElementNotPresent(ELEMENT_FORUM_TITLE);
+		
 		boolean verify = permission.length > 4 ? permission[4]:true;
 		if (verify){
 			waitForAndGetElement(FORUM);

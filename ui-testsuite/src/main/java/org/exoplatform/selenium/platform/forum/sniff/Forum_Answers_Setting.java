@@ -1,4 +1,4 @@
-package org.exoplatform.selenium.platform.forum.sniff;
+	package org.exoplatform.selenium.platform.forum.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 

@@ -2,8 +2,6 @@ package org.exoplatform.selenium.platform.calendar;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
-import java.awt.event.KeyEvent;
-
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;
@@ -122,7 +120,7 @@ public class CalendarBase extends PlatformBase {
 	public String MSG_FEEDS_DELETE = "Are you sure you want to delete this feed from the list?";
 
 	//---------- Add calendar-------------------
-	public By ELEMENT_CAL_DISPLAY_NAME_INPUT = By.id("displayName");
+	public By ELEMENT_CAL_DISPLAY_NAME_INPUT = By.xpath("//*[@id='displayName']");
 	public By ELEMENT_CAL_DESC_INPUT = By.xpath("//*[@id='UICalendarForm']//*[@id='description']");
 	public By ELEMENT_CAL_COLOR = By.xpath("//*[contains(@class,'displayValue')]");
 	public String ELEMENT_CAL_COLOR_SELECT = "//form[@id='UICalendarForm']//a[contains(@class,'red colorCell')]";
@@ -212,6 +210,10 @@ public class CalendarBase extends PlatformBase {
 	public final By ELEMENT_TOOLBAR_SELECT_CALENDAR = By.name("Calendar");
 	public final String ELEMENT_CREATE_EVENT_MESSAGE = "//*[contains(text(),'The Event was added to ${userName}')]";
 	public final String ELEMENT_CREATE_TASK_MESSAGE = "//*[contains(text(),'The Task was added to ${userName}')]";
+	
+	//---------------------List view --------------------------
+	public final String ELEMENT_FILTER_CATEGORY_SELECTED = "//option[@selected='selected' and text()='${category}']";
+	
 	/*================== Common functions for Calendar =================*/
 
 	/** Go to calendar
@@ -510,6 +512,7 @@ public class CalendarBase extends PlatformBase {
 	 */
 	public void importCalendar(String path, String name, String description, String color){
 		goToImportCalendar();
+		waitForAndGetElement(ELEMENT_CAL_DISPLAY_NAME_INPUT,50000);
 		uploadCalendar(path);
 		if(name != null)
 			type(ELEMENT_CAL_DISPLAY_NAME_INPUT,name,true);
@@ -573,7 +576,7 @@ public class CalendarBase extends PlatformBase {
 	public void deleteEventTask(String event, selectDayOption... options){
 		alert = new ManageAlert(driver);
 		waitForAndGetElement(ELEMENT_WORKING_PANE_23H);
-		selectDayOption optDay = (waitForAndGetElement(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", event), 5000,0) == null) ? selectDayOption.ALLDAY : selectDayOption.ONEDAY;
+		selectDayOption optDay = (waitForAndGetElement(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", event), 10000,0) == null) ? selectDayOption.ALLDAY : selectDayOption.ONEDAY;
 
 		info("--Delete an Event/Task--");
 		switch (optDay) {
@@ -731,9 +734,11 @@ public class CalendarBase extends PlatformBase {
 		info("----Type in quick search box----");
 		type(By.xpath(ELEMENT_INPUT_QUICK_SEARCH), keyword, true);
 		info("----Send search request----");
-		Utils.pause(5000);
+		/*Utils.pause(5000);
 		click(ELEMENT_INPUT_QUICK_SEARCH);
-		Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
+		Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);*/
+		((JavascriptExecutor)(driver)).executeScript("javascript:eXo.webui.UIForm.submitForm('3f1c6848-2dde-4a06-80b7-9d00c72fb0ad#UISearchForm','Search',true)");
+		
 		info("----Confirm search result page displayed----");
 		Utils.pause(3000);
 		waitForAndGetElement(ELEMENT_BUTTON_CLOSE_QUICK_SEARCH_RESULT);

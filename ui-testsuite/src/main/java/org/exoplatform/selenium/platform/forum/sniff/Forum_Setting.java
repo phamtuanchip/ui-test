@@ -131,7 +131,7 @@ public class Forum_Setting extends ForumBase {
 		magAc.signIn("john", DATA_PASS);
 		goToForums();
 		click(By.linkText(catName));
-		waitForAndGetElement(cat.ELEMENT_CHECKBOX_ALL_CATEGORY);
+		waitForAndGetElement(cat.ELEMENT_CHECKBOX_ALL_CATEGORY,2);
 		cat.deleteCategoryInForum(catName);
 		goToUserManagement("demo");
 		settingUserManagementProfile("Jack Miller", "User", null, null, "", true, false, true);
@@ -172,7 +172,8 @@ public class Forum_Setting extends ForumBase {
 		waitForElementNotPresent(ELEMENT_LEGEN_PANEL);
 		click(By.linkText(catName1));
 		String url = driver.getCurrentUrl();
-		assert url.contains(DEFAULT_BASEURL+ "/intranet/forum/category/forumCategory");
+		info("URL is " + url);
+		assert url.contains(baseUrl+ "/intranet/forum/category/forumCategory");
 		
 		info("Reset Data");
 		navTool.goToEditPageEditor();

@@ -318,7 +318,7 @@ public class PLF_Navigation_LeftNavigation extends GroupNavigation {
 		
 		/*Step 2: Check Left navigation on other portal*/
 		//- Connect to other sites. Go to via url: host:port/portal/acme/.
-		String url = DEFAULT_BASEURL+"/acme/";
+		String url = baseUrl+"/acme/";
 		driver.get(url);
 		
 		//- The Left Navigation isn't displayed

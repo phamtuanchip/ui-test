@@ -448,9 +448,10 @@ public class NavigationToolbar extends PlatformBase {
 		Utils.pause(1000);
 		info("-- Go to home page --");
 		click(ELEMENT_HOME_PAGE);
+		waitForAndGetElement(ELEMENT_REFRESH);
 		Utils.pause(1000);
 		driver.navigate().refresh();
-		//waitForAndGetElement(ELEMENT_REFRESH);
+		waitForAndGetElement(ELEMENT_REFRESH);
 		Utils.pause(5000);
 	}
 	

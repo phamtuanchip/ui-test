@@ -170,11 +170,12 @@ public class Calendar_Task extends CalendarBase {
 		info("Go to Intranet Calendar");
 		goToCalendarPage();
 
-		info("Add a new task");
+		/*info("Add a new task");
 		tsk.addQuickTask(CALENDAR05,CALENDAR05,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),false);
-
+		waitForAndGetElement(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", CALENDAR05),50000);
+		
 		info("Delete a task");
-		Utils.pause(5000);
+		Utils.pause(5000);*/
 		deleteEventTask(CALENDAR05, selectDayOption.ONEDAY);
 	}
 
@@ -193,7 +194,7 @@ public class Calendar_Task extends CalendarBase {
 		tsk.addQuickTask(CALENDAR06,CALENDAR06,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),false);
 
 		info("Drag & drop a task");
-		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", CALENDAR06)));
+		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", CALENDAR06)),50000);
 		dragAndDropToObject(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", CALENDAR06)),ELEMENT_TARGET_DATE);
 
 		info("Restore data");

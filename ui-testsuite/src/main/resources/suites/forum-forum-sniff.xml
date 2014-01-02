@@ -1,0 +1,30 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Platform Sniff Test" verbose="1" preserve-order="true">
+	<test name="forum-sniff" enabled="true">
+		<groups>
+			<run>
+				<exclude name="pending" />
+			</run>
+		</groups>
+		<classes>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Administration"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_BasicAction"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Bookmark"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Category"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_MoreAction"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Post"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_PrivateMessage"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Topic_BasicAction"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Topic_ManagePoll"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Topic_OtherAction"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Search"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Setting"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_PublishActivity_PollActivity"/>
+			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_PublishActivity_TopicActivity"/>
+		</classes>
+	</test>
+	<listeners>
+		<listener class-name="org.exoplatform.selenium.TestReportListener" />
+	</listeners>
+</suite>

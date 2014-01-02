@@ -51,26 +51,23 @@ public class Calendar_Views extends CalendarBase{
 	public void test01_checkEventAllViews() {
 		String EVENT_NAME_01 = "VIEWS_EVENT_01";
 
-		info("Go to Intranet Calendar");
-		goToCalendarPage();
-
 		info("Add new event");
 		evt.addQuickEvent(EVENT_NAME_01,EVENT_NAME_01,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true);
 
 		info("Confirm in Week view");
-		waitForAndGetElement(EVENT_WEEK_VIEW.replace("${eventTitle}",EVENT_NAME_01));
+		waitForAndGetElement(EVENT_WEEK_VIEW.replace("${eventTitle}",EVENT_NAME_01),50000);
 
 		info("Switch to Day view");
 		click(ELEMENT_BUTTON_DAY_VIEW);
-		waitForAndGetElement(EVENT_DAY_VIEW.replace("${eventTitle}",EVENT_NAME_01));
+		waitForAndGetElement(EVENT_DAY_VIEW.replace("${eventTitle}",EVENT_NAME_01),50000);
 
 		info("Switch to Month view");
 		click(ELEMENT_BUTTON_MONTH_VIEW);
-		waitForAndGetElement(EVENT_MONTH_VIEW.replace("${eventTitle}",EVENT_NAME_01));
+		waitForAndGetElement(EVENT_MONTH_VIEW.replace("${eventTitle}",EVENT_NAME_01),50000);
 
 		info("Switch to List view");
 		click(ELEMENT_BUTTON_LIST_VIEW);
-		waitForAndGetElement(EVENT_LIST_VIEW.replace("${eventTitle}",EVENT_NAME_01));
+		waitForAndGetElement(EVENT_LIST_VIEW.replace("${eventTitle}",EVENT_NAME_01),50000);
 
 		info("Switch to Work Week view");
 		//*[@class='btn-group containerMoreItem']/*[@data-toggle='dropdown']
@@ -92,9 +89,6 @@ public class Calendar_Views extends CalendarBase{
 		String EVENT_NAME_02 = "VIEWS_EVENT_02";
 		String CategoryName = "Meeting";
 
-		info("Go to Intranet Calendar");
-		goToCalendarPage();
-
 		info("Choose Week view of Calendar");
 		if(waitForAndGetElement(ELEMENT_BUTTON_VIEW_ACTIVE.replace("${view}", "Week"),10000,0) == null){
 			click(ELEMENT_BUTTON_WEEK_VIEW);
@@ -104,10 +98,15 @@ public class Calendar_Views extends CalendarBase{
 		evt.addQuickEvent(EVENT_NAME_02,EVENT_NAME_02,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith",CategoryName);
 
 		info("Check event displayed in ALL category");
-		waitForAndGetElement(EVENT_WEEK_VIEW.replace("${eventTitle}",EVENT_NAME_02));
+		waitForAndGetElement(EVENT_WEEK_VIEW.replace("${eventTitle}",EVENT_NAME_02),50000);
 
 		info("Check event displayed in chosen category");
+		chooseEventCategoryOpt("Anniversary");
+		
+		waitForElementNotPresent(EVENT_WEEK_VIEW.replace("${eventTitle}",EVENT_NAME_02));
+		
 		chooseEventCategoryOpt(CategoryName);
+		
 		waitForAndGetElement(EVENT_WEEK_VIEW.replace("${eventTitle}",EVENT_NAME_02));
 
 		info("Restore data");
@@ -123,9 +122,6 @@ public class Calendar_Views extends CalendarBase{
 		String EVENT_NAME_03 = "VIEWS_EVENT_03";
 		String CategoryName = "Calls";
 
-		info("Go to Intranet Calendar");
-		goToCalendarPage();
-
 		info("Choose LIST view of Calendar");
 		if(waitForAndGetElement(ELEMENT_BUTTON_VIEW_ACTIVE.replace("${view}", "List"),10000,0) == null){
 			click(ELEMENT_BUTTON_LIST_VIEW);
@@ -136,9 +132,12 @@ public class Calendar_Views extends CalendarBase{
 		evt.addQuickEvent(EVENT_NAME_03,EVENT_NAME_03,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith",CategoryName);
 
 		info("Check event displayed in ALL category");
-		waitForAndGetElement(EVENT_LIST_VIEW.replace("${eventTitle}",EVENT_NAME_03));
+		waitForAndGetElement(EVENT_LIST_VIEW.replace("${eventTitle}",EVENT_NAME_03),50000);
 
 		info("Check event displayed in chosen category");
+		chooseEventCategoryOpt("Clients");
+		waitForElementNotPresent(EVENT_LIST_VIEW.replace("${eventTitle}",EVENT_NAME_03));
+		
 		chooseEventCategoryOpt(CategoryName);
 		waitForAndGetElement(EVENT_LIST_VIEW.replace("${eventTitle}",EVENT_NAME_03));
 

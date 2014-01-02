@@ -3,6 +3,7 @@ package org.exoplatform.selenium.platform.calendar.sniff;
 import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.ManageAccount.userType;
 import org.openqa.selenium.By;
 import org.exoplatform.selenium.Utils;
 import org.testng.annotations.AfterMethod;
@@ -52,7 +53,6 @@ public class Calendar_Event extends CalendarBase {
 		String EVENT_01 = "EVENT68651";
 
 		info("Go to Intranet Calendar");
-		goToCalendarPage();
 
 		info("Add a new event in Personal calendar");
 		evt.addQuickEvent(EVENT_01, EVENT_01,getDate(0,"MM/dd/yyyy"), getDate(0,"MM/dd/yyyy"), true);
@@ -77,9 +77,6 @@ public class Calendar_Event extends CalendarBase {
 		String[] USER_SHARED = {"root"};
 		String USER_SHARED_PASS = "12345";
 		boolean[] EDITABLE = {true};
-
-		info("==Go to Intranet Calendar with User fqa==");
-		goToCalendarPage();
 
 		info("==Create and share a calendar with User root==");
 		addCalendar(CAL_02, CAL_02, "pink");
@@ -115,9 +112,6 @@ public class Calendar_Event extends CalendarBase {
 		String USER_GROUP_PASS = "12345";
 		String CAL_GROUP = "/platform/administrators";
 
-		info("==Go to Intranet Calendar==");
-		goToCalendarPage();
-
 		info("==Create a group calendar==");
 		addCalendar(CAL_03, CAL_03, "black", CAL_GROUP);
 		Utils.pause(3000);
@@ -150,9 +144,6 @@ public class Calendar_Event extends CalendarBase {
 		String TITLE = "EVENT69264edited";
 		String DESCRIPTION = "EVENT_04_description_edited";
 
-		info("Go to Intranet Calendar");
-		goToCalendarPage();
-
 		info("Add a new task");
 		evt.addQuickEvent(EVENT04,EVENT04,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true);
 
@@ -172,15 +163,13 @@ public class Calendar_Event extends CalendarBase {
 	public void test05_deleteEventinPersonalCal() {
 		String EVENT05 = "EVENT69265";
 
-		info("Go to Intranet Calendar");
-		goToCalendarPage();
-
 		info("Add a new event");
 		evt.addQuickEvent(EVENT05,EVENT05,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),false);
-
+		waitForAndGetElement(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", EVENT05));
+		
 		info("Delete an event");
 		Utils.pause(5000);
-		deleteEventTask(EVENT05, selectDayOption.ONEDAY);
+		deleteEventTask(EVENT05);
 	}
 
 
@@ -192,14 +181,11 @@ public class Calendar_Event extends CalendarBase {
 	public void test06_DragDropEvent() {
 		String EVENT06 = "EVENT69287";
 
-		info("Go to Intranet Calendar");
-		goToCalendarPage();
-
 		info("Add a new task");
 		evt.addQuickEvent(EVENT06,EVENT06,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),false);
 
 		info("Drag & drop a task");
-		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", EVENT06)));
+		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", EVENT06)),50000);
 		dragAndDropToObject(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", EVENT06)),ELEMENT_TARGET_DATE);
 
 		info("Restore data");
@@ -220,22 +206,14 @@ public class Calendar_Event extends CalendarBase {
 		String DESCRIPTION = "EVENT_07_description_edited";
 		String EVENT_CATEGORY = "All";
 		String USER_GROUP = "root";
-		String USER_GROUP_PASS = "12345";
-
-		info("==Go to Intranet Calendar==");
-		goToCalendarPage();
 
 		info("==Create a group calendar==");
 		addCalendar(CAL_07, CAL_07, "green", CAL_GROUP);
 		Utils.pause(3000);
 		changeEditPermissionForCalShowInGroup(CAL_07, USER_GROUP, CAL_GROUP);
 
-		info("==User fqa log out==");
-		acc.signOut();
-
 		info("==Login by shared user==");
-		acc.signIn(USER_GROUP, USER_GROUP_PASS);
-		Utils.pause(5000);
+		acc.userSignIn(userType.ROOT);
 
 		info("==Add a new event on group calendar==");
 		goToCalendarPage();
@@ -245,8 +223,8 @@ public class Calendar_Event extends CalendarBase {
 		evt.editEvent(EVENT07,TITLE,DESCRIPTION, null,null,null,false);
 
 		info("==Restore data==");
-		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}", EVENT07)));
-		deleteEventTask(EVENT07);
+		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}", TITLE)));
+		deleteEventTask(TITLE);
 		deleteCalendar(CAL_07,true);
 	}
 
@@ -262,9 +240,6 @@ public class Calendar_Event extends CalendarBase {
 		String EVENT_CATEGORY = "All";
 		String USER_GROUP = "root";
 		String USER_GROUP_PASS = "12345";
-
-		info("==Go to Intranet Calendar==");
-		goToCalendarPage();
 
 		info("==Create a group calendar==");
 		addCalendar(CAL_08, CAL_08, "green", CAL_GROUP);
@@ -303,9 +278,6 @@ public class Calendar_Event extends CalendarBase {
 		String USER_SHARED_PASS = "12345";
 		boolean[] EDITABLE = {true};
 
-		info("==Go to Intranet Calendar==");
-		goToCalendarPage();
-
 		info("==Create and share a calendar with User root==");
 		addCalendar(CAL_09, CAL_09, "pink");
 		Utils.pause(3000);
@@ -326,8 +298,8 @@ public class Calendar_Event extends CalendarBase {
 		evt.editEvent(EVENT09,TITLE,DESCRIPTION, null,null,null,false);
 
 		info("==Restore data==");
-		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}", EVENT09)));
-		deleteEventTask(EVENT09);
+		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}", TITLE)));
+		deleteEventTask(TITLE);
 		deleteCalendar(CAL_09,true);
 	}
 
@@ -343,9 +315,6 @@ public class Calendar_Event extends CalendarBase {
 		String[] USER_SHARED = {"root"};
 		String USER_SHARED_PASS = "12345";
 		boolean[] EDITABLE = {true};
-
-		info("==Go to Intranet Calendar==");
-		goToCalendarPage();
 
 		info("==Create a shared calendar==");
 		addCalendar(CAL_10, CAL_10, "blue");

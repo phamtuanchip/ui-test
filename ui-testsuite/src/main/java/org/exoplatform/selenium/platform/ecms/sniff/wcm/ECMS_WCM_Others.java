@@ -45,7 +45,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	SitesExplorer siteExp;
 	PageEditor pEditor;
 	SEO seo;
-	String acmeURL = DEFAULT_BASEURL + "/acme/"; 
+	String acmeURL = baseUrl + "/acme/"; 
 
 	/**
 	 * CaseID 65874 Show draft/public content from page

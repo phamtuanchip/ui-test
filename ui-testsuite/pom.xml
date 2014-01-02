@@ -190,6 +190,18 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>forum-forum-sniff</id>
+			<properties>
+				<testSuite>forum-forum-sniff.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>forum-answer-sniff</id>
+			<properties>
+				<testSuite>forum-answer-sniff.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
 			<id>calendar-sniff</id>
 			<properties>
 				<testSuite>calendar-sniff.xml</testSuite>

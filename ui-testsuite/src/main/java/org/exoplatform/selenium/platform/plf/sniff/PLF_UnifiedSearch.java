@@ -647,7 +647,7 @@ public class PLF_UnifiedSearch extends Template {
 		String nodeName3 = "node716153";
 		Map<String, String> languages = new HashMap<String, String>();
 		languages.put("English", "");
-		String url = DEFAULT_BASEURL+"/"+portalName.toLowerCase()+"/"+parentNode.toLowerCase()+"/"+nodeName1.toLowerCase();
+		String url = baseUrl+"/"+portalName.toLowerCase()+"/"+parentNode.toLowerCase()+"/"+nodeName1.toLowerCase();
 
 		//Create data
 		//Some pages are existed.

@@ -199,7 +199,7 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
 		info("View Page before editing...");
-		driver.get(DEFAULT_BASEURL + "/intranet/home/" + nodeName2);
+		driver.get(baseUrl + "/intranet/home/" + nodeName2);
 		waitForTextPresent("Basic information");
 		waitForTextPresent("Contact");
 		waitForTextPresent("Experience");
@@ -212,7 +212,7 @@ public class Gatein_Navigation_PortalNavigation_EditNavigation extends PortalMan
 		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
 
 		info("View Page after editing...");
-		driver.get(DEFAULT_BASEURL + "/intranet/home/" + nodeName2);
+		driver.get(baseUrl + "/intranet/home/" + nodeName2);
 		waitForTextNotPresent("Basic information");
 		waitForTextPresent("Wiki Home");
 
