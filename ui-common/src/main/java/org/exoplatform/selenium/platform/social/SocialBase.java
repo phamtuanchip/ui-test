@@ -28,6 +28,7 @@ public class SocialBase extends PlatformBase {
     public final String ELEMENT_INVITATION_LEAVE_LINK_IN_ALL_SPACES = "//*[@id='UIManageAllSpaces']//*[text()='${spaceName}']/../../ul//*[text()='Leave']";
     public final String ELEMENT_INVITATION_ACCEPT_LINK_IN_ALL_SPACES = "//*[@id='UIManageAllSpaces']//*[text()='${spaceName}']/../../ul//*[text()='Accept']";
 	public final String ELEMENT_INVITATION_IGNORE_LINK_IN_ALL_SPACES = "//*[@id='UIManageAllSpaces']//*[text()='${spaceName}']/../../ul//*[text()='Ignore']";
+	public final By     ELEMENT_ADDNEWSPACE_BUTTON      = By.xpath("//button[text()='Add New Space']");
     
     // Go to My Space > My Spaces Tab
  	public final String ELEMENT_INVITATION_LEAVE_LINK = "//*[@id='UIManageMySpaces']//*[text()='${spaceName}']/../../ul//*[text()='Leave']";
@@ -119,7 +120,11 @@ public class SocialBase extends PlatformBase {
 	public void goToAllSpaces(){
 		info("Go to All Spaces");
 		click(ELEMENT_JOIN_SPACE_LINK);
-		waitForAndGetElement("//*[contains(text(),'Add New Space')]");
+		if(waitForAndGetElement("//*[contains(text(),'Add New Space')]",20000,0) == null){ 
+			info("Cannot click on 'Join Space'");
+			click(ELEMENT_MY_SPACES_LINK);
+			waitForAndGetElement(ELEMENT_ADDNEWSPACE_BUTTON);
+		}
 	}
 
 	// Go to Invitation Receives

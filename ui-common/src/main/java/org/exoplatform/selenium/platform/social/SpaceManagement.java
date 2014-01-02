@@ -43,7 +43,6 @@ public class SpaceManagement extends SocialBase {
 	//Go to My Spaces	> 
 	//Add space Form
 	protected  int DEFAULT_TIMEOUT = 60000;
-	public final By     ELEMENT_ADDNEWSPACE_BUTTON      = By.xpath("//button[text()='Add New Space']");
 			//("//a[@class='AddSpaceIcon']");
 	public final By     ELEMENT_ADDNEWSPACE_FORM        = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Add New Space']");
 			//("//span[@class='PopupTitle' and text()='Add New Space']");

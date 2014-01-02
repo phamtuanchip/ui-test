@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationManagement;
 import org.exoplatform.selenium.platform.NavigationToolbar;
@@ -287,10 +288,10 @@ public class PLF_UnifiedSearch extends Template {
 	@Test(priority=1)
 	public void test05_QuickSearch(){
 		/*Declare variables*/
-		String searchText = "test5";
-		String spaceName = "test5S";
-		String wikiName = "test5W";
-		String contentName = "test5C";
+		String searchText = "test70771";
+		String spaceName = "test70771S";
+		String wikiName = "test70771W";
+		String contentName = "test70771C";
 		String[][] wikiPath = {{"Wiki Home/"+wikiName}};
 
 		//Create data
@@ -431,7 +432,8 @@ public class PLF_UnifiedSearch extends Template {
 		info("-- Verify the forum name --");
 		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText().contains(forum1);
 		info("-- Verify the post date --");
-		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText().contains("AM");
+//		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText().contains("AM");
+		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText().contains(getCurrentDate("EEEEE, MMMMM d, yyyy"));
 		info("-- Verify the rating --");
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_FORUM_VOTE);
 		info("-- Verify the the number of replies in the topic --");
@@ -471,9 +473,11 @@ public class PLF_UnifiedSearch extends Template {
 		actBar.goToAddNewContent();
 		conTemp.createNewProduct(contentName1, contentName1);
 		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
+		Utils.pause(3000);
 		actBar.goToAddNewContent();
 		conTemp.createNewProduct(contentName2, contentName2);
 		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
+		Utils.pause(3000);
 		actBar.goToAddNewContent();
 		conTemp.createNewProduct(contentName3, contentName3);
 

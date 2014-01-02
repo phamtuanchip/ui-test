@@ -229,7 +229,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_PASTE_NODE = By.className("uiIconPasteNode");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsPaste']"); 
 //	public final By ELEMENT_COPY_NODE = By.className("uiIconEcmsCopy");
-	public final By ELEMENT_COPY_NODE = By.className("uiIconCopyNode");
+	public final By ELEMENT_COPY_NODE = By.xpath("//i[contains(@class,'uiIcon') and contains(@class,'Copy')]");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsCopy']"); 
 	public final By ELEMENT_CLONE_NODE = By.xpath("//a[contains(text(),'Clone')]");
 	public final By ELEMENT_EDIT_NODE_PAGE = By.className("uiIconEcmsEditDocument");
@@ -963,9 +963,9 @@ public class PlatformBase extends TestBase {
 			if (waitForAndGetElement(ELEMENT_COPY_NODE, 5000, 0) != null){
 				click((ELEMENT_COPY_NODE));
 				return;
-			}else if (waitForAndGetElement(ELEMENT_NAVIGATION_COPY_NODE, 5000, 0) != null){
+			/*}else if (waitForAndGetElement(ELEMENT_NAVIGATION_COPY_NODE, 5000, 0) != null){
 				click(ELEMENT_NAVIGATION_COPY_NODE);
-				return;
+				return;*/
 			}
 			Utils.pause(WAIT_INTERVAL);
 		}
