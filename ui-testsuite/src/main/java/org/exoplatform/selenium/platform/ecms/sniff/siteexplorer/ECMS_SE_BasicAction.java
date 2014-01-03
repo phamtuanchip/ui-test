@@ -300,8 +300,8 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 		info("Paste Clipboard");
 
 		//Create node1, node2
-		/*cTemplate.createNewFolder(node1, folderType.Content);
-		cTemplate.createNewFolder(node2, folderType.Document);*/
+		cTemplate.createNewFolder(node1, folderType.Content);
+		cTemplate.createNewFolder(node2, folderType.Document);
 
 		//Copy node1, cut node2
 		cMenu.copyNode(bNode1);
