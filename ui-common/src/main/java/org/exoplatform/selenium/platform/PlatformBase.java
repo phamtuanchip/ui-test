@@ -223,11 +223,9 @@ public class PlatformBase extends TestBase {
 	 * Context menu
 	 * */
 //	public final By ELEMENT_CUT_NODE = By.className("uiIconEcmsCut");
-	public final By ELEMENT_CUT_NODE = By.className("uiIconCutNode");
-	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsCut']"); 
+	public final By ELEMENT_CUT_NODE = By.xpath("//i[contains(@class,'uiIcon') and contains(@class,'Cut')]");
 //	public final By ELEMENT_PASTE_NODE = By.className("uiIconEcmsPaste");
-	public final By ELEMENT_PASTE_NODE = By.className("uiIconPasteNode");
-	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsPaste']"); 
+	public final By ELEMENT_PASTE_NODE = By.xpath("//i[contains(@class,'uiIcon') and contains(@class,'Paste')]");
 //	public final By ELEMENT_COPY_NODE = By.className("uiIconEcmsCopy");
 	public final By ELEMENT_COPY_NODE = By.xpath("//i[contains(@class,'uiIcon') and contains(@class,'Copy')]");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsCopy']"); 
