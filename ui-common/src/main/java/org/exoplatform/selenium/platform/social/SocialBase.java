@@ -18,7 +18,8 @@ public class SocialBase extends PlatformBase {
 	//public final By ELEMENT_JOIN_SPACE_LINK = By.xpath("//div[@class='uiSpaceNavigationPortlet']/..//div/a[contains(text(),'Join a space')]");
 
 	// Go to My space link
-	public final By ELEMENT_MY_SPACES_LINK = By.linkText("My Spaces");
+//	public final By ELEMENT_MY_SPACES_LINK = By.linkText("My Spaces");
+	public final By ELEMENT_MY_SPACES_LINK  = By.xpath("//a[text()='My Spaces']");
 	public final By ELEMENT_ALL_SPACE_LINK = By.linkText("All Spaces");
 	public final By ELEMENT_INVATATION_RECEIVES_LINK = By.linkText("Invitations Received");
 	public final By ELEMENT_REQUESTS_PENDING_LINK = By.linkText("Requests Pending");
@@ -120,7 +121,7 @@ public class SocialBase extends PlatformBase {
 	public void goToAllSpaces(){
 		info("Go to All Spaces");
 		click(ELEMENT_JOIN_SPACE_LINK);
-		if(waitForAndGetElement("//*[contains(text(),'Add New Space')]",20000,0) == null){ 
+		if(waitForAndGetElement(ELEMENT_ADDNEWSPACE_BUTTON,10000,0) == null){ 
 			info("Cannot click on 'Join Space'");
 			click(ELEMENT_MY_SPACES_LINK);
 			waitForAndGetElement(ELEMENT_ADDNEWSPACE_BUTTON);
