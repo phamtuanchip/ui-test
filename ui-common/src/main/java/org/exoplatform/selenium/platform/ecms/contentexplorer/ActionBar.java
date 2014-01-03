@@ -886,14 +886,16 @@ public class ActionBar extends EcmsBase{
 
 		info("-- Undo deletion --");
 		if (node != ""){
-			waitForTextPresent("\'" + node + "' was deleted succesfully.");
+			waitForAndGetElement(By.xpath("//*[contains(text(),'was deleted succesfully.')]"));
+			//waitForTextPresent("\'" + node + "' was deleted succesfully.");
 		}
 		click(ELEMENT_UNDO_DELETED_ITEM);
 		if (waitForAndGetElement(button.ELEMENT_OK_BUTTON, 3000, 0) != null){
 			click(button.ELEMENT_OK_BUTTON);
 		}
 		if (node != ""){
-			waitForTextPresent("\'" + node + "' was successfully restored.");
+			waitForAndGetElement(By.xpath("//*[contains(text(),'was successfully restored.')]"));
+			//waitForTextPresent("\'" + node + "' was successfully restored.");
 		}
 		Utils.pause(1000);		
 	}
