@@ -601,7 +601,10 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_FIRST_MAIL = By.xpath("//div[@class='iA g6' and contains(text(),'Hi')]/../../../../../table[@class='cf iB']");
 	public final String ELEMENT_GMAIL_CONTENT = "//*[@class='adn ads']//*[contains(text(),'${content}')]";
 	public final By ELEMENT_GMAIL_SIGN_IN_LINK = By.xpath("//a[@id='gmail-sign-in' and contains(text(),'Sign in')]");
-
+	public final String ELEMENT_GMAIL_INVITE_COWORKER_CONTENT = "//*[@class='adn ads']//strong[text()='${user}']/..";
+	public final String ELEMENT_GMAIL_FROM_USER = "//*[@class='gD' and @name ='${user}']";
+	public final By ELEMENT_GMAIL_TITLE_COWORKER = By.id(":xu");
+	
 	//get url
 	public final String ELEMENT_GET_URL_IMAGE = "//img[@alt='${name}']";
 
@@ -1230,15 +1233,27 @@ public class PlatformBase extends TestBase {
 	 * @param mail: element title of mail
 	 * @param content: mail content
 	 */
-	public void checkAndDeleteMail(By mail, String content){
+	public void checkAndDeleteMail(By mail, String content, Object... opParams){
+		Boolean isInvite = (Boolean) (opParams.length > 0 ? opParams[0]: false);
+		String fromUser = (String)(opParams.length>1 ? opParams[1] : "");
 		waitForAndGetElement(mail,300000);
 
-		click(mail);	
-		if(waitForAndGetElement(ELEMENT_GMAIL_CONTENT.replace("${content}",content),20000,0) == null )
-			click(ELEMENT_FIRST_MAIL);
-		waitForAndGetElement(ELEMENT_GMAIL_CONTENT.replace("${content}",content));
-		info("Found notify mail");
-
+		click(mail);
+		if(isInvite){
+			if(waitForAndGetElement(ELEMENT_GMAIL_INVITE_COWORKER_CONTENT.replace("${user}",fromUser),20000,0) == null )
+				click(ELEMENT_FIRST_MAIL);
+			waitForAndGetElement(ELEMENT_GMAIL_INVITE_COWORKER_CONTENT.replace("${user}",fromUser));
+			assert waitForAndGetElement(ELEMENT_GMAIL_INVITE_COWORKER_CONTENT.replace("${user}",fromUser)).getText().contains(content);
+			if(fromUser!="")
+				waitForAndGetElement(ELEMENT_GMAIL_FROM_USER.replace("${user}",fromUser));
+			info("Found notify mail");
+		}
+		else{
+			if(waitForAndGetElement(ELEMENT_GMAIL_CONTENT.replace("${content}",content),20000,0) == null )
+				click(ELEMENT_FIRST_MAIL);
+			waitForAndGetElement(ELEMENT_GMAIL_CONTENT.replace("${content}",content));
+			info("Found notify mail");
+		}
 		info("delete mail");
 		if (waitForAndGetElement(ELEMENT_DELETE_MAIL_2, 5000, 0) == null){
 			click(ELEMENT_DELETE_MAIL);

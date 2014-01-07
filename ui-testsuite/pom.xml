@@ -29,6 +29,12 @@
 
 	<profiles>
 		<profile>
+			<id>cloud-features</id>
+			<properties>
+				<testSuite>cloud-features.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
 			<id>cloud-signup</id>
 			<properties>
 				<testSuite>cloud-signup.xml</testSuite>

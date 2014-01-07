@@ -497,8 +497,8 @@ public class Cloud_Features_FirstLoginWizard extends CloudBase{
 	 * Refer: https://jira.exoplatform.org/browse/FQA-1372
 	 */
 	@Test (groups="pending")
-	public  void test09_TheLabelAddEmailAddressShouldBeRemoved() {
-		info("Test 9: The label Add email Address should be removed");
+	public  void test07_TheLabelAddEmailAddressShouldBeRemoved() {
+		info("Test 7: The label Add email Address should be removed");
 		/*- Sign In Intranet
 		 *Input Data: 
 		 *Expected Outcome: */
@@ -531,8 +531,8 @@ public class Cloud_Features_FirstLoginWizard extends CloudBase{
 	 * Refer: https://jira.exoplatform.org/browse/FQA-1583
 	 */
 	@Test (groups="pending")
-	public  void test03_UserShouldBeAbleToUploadAProfilePicture() {
-		info("Test 4: User should be able to upload a profile picture");
+	public  void test08_UserShouldBeAbleToUploadAProfilePicture() {
+		info("Test 8: User should be able to upload a profile picture");
 		/*
 		 *Input Data: 
 		 *	- Sign In Intranet
@@ -562,8 +562,8 @@ public class Cloud_Features_FirstLoginWizard extends CloudBase{
 	 * Refer: https://jira.exoplatform.org/browse/FQA-1245
 	 */
 	@Test (groups="pending")
-	public  void test04_UserShouldBeAbleToDragAndDropAProfilePicture() {
-		info("Test 5: User should be able to drag and drop a profile picture");
+	public  void test09_UserShouldBeAbleToDragAndDropAProfilePicture() {
+		info("Test 9: User should be able to drag and drop a profile picture");
 		/*
 		 *Input Data: 
 		 *	- Sign In Intranet
@@ -593,8 +593,8 @@ public class Cloud_Features_FirstLoginWizard extends CloudBase{
 	 * Refer: https://jira.exoplatform.org/browse/FQA-1583
 	 */
 	@Test (groups="pending")
-	public  void test05_LoadingIconShouldBeDisplayed() {
-		info("Test 6: Loading icon should be displayed");
+	public  void test10_LoadingIconShouldBeDisplayed() {
+		info("Test 10: Loading icon should be displayed");
 		/*
 		 *Input Data: 
 		 *	- Sign In Intranet

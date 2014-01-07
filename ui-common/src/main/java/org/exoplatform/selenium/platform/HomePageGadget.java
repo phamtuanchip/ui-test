@@ -15,6 +15,9 @@ import org.openqa.selenium.WebElement;
 public class HomePageGadget extends PlatformBase{
 
 	//-------Invitation Gadget --------
+	public By ELEMENT_SEND_BUTTON = By.id("send");
+	public By ELEMENT_INVITATION_GADGET_CLOUD = By.xpath("//*[@id='OfficeRight']//*[@class='UIGadgetPortlet']");
+	public By ELEMENT_INVITATION_GADGET_INDEX_DEFAULT_CLOUD = By.xpath("//*[@id='OfficeRight']//*[contains(@class,'UIRowContainer')]/div[2]//*[@class='UIGadgetPortlet']");
 	public By ELEMENT_INVITATION_GADGET = By.id("InvitationsPortlet");
 	public String ELEMENT_SHOW_CONNECTIONS_REQUEST_USER = "//div[@id='InvitationsPortlet']//div[@class='peopleInviteName']//div[text()='${nameinvitation}']";
 	public String ELEMENT_SHOW_CONNECTIONS_REQUEST_SPACE= "//div[@id='InvitationsPortlet']//div[@class='spaceInviteInfo']//div[text()='${namespace}']";
@@ -22,8 +25,13 @@ public class HomePageGadget extends PlatformBase{
 	public String ELEMENT_SHOW_ACCETPS_BUTTON = "//div[@id='InvitationsPortlet']//div[@class='peopleInviteInfo']//div[text()='${peopleName}']/..//a[text()='Accept']";
 	public String ELEMENT_REMOVE_INVITATION_BUTTON = "//div[@id='InvitationsPortlet']//div[@class='peopleInviteInfo']//div[text()='${peopleName}']/..//i[@class='uiIconClose']";
 	public String ELEMENT_TITLE_OF_GAGDET = "//div[@id='InvitationsPortlet']/..//span[text()='${number}']";
+	public By ELEMENT_FRAME_INVITATION_GADGET_CLOUD = By.id("remote_iframe_0");
+	public By ELEMENT_MESSAGE_INVITATION_GADGET = By.id("Message");
+	public String ELEMENT_GMAIL_EMAIL = "//span/b[contains(text(),'${user} has invited you to try eXo')]";
+	public By ELEMENT_GMAIL_SEND_USER = By.xpath("//*[@class='gD']");
 
 	//-------Getting Started Gadget -------- 
+	public By ELEMENT_GETTING_STARTED_GADGET_INDEX_DEFAULT_CLOUD = By.xpath("//*[@id='OfficeRight']//*[contains(@class,'UIRowContainer')]/div[1]//*[@class='GettingStartedContainer']");
 	public By ELEMENT_GETTING_STARTED_GADGET_FORM = By.id("GettingStartedContainer");
 	public By ELEMENT_PROFILE_PICTURE = By.linkText("Add a profile picture");
 	public By ELEMENT_CONNECT_TO_COWORKERS = By.linkText("Connect to coworkers");
