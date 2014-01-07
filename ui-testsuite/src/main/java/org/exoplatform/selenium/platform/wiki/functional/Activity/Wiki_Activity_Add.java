@@ -25,19 +25,18 @@ public class Wiki_Activity_Add extends Permalink{
 	SpaceManagement magSpace;
 	NavigationToolbar navBar;
 	
-	public String User = "fqa";
-	public String Pass = "gtngtn";
+	
 	
 	@BeforeMethod
 	public void beforeMethod(){
 		initSeleniumTest();
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
-		as = new HomePageActivity(driver);
-		magSpace = new SpaceManagement(driver);
-		navBar = new NavigationToolbar(driver);
-		magAcc = new ManageAccount(driver);
-		magAcc.signIn(User, Pass);
+		as = new HomePageActivity(driver,this.plfVersion);
+		magSpace = new SpaceManagement(driver,this.plfVersion);
+		navBar = new NavigationToolbar(driver,this.plfVersion);
+		magAcc = new ManageAccount(driver,this.plfVersion);
+		magAcc.signIn(DATA_USER1, DATA_PASS);
 	}
 
 	@AfterMethod
@@ -68,9 +67,9 @@ public class Wiki_Activity_Add extends Permalink{
 		magSpace.goToSpaceMenu("Wiki");
 		
 		info("Create a wiki page and make Space Wiki public");
-		makePublicPage(true);
 		addBlankWikiPage(WIKI_CONTENT,WIKI_CONTENT,2);
-	
+		makePublicPage(true);
+		
 		info("Go to Homepage Activity Stream to check activity update");
 		navBar.goToHomePage();
 		waitForTextPresent(WIKI_CONTENT);

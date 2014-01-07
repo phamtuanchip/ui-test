@@ -63,6 +63,7 @@ public class SpaceManagement extends SocialBase {
 	public final String MESSAGE_DELETE_SPACE            = "Cannot undo one deleted space with all its page navigations and group. Are you sure to delete this space?";
 	public final String ELEMENT_VERIFY_SPACE_NAME_ACTIVITY = "//div[@class='author']/a[contains(text(),'${spaceName}')]";
 	public final String ELEMENT_SPACE_MENU_ITEM = "//span[contains(text(),'${menuItem}')]";
+	public final String ELEMENT_SPACE_MENU_ITEM_41 = "//span[@class='tabName' and contains(text(),'${menuItem}')]";
 	public final String ELEMENT_SPACE_CURRENT_MENU_ITEM = "//li[@class='active item']//span[text()='${menuItem}']";
 	
 	//Space access
@@ -364,17 +365,32 @@ public class SpaceManagement extends SocialBase {
 	 */
 	public void goToSpaceMenu(String menuItem){
 		info("-- Go To " + menuItem + " --");
-		if(waitForAndGetElement(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem),DEFAULT_TIMEOUT,0)!=null)
-			click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem)));
-		else{
-			click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", "More")));
-			String []items = menuItem.split(" ");
-			if(items.length>1){
-				click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem.split(" ")[0]+" ...")));
-			}
+		if(this.plfVersion.equalsIgnoreCase("4.1")){
+			if(waitForAndGetElement(ELEMENT_SPACE_MENU_ITEM_41.replace("${menuItem}", menuItem),DEFAULT_TIMEOUT,0)!=null)
+				click(By.xpath(ELEMENT_SPACE_MENU_ITEM_41.replace("${menuItem}", menuItem)));
 			else{
-				click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem)));
+				click(By.xpath(ELEMENT_SPACE_MENU_ITEM_41.replace("${menuItem}", "More")));
+				String []items = menuItem.split(" ");
+				if(items.length>1){
+					click(By.xpath(ELEMENT_SPACE_MENU_ITEM_41.replace("${menuItem}", menuItem.split(" ")[0]+" ...")));
+				}
+				else{
+					click(By.xpath(ELEMENT_SPACE_MENU_ITEM_41.replace("${menuItem}", menuItem)));
+				}
 			}
+		} else if(this.plfVersion.equalsIgnoreCase("4.0")){
+			if(waitForAndGetElement(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem),DEFAULT_TIMEOUT,0)!=null)
+				click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem)));
+			else{
+				click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", "More")));
+				String []items = menuItem.split(" ");
+				if(items.length>1){
+					click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem.split(" ")[0]+" ...")));
+				}
+				else{
+					click(By.xpath(ELEMENT_SPACE_MENU_ITEM.replace("${menuItem}", menuItem)));
+				}
+			}	
 		}
 	}
 	

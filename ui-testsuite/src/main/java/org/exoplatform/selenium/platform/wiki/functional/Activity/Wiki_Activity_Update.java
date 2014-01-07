@@ -31,10 +31,10 @@ public class Wiki_Activity_Update extends BasicAction{
 		initSeleniumTest();
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
-		as = new HomePageActivity(driver);
-		magAcc = new ManageAccount(driver);
-		magSpace = new SpaceManagement(driver);
-		navBar = new NavigationToolbar(driver);
+		as = new HomePageActivity(driver,this.plfVersion);
+		magAcc = new ManageAccount(driver,this.plfVersion);
+		magSpace = new SpaceManagement(driver,this.plfVersion);
+		navBar = new NavigationToolbar(driver,this.plfVersion);
 		magAcc.signIn("fqa", "gtngtn");
 	}
 
