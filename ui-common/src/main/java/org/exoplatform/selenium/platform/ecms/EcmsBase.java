@@ -32,9 +32,9 @@ public class EcmsBase extends ManageAccount {
 	 * */
 
 	public final String ELEMENT_OVERVIEW_LINK = "//i[@class='uiIconFile uiIconExt-overview']";
-	public final String ELEMENT_DRAFT_ACME= "//div[text()='${content}']/../..//span[text()='Draft']";
+	public final String ELEMENT_DRAFT_ACME= "//h4[text()='${content}']/..//span[text()='Draft']";
 	public final String ELEMENT_ACME_TITLE= "//*[text()='${content}']";
-	public final String ELEMENT_PUBLISH_ACME = "//div[text()='${content}']/../..//span[@class='publishText']";
+	public final String ELEMENT_PUBLISH_ACME = "//h4[text()='${content}']/..//span[@class='publishText']";
 	public final By ELEMENT_ACME_WELCOME_TEXT = By.xpath("//div[contains(text(),'Welcome to Acme')]");
 	public final By ELEMENT_ACME_SEARCH_INPUT = By.name("keyword");
 	public final String ELEMENT_ACME_SEARCH_RESULT = "//a[text()='${result}']";
@@ -357,7 +357,7 @@ public class EcmsBase extends ManageAccount {
 
 	//Acme site > Overview page
 	public final By ELEMENT_OVERVIEW_PAGE = By.xpath("//*[@class = 'uiIconFile uiIconExt-overview']");
-	public final By ELEMENT_RSS_ICON = By.className("RssIcon");
+	public final By ELEMENT_RSS_ICON = By.xpath("//*[@data-original-title='RSS Feed']");
 	public final String ELEMENT_CLV_TITLE = "//*[@class='Title' and contains(text(), '${title}')]";
 	public final String ELEMENT_CLV_PUBLISH_DATE = ELEMENT_CLV_TITLE + "/../div[contains(text(), '${date}')]";
 

@@ -69,6 +69,7 @@ public class PageEditor extends PlatformBase {
 	public final By ELEMENT_CHECK_BOX_WORD_PHRASE_EDIT_MODE = By.xpath("//input[@id='content' and @type='radio']");
 	public final By ELEMENT_INPUT_NAME_SEARCH_WORD_PHRASE_EDIT_MODE = By.xpath("//input[@id='content' and @type='text']");
 	public final By ELEMENT_CONTENT_SEARCH_FORM_TAB = By.xpath("//div[@class='MiddleTab' and text() = 'Content Search Form']");
+	public final By ELEMENT_MULTI_CONTENT_SELECT_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Multiple Content Selector Pane']");
 
 	//Add Path > Right Workspace 
 	public final String ELEMENT_RIGHT_WORKSPACE_NODE = "//*[@class='rightWorkspace']//*[text()='${node}']";
@@ -323,12 +324,15 @@ public class PageEditor extends PlatformBase {
 			//wait 1s
 			Utils.pause(1000);
 			button.save();
+			waitForElementNotPresent(ELEMENT_MULTI_CONTENT_SELECT_POPUP);
 			if (contentMode){
+				waitForAndGetElement("//*[contains(@value,'"+(pathNames[pathNames.length - 1])+"')]");
 				button.save();
-				waitForTextPresent(pathNames[pathNames.length - 1]);
+				Utils.pause(2000);
 			}
 			if (nClose){
 				button.close();
+				waitForElementNotPresent(button.ELEMENT_CLOSE_BUTTON);
 			}
 		}
 		else{

@@ -56,7 +56,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	@Test
 	public void test01_ShowDraftPublicContentFromPage(){
 		String node1 = "ShowDraftPublicContentFromPage65874";
-		String page = "test01_page";
+		String page = "page65874";
 		By bNode = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node1));
 		String contentPath = "General Drives/Sites Management/" + node1;
 
@@ -69,7 +69,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 		//Go to overview page, add a SCV page
 		click(ecms.ELEMENT_OVERVIEW_LINK);	
 		pEditor.addSCVPageAndContentFolderPaths(page, contentPath,true);
-			
+				
 		//Switch to Edit mode
 		ecms.enableEditMode(true);
 		mouseOver(ecms.ELEMENT_ACME_TITLE.replace("${content}", node1), true);
@@ -118,7 +118,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 		String contentPath2 = "General Drives/Sites Management/acme/" + node3;
 
 		info("Search content of document/page");	
-		navToolBar.goToSiteExplorer();
+//		navToolBar.goToSiteExplorer();
 		//Create node
 		actBar.goToNode("acme");
 		actBar.goToAddNewContent();
@@ -168,7 +168,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 		
 		//Switch to public mode
 		ecms.enableEditMode(false);
-		waitForAndGetElement(ecms.ELEMENT_ACME_SEARCH_RESULT.replace("${result}", node1));
+		waitForElementNotPresent(ecms.ELEMENT_ACME_SEARCH_RESULT.replace("${result}", node1));
 		
 		//Delete data
 		navToolBar.goToSiteExplorer();

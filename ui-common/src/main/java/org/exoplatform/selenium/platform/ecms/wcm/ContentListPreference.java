@@ -24,7 +24,7 @@ public class ContentListPreference extends EcmsBase{
 	Button button = new Button(driver);
 	
 	//Elements
-	public final By ELEMENT_PREFERENCE_LATEST_NEWS_ICON = By.xpath("//*[@class='RssIcon']/ancestor::div[contains(@id, 'UICLVPresentation')]/..//*[@class='uiIconSetting']");
+	public final By ELEMENT_PREFERENCE_LATEST_NEWS_ICON = By.xpath("//*[@data-original-title='RSS Feed']/ancestor::div[contains(@id, 'UICLVPresentation')]/..//*[@class='uiIconSetting']");
 	
 	//Content List Preference Tab
 	public final By ELEMENT_CONTENT_SELECTION_TAB = By.xpath("//*[text()='Content Selection']");
@@ -45,7 +45,7 @@ public class ContentListPreference extends EcmsBase{
 		info("-- Open Content List Preference --");
 		mouseOver(locator, true);
 		Utils.pause(1000);
-		click(preference);
+		click(preference,2);
 		//waitForTextPresent("Content Selection");
 	}
 

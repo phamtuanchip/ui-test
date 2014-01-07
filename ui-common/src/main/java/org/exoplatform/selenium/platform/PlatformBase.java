@@ -1092,7 +1092,8 @@ public class PlatformBase extends TestBase {
 				if (repeat >= DEFAULT_TIMEOUT/WAIT_INTERVAL) {
 					Assert.fail("Fail to input data to frame " + framelocator);
 				}
-				driver.switchTo().frame(waitForAndGetElement(framelocator));
+				WebElement e = waitForAndGetElement(framelocator,DEFAULT_TIMEOUT,1,2);
+				driver.switchTo().frame(e);
 				inputsummary = driver.switchTo().activeElement();
 
 				inputsummary.click();

@@ -35,7 +35,7 @@ public class ContentTemplate extends EcmsBase{
 	//Announcement
 	public final By ELEMENT_ANNOUNCEMENT_LINK = By.xpath("//*[@class='templateLabel']//*[text()='Announcement']");
 	public final By ELEMENT_ANNOUNCEMENT_NAME_TEXTBOX = By.id("name");
-	public final By ELEMENT_ANNOUNCEMENT_SUMMARY_FRAME = By.xpath("//td[@id='cke_contents_exo:summary']/iframe");
+	public final By ELEMENT_ANNOUNCEMENT_SUMMARY_FRAME = By.xpath("//*[@id='cke_exo:summary']//iframe");
 
 	//WebLink
 	public final By ELEMENT_WEBLINK_LINK = By.xpath("//*[@class='templateLabel']//*[text()='Web Link']");
@@ -44,12 +44,12 @@ public class ContentTemplate extends EcmsBase{
 	public final By ELEMENT_WEBCONTENT_LINK = By.xpath("//*[@class='templateLabel']//*[text()='Web Content']");
 	//public final By ELEMENT_WEBCONTENT_TITLE_TEXTBOX = By.id("title");	
 	public final By ELEMENT_WEBCONTENT_NAME_TEXTBOX = By.id("name");	
-	public final By ELEMENT_WEBCONTENT_CONTENT_FRAME = By.xpath("//td[contains(@id,'cke_contents_htmlData')]/iframe");
+	public final By ELEMENT_WEBCONTENT_CONTENT_FRAME = By.xpath("//*[contains(@id,'cke_htmlData')]//iframe");
 	public final By ELEMENT_WEBCONTENT_ADD_CONTENT_LINK = By.xpath("//*[@title='Insert Content Link']");
 	public final By ELEMENT_WEBCONTENT_ILLUSTRATION_TAB = By.xpath("//*[contains(text(),'Illustration')]");
 	public final By ELEMENT_WEBCONTENT_UPLOAD_FRAME = By.xpath("//*[contains(@name,'uploadIFrame')]");
 	//public final By ELEMENT_WEBCONTENT_FILE_IMAGE = By.name("file");
-	public final By ELEMENT_WEBCONTENT_SUMMARY_FRAME = By.xpath("//td[@id='cke_contents_exo:summary']/iframe");
+	public final By ELEMENT_WEBCONTENT_SUMMARY_FRAME = By.xpath("//div[@id='cke_exo:summary']//iframe");
 	public final By ELEMENT_WEBCONTENT_ADVANCE_TAB = By.xpath("//*[contains(text(),'Advanced')]");
 	public final By ELEMENT_WEBCONTENT_CSS_TEXTAREA = By.xpath("//textarea[contains(@id,'ContentCSS')]");
 	public final By ELEMENT_WEBCONTENT_JS_TEXTAREA = By.xpath("//textarea[contains(@id,'ContentJS')]");
@@ -101,7 +101,7 @@ public class ContentTemplate extends EcmsBase{
 	public final By ELEMENT_NEWFILE_LINK = By.xpath("//*[@class='templateLabel']//*[text()='File']");
 	//By.linkText("File");
 	public final By ELEMENT_NEWFILE_NAME_TEXTBOX = By.id("name");
-	public final By ELEMENT_NEWFILE_CONTENT_FRAME = By.xpath("//*[@id='cke_1_contents']/iframe");
+	public final By ELEMENT_NEWFILE_CONTENT_FRAME = By.xpath("//*[@id='cke_contentHtml']//iframe");
 	public final By ELEMENT_NEWFILE_TITLE_TEXTBOX = By.id("title0");
 	//public final By ELEMENT_NEWFILE_DESC_TEXTBOX = By.id("description0");
 	public final By ELEMENT_NEWFILE_DESCRIPTION_TEXTBOX = By.id("description0");
@@ -229,7 +229,7 @@ public class ContentTemplate extends EcmsBase{
 	public void createNewAnnouncement (String name, String sum){
 		click(ELEMENT_ANNOUNCEMENT_LINK);
 		type(ELEMENT_ANNOUNCEMENT_NAME_TEXTBOX, name, true);
-		inputDataToFrame(ELEMENT_ANNOUNCEMENT_SUMMARY_FRAME,sum);
+		inputDataToFrame(ELEMENT_ANNOUNCEMENT_SUMMARY_FRAME,sum,true);
 		switchToParentWindow();
 		click(button.ELEMENT_SAVE_CLOSE_BUTTON);
 	}
@@ -309,11 +309,12 @@ public class ContentTemplate extends EcmsBase{
 		}
 		Utils.pause(300);
 		if (!lines){
-			if (waitForAndGetElement(ELEMENT_NEWFILE_CONTENT_FRAME, 3000, 0) != null){
+			if (waitForAndGetElement(ELEMENT_NEWFILE_CONTENT_FRAME, 5000, 0,2) != null){
 				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME, cont, true);
-			}else //if (waitForAndGetElement(ELEMENT_NEWFILE_TEXTAREA_ID, 3000, 0) != null){
+			}
+			else if (waitForAndGetElement(ELEMENT_NEWFILE_TEXTAREA_ID, 3000, 0) != null){
 				type(ELEMENT_NEWFILE_TEXTAREA_ID, cont, true);
-			//}
+			}
 			switchToParentWindow();
 		}else {
 			typeMultiLineInCkeContent(ELEMENT_NEWFILE_CONTENT_FRAME, cont);

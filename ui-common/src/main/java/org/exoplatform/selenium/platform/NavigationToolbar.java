@@ -20,7 +20,7 @@ public class NavigationToolbar extends PlatformBase {
 	public final By ELEMENT_MENU_EDIT_LINK = By.xpath("//i[@class='uiIconPLF24x24Edit']");
 	public final By ELEMENT_MENU_EDIT_CONTENT = By.xpath("//i[@class='quickEditChecked']");
 	public final By ELEMENT_EDIT_MENU_ID = By.xpath("//*[@id='UIAdminToolbarPortlet']/../..");
-	public final By ELEMENT_SEO_MENU = By.xpath("//span[text()='SEO']");
+	public final By ELEMENT_SEO_MENU = By.xpath("//span[contains(text(),'SEO')]");
 	public final By ELEMENT_PAGE_ID = By.xpath("//*[contains(@id, 'UIPage-')]");
 
 	public NavigationToolbar(WebDriver dr, String...plfVersion){
