@@ -405,12 +405,13 @@ public class EcmsBase extends ManageAccount {
 
 	//Acme sites > Go to Overview page
 	public void goToOverviewPage(){
+		baseUrl= (System.getProperty("baseUrl") == null) ? DEFAULT_BASEURL : System.getProperty("baseUrl");
 		info("-- Go to Overview page--");
 		Utils.pause(500);
 		if (waitForAndGetElement(ELEMENT_OVERVIEW_PAGE, 3000, 0) != null){
 			click(ELEMENT_OVERVIEW_PAGE);
 		}else {
-			driver.get(DEFAULT_BASEURL + "/acme/overview");
+			driver.get(baseUrl + "/acme/overview");
 		}
 		Utils.pause(1000);
 	}
