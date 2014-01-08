@@ -17,9 +17,10 @@ import org.openqa.selenium.WebElement;
  *
  */
 public class ContentTemplate extends EcmsBase{
-	public ContentTemplate(WebDriver dr) {
+	public ContentTemplate(WebDriver dr,String...plfVersion) {
 		super(dr);
 		// TODO Auto-generated constructor stub
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 	}
 
 	ActionBar actBar = new ActionBar(driver);
@@ -45,11 +46,13 @@ public class ContentTemplate extends EcmsBase{
 	//public final By ELEMENT_WEBCONTENT_TITLE_TEXTBOX = By.id("title");	
 	public final By ELEMENT_WEBCONTENT_NAME_TEXTBOX = By.id("name");	
 	public final By ELEMENT_WEBCONTENT_CONTENT_FRAME = By.xpath("//td[contains(@id,'cke_contents_htmlData')]/iframe");
+	public final By ELEMENT_WEBCONTENT_CONTENT_FRAME_41 = By.xpath("//td[contains(@id,'cke_htmlData')]/iframe");
 	public final By ELEMENT_WEBCONTENT_ADD_CONTENT_LINK = By.xpath("//*[@title='Insert Content Link']");
 	public final By ELEMENT_WEBCONTENT_ILLUSTRATION_TAB = By.xpath("//*[contains(text(),'Illustration')]");
 	public final By ELEMENT_WEBCONTENT_UPLOAD_FRAME = By.xpath("//*[contains(@name,'uploadIFrame')]");
 	//public final By ELEMENT_WEBCONTENT_FILE_IMAGE = By.name("file");
 	public final By ELEMENT_WEBCONTENT_SUMMARY_FRAME = By.xpath("//td[@id='cke_contents_exo:summary']/iframe");
+	public final By ELEMENT_WEBCONTENT_SUMMARY_FRAME_41 = By.xpath("//td[@id='cke_exo:summary']/iframe");
 	public final By ELEMENT_WEBCONTENT_ADVANCE_TAB = By.xpath("//*[contains(text(),'Advanced')]");
 	public final By ELEMENT_WEBCONTENT_CSS_TEXTAREA = By.xpath("//textarea[contains(@id,'ContentCSS')]");
 	public final By ELEMENT_WEBCONTENT_JS_TEXTAREA = By.xpath("//textarea[contains(@id,'ContentJS')]");
@@ -102,6 +105,7 @@ public class ContentTemplate extends EcmsBase{
 	//By.linkText("File");
 	public final By ELEMENT_NEWFILE_NAME_TEXTBOX = By.id("name");
 	public final By ELEMENT_NEWFILE_CONTENT_FRAME = By.xpath("//*[@id='cke_1_contents']/iframe");
+	public final By ELEMENT_NEWFILE_CONTENT_FRAME_41 = By.xpath("//*[@id='cke_contentHtml']//iframe");
 	public final By ELEMENT_NEWFILE_TITLE_TEXTBOX = By.id("title0");
 	//public final By ELEMENT_NEWFILE_DESC_TEXTBOX = By.id("description0");
 	public final By ELEMENT_NEWFILE_DESCRIPTION_TEXTBOX = By.id("description0");
@@ -247,7 +251,11 @@ public class ContentTemplate extends EcmsBase{
 			selectOption(ELEMENT_PIC_LANG, optionLang);
 		}
 		if (cont != ""){
+			if(this.plfVersion.equalsIgnoreCase("4.1"))
+				inputDataToFrame(ELEMENT_WEBCONTENT_CONTENT_FRAME_41,cont);
+			else if(this.plfVersion.equalsIgnoreCase("4.0"))
 			inputDataToFrame(ELEMENT_WEBCONTENT_CONTENT_FRAME,cont);
+			
 			switchToParentWindow();
 		}
 		if (sum!="" || img !=""){
@@ -265,10 +273,17 @@ public class ContentTemplate extends EcmsBase{
 				waitForAndGetElement(By.xpath("//div[contains(text(),'" + links[length-1]+"')]"),DEFAULT_TIMEOUT,1,2);
 			}
 			if (!lines){
-				inputDataToFrame(ELEMENT_WEBCONTENT_SUMMARY_FRAME, sum);
+				if(this.plfVersion.equalsIgnoreCase("4.1"))
+					inputDataToFrame(ELEMENT_WEBCONTENT_SUMMARY_FRAME_41, sum);
+				else if(this.plfVersion.equalsIgnoreCase("4.0"))
+					inputDataToFrame(ELEMENT_WEBCONTENT_SUMMARY_FRAME, sum);
 				switchToParentWindow();
 			}else {
-				typeMultiLineInCkeContent(ELEMENT_WEBCONTENT_SUMMARY_FRAME, sum);
+				if(this.plfVersion.equalsIgnoreCase("4.1"))
+					typeMultiLineInCkeContent(ELEMENT_WEBCONTENT_SUMMARY_FRAME_41, sum);
+				else if(this.plfVersion.equalsIgnoreCase("4.0"))
+					typeMultiLineInCkeContent(ELEMENT_WEBCONTENT_SUMMARY_FRAME, sum);
+				
 			}
 		}
 		if(css!="" || js !=""){
@@ -311,9 +326,11 @@ public class ContentTemplate extends EcmsBase{
 		if (!lines){
 			if (waitForAndGetElement(ELEMENT_NEWFILE_CONTENT_FRAME, 3000, 0) != null){
 				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME, cont, true);
-			}else //if (waitForAndGetElement(ELEMENT_NEWFILE_TEXTAREA_ID, 3000, 0) != null){
+			}else if (waitForAndGetElement(ELEMENT_NEWFILE_TEXTAREA_ID, 3000, 0) != null){
 				type(ELEMENT_NEWFILE_TEXTAREA_ID, cont, true);
-			//}
+			} else if(waitForAndGetElement(ELEMENT_NEWFILE_CONTENT_FRAME_41, 3000, 0) != null){
+				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME_41, cont, true);
+			}
 			switchToParentWindow();
 		}else {
 			typeMultiLineInCkeContent(ELEMENT_NEWFILE_CONTENT_FRAME, cont);

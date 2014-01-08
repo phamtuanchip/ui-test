@@ -227,12 +227,15 @@ public class PlatformBase extends TestBase {
 	 * */
 //	public final By ELEMENT_CUT_NODE = By.className("uiIconEcmsCut");
 	public final By ELEMENT_CUT_NODE = By.className("uiIconCutNode");
+	public final By ELEMENT_ECMS_CUT_NODE = By.className("uiIconEcmsCut");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsCut']"); 
 //	public final By ELEMENT_PASTE_NODE = By.className("uiIconEcmsPaste");
 	public final By ELEMENT_PASTE_NODE = By.className("uiIconPasteNode");
+	public final By ELEMENT_ECMS_PASTE_NODE = By.className("uiIconEcmsPaste");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsPaste']"); 
 //	public final By ELEMENT_COPY_NODE = By.className("uiIconEcmsCopy");
 	public final By ELEMENT_COPY_NODE = By.className("uiIconCopyNode");
+	public final By ELEMENT_ECMS_COPY_NODE = By.className("uiIconEcmsCopy");
 	//By.xpath("//*[@class='uiContextMenuContainer']//*[@class='uiIconEcmsCopy']"); 
 	public final By ELEMENT_CLONE_NODE = By.xpath("//a[contains(text(),'Clone')]");
 	public final By ELEMENT_EDIT_NODE_PAGE = By.className("uiIconEcmsEditDocument");
@@ -469,6 +472,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_SELECT_CONTENT_PATH_LINK = By.xpath("//a[@data-original-title='Add Path']");
 	public final By ELEMENT_SELECT_CONTENT_PATH_LINK_AUX = By.xpath("//*[contains(@class, 'uiIconAddPath')]");
 	public final String ELEMENT_CONTENT_IN_CONTENT_DETAIL_PORTLET = "//*[contains(@id, 'UISingleContentViewerPortlet')]//*[@class='Title' and text()='${contentName}']";
+	public final String ELEMENT_CONTENT_IN_CONTENT_DETAIL_PORTLET_41 = "//*[contains(@id, 'UISingleContentViewerPortlet')]//*[@class='topTitle' and text()='${contentName}']";
 	public final String ELEMENT_GADGET_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList0']//div[contains(text(),'${gadget}')]";
 	public final String ELEMENT_PORTLET_TITLE = "//*[@class='portletLayoutDecorator' and contains(text(), '${portletTitle}')]";
 
@@ -967,6 +971,9 @@ public class PlatformBase extends TestBase {
 			}else if (waitForAndGetElement(ELEMENT_NAVIGATION_CUT_NODE, 5000, 0) != null){
 				click(ELEMENT_NAVIGATION_CUT_NODE);
 				return;
+			}else if (waitForAndGetElement(ELEMENT_ECMS_CUT_NODE, 5000, 0) != null){
+				click(ELEMENT_ECMS_CUT_NODE);
+				return;
 			}
 			Utils.pause(WAIT_INTERVAL);
 		}
@@ -984,6 +991,9 @@ public class PlatformBase extends TestBase {
 			}else if (waitForAndGetElement(ELEMENT_NAVIGATION_COPY_NODE, 5000, 0) != null){
 				click(ELEMENT_NAVIGATION_COPY_NODE);
 				return;
+			} else if (waitForAndGetElement(ELEMENT_ECMS_COPY_NODE, 5000, 0) != null){
+				click(ELEMENT_ECMS_COPY_NODE);
+				return;
 			}
 			Utils.pause(WAIT_INTERVAL);
 		}
@@ -1000,6 +1010,10 @@ public class PlatformBase extends TestBase {
 				return;
 			}else if (waitForAndGetElement(ELEMENT_NAVIGATION_PASTE_NODE, 5000, 0) != null){
 				click(ELEMENT_NAVIGATION_PASTE_NODE);
+				return;
+			}
+			else if (waitForAndGetElement(ELEMENT_ECMS_PASTE_NODE, 5000, 0) != null){
+				click(ELEMENT_ECMS_PASTE_NODE);
 				return;
 			}
 			Utils.pause(WAIT_INTERVAL);

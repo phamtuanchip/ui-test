@@ -21,8 +21,9 @@ import org.openqa.selenium.WebDriver;
  */
 public class SitesExplorer extends EcmsBase{
 
-	public SitesExplorer(WebDriver dr) {
+	public SitesExplorer(WebDriver dr,String...plfVersion) {
 		super(dr);
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
 		// TODO Auto-generated constructor stub
 	}
 

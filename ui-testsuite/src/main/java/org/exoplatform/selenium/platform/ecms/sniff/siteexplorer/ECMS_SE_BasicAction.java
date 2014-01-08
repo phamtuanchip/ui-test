@@ -150,7 +150,10 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 		//Click on "Download and allow edition" of node1 in a new window
 		rightClickOnElement(siteExp.ELEMENT_SE_NODE.replace("{$node}", node1));
-		click("//a[@class='itemDownload']");
+		if(isElementPresent("//a[@class='itemDownload']"))
+			click("//a[@class='itemDownload']");
+		else if(isElementPresent("//a[@class='uiIconDownload uiIconLightGray']"))
+			click("//a[@class='uiIconDownload uiIconLightGray']");
 
 		//Swith to new window containing Webdav of node1
 		switchToNewWindow();
@@ -321,7 +324,6 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 		//Delete data
 		cMenu.contextMenuAction(bNode1, cMenu.ELEMENT_MENU_DELETE);
-		alt.waitForMessage("Are you sure you want to delete the folder '"+node1+"' and all subfolders?");
 		dialog.deleteInDialog();
 		cMenu.deleteDocument(bNode1);
 		cMenu.deleteDocument(bNode2);
@@ -354,16 +356,16 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 		getDriverAutoOpenWindow();
 		driver.get(baseUrl);
 		dialog = new Dialog(driver);
-		navToolBar = new NavigationToolbar(driver);
-		magAcc = new ManageAccount(driver);
+		navToolBar = new NavigationToolbar(driver,this.plfVersion);
+		magAcc = new ManageAccount(driver,this.plfVersion);
 		magAcc.signIn(DATA_USER, DATA_PASS);
 		navToolBar.goToSiteExplorer();
-		actBar = new ActionBar(driver);
-		cTemplate = new ContentTemplate(driver);
-		ecms = new EcmsBase(driver);
-		cMenu = new ContextMenu(driver);
-		alt = new ManageAlert(driver);
-		siteExp = new SitesExplorer(driver);
+		actBar = new ActionBar(driver,this.plfVersion);
+		cTemplate = new ContentTemplate(driver,this.plfVersion);
+		ecms = new EcmsBase(driver,this.plfVersion);
+		cMenu = new ContextMenu(driver,this.plfVersion);
+		alt = new ManageAlert(driver,this.plfVersion);
+		siteExp = new SitesExplorer(driver,this.plfVersion);
 	}
 
 	@AfterMethod

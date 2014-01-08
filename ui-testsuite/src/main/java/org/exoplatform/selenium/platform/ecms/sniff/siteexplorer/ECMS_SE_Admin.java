@@ -257,8 +257,8 @@ public class ECMS_SE_Admin extends PlatformBase {
 	 */
 	@Test
 	public void test09_DeleteRelation() {
-		String node1 = "test09_DeleteRelation1";
-		String node2 = "test09_DeleteRelation2";
+		String node1 = "test09deleterelation1";
+		String node2 = "test09deleterelation2";
 		By bNode1 = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node1));
 		By bNode2 = By.xpath(siteExp.ELEMENT_SE_NODE.replace("{$node}", node2));
 		

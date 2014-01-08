@@ -333,6 +333,7 @@ public class EcmsBase extends ManageAccount {
 	public final By ELEMENT_ADD_COMMENT_LINK = By.xpath("//a[contains(text(), 'Comment')]");
 	public final By ELEMENT_ADD_COMMENT_POPUP = By.xpath("//*[@id='UIPopupWindow']//span[text()='Comment']");
 	public final By ELEMENT_ADD_COMMENT_FRAME = By.xpath("//*[@id='cke_contents_comment']/iframe");
+	public final By ELEMENT_ADD_COMMENT_FRAME_41 = By.xpath("//*[@id='cke_comment']//iframe"); 
 	public final By ELEMENT_SHOW_COMMENT_LINK = By.linkText("Show comments");
 	public final String ELEMENT_SHOW_COMMENT_CONTENT = "//*[@class='commentBox uiBox']//p[contains(text(), '${comment}')]";
 	public final String ELEMENT_EDIT_COMMENT_ICON = "//*[contains(text(), '${comment}')]/..//a[@data-original-title='Edit this comment']";
