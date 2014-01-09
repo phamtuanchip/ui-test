@@ -65,7 +65,7 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 		//Go to node2, add a document
 		ecms.goToNode(node2);
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewWebContent(webContent, webContent, "", webContent, "", "");
@@ -210,7 +210,7 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 		info("Lock a node");
 		//Create file document
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1, node1, node1);
@@ -239,7 +239,7 @@ public class ECMS_SE_BasicAction extends PlatformBase {
 
 		//Create file document
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		actBar.goToViewMode("Web");
 		actBar.goToAddNewContent();
 		cTemplate.createNewFile(node1, node1, node1);

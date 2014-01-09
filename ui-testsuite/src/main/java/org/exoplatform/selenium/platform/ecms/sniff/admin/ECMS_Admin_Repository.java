@@ -94,7 +94,7 @@ public class ECMS_Admin_Repository extends PlatformBase{
 		info("-- Test case: Unlock a node --");
 		nav.goToSiteExplorer();
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		
 		//actBar.goToSitesManagement();
 		ecms.goToNode("intranet/documents");
@@ -140,7 +140,7 @@ public class ECMS_Admin_Repository extends PlatformBase{
 		info("-- Test case: Manage lock --");
 		nav.goToSiteExplorer();
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		
 		//actBar.goToSitesManagement();
 		ecms.goToNode("intranet/documents");

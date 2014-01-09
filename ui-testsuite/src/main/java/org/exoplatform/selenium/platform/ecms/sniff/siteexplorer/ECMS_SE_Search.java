@@ -50,7 +50,7 @@ public class ECMS_SE_Search extends PlatformBase {
 		info("Advanced search");
 		navToolBar.goToSiteExplorer();
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		
 		//Create document
 		actBar.goToViewMode("Web");
@@ -84,7 +84,7 @@ public class ECMS_SE_Search extends PlatformBase {
 		info("Simple search");
 		navToolBar.goToSiteExplorer();
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		
 		//Create document
 		actBar.goToViewMode("Web");
@@ -115,7 +115,7 @@ public class ECMS_SE_Search extends PlatformBase {
 		
 		navToolBar.goToSiteExplorer();
 		actBar.goToViewMode("Web");
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web", "Web");
+		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Web");
 		
 		info("Create, edit, execute, delete query in Advanced search");
 		actBar.goToViewMode("Web");
