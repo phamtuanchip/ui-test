@@ -66,7 +66,7 @@ public class ManageMember extends SpaceManagement {
 	//Warning message: users have already existed in the space
 	public final String MESSAGE_USER_EXISTED_IN_SPACE = "Some users have already existed in the space, including:" + " ${username}";
 	public final String MESSAGE_USER_EXISTED_IN_INVITING_LIST = "Some users have already existed in the inviting list, including:" + " ${username}";
-	public final String ELEMENT_LEFT_PANEL_SPACE_ITEM = "//li[contains(@class,'spaceItem')]/a[@title='${spaceName}']";
+	public final String ELEMENT_LEFT_PANEL_SPACE_ITEM = "//li[contains(@class,'spaceItem')]//span[contains(@data-original-title,'${spaceName}')]";
 
 	/*-------------------------------- Common functions for SOCIAL -----------------------------------*/
 

@@ -89,13 +89,13 @@ public class Social_Space_SpaceManagement_ManageSpace extends SocialBase{
 		//- Click Add new space and input valid value into create space form
 		//- Click on Create button
 		//- New space is displayed on My space list of user and Publics space list of other user.
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 		
 		//- New space is displayed on Publics space list of other user.
 		magAcc.userSignIn(userType.PUBLISHER);
 		magMember.goToAllSpaces();
-		waitForTextPresent(spaceName);
+		waitForAndGetElement("//*[contains(text(),'"+spaceName+"')]");
 		
 		/*Step 2: Edit a space*/
 		magAcc.userSignIn(userType.ADMIN);
